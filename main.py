@@ -61,12 +61,6 @@ def status():
         icon=PASS_ICON if return_json(url=f"{API_URL}/swagger.json") else FAIL_ICON,
         text="JSON service API server",
     )
-    content += render_template(
-        "status.html",
-        header="Redis database",
-        icon=FAIL_ICON,
-        text="Redis database server",
-    )
     return render_template(
         "main_frame.html", header="Status of packit service", content=content
     )
