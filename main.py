@@ -100,10 +100,5 @@ def projects():
     return render_template("main_frame.html", header="Project", content=content)
 
 
-@app.route("/logs/")
-def logs():
-    return render_template("main_frame.html", header="Logs", content="nic")
-
-
 if __name__ == "__main__":
     app.run(debug=True)
