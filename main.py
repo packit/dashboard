@@ -1,11 +1,14 @@
 import json
 import socket
+from os import getenv
 
 import requests
 from flask import Flask, render_template, send_from_directory
 
+deployment = getenv("DEPLOYMENT", "stg")
 app = Flask("Packit Service Dashboard")
-API_URL = "https://stg.packit.dev/api"
+
+API_URL = f"https://{deployment}.packit.dev/api"
 PASS_ICON = "fa-check-circle"
 FAIL_ICON = "fa-exclamation-circle"
 WARN_ICON = "fa-exclamation-triangle"
@@ -20,7 +23,6 @@ def node_modules(filename):
 def main():
     return render_template(
         "main_frame.html",
-        header="Information",
         content=render_template("information.html"),
     )
 
@@ -57,7 +59,7 @@ def return_json_all_pages(url, limit=10, method="GET", **kwargs):
 def status():
     content = render_template(
         "status.html",
-        header="Sevice API",
+        header="Service API",
         icon=PASS_ICON if return_json(url=f"{API_URL}/swagger.json") else FAIL_ICON,
         text="JSON service API server",
     )
