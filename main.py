@@ -1,22 +1,30 @@
-from flask import Flask, render_template, send_from_directory
-import socket
-import requests
 import json
+import socket
+from os import getenv
 
+import requests
+from flask import Flask, render_template, send_from_directory
+
+deployment = getenv("DEPLOYMENT", "stg")
 app = Flask("Packit Service Dashboard")
-API_URL = "https://stg.packit.dev/api"
+
+API_URL = f"https://{deployment}.packit.dev/api"
 PASS_ICON = "fa-check-circle"
 FAIL_ICON = "fa-exclamation-circle"
 WARN_ICON = "fa-exclamation-triangle"
 
-@app.route('/node_modules/<path:filename>')
+
+@app.route("/node_modules/<path:filename>")
 def node_modules(filename):
     return send_from_directory(f"node_modules", filename)
 
 
 @app.route("/")
 def main():
-    return render_template('main_frame.html', header="Information", content=render_template('information.html'))
+    return render_template(
+        "main_frame.html",
+        content=render_template("information.html"),
+    )
 
 
 def check_service(server, port, ip_type=socket.SOCK_STREAM):
@@ -47,13 +55,18 @@ def return_json_all_pages(url, limit=10, method="GET", **kwargs):
     return output
 
 
-
-
 @app.route("/status/")
 def status():
-    content = render_template('status.html', header="Sevice API", icon=PASS_ICON if return_json(url=f"{API_URL}/swagger.json") else FAIL_ICON, text="JSON service API server")
-    content += render_template('status.html', header="Redis database", icon=FAIL_ICON, text="Redis database server")
-    return render_template('main_frame.html', header="Status of packit service", content=content)
+    content = render_template(
+        "status.html",
+        header="Service API",
+        icon=PASS_ICON if return_json(url=f"{API_URL}/swagger.json") else FAIL_ICON,
+        text="JSON service API server",
+    )
+    return render_template(
+        "main_frame.html", header="Status of packit service", content=content
+    )
+
 
 @app.route("/projects/")
 def projects():
@@ -65,26 +78,26 @@ def projects():
             project_name = item.get("project")
 
         if project_name not in summary_dict:
-            summary_dict[project_name] = {"owner": item.get("owner"), "last_status": item.get("status"), "builds": [item]}
+            summary_dict[project_name] = {
+                "owner": item.get("owner"),
+                "last_status": item.get("status"),
+                "builds": [item],
+            }
         else:
             summary_dict[project_name]["builds"] += item
     content_projects = ""
     for k, v in summary_dict.items():
-        content_projects += render_template('project.html',
-                                            header=f"{k} ({len(v['builds'])}) owned by {v['owner']}",
-                                            icon=PASS_ICON if v["last_status"] else FAIL_ICON,
-                                            text="",
-                                            copr_link=f"https://copr.fedorainfracloud.org/coprs/packit/{k}/builds/"
-                                            )
-    content = render_template('projects.html', counter=len(summary_dict.keys()), projects=content_projects)
-    return render_template('main_frame.html', header="Project", content=content)
-
-
-@app.route("/logs/")
-def logs():
-    return render_template('main_frame.html', header="Logs", content="nic")
-
-
+        content_projects += render_template(
+            "project.html",
+            header=f"{k} ({len(v['builds'])}) owned by {v['owner']}",
+            icon=PASS_ICON if v["last_status"] else FAIL_ICON,
+            text="",
+            copr_link=f"https://copr.fedorainfracloud.org/coprs/packit/{k}/builds/",
+        )
+    content = render_template(
+        "projects.html", counter=len(summary_dict.keys()), projects=content_projects
+    )
+    return render_template("main_frame.html", header="Project", content=content)
 
 
 if __name__ == "__main__":

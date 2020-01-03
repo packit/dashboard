@@ -1,7 +1,6 @@
 install-dependencies:
-	sudo dnf -y install npm
-	sudo pip3 install flask
-	npm install @patternfly/patternfly --save
+	sudo dnf -y install python3-flask npm
+	npm install
 
 run:
-	python3 main.py
+	FLASK_ENV=development python3 main.py
