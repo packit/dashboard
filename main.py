@@ -22,8 +22,7 @@ def node_modules(filename):
 @app.route("/")
 def main():
     return render_template(
-        "main_frame.html",
-        content=render_template("information.html"),
+        "main_frame.html", content=render_template("information.html"),
     )
 
 
@@ -44,17 +43,6 @@ def return_json(url, method="GET", **kwargs):
     return output
 
 
-def return_json_all_pages(url, limit=10, method="GET", **kwargs):
-    output = []
-    for counter in range(1, limit):
-        url += f"?page={counter}&per_page=10"
-        tmp_output = return_json(url, method, **kwargs)
-        if not tmp_output:
-            break
-        output += tmp_output
-    return output
-
-
 @app.route("/status/")
 def status():
     content = render_template(
@@ -68,34 +56,45 @@ def status():
     )
 
 
+def all_from(url, method="GET", **kwargs):
+    counter = 0
+    while True:
+        counter += 1
+        url_ = f"{url}?page={counter}&per_page=50"
+        page = return_json(url_, method, **kwargs)
+        if not page:
+            break
+        for item in page:
+            yield item
+
+
 @app.route("/projects/")
 def projects():
+    all_projects = set()
+    successful_projects = set()
 
-    copr_packages_json = return_json_all_pages(f"{API_URL}/copr-builds")
-    summary_dict = {}
-    for item in copr_packages_json:
-        if isinstance(item, dict):
-            project_name = item.get("project")
+    for build in all_from(f"{API_URL}/copr-builds"):
+        if not isinstance(build, dict) or not all(
+            [build.get("project"), build.get("status")]
+        ):
+            continue
+        name = build["project"]
+        # rstrip -stg
+        if name.endswith("-stg"):
+            name = name[: -len("-stg")]
+        # rstrip the PR number
+        name = name[: name.rfind("-")]
 
-        if project_name not in summary_dict:
-            summary_dict[project_name] = {
-                "owner": item.get("owner"),
-                "last_status": item.get("status"),
-                "builds": [item],
-            }
-        else:
-            summary_dict[project_name]["builds"] += item
-    content_projects = ""
-    for k, v in summary_dict.items():
-        content_projects += render_template(
-            "project.html",
-            header=f"{k} ({len(v['builds'])}) owned by {v['owner']}",
-            icon=PASS_ICON if v["last_status"] else FAIL_ICON,
-            text="",
-            copr_link=f"https://copr.fedorainfracloud.org/coprs/packit/{k}/builds/",
-        )
+        all_projects.add(name)
+        if build["status"] == "success":
+            successful_projects.add(name)
+
     content = render_template(
-        "projects.html", counter=len(summary_dict.keys()), projects=content_projects
+        "projects.html",
+        counter=len(all_projects),
+        all_projects=str(all_projects),
+        counter_s=len(successful_projects),
+        successful_projects=str(successful_projects),
     )
     return render_template("main_frame.html", header="Project", content=content)
 
