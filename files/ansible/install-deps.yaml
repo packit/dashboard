@@ -1,0 +1,17 @@
+---
+- name: Install dependencies for packit_dashboard.
+  hosts: all
+  tasks:
+  - name: Install all RPM/python packages needed to run dashboard.
+    dnf:
+      name:
+        - python3-flask
+        - python3-requests
+        - npm
+        - nss_wrapper
+        - python3-mod_wsgi
+        - httpd
+        - mod_md
+        - mod_ssl
+        - nss_wrapper
+      state: present
