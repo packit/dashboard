@@ -1,0 +1,25 @@
+# Tasks common to all images
+
+- name: Create /usr/share/packit_dashboard
+  file:
+    state: directory
+    path: /usr/share/packit_dashboard
+- name: make packit_dashboard home dir
+  file:
+    state: directory
+    path: "{{ home_path }}"
+    mode: 0776
+- name: stat {{ packit_dashboard_path }}
+  stat:
+    path: '{{ packit_dashboard_path }}'
+  tags:
+  - no-cache
+  register: src_path
+- name: Let'secrets make sure {{ packit_dashboard_path }} is present
+  assert:
+    that:
+    - 'src_path.stat.isdir'
+- name: Clean all the cache files (especially pip)
+  file:
+    state: absent
+    path: ~/.cache/
