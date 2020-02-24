@@ -75,7 +75,7 @@ def projects():
 
     for build in all_from(f"{API_URL}/copr-builds"):
         if not isinstance(build, dict) or not all(
-            [build.get("project"), build.get("status")]
+                [build.get("project"), build.get("status")]
         ):
             continue
         name = build["project"]
