@@ -3,7 +3,7 @@
 
   <thead>
     <tr role="row">
-      <th class="pf-c-table__sort pf-m-selected " role="columnheader" scope="col">
+      <th class="pf-c-table__sort " role="columnheader" scope="col">
         <button class="pf-c-button pf-m-plain" type="button">Project
           <span class="pf-c-table__sort-indicator">
             <i class="fas fa-arrows-alt-v"></i>
@@ -24,11 +24,8 @@
           </span>
         </button>
       </th>
-      <th class="pf-c-table__sort " role="columnheader" aria-sort="none" scope="col">
+      <th class="pf-c-table__sort sort-disabled" role="columnheader" aria-sort="none" scope="col">
         <button class="pf-c-button pf-m-plain" type="button">Chroots
-          <span class="pf-c-table__sort-indicator">
-            <i class="fas fa-arrows-alt-v"></i>
-          </span>
         </button>
       </th>
       <th class="pf-c-table__sort " role="columnheader" aria-sort="none" scope="col">
@@ -71,5 +68,10 @@
       "info": false
     });
   });
-
 </script>
+
+<style>
+.sort-disabled {
+  pointer-events: none;
+}
+</style>
