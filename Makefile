@@ -6,7 +6,7 @@ install-dependencies:
 	npm install
 
 run:
-	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask run
+	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run
 
 run-docker-stg: build-stg
 	docker run -p 443:8443 -v $(CURDIR)/secrets:/secrets -i $(IMAGE)
