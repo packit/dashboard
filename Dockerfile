@@ -13,7 +13,8 @@ WORKDIR "/src"
 RUN ansible-playbook -vv -c local -i localhost, files/ansible/install-deps.yaml \
     && dnf clean all
 
-COPY ./packit_dashboard /src/packit_dashboard
+COPY ./packit_dashboard  /src/packit_dashboard
+COPY ./templates  /src/templates
 
 RUN ansible-playbook -vv -c local -i localhost, ./files/ansible/recipe.yaml
 
