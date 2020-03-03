@@ -11,7 +11,6 @@ repos:
     rev: 1.19.1
     hooks:
       - id: prettier
-        exclude: tests_recording/test_data/*
   - repo: https://github.com/pre-commit/pre-commit-hooks
     rev: v2.5.0
     hooks:
