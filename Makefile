@@ -1,10 +1,14 @@
 CURDIR := ${CURDIR}
 IMAGE ?= usercont/packit-dashboard:stg
-
 install-dependencies:
-	sudo dnf -y install python3-flask npm
+	if [ -f "/etc/redhat-release" ];\
+	 then\
+		sudo dnf -y install python3-flask npm;\
+	elif [ -f "/etc/debian_version" ];\
+	 then\
+		sudo apt -y install python3-flask npm;\
+	fi
 	npm install
-
 run:
 	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run
 
