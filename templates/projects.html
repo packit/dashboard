@@ -1,9 +1,44 @@
-<h2> Total projects: {{ counter }} </h2>
-(Projects which ever used (i.e. were building their PR code in Copr via) Packit service)
-<p><p>
-{{ all_projects|safe }}
+<ul class="pf-c-data-list" role="list" aria-label="Basic data list example" id="data-list-basic">
+    <li class="pf-c-data-list__item" aria-labelledby="data-list-basic-item1">
+        <div class="pf-c-data-list__item-row">
+            <div class="pf-c-data-list__item-content">
+                <div class="pf-c-data-list__cell">
+                    <span id="data-list-basic-item1">
+                        <h2> Total projects: {{ counter }} </h2>
+                        (Projects which ever used (i.e. were building their PR code in Copr via) Packit service)
+                        <p>
+                            <ul>
+                                {% for project in all_projects %}
+                                <li>{{ project }}</li>
+                                {% endfor %}
+                            </ul>
 
-<h2> Successful projects: {{ counter_s }} </h2>
-(Projects which ever successfully used (i.e. successfully built their PR code in Copr in all targets via) Packit service)
-<p><p>
-{{ successful_projects|safe }}
+                        </p>
+                    </span>
+                </div>
+
+            </div>
+        </div>
+    </li>
+    <li class="pf-c-data-list__item" aria-labelledby="data-list-basic-item2">
+        <div class="pf-c-data-list__item-row">
+            <div class="pf-c-data-list__item-content">
+                <div class="pf-c-data-list__cell">
+                    <span id="data-list-basic-item2">
+                        <h2> Successful projects: {{ counter_s }} </h2>
+                        (Projects which ever successfully used (i.e. successfully built their PR code in Copr in all
+                        targets via) Packit service)
+                        <p>
+                            <ul>
+                                {% for project in successful_projects %}
+                                <li>{{ project }}</li>
+                                {% endfor %}
+                            </ul>
+
+                        </p>
+                    </span>
+                </div>
+
+            </div>
+    </li>
+</ul>
