@@ -21,6 +21,12 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
+  - repo: https://github.com/motet-a/jinjalint
+    rev: master
+    hooks:
+      - id: jinjalint
+        types: [file]
+        files: \.(html)$
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.7.9
     hooks:
@@ -39,3 +45,4 @@ repos:
       - id: check-rebase
         args:
           - git://github.com/packit-service/dashboard.git
+          
