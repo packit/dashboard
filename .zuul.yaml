@@ -1,0 +1,9 @@
+---
+- project:
+    name: packit-service/dashboard
+    check:
+      jobs:
+        - noop
+    gate:
+      jobs:
+        - noop
