@@ -28,13 +28,13 @@
           <nav class="pf-c-nav pf-m-end" id="page-layout-horizontal-nav-horizontal-nav" aria-label="Global">
             <ul class="pf-c-nav__horizontal-list">
               <li class="pf-c-nav__item">
-                <a href="{{ url_for('status') }}" class="pf-c-nav__link">Service Status</a>
+                <a href="{{ url_for('about.status') }}" class="pf-c-nav__link">Service Status</a>
               </li>
               <li class="pf-c-nav__item">
-                <a href="{{ url_for('projects') }}" class="pf-c-nav__link">Projects</a>
+                <a href="{{ url_for('projects.projects_page') }}" class="pf-c-nav__link">Projects</a>
               </li>
               <li class="pf-c-nav__item">
-                <a href="{{ url_for('builds') }}" class="pf-c-nav__link">Recent Builds</a>
+                <a href="{{ url_for('builds.builds_page') }}" class="pf-c-nav__link">Recent Builds</a>
               </li>
             </ul>
           </nav>
