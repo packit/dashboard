@@ -1,46 +1,70 @@
-<h2> Recent Builds</h2>
-<table class="pf-c-table pf-m-grid-lg" role="grid" aria-label="Builds Table" id="builds-table">
-
+<h2>Recent Builds</h2>
+<table
+  class="pf-c-table pf-m-grid-lg"
+  role="grid"
+  aria-label="Builds Table"
+  id="builds-table"
+>
   <thead>
     <tr role="row">
       <th class="pf-c-table__sort " role="columnheader" scope="col">
-        <button class="pf-c-button pf-m-plain" type="button">Project
+        <button class="pf-c-button pf-m-plain" type="button">
+          Project
           <span class="pf-c-table__sort-indicator">
             <i class="fas fa-arrows-alt-v"></i>
           </span>
         </button>
       </th>
-      <th class="pf-c-table__sort " role="columnheader" aria-sort="none" scope="col">
-        <button class="pf-c-button pf-m-plain" type="button">Owner
+      <th
+        class="pf-c-table__sort "
+        role="columnheader"
+        aria-sort="none"
+        scope="col"
+      >
+        <button class="pf-c-button pf-m-plain" type="button">
+          Owner
           <span class="pf-c-table__sort-indicator">
             <i class="fas fa-arrows-alt-v"></i>
           </span>
         </button>
       </th>
-      <th class="pf-c-table__sort " role="columnheader" aria-sort="none" scope="col">
-        <button class="pf-c-button pf-m-plain" type="button">Status
+      <th
+        class="pf-c-table__sort "
+        role="columnheader"
+        aria-sort="none"
+        scope="col"
+      >
+        <button class="pf-c-button pf-m-plain" type="button">
+          Status
           <span class="pf-c-table__sort-indicator">
             <i class="fas fa-arrows-alt-v"></i>
           </span>
         </button>
       </th>
-      <th class="pf-c-table__sort sort-disabled" role="columnheader" aria-sort="none" scope="col">
-        <button class="pf-c-button pf-m-plain" type="button">Chroots
-        </button>
+      <th
+        class="pf-c-table__sort sort-disabled"
+        role="columnheader"
+        aria-sort="none"
+        scope="col"
+      >
+        <button class="pf-c-button pf-m-plain" type="button">Chroots</button>
       </th>
-      <th class="pf-c-table__sort " role="columnheader" aria-sort="none" scope="col">
-        <button class="pf-c-button pf-m-plain" type="button">Build ID
+      <th
+        class="pf-c-table__sort "
+        role="columnheader"
+        aria-sort="none"
+        scope="col"
+      >
+        <button class="pf-c-button pf-m-plain" type="button">
+          Build ID
           <span class="pf-c-table__sort-indicator">
             <i class="fas fa-arrows-alt-v"></i>
           </span>
         </button>
       </th>
-
     </tr>
   </thead>
   <tbody role="rowgroup">
-
-
     {% for build in builds_list %}
     <tr role="row">
       <td role="cell" data-label="Project">{{ build["project"] }}</td>
@@ -54,24 +78,22 @@
       <td role="cell" data-label="Build ID">{{ build["build_id"] }}</td>
     </tr>
     {% endfor %}
-
   </tbody>
 </table>
 
-<script src="{{ url_for('node_modules', filename='datatables.net/js/jquery.dataTables.min.js') }}">
-</script>
+<script src="{{ url_for('node_modules', filename='datatables.net/js/jquery.dataTables.min.js') }}"></script>
 <script type="text/javascript">
-  $(document).ready(function () {
-    $('#builds-table').DataTable({
-      "paging": false,
-      "searching": false,
-      "info": false
+  $(document).ready(function() {
+    $("#builds-table").DataTable({
+      paging: false,
+      searching: false,
+      info: false
     });
   });
 </script>
 
 <style>
-.sort-disabled {
-  pointer-events: none;
-}
+  .sort-disabled {
+    pointer-events: none;
+  }
 </style>

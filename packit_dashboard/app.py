@@ -1,4 +1,8 @@
 from flask import Flask, send_from_directory
+from packit_dashboard.home.routes import home
+from packit_dashboard.about.routes import about
+from packit_dashboard.builds.routes import builds
+from packit_dashboard.projects.routes import projects
 
 app = Flask("Packit Service Dashboard")
 
@@ -7,11 +11,6 @@ app = Flask("Packit Service Dashboard")
 def node_modules(filename):
     return send_from_directory(f"node_modules", filename)
 
-
-from packit_dashboard.home.routes import home
-from packit_dashboard.about.routes import about
-from packit_dashboard.builds.routes import builds
-from packit_dashboard.projects.routes import projects
 
 app.register_blueprint(home)
 app.register_blueprint(about)

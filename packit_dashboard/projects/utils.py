@@ -1,4 +1,3 @@
-import requests
 from packit_dashboard.packagewide_utils import return_json
 
 

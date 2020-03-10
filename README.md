@@ -1,3 +1,3 @@
 # dashboard
-Packit-service web UI dashboard.
 
+Packit-service web UI dashboard.
