@@ -27,13 +27,15 @@ repos:
       - id: jinjalint
         types: [file]
         files: \.(html)$
+        args:
+          - --parse-only
   - repo: https://gitlab.com/pycqa/flake8
     rev: 3.7.9
     hooks:
       - id: flake8
         args:
           - --max-line-length=100
-          - --per-file-ignores=files/packit.wsgi:F401,E402
+          - --per-file-ignores=packit_dashboard/packit_dashboard.wsgi:F401,E402
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v0.761
     hooks:
@@ -45,4 +47,3 @@ repos:
       - id: check-rebase
         args:
           - git://github.com/packit-service/dashboard.git
-          

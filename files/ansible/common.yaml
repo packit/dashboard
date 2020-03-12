@@ -11,14 +11,14 @@
     mode: 0776
 - name: stat {{ packit_dashboard_path }}
   stat:
-    path: '{{ packit_dashboard_path }}'
+    path: "{{ packit_dashboard_path }}"
   tags:
-  - no-cache
+    - no-cache
   register: src_path
 - name: Let'secrets make sure {{ packit_dashboard_path }} is present
   assert:
     that:
-    - 'src_path.stat.isdir'
+      - "src_path.stat.isdir"
 - name: Clean all the cache files (especially pip)
   file:
     state: absent

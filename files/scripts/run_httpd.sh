@@ -10,4 +10,3 @@ export NSS_WRAPPER_PASSWD=${HOME}/passwd
 export NSS_WRAPPER_GROUP=/etc/group
 
 httpd -DFOREGROUND
-
