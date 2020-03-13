@@ -1,12 +1,13 @@
 # HOWTO: https://pre-commit.com/#usage
 # pip3 install pre-commit
 # pre-commit install
+
 repos:
   - repo: https://github.com/psf/black
     rev: stable
     hooks:
       - id: black
-        language_version: python3.6
+        language_version: python3
   - repo: https://github.com/prettier/prettier
     rev: 1.19.1
     hooks:
