@@ -1,5 +1,9 @@
 CURDIR := ${CURDIR}
 IMAGE ?= usercont/packit-dashboard:stg
+TEST_IMAGE ?= packit-dashboard-tests
+TEST_TARGET ?= ./tests/
+CONTAINER_ENGINE ?= docker
+
 install-dependencies:
 	if [ -f "/etc/redhat-release" ];\
 	 then\
@@ -23,3 +27,14 @@ push-stg: build-stg
 
 oc-push-stg:
 	oc import-image is/packit-dashboard:stg
+
+check:
+	PYTHONPATH=$(CURDIR) PYTHONDONTWRITEBYTECODE=1 python3 -m pytest --color=yes --verbose --showlocals --cov=packit_dashboard --cov-report=term-missing $(TEST_TARGET)
+
+test_image: files/ansible/install-deps.yaml files/ansible/recipe-tests.yaml
+	$(CONTAINER_ENGINE) build --rm -t $(TEST_IMAGE) -f Dockerfile.tests .
+
+check_in_container: test_image
+	$(CONTAINER_ENGINE) run --rm \
+		--security-opt label=disable \
+		$(TEST_IMAGE) make check

@@ -1,0 +1,22 @@
+FROM fedora:31
+
+ENV HOME=/home/packit_dashboard \
+    ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3 \
+    ANSIBLE_STDOUT_CALLBACK=debug
+
+
+RUN dnf install -y ansible
+
+COPY ./files /src/files
+COPY ./package.json /src
+COPY ./Makefile /src/Makefile
+
+WORKDIR "/src"
+
+RUN ansible-playbook -vv -c local -i localhost, ./files/ansible/install-deps.yaml
+RUN ansible-playbook -vv -c local -i localhost, ./files/ansible/recipe-tests.yaml \
+    && dnf clean all
+
+COPY ./packit_dashboard  /src/packit_dashboard
+COPY ./templates  /src/templates
+COPY ./tests  /src/tests
