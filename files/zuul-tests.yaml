@@ -1,0 +1,9 @@
+- name: dashboard-tests
+  hosts: all
+  tasks:
+    - include_tasks: tasks/zuul-project-setup.yaml
+    - name: Run tests
+      command: "make check"
+      args:
+        chdir: "{{ project_dir }}"
+      become: true
