@@ -1,0 +1,17 @@
+---
+- name: This is a recipe for a container image where packit-service dashboard tests will run
+  hosts: all
+  tasks:
+    - name: Install test RPM dependencies
+      dnf:
+        name:
+          - python3-requests
+          - python3-pytest
+          - python3-pytest-cov
+          - make
+        state: present
+    - name: Install pip deps
+      pip:
+        name:
+          - requre
+        executable: pip3

@@ -8,11 +8,14 @@
           - python3-pip
           - python3-flask
           - python3-requests
-          - npm
           - nss_wrapper
-          - python3-mod_wsgi
-          - httpd
-          - mod_md
-          - mod_ssl
-          - nss_wrapper
+          - python3-pytest
+          - python3-pytest-cov
+          - make
         state: present
+    - name: Install pip deps
+      pip:
+        name:
+          - requre
+        executable: pip3
+  become: true

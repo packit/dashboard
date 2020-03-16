@@ -109,3 +109,6 @@ node_modules
 secrets
 .idea
 package-lock.json
+
+# Requre debug logs
+modules.out
