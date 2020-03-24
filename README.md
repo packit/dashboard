@@ -5,7 +5,7 @@
 
  ## Requirements
  #### For Ubuntu:
- [dashboard](https://github.com/packit-service/dashboard) is written in **python3** and is support only on 3.6 or later. Always try to use the latest version.
+ [dashboard](https://github.com/packit-service/dashboard) is written in **python3** and it support only on 3.6 or later. Always try to use the latest version.
  ``` bash
     $ sudo apt-get update && sudo apt-get upgrade
     $ sudo apt-get install python3.7
