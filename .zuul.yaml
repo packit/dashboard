@@ -8,7 +8,6 @@
     gate:
       jobs:
         - dashboard-pre-commit
-        - dashboard-tests
 
 - job:
     name: dashboard-pre-commit
