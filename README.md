@@ -1,34 +1,34 @@
-# dashboard
+# Dashboard for Packit
 
-# About
+<img src="./static/logo.png" alt="packit" width="200"/>
 
-Repository containing the [dashboard](https://github.com/packit-service/dashboard) of [Packit-service](https://github.com/packit-service) application.
+Dashboard for [Packit Service](https://github.com/packit-service).
 
-## Requirements
-
-#### For Ubuntu:
-
-[dashboard](https://github.com/packit-service/dashboard) is written in **python3** and it support only on 3.6 or later. Always try to use the latest version.
+## Local Development
 
 ```bash
-   $ sudo apt-get update && sudo apt-get upgrade
-   $ sudo apt-get install python3.7
-   $ python3 --version
-     Python 3.7.3
+# install dependencies
+:~/dashboard $ make install-dependencies
 ```
-
-### Installation
 
 ```bash
-   :~/dashboard $ export FLASK_ENV=development
-   :~/dashboard $ export FLASK_APP=packit_dashboard.app
-   :~/dashboard $ flask run
+# this will start the flask development server and webpack's --watch mode.
+# flask and react debug logs will be shown in the same terminal window
+:~/dashboard $ make run-dev
 ```
 
-- You should see your app is running under localhost.
+(you make have to use modify the make command if you want to run flask in a virtulenv instead of using `python3-flask` from the fedora repos.)
 
-### More info
+```bash
+# to create a production build of react and/or any other javascript libs
+:~/dashboard $ make transpile-prod
+# now forget everything about npm, deploy flask the usual way
+```
+
+## More Info
 
 If you'd like to know more about [packit](https://github.com/packit-service), please check:
 
-- Our website: [Packit.dev](https://packit.dev/)
+- Our website: [packit.dev](https://packit.dev/)
+- [Packit Service](https://github.com/packit-service/packit-service)
+- [Packit](https://github.com/packit-service/packit)

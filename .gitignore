@@ -109,6 +109,7 @@ node_modules
 secrets
 .idea
 package-lock.json
+yarn.lock
 
 # Requre debug logs
 modules.out
