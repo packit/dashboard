@@ -1,8 +1,10 @@
 ---
 - name: Install dependencies for packit_dashboard.
   hosts: all
+  vars:
+    packit_dashboard_path: /src
   tasks:
-    - name: Install all RPM/python packages needed to run dashboard.
+    - name: Install all RPM/Python/Node packages needed to run dashboard.
       dnf:
         name:
           - python3-pip
@@ -16,3 +18,7 @@
           - mod_ssl
           - nss_wrapper
         state: present
+
+    - name: npm install
+      npm:
+        path: "{{ packit_dashboard_path }}"

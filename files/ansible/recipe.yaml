@@ -8,6 +8,7 @@
     - import_tasks: common.yaml
     - import_tasks: httpd.yaml
 
-    - name: npm install
-      npm:
-        path: "{{ packit_dashboard_path }}"
+    - name: bundle javascript
+      command:
+        chdir: "{{ packit_dashboard_path }}"
+        cmd: npx webpack --mode production --optimize-minimize
