@@ -93,25 +93,25 @@ docker build --rm -t usercont/packit-dashboard -f Dockerfile .
 2. Generate private key
 
 ```
-openssl genrsa -des3 -out secrets/dashboard-privkey.pem 1024
+openssl genrsa -des3 -out secrets/privkey.pem 1024
 ```
 
 3. Generate Certificate Signing Request
 
 ```
-openssl req -new -key secrets/dashboard-privkey.pem -out secrets/dashboard-signing-request.csr
+openssl req -new -key secrets/privkey.pem -out secrets/signing-request.csr
 ```
 
 4. Remove Passphrase from Key
 
 ```
-openssl rsa -in secrets/dashboard-privkey.pem -out secrets/dashboard-privkey.pem
+openssl rsa -in secrets/privkey.pem -out secrets/privkey.pem
 ```
 
 5. Generate self signed certificate
 
 ```
-openssl x509 -req -days 365 -in secrets/dashboard-signing-request.csr -signkey secrets/dashboard-privkey.pem -out secrets/dashboard-fullchain.pem
+openssl x509 -req -days 365 -in secrets/signing-request.csr -signkey secrets/privkey.pem -out secrets/fullchain.pem
 ```
 
 6. Start dashboard container
@@ -123,7 +123,7 @@ docker run -p 443:8443 -v $(PWD)/secrets:/secrets -d usercont/packit-dashboard:s
 7. Install CA (optional)
 
 ```
-cp secrets/dashboard-fullchain.pem /usr/local/share/ca-certificates/dashboard-fullchain.crt
+cp secrets/fullchain.pem /usr/local/share/ca-certificates/dashboard-fullchain.crt
 sudo update-ca-certificates
 ```
 
