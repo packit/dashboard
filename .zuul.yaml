@@ -4,7 +4,7 @@
     check:
       jobs:
         - dashboard-pre-commit
-        - dashboard-tests
+        # - dashboard-tests
     gate:
       jobs:
         - dashboard-pre-commit
@@ -20,17 +20,16 @@
       nodes:
         - name: test-node
           label: cloud-fedora-31
-
-- job:
-    name: dashboard-tests
-    parent: base
-    description: Run tests
-    pre-run:
-      - files/zuul-install-requirements.yaml
-    run: files/zuul-tests.yaml
-    extra-vars:
-      ansible_python_interpreter: /usr/bin/python3
-    nodeset:
-      nodes:
-        - name: test-node
-          label: cloud-fedora-31
+# - job:
+#     name: dashboard-tests
+#     parent: base
+#     description: Run tests
+#     pre-run:
+#       - files/zuul-install-requirements.yaml
+#     run: files/zuul-tests.yaml
+#     extra-vars:
+#       ansible_python_interpreter: /usr/bin/python3
+#     nodeset:
+#       nodes:
+#         - name: test-node
+#           label: cloud-fedora-31
