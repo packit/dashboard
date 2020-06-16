@@ -1,3 +1,5 @@
+"""
+
 from requre.storage import PersistentObjectStorage
 from requre.utils import StorageMode
 from requre import RequreTestCase
@@ -25,6 +27,7 @@ class TestUtilsUsingRequre(RequreTestCase):
     # you will have to modify the assertions below accordingly
 
     # It should return a json object from a given url.
+
     def test_return_json(self):
         tasks_list = return_json(API_URL)
         # Returns 10 items by default
@@ -36,6 +39,17 @@ class TestUtilsUsingRequre(RequreTestCase):
         assert tasks_list[9]["date_done"] == "2020-03-13T12:49:44.092613"
         assert tasks_list[9]["status"] == "SUCCESS"
         assert tasks_list[9]["task_id"] == "c93e97ff-da3d-4d4e-9e6a-6ea9bb2702ca"
+
+
+
+    # This test was disabled because
+    # a) right now this function isnt being used anywhere
+    # b) not sure if it should be used because fetching 1000 entries but displaying
+    # only 20 seems inefficient
+    # c) requre wants to recreate this, it would require a example API with paginatiion
+    # and the example I used previously would now lead to a huge file with
+    # like a hundred thousand lines
+
 
     # Should return one huge json after combining all pages
     def test_all_from(self):
@@ -51,3 +65,6 @@ class TestUtilsUsingRequre(RequreTestCase):
         assert tasks_list[165]["date_done"] == "2020-03-13T15:39:08.924273"
         assert tasks_list[165]["status"] == "SUCCESS"
         assert tasks_list[165]["task_id"] == "c09dfbda-8dea-4a09-bd17-4a0fd7c292b1"
+
+
+"""

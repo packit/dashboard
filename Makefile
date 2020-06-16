@@ -2,28 +2,26 @@ CURDIR := ${CURDIR}
 IMAGE ?= usercont/packit-dashboard:stg
 TEST_IMAGE ?= packit-dashboard-tests
 TEST_TARGET ?= ./tests/
-CONTAINER_ENGINE ?= docker
+CONTAINER_ENGINE ?= $(shell command -v podman 2> /dev/null || echo docker)
 
 install-dependencies:
-	if [ -f "/etc/redhat-release" ];\
-	 then\
-		sudo dnf -y install python3-flask npm;\
-	elif [ -f "/etc/debian_version" ];\
-	 then\
-		sudo apt -y install python3-flask npm;\
-	fi
-	npm install
-run:
-	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run
+	sudo dnf -y install python3-flask yarnpkg
+	yarn install
 
-run-docker-stg: build-stg
-	docker run -p 443:8443 -v $(CURDIR)/secrets:/secrets -i $(IMAGE)
+transpile-prod:
+	yarn webpack --mode production --optimize-minimize
+
+run-dev:
+	yarn webpack --mode development --watch & FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
+
+run-container-stg: build-stg
+	$(CONTAINER_ENGINE) run -p 8443:8443 -v $(CURDIR)/secrets:/secrets:z -i $(IMAGE)
 
 build-stg:
-	docker build --rm -t $(IMAGE) -f Dockerfile .
+	$(CONTAINER_ENGINE) build --rm -t $(IMAGE) -f Dockerfile .
 
 push-stg: build-stg
-	docker push $(IMAGE)
+	$(CONTAINER_ENGINE) push $(IMAGE)
 
 oc-push-stg:
 	oc import-image is/packit-dashboard:stg
