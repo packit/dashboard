@@ -7,7 +7,7 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        jobs: path.join(__dirname, "/frontend/jobs.js")
+        jobs: path.join(__dirname, "/frontend/jobs.js"),
     },
     module: {
         rules: [
@@ -15,7 +15,7 @@ module.exports = {
             {
                 test: /\.js$/,
                 exclude: /node_modules/,
-                use: "babel-loader"
+                use: "babel-loader",
             },
             // Take care of images which are imported by JS
             {
@@ -24,8 +24,8 @@ module.exports = {
 
                 options: {
                     name: "[name].[ext]",
-                    outputPath: "../../static/dist/img"
-                }
+                    outputPath: "../../static/dist/img",
+                },
             },
             {
                 test: /\.(svg|ttf|eot|woff|woff2)$/,
@@ -51,15 +51,15 @@ module.exports = {
                     path.resolve(
                         __dirname,
                         "node_modules/@patternfly/patternfly/assets/pficon"
-                    )
+                    ),
                 ],
                 use: {
                     loader: "file-loader",
                     options: {
                         outputPath: "../../static/dist/fonts",
-                        name: "[name].[ext]"
-                    }
-                }
+                        name: "[name].[ext]",
+                    },
+                },
             },
             // CSS, maybe add SCSS if needed later
             {
@@ -94,14 +94,14 @@ module.exports = {
                     path.resolve(
                         __dirname,
                         "node_modules/@patternfly/react-inline-edit-extension/node_modules/@patternfly/react-styles/css"
-                    )
+                    ),
                 ],
-                use: ["style-loader", "css-loader"]
-            }
-        ]
+                use: ["style-loader", "css-loader"],
+            },
+        ],
     },
     output: {
         path: __dirname + "/static/dist",
-        filename: "[name].bundle.js"
-    }
+        filename: "[name].bundle.js",
+    },
 };

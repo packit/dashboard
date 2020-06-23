@@ -11,43 +11,43 @@ const routes = [
         exact: true,
         label: "Home",
         path: "/",
-        title: "Home | Packit Service"
+        title: "Home | Packit Service",
     },
     {
         component: Support,
         exact: true,
         label: "Jobs",
         path: "/jobs",
-        title: "Jobs | Packit Service"
+        title: "Jobs | Packit Service",
     },
     {
         component: Support,
         exact: true,
         label: "Projects",
         path: "/projects",
-        title: "Jobs | Packit Service"
+        title: "Jobs | Packit Service",
     },
     {
         component: Support,
         exact: true,
         label: "Installations",
         path: "/installations",
-        title: "Installations | Packit Service"
+        title: "Installations | Packit Service",
     },
     {
         component: Support,
         exact: true,
         label: "FAQ",
         path: "/faq",
-        title: "FAQ | Packit Service"
+        title: "FAQ | Packit Service",
     },
     {
         component: Support,
         exact: true,
         label: "Status",
         path: "/status",
-        title: "Status | Packit Service"
-    }
+        title: "Status | Packit Service",
+    },
 ];
 
 const AppRoutes = () => (
