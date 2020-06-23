@@ -7,14 +7,14 @@ import {
     Page,
     PageHeader,
     PageSidebar,
-    SkipToContent
+    SkipToContent,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 
 const AppLayout = ({ children }) => {
     const logoProps = {
         href: "/",
-        target: "_blank"
+        target: "_blank",
     };
     const [isNavOpen, setIsNavOpen] = React.useState(true);
     const [isMobileView, setIsMobileView] = React.useState(true);
@@ -25,7 +25,7 @@ const AppLayout = ({ children }) => {
     const onNavToggle = () => {
         setIsNavOpen(!isNavOpen);
     };
-    const onPageResize = props => {
+    const onPageResize = (props) => {
         setIsMobileView(props.mobileView);
     };
     const Header = (

@@ -8,7 +8,7 @@ import {
     EmptyStateVariant,
     EmptyStateIcon,
     EmptyStateBody,
-    EmptyStateSecondaryActions
+    EmptyStateSecondaryActions,
 } from "@patternfly/react-core";
 
 const Support = () => (
