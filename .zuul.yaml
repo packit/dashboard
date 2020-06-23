@@ -3,23 +3,11 @@
     name: packit-service/dashboard
     check:
       jobs:
-        - dashboard-pre-commit
+        - pre-commit
         # - dashboard-tests
     gate:
       jobs:
-        - dashboard-pre-commit
-
-- job:
-    name: dashboard-pre-commit
-    parent: base
-    description: Check precommit
-    run: files/zuul-pre-commit.yaml
-    extra-vars:
-      ansible_python_interpreter: /usr/bin/python3
-    nodeset:
-      nodes:
-        - name: test-node
-          label: cloud-fedora-31
+        - pre-commit
 # - job:
 #     name: dashboard-tests
 #     parent: base
