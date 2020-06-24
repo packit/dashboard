@@ -1,6 +1,7 @@
 import * as React from "react";
 import { NavLink } from "react-router-dom";
 import {
+    Brand,
     Nav,
     NavList,
     NavItem,
@@ -10,6 +11,7 @@ import {
     SkipToContent,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
+import packitLogo from "../../static/logo.png"
 
 const AppLayout = ({ children }) => {
     const logoProps = {
@@ -30,7 +32,7 @@ const AppLayout = ({ children }) => {
     };
     const Header = (
         <PageHeader
-            logo="Packit Service"
+            logo={<Brand src={packitLogo} alt="Patternfly Logo" />}
             logoProps={logoProps}
             showNavToggle
             isNavOpen={isNavOpen}
