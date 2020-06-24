@@ -2,6 +2,7 @@ import * as React from "react";
 import { Route, Switch } from "react-router-dom";
 
 import { Dashboard } from "./components/dashboard";
+import { Jobs } from "./components/jobs";
 import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
 
@@ -14,7 +15,7 @@ const routes = [
         title: "Home | Packit Service",
     },
     {
-        component: Support,
+        component: Jobs,
         exact: true,
         label: "Jobs",
         path: "/jobs",

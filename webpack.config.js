@@ -7,7 +7,7 @@ const path = require("path");
 
 module.exports = {
     entry: {
-        jobs: path.join(__dirname, "/frontend/jobs.js"),
+        app: path.join(__dirname, "/frontend/app.js"),
     },
     module: {
         rules: [
