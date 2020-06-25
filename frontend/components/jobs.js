@@ -34,7 +34,7 @@ const Jobs = () => {
     // };
     const [activeTabKey, setActiveTabKey] = React.useState(0);
     const handleTabClick = (event, tabIndex) => {
-        setActiveTabKey(tabIndex)
+        setActiveTabKey(tabIndex);
     };
     return (
         <div>
@@ -60,7 +60,7 @@ const Jobs = () => {
                                 eventKey={0}
                                 title={<TabTitleText>Copr Builds</TabTitleText>}
                             >
-                                <CoprBuildsTable/>
+                                <CoprBuildsTable />
                             </Tab>
                             <Tab
                                 eventKey={1}
@@ -72,7 +72,7 @@ const Jobs = () => {
                                 eventKey={2}
                                 title={<TabTitleText>Test Runs</TabTitleText>}
                             >
-                                <TestingFarmResultsTable/>
+                                <TestingFarmResultsTable />
                             </Tab>
                         </Tabs>
                     </CardBody>

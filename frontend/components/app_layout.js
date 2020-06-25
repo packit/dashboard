@@ -11,7 +11,7 @@ import {
     SkipToContent,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
-import packitLogo from "../../static/logo.png"
+import packitLogo from "../../static/logo.png";
 
 const AppLayout = ({ children }) => {
     const logoProps = {
@@ -32,7 +32,7 @@ const AppLayout = ({ children }) => {
     };
     const Header = (
         <PageHeader
-            logo={<Brand src={packitLogo} alt="Patternfly Logo" />}
+            logo={<Brand src={packitLogo} alt="Packit Logo" />}
             logoProps={logoProps}
             showNavToggle
             isNavOpen={isNavOpen}
