@@ -5,6 +5,7 @@
         "@patternfly/react-core": "^4.15.0",
         "@patternfly/react-icons": "^4.3.0",
         "@patternfly/react-styles": "^4.3.0",
+        "@patternfly/react-table": "^4.5.7",
         "react": "^16.13.1",
         "react-dom": "^16.13.1",
         "react-router-dom": "^5.2.0"
