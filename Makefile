@@ -5,7 +5,7 @@ TEST_TARGET ?= ./tests/
 CONTAINER_ENGINE ?= $(shell command -v podman 2> /dev/null || echo docker)
 
 install-dependencies:
-	sudo dnf -y install python3-flask yarnpkg
+	sudo dnf -y install python3-flask python3-flask-caching yarnpkg
 	yarn install
 
 transpile-prod:

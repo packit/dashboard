@@ -9,6 +9,7 @@
         name:
           - python3-pip
           - python3-flask
+          - python3-flask-caching
           - python3-requests
           - npm
           - nss_wrapper

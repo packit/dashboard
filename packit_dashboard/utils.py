@@ -1,14 +1,15 @@
 import requests
 import json
+import time
 
 
 # Common utility functions used in multiple files in the packit_dashboard package
-# Returns python parsable json object from URL
+
+
 def return_json(url, method="GET", **kwargs):
-
+    """ Returns python parsable json object from URL. """
     output = None
-
-    tries = 6
+    tries = 20
     for i in range(tries):
         try:
             response = requests.request(method=method, url=url, **kwargs)
@@ -16,6 +17,7 @@ def return_json(url, method="GET", **kwargs):
             print(f"Try-{i}")
         except Exception:
             if i < tries - 1:
+                time.sleep(0.5)
                 continue
             else:
                 output = None
