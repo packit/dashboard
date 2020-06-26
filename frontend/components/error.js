@@ -1,5 +1,11 @@
 import React from "react";
-import { EmptyState, EmptyStateIcon, EmptyStateVariant, EmptyStateBody, Title } from "@patternfly/react-core";
+import {
+    EmptyState,
+    EmptyStateIcon,
+    EmptyStateVariant,
+    EmptyStateBody,
+    Title,
+} from "@patternfly/react-core";
 
 import { ExclamationCircleIcon } from "@patternfly/react-icons";
 

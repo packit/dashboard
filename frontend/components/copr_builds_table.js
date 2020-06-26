@@ -55,11 +55,11 @@ const StatusLabel = (props) => {
 const CoprBuildsTable = () => {
     // Headings
     const column_list = [
-        { title: "Project", transforms: [sortable] },
+        "PR",
         "Chroots",
-        { title: "Build ID", transforms: [sortable] },
         { title: "Time Submitted", transforms: [sortable] },
-        "Ref",
+        { title: "Build ID", transforms: [sortable] },
+        // "Ref",
     ];
 
     // Local State
@@ -107,9 +107,9 @@ const CoprBuildsTable = () => {
                             <StatusLabel list={copr_builds.status_per_chroot} />
                         ),
                     },
-                    copr_builds.build_id,
                     copr_builds.build_submitted_time,
-                    copr_builds.ref,
+                    copr_builds.build_id,
+                    // copr_builds.ref.substring(0, 8),
                 ],
             };
             rowsList.push(singleRow);
