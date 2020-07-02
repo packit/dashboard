@@ -7,6 +7,7 @@ import {
     TableVariant,
     sortable,
     SortByDirection,
+    cellWidth,
 } from "@patternfly/react-table";
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
@@ -24,27 +25,27 @@ const StatusLabel = (props) => {
             case "success":
                 statusLabelList.push(
                     <Tooltip content={props.list[chroot]}>
-                        <div style={{ padding: "2px" }}>
+                        <span style={{ padding: "2px" }}>
                             <Label color="green">{chroot}</Label>
-                        </div>
+                        </span>
                     </Tooltip>
                 );
                 break;
             case "failure":
                 statusLabelList.push(
                     <Tooltip content={props.list[chroot]}>
-                        <div style={{ padding: "2px" }}>
+                        <span style={{ padding: "2px" }}>
                             <Label color="red">{chroot}</Label>
-                        </div>
+                        </span>
                     </Tooltip>
                 );
                 break;
             default:
                 statusLabelList.push(
                     <Tooltip content={props.list[chroot]}>
-                        <div style={{ padding: "2px" }}>
+                        <span style={{ padding: "2px" }}>
                             <Label color="purple">{chroot}</Label>
-                        </div>
+                        </span>
                     </Tooltip>
                 );
         }
@@ -55,10 +56,10 @@ const StatusLabel = (props) => {
 const CoprBuildsTable = () => {
     // Headings
     const column_list = [
-        "PR",
+        { title: "PR", transforms: [cellWidth(25)] },
         "Chroots",
-        { title: "Time Submitted", transforms: [sortable] },
-        { title: "Build ID", transforms: [sortable] },
+        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
+        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
         // "Ref",
     ];
 
