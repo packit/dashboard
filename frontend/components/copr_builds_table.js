@@ -73,8 +73,8 @@ const CoprBuildsTable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        console.log(`Route is /api/copr-builds/?page=${page}&per_page=10`);
-        fetch(`/api/copr-builds/?page=${page}&per_page=10`)
+        console.log(`Route is /api/copr-builds/?page=${page}&per_page=20`);
+        fetch(`/api/copr-builds/?page=${page}&per_page=20`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
