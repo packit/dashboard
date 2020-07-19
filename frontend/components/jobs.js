@@ -2,36 +2,18 @@ import * as React from "react";
 import {
     PageSection,
     PageSectionVariants,
-    Title,
     Tabs,
     Tab,
     TabTitleText,
-    Checkbox,
     TextContent,
     Card,
     CardBody,
     Text,
-    Breadcrumb,
-    BreadcrumbItem,
-    BreadcrumbHeading,
 } from "@patternfly/react-core";
-import { render } from "react-dom";
 import TestingFarmResultsTable from "./tf_results_table";
 import CoprBuildsTable from "./copr_builds_table";
 
-const SimpleBreadcrumbs = () => (
-    <Breadcrumb>
-        <BreadcrumbItem to="#">Home</BreadcrumbItem>
-        <BreadcrumbItem to="#" isActive>
-            Jobs
-        </BreadcrumbItem>
-    </Breadcrumb>
-);
-
 const Jobs = () => {
-    // state = {
-    //     activeTabKey: 0,
-    // };
     const [activeTabKey, setActiveTabKey] = React.useState(0);
     const handleTabClick = (event, tabIndex) => {
         setActiveTabKey(tabIndex);
@@ -39,8 +21,6 @@ const Jobs = () => {
     return (
         <div>
             <PageSection variant={PageSectionVariants.light}>
-                {/* <SimpleBreadcrumbs /> */}
-
                 <TextContent>
                     <Text component="h1">Jobs</Text>
                     <Text component="p">List of jobs by Packit Service</Text>
