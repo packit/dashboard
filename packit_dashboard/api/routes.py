@@ -40,3 +40,9 @@ def project_prs(forge, namespace, repo_name):
 def project_releases(forge, namespace, repo_name):
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/releases"
     return jsonify(return_json(url))
+
+
+@api.route("/api/projects/<forge>/<namespace>/<repo_name>/issues/")
+def project_issues(forge, namespace, repo_name):
+    url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/issues"
+    return jsonify(return_json(url))

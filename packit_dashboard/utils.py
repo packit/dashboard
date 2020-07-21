@@ -13,7 +13,6 @@ def return_json(url, method="GET", **kwargs):
         try:
             response = requests.request(method=method, url=url, **kwargs)
             output = json.loads(response.content)
-            # print(f"Try-{i}")
         except Exception:
             if i < tries - 1:
                 continue
