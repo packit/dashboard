@@ -46,17 +46,20 @@ const IssuesList = (props) => {
         return <Preloader />;
     }
 
-    // Don't know why Patternfly had to make react components for bullet lists 🤔
-    // Unnecessary abstraction...but I guess it saves you from adding more classes so whatever
-    return (
-        <div>
-            <List>
-                {issueList.issues.map((issue, index) => (
-                    <ListItem key={index}>#{issue}</ListItem>
-                ))}
-            </List>
-        </div>
-    );
+    if (issueList.hasOwnProperty("issues")) {
+        // Don't know why Patternfly had to make react components for bullet lists 🤔
+        // Unnecessary abstraction...but I guess it saves you from adding more classes so whatever
+        return (
+            <div>
+                <List>
+                    {issueList.issues.map((issue, index) => (
+                        <ListItem key={index}>#{issue}</ListItem>
+                    ))}
+                </List>
+            </div>
+        );
+    }
+    return <span>No issues handled by Packit Service.</span>;
 };
 
 export default IssuesList;
