@@ -3,9 +3,12 @@ import { Route, Switch } from "react-router-dom";
 
 import { Dashboard } from "./components/dashboard";
 import { Jobs } from "./components/jobs";
+import { Projects } from "./components/projects";
+import { ProjectInfo } from "./components/project_info";
 import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
 
+// Main Menu routes
 const routes = [
     {
         component: Dashboard,
@@ -22,11 +25,11 @@ const routes = [
         title: "Jobs | Packit Service",
     },
     {
-        component: Support,
+        component: Projects,
         exact: true,
         label: "Projects",
         path: "/projects",
-        title: "Jobs | Packit Service",
+        title: "Projects | Packit Service",
     },
     {
         component: Support,
@@ -62,7 +65,13 @@ const AppRoutes = () => (
                 key={idx}
             />
         ))}
-        <Route path="/" component={NotFound} title="404 Page Not Found" />;
+        <Route
+            path="/projects/:forge/:namespace/:repoName"
+            component={ProjectInfo}
+            exact
+            title="Project"
+        />
+        <Route path="/" component={NotFound} title="404 Page Not Found" />
     </Switch>
 );
 
