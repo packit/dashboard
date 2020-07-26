@@ -24,6 +24,9 @@
     <body class="pf-m-redhat-font">
         <noscript>Enabling JavaScript is required to run this app.</noscript>
         <div id="root"></div>
+        <script>
+            window.apiURL = "{{api_url}}";
+        </script>
         <script
             type="text/javascript"
             src="{{ url_for('static', filename='dist/app.bundle.js') }}"

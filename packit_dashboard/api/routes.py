@@ -8,8 +8,7 @@ api = Blueprint("api", __name__)
 # from the main API.
 # This is because it will be easier to implement caching API requests here.
 # (Flask-Caching etc)
-# However if you want to do this client side, just delete these, send the API URL from jinja to JS
-# via a window.Variable and use that everywhere to fetch from packit-service
+# However if you want to do this client side, just delete these and use window.apiURL in JS
 
 
 @api.route("/api/copr-builds/")
