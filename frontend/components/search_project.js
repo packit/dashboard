@@ -26,8 +26,14 @@ const SearchProject = () => {
     const history = useHistory();
 
     function goToProjectDetails() {
-        if (namespace && repoName && forge) {
-            history.push(`/projects/${forge}/${namespace}/${repoName}`);
+        if (forge && namespace && repoName) {
+            if (repoName === "*") {
+                history.push(`/projects/${forge}/${namespace}`);
+            } else {
+                history.push(`/projects/${forge}/${namespace}/${repoName}`);
+            }
+        } else if (forge && namespace) {
+            history.push(`/projects/${forge}/${namespace}`);
         } else {
             setWarning(true);
         }
@@ -78,7 +84,7 @@ const SearchProject = () => {
                                     aria-describedby="repo-name"
                                     id="project-search-repo-name"
                                     value={repoName}
-                                    placeholder="the-repo-name"
+                                    placeholder="the-repo-name or *"
                                     onChange={(e) => setRepoName(e)}
                                 />
                             </GridItem>

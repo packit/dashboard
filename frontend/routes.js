@@ -4,6 +4,7 @@ import { Route, Switch } from "react-router-dom";
 import { Dashboard } from "./components/dashboard";
 import { Jobs } from "./components/jobs";
 import { Projects } from "./components/projects";
+import { Namespace } from "./components/namespace";
 import { ProjectInfo } from "./components/project_info";
 import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
@@ -70,6 +71,12 @@ const AppRoutes = () => (
             component={ProjectInfo}
             exact
             title="Project"
+        />
+        <Route
+            path="/projects/:forge/:namespace"
+            component={Namespace}
+            exact
+            title="Namespace"
         />
         <Route path="/" component={NotFound} title="404 Page Not Found" />
     </Switch>

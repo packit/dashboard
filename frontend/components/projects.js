@@ -8,6 +8,7 @@ import {
 
 import SearchProject from "./search_project";
 import ProjectsList from "./projects_list";
+
 const Projects = () => {
     return (
         <div>
