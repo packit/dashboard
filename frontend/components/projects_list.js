@@ -32,9 +32,9 @@ const ProjectsList = (props) => {
 
     // If a namespace and forge are provided, then load those
     // otherwise load all projects
-    let jsonLink = `${window.apiURL}/projects?page=${page}&per_page=50`;
+    let jsonLink = `${apiURL}/projects?page=${page}&per_page=50`;
     if (props.forge && props.namespace) {
-        jsonLink = `${window.apiURL}/projects/${props.forge}/${props.namespace}`;
+        jsonLink = `${apiURL}/projects/${props.forge}/${props.namespace}`;
     }
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
