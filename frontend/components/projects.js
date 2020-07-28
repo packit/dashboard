@@ -67,8 +67,7 @@ const ProjectsList = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        // console.log(`Route is /api/copr-builds/?page=${page}&per_page=20`);
-        fetch(`https://stg.packit.dev/api/projects?page=${page}&per_page=50`)
+        fetch(`/api/projects?page=${page}&per_page=50`)
             .then((response) => response.json())
             .then((data) => {
                 setProjects(projects.concat(data));

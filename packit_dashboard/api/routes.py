@@ -28,6 +28,14 @@ def testing_farm():
     return jsonify(return_json(url))
 
 
+@api.route("/api/projects/")
+def projects():
+    page = request.args.get("page")
+    per_page = request.args.get("per_page")
+    url = f"{API_URL}/projects?page={page}&per_page={per_page}"
+    return jsonify(return_json(url))
+
+
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/prs/")
 def project_prs(forge, namespace, repo_name):
     page = request.args.get("page")
