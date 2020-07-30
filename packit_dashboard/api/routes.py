@@ -8,7 +8,7 @@ api = Blueprint("api", __name__)
 # from the main API.
 # This is because it will be easier to implement caching API requests here.
 # (Flask-Caching etc)
-# However if you want to do this client side, just delete these and use window.apiURL in JS
+# However if you want to do this client side, just delete these and use apiURL in JS
 
 
 @api.route("/api/copr-builds/")

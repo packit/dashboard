@@ -97,7 +97,7 @@ const CoprBuildsTable = () => {
             if (props.builds.pr_id) {
                 jobSuffix = `#${props.builds.pr_id}`;
             } else if (props.builds.branch_name) {
-                jobSuffix = `-${props.builds.branch_name}`;
+                jobSuffix = `:${props.builds.branch_name}`;
             }
             return <>{jobSuffix}</>;
         };

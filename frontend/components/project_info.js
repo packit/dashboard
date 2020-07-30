@@ -13,6 +13,7 @@ import {
 } from "@patternfly/react-core";
 
 import PullRequestList from "./pr";
+import BranchList from "./branch";
 import IssuesList from "./issues";
 import ReleasesList from "./releases";
 
@@ -82,7 +83,11 @@ const ProjectInfo = (props) => {
                                     </TabTitleText>
                                 }
                             >
-                                Branches
+                                <BranchList
+                                    repoName={repoName}
+                                    namespace={namespace}
+                                    forge={forge}
+                                />
                             </Tab>
                             <Tab
                                 eventKey={3}
