@@ -56,7 +56,7 @@ const StatusLabel = (props) => {
 const CoprBuildsTable = () => {
     // Headings
     const column_list = [
-        { title: "PR", transforms: [cellWidth(25)] },
+        { title: "Trigger", transforms: [cellWidth(25)] },
         "Chroots",
         { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
         { title: "Build ID", transforms: [sortable, cellWidth(15)] },
@@ -90,6 +90,18 @@ const CoprBuildsTable = () => {
     // Convert fetched json into row format that the table can read
     function jsonToRow(res) {
         let rowsList = [];
+
+        // set suffix to be either PR ID or Branch Name depending on trigger
+        const FindSuffix = (props) => {
+            let jobSuffix = "";
+            if (props.builds.pr_id) {
+                jobSuffix = `#${props.builds.pr_id}`;
+            } else if (props.builds.branch_name) {
+                jobSuffix = `:${props.builds.branch_name}`;
+            }
+            return <>{jobSuffix}</>;
+        };
+
         res.map((copr_builds) => {
             let singleRow = {
                 cells: [
@@ -98,7 +110,8 @@ const CoprBuildsTable = () => {
                             <strong>
                                 <a target="_blank" href={copr_builds.web_url}>
                                     {copr_builds.repo_namespace}/
-                                    {copr_builds.repo_name}#{copr_builds.pr_id}
+                                    {copr_builds.repo_name}
+                                    <FindSuffix builds={copr_builds} />
                                 </a>
                             </strong>
                         ),
