@@ -1,6 +1,5 @@
 ---
 - project:
-    name: packit-service/dashboard
     check:
       jobs:
         - pre-commit
