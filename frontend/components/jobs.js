@@ -12,6 +12,7 @@ import {
 } from "@patternfly/react-core";
 import TestingFarmResultsTable from "./tf_results_table";
 import CoprBuildsTable from "./copr_builds_table";
+import SRPMBuildsTable from "./srpm_builds_table";
 
 const Jobs = () => {
     const [activeTabKey, setActiveTabKey] = React.useState(0);
@@ -50,6 +51,12 @@ const Jobs = () => {
                             </Tab>
                             <Tab
                                 eventKey={2}
+                                title={<TabTitleText>SRPM Builds</TabTitleText>}
+                            >
+                                <SRPMBuildsTable />
+                            </Tab>
+                            <Tab
+                                eventKey={3}
                                 title={<TabTitleText>Test Runs</TabTitleText>}
                             >
                                 <TestingFarmResultsTable />
