@@ -35,20 +35,6 @@ const routes = [
     {
         component: Support,
         exact: true,
-        label: "Installations",
-        path: "/installations",
-        title: "Installations | Packit Service",
-    },
-    {
-        component: Support,
-        exact: true,
-        label: "FAQ",
-        path: "/faq",
-        title: "FAQ | Packit Service",
-    },
-    {
-        component: Support,
-        exact: true,
         label: "Status",
         path: "/status",
         title: "Status | Packit Service",
