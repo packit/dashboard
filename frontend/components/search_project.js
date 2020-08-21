@@ -7,7 +7,7 @@ import {
     Form,
     Grid,
     GridItem,
-    FormGroup,
+    Button,
     TextInput,
 } from "@patternfly/react-core";
 
@@ -50,52 +50,56 @@ const SearchProject = () => {
         <Card>
             <CardBody>
                 <Form>
-                    <FormGroup>
-                        <Grid sm={6} md={4} lg={3} xl2={3}>
-                            <GridItem>
-                                <TextInput
-                                    isRequired
-                                    type="text"
-                                    name="forge"
-                                    aria-describedby="forge"
-                                    id="project-search-forge"
-                                    value={forge}
-                                    placeholder="github.com"
-                                    onChange={(e) => setForge(e)}
-                                />
-                            </GridItem>
-                            <GridItem>
-                                <TextInput
-                                    isRequired
-                                    type="text"
-                                    name="namespace"
-                                    aria-describedby="namespace"
-                                    id="project-search-namespace"
-                                    value={namespace}
-                                    placeholder="the-namespace"
-                                    onChange={(e) => setNamespace(e)}
-                                />
-                            </GridItem>
-                            <GridItem>
-                                <TextInput
-                                    isRequired
-                                    type="text"
-                                    name="repo-name"
-                                    aria-describedby="repo-name"
-                                    id="project-search-repo-name"
-                                    value={repoName}
-                                    placeholder="the-repo-name or *"
-                                    onChange={(e) => setRepoName(e)}
-                                />
-                            </GridItem>
+                    <Grid sm={6} md={4} lg={3} xl2={3}>
+                        <GridItem>
+                            <TextInput
+                                isRequired
+                                type="text"
+                                name="forge"
+                                aria-describedby="forge"
+                                id="project-search-forge"
+                                value={forge}
+                                placeholder="github.com"
+                                onChange={(e) => setForge(e)}
+                            />
+                        </GridItem>
+                        <GridItem>
+                            <TextInput
+                                isRequired
+                                type="text"
+                                name="namespace"
+                                aria-describedby="namespace"
+                                id="project-search-namespace"
+                                value={namespace}
+                                placeholder="the-namespace"
+                                onChange={(e) => setNamespace(e)}
+                            />
+                        </GridItem>
+                        <GridItem>
+                            <TextInput
+                                isRequired
+                                type="text"
+                                name="repo-name"
+                                aria-describedby="repo-name"
+                                id="project-search-repo-name"
+                                value={repoName}
+                                placeholder="the-repo-name or *"
+                                onChange={(e) => setRepoName(e)}
+                            />
+                        </GridItem>
+                        <GridItem>
+                            <Bullseye>
+                                <Button
+                                    variant="plain"
+                                    aria-label="Search"
+                                    onClick={goToProjectDetails}
+                                >
+                                    <SearchIcon />
+                                </Button>
+                            </Bullseye>
+                        </GridItem>
+                    </Grid>
 
-                            <GridItem>
-                                <Bullseye>
-                                    <SearchIcon onClick={goToProjectDetails} />
-                                </Bullseye>
-                            </GridItem>
-                        </Grid>
-                    </FormGroup>
                     {emptyFormWarning}
                 </Form>
             </CardBody>
