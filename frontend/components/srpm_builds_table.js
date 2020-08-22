@@ -13,6 +13,7 @@ import {
 import { Button, Label, Tooltip } from "@patternfly/react-core";
 
 import ConnectionError from "./error";
+import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 
@@ -58,13 +59,7 @@ const SRPMBuildstable = () => {
                     {
                         title: (
                             <strong>
-                                <a
-                                    target="_blank"
-                                    href={srpm_builds.project_url}
-                                >
-                                    {srpm_builds.repo_namespace}/
-                                    {srpm_builds.repo_name}
-                                </a>
+                                <TriggerLink builds={srpm_builds} />
                             </strong>
                         ),
                     },

@@ -12,7 +12,7 @@ import {
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
-
+import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 
@@ -91,28 +91,13 @@ const CoprBuildsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        // set suffix to be either PR ID or Branch Name depending on trigger
-        const FindSuffix = (props) => {
-            let jobSuffix = "";
-            if (props.builds.pr_id) {
-                jobSuffix = `#${props.builds.pr_id}`;
-            } else if (props.builds.branch_name) {
-                jobSuffix = `:${props.builds.branch_name}`;
-            }
-            return <>{jobSuffix}</>;
-        };
-
         res.map((copr_builds) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
                             <strong>
-                                <a target="_blank" href={copr_builds.web_url}>
-                                    {copr_builds.repo_namespace}/
-                                    {copr_builds.repo_name}
-                                    <FindSuffix builds={copr_builds} />
-                                </a>
+                                <TriggerLink builds={copr_builds} />
                             </strong>
                         ),
                     },
