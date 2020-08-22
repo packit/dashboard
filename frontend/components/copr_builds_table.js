@@ -107,7 +107,15 @@ const CoprBuildsTable = () => {
                         ),
                     },
                     copr_builds.build_submitted_time,
-                    copr_builds.build_id,
+                    {
+                        title: (
+                            <strong>
+                                <a href={copr_builds.web_url} target="_blank">
+                                    {copr_builds.build_id}
+                                </a>
+                            </strong>
+                        ),
+                    },
                     // copr_builds.ref.substring(0, 8),
                 ],
             };
