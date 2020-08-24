@@ -11,10 +11,10 @@ import {
 } from "@patternfly/react-table";
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
-import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
+import ForgeIcon from "./forge_icon";
 
 // Add every target to the chroots column and color code according to status
 const StatusLabel = (props) => {
@@ -56,6 +56,7 @@ const StatusLabel = (props) => {
 const CoprBuildsTable = () => {
     // Headings
     const column_list = [
+        "", // no title, empty space for the forge icon
         { title: "Trigger", transforms: [cellWidth(25)] },
         "Chroots",
         { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
@@ -94,6 +95,11 @@ const CoprBuildsTable = () => {
         res.map((copr_builds) => {
             let singleRow = {
                 cells: [
+                    {
+                        title: (
+                            <ForgeIcon projectURL={copr_builds.project_url} />
+                        ),
+                    },
                     {
                         title: (
                             <strong>

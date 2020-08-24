@@ -16,10 +16,12 @@ import ConnectionError from "./error";
 import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
+import ForgeIcon from "./forge_icon";
 
 const SRPMBuildstable = () => {
     // Headings
     const column_list = [
+        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Success", transforms: [cellWidth(10)] },
         { title: "ID", transforms: [sortable, cellWidth(10)] },
@@ -56,6 +58,11 @@ const SRPMBuildstable = () => {
         res.map((srpm_builds) => {
             let singleRow = {
                 cells: [
+                    {
+                        title: (
+                            <ForgeIcon projectURL={srpm_builds.project_url} />
+                        ),
+                    },
                     {
                         title: (
                             <strong>
