@@ -52,7 +52,7 @@ const ProjectInfo = (props) => {
             });
     }
 
-    // Executes fetchData on first render of component
+    // Executes checkValidProject on first render of component
     useEffect(() => {
         checkValidProject();
     }, []);

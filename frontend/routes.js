@@ -8,6 +8,7 @@ import { Namespace } from "./components/namespace";
 import { ProjectInfo } from "./components/project_info";
 import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
+import { Status } from "./components/status";
 
 // Main Menu routes
 const routes = [
@@ -33,7 +34,7 @@ const routes = [
         title: "Projects | Packit Service",
     },
     {
-        component: Support,
+        component: Status,
         exact: true,
         label: "Status",
         path: "/status",
