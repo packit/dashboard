@@ -71,10 +71,10 @@ To [utilize pre-commit](https://pre-commit.com/#usage), install pre-commit with 
 ### Naming Scheme
 
 - `camelCase` for variable names.
-- 4 Spaces = 1 Tab
+- Indentation: 4 Spaces.
 - Regular JS functions are defined like `function someFunction()`
 - React components are defined using the arrow syntax.
-- React Hooks style syntax is used, wherever possible, over the old Class based syntax.
+- [React Hooks](https://reactjs.org/docs/hooks-intro.html) style syntax is used, wherever possible, over [the old Class based](https://reactjs.org/docs/hooks-intro.html#classes-confuse-both-people-and-machines) syntax.
 
 ### Changelog
 

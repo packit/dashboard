@@ -15,7 +15,6 @@ import { Button, Label, Tooltip } from "@patternfly/react-core";
 import ConnectionError from "./error";
 import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
-import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 import ForgeIcon from "./forge_icon";
 
 const SRPMBuildstable = () => {
@@ -25,7 +24,6 @@ const SRPMBuildstable = () => {
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Success", transforms: [cellWidth(10)] },
         { title: "ID", transforms: [sortable, cellWidth(10)] },
-        { title: "Logs", transforms: [cellWidth(15)] },
     ];
 
     // Local State
@@ -73,9 +71,14 @@ const SRPMBuildstable = () => {
                     {
                         title: <StatusLabel success={srpm_builds.success} />,
                     },
-                    srpm_builds.srpm_build_id,
                     {
-                        title: <WebUrlIcon link={srpm_builds.log_url} />,
+                        title: (
+                            <strong>
+                                <a target="_blank" href={srpm_builds.log_url}>
+                                    {srpm_builds.srpm_build_id}
+                                </a>
+                            </strong>
+                        ),
                     },
                 ],
             };
@@ -144,11 +147,6 @@ const StatusLabel = (props) => {
     } else {
         return <Label color="red">Failed</Label>;
     }
-};
-
-const WebUrlIcon = (props) => {
-    const handleClick = () => window.open(props.link, "_blank");
-    return <ExternalLinkAltIcon onClick={handleClick} />;
 };
 
 export default SRPMBuildstable;

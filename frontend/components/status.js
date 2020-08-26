@@ -16,9 +16,9 @@ const Status = () => {
 
     function fetchHealth() {
         fetch(`${apiURL}/healthz`)
-            .then((response) => response.json())
-            .then((data) => {
-                if (data.status === "We are healthy!") {
+            .then((response) => {
+                console.log(response.status);
+                if (response.ok) {
                     setTitle("We are healthy!");
                 }
             })

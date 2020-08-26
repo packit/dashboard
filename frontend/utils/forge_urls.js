@@ -24,4 +24,18 @@ function getPRLink(forge, namespace, repoName, prID) {
     return prLink;
 }
 
-export { getHostName, getPRLink };
+// getBranchLink - returns the branch link if possible otherwise an empty string
+function getBranchLink(forge, namespace, repoName, branchName) {
+    let branchLink = "";
+    switch (forge) {
+        case "github.com":
+            branchLink = `https://github.com/${namespace}/${repoName}/tree/${branchName}`;
+            break;
+        case "gitlab.com":
+            branchLink = `https://gitlab.com/${namespace}/${repoName}/-/tree/${branchName}`;
+            break;
+    }
+    return branchLink;
+}
+
+export { getHostName, getPRLink, getBranchLink };
