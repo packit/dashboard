@@ -11,57 +11,19 @@ import {
 } from "@patternfly/react-table";
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
-import TriggerLink from "./trigger_link";
+
 import ConnectionError from "./error";
+import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
 
-// Add every target to the chroots column and color code according to status
-const StatusLabel = (props) => {
-    let statusLabelList = [];
-    let chroot;
-    for (chroot in props.list) {
-        switch (props.list[chroot]) {
-            case "success":
-                statusLabelList.push(
-                    <Tooltip content={props.list[chroot]}>
-                        <span style={{ padding: "2px" }}>
-                            <Label color="green">{chroot}</Label>
-                        </span>
-                    </Tooltip>
-                );
-                break;
-            case "failure":
-                statusLabelList.push(
-                    <Tooltip content={props.list[chroot]}>
-                        <span style={{ padding: "2px" }}>
-                            <Label color="red">{chroot}</Label>
-                        </span>
-                    </Tooltip>
-                );
-                break;
-            default:
-                statusLabelList.push(
-                    <Tooltip content={props.list[chroot]}>
-                        <span style={{ padding: "2px" }}>
-                            <Label color="purple">{chroot}</Label>
-                        </span>
-                    </Tooltip>
-                );
-        }
-    }
-    return <div>{statusLabelList}</div>;
-};
-
-const CoprBuildsTable = () => {
+const SRPMBuildstable = () => {
     // Headings
     const column_list = [
-        "", // no title, empty space for the forge icon
-        { title: "Trigger", transforms: [cellWidth(25)] },
-        "Chroots",
-        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
-        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
-        // "Ref",
+        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
+        { title: "Trigger", transforms: [cellWidth(15)] },
+        { title: "Success", transforms: [cellWidth(10)] },
+        { title: "ID", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State
@@ -74,8 +36,7 @@ const CoprBuildsTable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        console.log(`Route is /api/copr-builds/?page=${page}&per_page=20`);
-        fetch(`/api/copr-builds/?page=${page}&per_page=20`)
+        fetch(`${apiURL}/srpm-builds?page=${page}&per_page=20`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -92,42 +53,37 @@ const CoprBuildsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((copr_builds) => {
+        res.map((srpm_builds) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
-                            <ForgeIcon projectURL={copr_builds.project_url} />
+                            <ForgeIcon projectURL={srpm_builds.project_url} />
                         ),
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={copr_builds} />
+                                <TriggerLink builds={srpm_builds} />
                             </strong>
                         ),
                     },
                     {
-                        title: (
-                            <StatusLabel list={copr_builds.status_per_chroot} />
-                        ),
+                        title: <StatusLabel success={srpm_builds.success} />,
                     },
-                    copr_builds.build_submitted_time,
                     {
                         title: (
                             <strong>
-                                <a href={copr_builds.web_url} target="_blank">
-                                    {copr_builds.build_id}
+                                <a target="_blank" href={srpm_builds.log_url}>
+                                    {srpm_builds.srpm_build_id}
                                 </a>
                             </strong>
                         ),
                     },
-                    // copr_builds.ref.substring(0, 8),
                 ],
             };
             rowsList.push(singleRow);
         });
-        // console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -146,20 +102,8 @@ const CoprBuildsTable = () => {
         );
     }
 
-    // Load more items
-    function nextPage() {
-        // console.log("Next Page is " + page);
-        fetchData();
-    }
-
-    // useEffect by default executes on every render of component
-    // here we only need it to execute on mount / first render
-    // so I simply added the second parameter (empty array three lines after this comment)
-
-    // But if you want different behaviour for first render and updated render
-    // look at https://stackoverflow.com/a/55075818/3809115
-    // and add code after the last line of the if statement in the ans
-
+    // Executes fetchData on first render of component
+    // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
     }, []);
@@ -189,7 +133,7 @@ const CoprBuildsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={nextPage}>
+                <Button variant="control" onClick={fetchData}>
                     Load More
                 </Button>
             </center>
@@ -197,4 +141,12 @@ const CoprBuildsTable = () => {
     );
 };
 
-export default CoprBuildsTable;
+const StatusLabel = (props) => {
+    if (props.success == true) {
+        return <Label color="green">Success</Label>;
+    } else {
+        return <Label color="red">Failed</Label>;
+    }
+};
+
+export default SRPMBuildstable;

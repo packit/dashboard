@@ -68,6 +68,14 @@ To [utilize pre-commit](https://pre-commit.com/#usage), install pre-commit with 
 - `pre-commit install` - to install pre-commit into your [git hooks](https://githooks.com). pre-commit will from now on run all the checkers/linters/formatters on every commit. If you later want to commit without running it, just run `git commit` with `-n/--no-verify`.
 - Or if you want to manually run all the checkers/linters/formatters, run `pre-commit run --all-files`.
 
+### Naming Scheme
+
+- `camelCase` for variable names.
+- Indentation: 4 Spaces.
+- Regular JS functions are defined like `function someFunction()`
+- React components are defined using the arrow syntax.
+- [React Hooks](https://reactjs.org/docs/hooks-intro.html) style syntax is used, wherever possible, over [the old Class based](https://reactjs.org/docs/hooks-intro.html#classes-confuse-both-people-and-machines) syntax.
+
 ### Changelog
 
 When you are contributing to changelog, please follow these suggestions:

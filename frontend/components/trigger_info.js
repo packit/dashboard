@@ -71,6 +71,46 @@ const TriggerInfo = (props) => {
             </div>
         );
     }
+    if (activeView == "SRPM Builds") {
+        activeViewContent = (
+            <div>
+                <table
+                    className="pf-c-table pf-m-compact pf-m-grid-md"
+                    role="grid"
+                    aria-label="SRPM Builds Table"
+                >
+                    <thead>
+                        <tr role="row">
+                            <th role="columnheader" scope="col">
+                                SRPM Build ID
+                            </th>
+                            <th role="columnheader" scope="col">
+                                Success
+                            </th>
+                            <th role="columnheader" scope="col">
+                                Logs
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody role="rowgroup">
+                        {props.trigger.srpm_builds.map((build, index) => (
+                            <tr role="row" key={index}>
+                                <td role="cell" data-label="SRPM Build ID">
+                                    {build.srpm_build_id}
+                                </td>
+                                <td role="cell" data-label="Success">
+                                    {String(build.success)}
+                                </td>
+                                <td role="cell" data-label="Logs">
+                                    <WebUrlIcon link={build.log_url} />
+                                </td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            </div>
+        );
+    }
     if (activeView == "Test Runs") {
         activeViewContent = (
             <div>
@@ -137,6 +177,12 @@ const TriggerInfo = (props) => {
                         onClick={() => setActiveView("Builds")}
                     >
                         Builds
+                    </DropdownItem>,
+                    <DropdownItem
+                        key="builds"
+                        onClick={() => setActiveView("SRPM Builds")}
+                    >
+                        SRPM Builds
                     </DropdownItem>,
                     <DropdownItem
                         key="tests"
