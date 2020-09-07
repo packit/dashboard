@@ -10,15 +10,10 @@ import {
 } from "@patternfly/react-table";
 
 import { Button, Label } from "@patternfly/react-core";
-import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 
 import ConnectionError from "./error";
 import Preloader from "./preloader";
-
-const WebUrlIcon = (props) => {
-    const handleClick = () => window.open(props.link, "_blank");
-    return <ExternalLinkAltIcon onClick={handleClick} />;
-};
+import TriggerLink from "./trigger_link";
 
 const StatusLabel = (props) => {
     if (props.status == "failed") {
@@ -34,13 +29,10 @@ const StatusLabel = (props) => {
 
 const TestingFarmResultsTable = () => {
     const column_list = [
-        "Namespace",
-        { title: "Repository", transforms: [sortable] },
-        { title: "PR ID", transforms: [sortable] },
+        "Trigger",
         "Pipeline",
         { title: "Chroot", transforms: [sortable] },
         { title: "Status", transforms: [sortable] },
-        "Web URL",
     ];
 
     // Local State
@@ -72,10 +64,21 @@ const TestingFarmResultsTable = () => {
         res.map((test_results) => {
             let singleRow = {
                 cells: [
-                    test_results.repo_namespace,
-                    test_results.repo_name,
-                    test_results.pr_id,
-                    test_results.pipeline_id,
+                    {
+                        title: (
+                            <strong>
+                                <TriggerLink builds={test_results} />
+                            </strong>
+                        ),
+                    },
+                    {
+                        title: (
+                            <TFLogsURL
+                                link={test_results.web_url}
+                                pipeline={test_results.pipeline_id}
+                            />
+                        ),
+                    },
                     {
                         title: (
                             <Label color="blue">{test_results.target}</Label>
@@ -83,10 +86,6 @@ const TestingFarmResultsTable = () => {
                     },
                     {
                         title: <StatusLabel status={test_results.status} />,
-                    },
-
-                    {
-                        title: <WebUrlIcon link={test_results.web_url} />,
                     },
                 ],
             };
@@ -154,6 +153,20 @@ const TestingFarmResultsTable = () => {
             </center>
         </div>
     );
+};
+
+const TFLogsURL = (props) => {
+    // when the testing farm test is running, there is no url stored
+    // so instead of showing a fake link that leads to 404, do not show the link at all
+    if (props.link !== null) {
+        return (
+            <a target="_blank" href={props.link}>
+                {props.pipeline}
+            </a>
+        );
+    } else {
+        return <span>{props.pipeline}</span>;
+    }
 };
 
 export default TestingFarmResultsTable;

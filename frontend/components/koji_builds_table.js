@@ -16,7 +16,6 @@ import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
 
-// Add every target to the chroots column and color code according to status
 const StatusLabel = (props) => {
     let chroot = props.chroot;
     let status = props.status;
@@ -33,7 +32,6 @@ const StatusLabel = (props) => {
         case "failure":
             return (
                 <Tooltip content={chroot}>
-
                     <span style={{ padding: "2px" }}>
                         <Label color="red">{chroot}</Label>
                     </span>
@@ -105,7 +103,10 @@ const KojiBuildsTable = () => {
                     },
                     {
                         title: (
-                            <StatusLabel chroot={koji_builds.chroot} status={koji_builds.status}/>
+                            <StatusLabel
+                                chroot={koji_builds.chroot}
+                                status={koji_builds.status}
+                            />
                         ),
                     },
                     koji_builds.build_submitted_time,
