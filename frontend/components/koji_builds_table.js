@@ -11,20 +11,52 @@ import {
 } from "@patternfly/react-table";
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
-
-import ConnectionError from "./error";
 import TriggerLink from "./trigger_link";
+import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
 
-const SRPMBuildstable = () => {
+const StatusLabel = (props) => {
+    let chroot = props.chroot;
+    let status = props.status;
+    switch (status) {
+        case "success":
+            return (
+                <Tooltip content={chroot}>
+                    <span style={{ padding: "2px" }}>
+                        <Label color="green">{chroot}</Label>
+                    </span>
+                </Tooltip>
+            );
+        // No "break;" here cause return means that the break will be unreachable
+        case "failure":
+            return (
+                <Tooltip content={chroot}>
+                    <span style={{ padding: "2px" }}>
+                        <Label color="red">{chroot}</Label>
+                    </span>
+                </Tooltip>
+            );
+        // No "break;" here cause return means that the break will be unreachable
+        default:
+            return (
+                <Tooltip content={chroot}>
+                    <span style={{ padding: "2px" }}>
+                        <Label color="purple">{chroot}</Label>
+                    </span>
+                </Tooltip>
+            );
+    }
+};
+
+const KojiBuildsTable = () => {
     // Headings
     const column_list = [
-        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(15)] },
-        { title: "Success", transforms: [cellWidth(10)] },
-        { title: "Time Submitted", transforms: [cellWidth(15)] },
-        { title: "ID", transforms: [sortable, cellWidth(10)] },
+        "", // no title, empty space for the forge icon
+        { title: "Trigger", transforms: [cellWidth(25)] },
+        "Chroot",
+        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
+        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
     ];
 
     // Local State
@@ -37,7 +69,7 @@ const SRPMBuildstable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${apiURL}/srpm-builds?page=${page}&per_page=20`)
+        fetch(`${apiURL}/koji-builds?page=${page}&per_page=20`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -54,40 +86,45 @@ const SRPMBuildstable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((srpm_builds) => {
+        res.map((koji_builds) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
-                            <ForgeIcon projectURL={srpm_builds.project_url} />
+                            <ForgeIcon projectURL={koji_builds.project_url} />
                         ),
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={srpm_builds} />
+                                <TriggerLink builds={koji_builds} />
                             </strong>
                         ),
                     },
                     {
-                        title: <StatusLabel success={srpm_builds.success} />,
+                        title: (
+                            <StatusLabel
+                                chroot={koji_builds.chroot}
+                                status={koji_builds.status}
+                            />
+                        ),
                     },
-                    {
-                        title: <span>{srpm_builds.build_submitted_time}</span>,
-                    },
+                    koji_builds.build_submitted_time,
                     {
                         title: (
                             <strong>
-                                <a target="_blank" href={srpm_builds.log_url}>
-                                    {srpm_builds.srpm_build_id}
+                                <a href={koji_builds.web_url} target="_blank">
+                                    {koji_builds.build_id}
                                 </a>
                             </strong>
                         ),
                     },
+                    // copr_builds.ref.substring(0, 8),
                 ],
             };
             rowsList.push(singleRow);
         });
+        // console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -145,12 +182,4 @@ const SRPMBuildstable = () => {
     );
 };
 
-const StatusLabel = (props) => {
-    if (props.success == true) {
-        return <Label color="green">Success</Label>;
-    } else {
-        return <Label color="red">Failed</Label>;
-    }
-};
-
-export default SRPMBuildstable;
+export default KojiBuildsTable;
