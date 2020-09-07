@@ -137,3 +137,15 @@ sudo update-ca-certificates
 
 Thank you for your interest!
 packit team.
+
+### Increase System Limit for File Watchers
+
+While transpiling and packing code, webpack contionusly watches all dependencies for changes. It's not uncommon to encounter a system limit on the number of files you can monitor.
+
+Increase it with
+
+```
+echo fs.inotify.max_user_watches=524288 | sudo tee -a /etc/sysctl.conf && sudo sysctl -p
+```
+
+[Technical details](https://github.com/guard/listen/wiki/Increasing-the-amount-of-inotify-watchers#the-technical-details)

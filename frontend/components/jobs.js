@@ -12,6 +12,7 @@ import {
 } from "@patternfly/react-core";
 import TestingFarmResultsTable from "./tf_results_table";
 import CoprBuildsTable from "./copr_builds_table";
+import KojiBuildsTable from "./koji_builds_table";
 import SRPMBuildsTable from "./srpm_builds_table";
 
 const Jobs = () => {
@@ -47,7 +48,7 @@ const Jobs = () => {
                                 eventKey={1}
                                 title={<TabTitleText>Koji Builds</TabTitleText>}
                             >
-                                Koji Builds
+                                <KojiBuildsTable />
                             </Tab>
                             <Tab
                                 eventKey={2}
