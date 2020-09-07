@@ -23,6 +23,7 @@ const SRPMBuildstable = () => {
         { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Success", transforms: [cellWidth(10)] },
+        { title: "Time Submitted", transforms: [cellWidth(15)] },
         { title: "ID", transforms: [sortable, cellWidth(10)] },
     ];
 
@@ -70,6 +71,9 @@ const SRPMBuildstable = () => {
                     },
                     {
                         title: <StatusLabel success={srpm_builds.success} />,
+                    },
+                    {
+                        title: <span>{srpm_builds.build_submitted_time}</span>,
                     },
                     {
                         title: (
