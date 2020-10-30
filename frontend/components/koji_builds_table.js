@@ -22,7 +22,7 @@ const StatusLabel = (props) => {
     switch (status) {
         case "success":
             return (
-                <Tooltip content={chroot}>
+                <Tooltip content="Success">
                     <span style={{ padding: "2px" }}>
                         <Label color="green">{chroot}</Label>
                     </span>
@@ -31,7 +31,7 @@ const StatusLabel = (props) => {
         // No "break;" here cause return means that the break will be unreachable
         case "failure":
             return (
-                <Tooltip content={chroot}>
+                <Tooltip content="Failure">
                     <span style={{ padding: "2px" }}>
                         <Label color="red">{chroot}</Label>
                     </span>
@@ -40,7 +40,7 @@ const StatusLabel = (props) => {
         // No "break;" here cause return means that the break will be unreachable
         default:
             return (
-                <Tooltip content={chroot}>
+                <Tooltip content="Pending">
                     <span style={{ padding: "2px" }}>
                         <Label color="purple">{chroot}</Label>
                     </span>
