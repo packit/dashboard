@@ -29,6 +29,8 @@ const ProjectsList = (props) => {
     const [loaded, setLoaded] = useState(false);
     const [page, setPage] = useState(1);
     const [projects, setProjects] = useState([]);
+    // by default, ignore projects without any handled item
+    const [showUseful, setShowUseful] = useState(true);
 
     // If a namespace and forge are provided, then load those
     // otherwise load all projects
@@ -70,6 +72,77 @@ const ProjectsList = (props) => {
             </Button>
         </center>
     );
+
+    // we may not want to view projects which have packit-service enabled but
+    // are not actually using it
+    function checkUseful(project, index) {
+        if (
+            project.prs_handled > 0 ||
+            project.branches_handled > 0 ||
+            project.releases_handled > 0 ||
+            project.issues_handled > 0 ||
+            !showUseful
+        ) {
+            return (
+                <GalleryItem key={index}>
+                    <Card isHoverable>
+                        <CardTitle>
+                            <Link to={() => goToProjectInfo(project)}>
+                                {`${project.namespace}/${project.repo_name}`}
+                            </Link>
+                            <br />
+                            <a href={project.project_url} target="_blank">
+                                <ExternalLinkAltIcon />
+                            </a>
+                        </CardTitle>
+                        <CardBody>
+                            <Flex>
+                                <FlexItem>
+                                    <Tooltip
+                                        position={TooltipPosition.top}
+                                        content={"Branches Handled"}
+                                    >
+                                        <CodeBranchIcon />
+                                    </Tooltip>
+                                    {project.branches_handled}
+                                </FlexItem>
+                                <FlexItem>
+                                    <Tooltip
+                                        position={TooltipPosition.top}
+                                        content={"Issues Handled"}
+                                    >
+                                        <SecurityIcon />
+                                    </Tooltip>
+                                    {project.issues_handled}
+                                </FlexItem>
+                                <FlexItem>
+                                    <Tooltip
+                                        position={TooltipPosition.top}
+                                        content={"Releases Handled"}
+                                    >
+                                        <BuildIcon />
+                                    </Tooltip>
+                                    {project.releases_handled}
+                                </FlexItem>
+                                <FlexItem>
+                                    <Tooltip
+                                        position={TooltipPosition.top}
+                                        content={"Pull Requests Handled"}
+                                    >
+                                        <BlueprintIcon />
+                                    </Tooltip>
+                                    {project.prs_handled}
+                                </FlexItem>
+                            </Flex>
+                        </CardBody>
+                    </Card>
+                </GalleryItem>
+            );
+        } else {
+            return <></>;
+        }
+    }
+
     // Hide the  Load More Button if we're displaying projects of one namespace only
     if (props.forge && props.namespace) {
         loadButton = "";
@@ -89,59 +162,7 @@ const ProjectsList = (props) => {
         <div>
             <Gallery hasGutter>
                 {projects.map((project, index) => (
-                    <GalleryItem key={index}>
-                        <Card isHoverable>
-                            <CardTitle>
-                                <Link to={() => goToProjectInfo(project)}>
-                                    {`${project.namespace}/${project.repo_name}`}
-                                </Link>
-                                <br />
-                                <a href={project.project_url} target="_blank">
-                                    <ExternalLinkAltIcon />
-                                </a>
-                            </CardTitle>
-                            <CardBody>
-                                <Flex>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Branches Handled"}
-                                        >
-                                            <CodeBranchIcon />
-                                        </Tooltip>
-                                        {project.branches_handled}
-                                    </FlexItem>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Issues Handled"}
-                                        >
-                                            <SecurityIcon />
-                                        </Tooltip>
-                                        {project.issues_handled}
-                                    </FlexItem>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Releases Handled"}
-                                        >
-                                            <BuildIcon />
-                                        </Tooltip>
-                                        {project.releases_handled}
-                                    </FlexItem>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Pull Requests Handled"}
-                                        >
-                                            <BlueprintIcon />
-                                        </Tooltip>
-                                        {project.prs_handled}
-                                    </FlexItem>
-                                </Flex>
-                            </CardBody>
-                        </Card>
-                    </GalleryItem>
+                    <>{checkUseful(project, index)}</>
                 ))}
             </Gallery>
             {loadButton}
