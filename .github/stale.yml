@@ -1,0 +1,26 @@
+# Number of days of inactivity before an issue becomes stale
+daysUntilStale: 60
+# Number of days of inactivity before a stale issue is closed
+daysUntilClose: 14
+# Issues with these labels will never be considered stale
+exemptLabels:
+  - pinned
+  - EPIC
+# Label to use when marking an issue as stale
+staleLabel: stale
+# Comment to post when marking an issue as stale. Set to `false` to disable
+markComment: |
+  This issue has been marked as *stale* because it hasn't seen any
+  activity for the last 60 days.
+
+  *Stale* issues are closed after 14 days, unless the label is removed
+  by a maintainer or someone comments on it.
+
+  This is done in order to ensure that open issues are still relevant.
+
+  Thank you for your contribution! :unicorn: :rocket: :robot:
+
+  (Note: issues labeled with *pinned*, *security*, *bug* or *EPIC* are
+  never marked as stale.)
+# Comment to post when closing a stale issue. Set to `false` to disable
+closeComment: false
