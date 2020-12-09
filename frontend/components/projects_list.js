@@ -29,6 +29,8 @@ const ProjectsList = (props) => {
     const [loaded, setLoaded] = useState(false);
     const [page, setPage] = useState(1);
     const [projects, setProjects] = useState([]);
+    // by default, ignore non useful projects ie without any handled item
+    const [showUseful, setShowUseful] = useState(true);
 
     // If a namespace and forge are provided, then load those
     // otherwise load all projects
@@ -37,14 +39,34 @@ const ProjectsList = (props) => {
         jsonLink = `${apiURL}/projects/${props.forge}/${props.namespace}`;
     }
 
-    // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
+        let usefulProjects = [];
         fetch(jsonLink)
             .then((response) => response.json())
             .then((data) => {
-                setProjects(projects.concat(data));
+                for (const index in data) {
+                    const project = data[index];
+                    if (
+                        project.prs_handled > 0 ||
+                        project.branches_handled > 0 ||
+                        project.releases_handled > 0 ||
+                        project.issues_handled > 0 ||
+                        !showUseful
+                    ) {
+                        usefulProjects.push(project);
+                    }
+                }
                 setLoaded(true);
-                setPage(page + 1); // set next page
+                console.log("Useful: ", usefulProjects.length);
+                setProjects(projects.concat(usefulProjects));
+                if (
+                    usefulProjects.length < 6 && // fetch more if 5 or less useful projects
+                    !(props.forge && props.namespace) && // no pagination when namespace is specified
+                    data.length > 0
+                ) {
+                    console.log("Less useful projects, load more");
+                    setPage(page + 1);
+                }
             })
             .catch((err) => {
                 console.log(err);
@@ -52,9 +74,19 @@ const ProjectsList = (props) => {
             });
     }
 
+    // The useEffect Hook gets executed after every state change i.e. every render with
+    // the condition that any element in the array (2nd parameter) is also changed
+    // the elements of this dependency array can be state, props, etc
+    // if no dependency array is passed as parameter then it executes after every render
+    // if empty array is passed, then it executes only after initial render
+    // here useEffect gets executed after page changes and it fetched more pages
     useEffect(() => {
         fetchData();
-    }, []);
+    }, [page]);
+
+    function loadMore() {
+        setPage(page + 1);
+    }
 
     function goToProjectInfo(project) {
         const urlArray = project.project_url.split("/");
@@ -65,12 +97,13 @@ const ProjectsList = (props) => {
     let loadButton = (
         <center>
             <br />
-            <Button variant="control" onClick={fetchData}>
+            <Button variant="control" onClick={loadMore}>
                 Load More
             </Button>
         </center>
     );
-    // Hide the  Load More Button if we're displaying projects of one namespace only
+
+    // Hide the Load More Button if we're displaying projects of one namespace only
     if (props.forge && props.namespace) {
         loadButton = "";
     }
