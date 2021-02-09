@@ -19,7 +19,7 @@ const Status = () => {
             .then((response) => {
                 console.log(response.status);
                 if (response.ok) {
-                    setTitle("We are healthy!");
+                    setTitle("Packit API is healthy.");
                 }
             })
             .catch((err) => {
