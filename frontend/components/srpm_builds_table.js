@@ -10,12 +10,13 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 
 import ConnectionError from "./error";
 import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
+import StatusLabel from "./status_label";
 
 const SRPMBuildstable = () => {
     // Headings
@@ -143,14 +144,6 @@ const SRPMBuildstable = () => {
             </center>
         </div>
     );
-};
-
-const StatusLabel = (props) => {
-    if (props.success == true) {
-        return <Label color="green">Success</Label>;
-    } else {
-        return <Label color="red">Failed</Label>;
-    }
 };
 
 export default SRPMBuildstable;

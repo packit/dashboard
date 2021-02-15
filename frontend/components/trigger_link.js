@@ -5,11 +5,20 @@ const TriggerLink = (props) => {
     let link = "";
     // set suffix to be either PR ID or Branch Name depending on trigger
     let jobSuffix = "";
+
+    // different endpoints use "git_repo" or "project_url" to refer to the same thing
+    let gitRepo = "";
+    if (props.builds.project_url) {
+        gitRepo = props.builds.project_url;
+    } else if (props.builds.git_repo) {
+        gitRepo = props.builds.git_repo;
+    }
+
     if (props.builds.pr_id) {
         jobSuffix = `#${props.builds.pr_id}`;
 
         link = getPRLink(
-            getHostName(props.builds.project_url),
+            getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.pr_id
@@ -18,7 +27,7 @@ const TriggerLink = (props) => {
         jobSuffix = `:${props.builds.branch_name}`;
 
         link = getBranchLink(
-            getHostName(props.builds.project_url),
+            getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.branch_name

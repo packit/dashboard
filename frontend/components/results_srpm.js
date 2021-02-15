@@ -1,0 +1,94 @@
+import React, { useState, useEffect } from "react";
+import {
+    PageSection,
+    Card,
+    CardBody,
+    PageSectionVariants,
+    TextContent,
+    Text,
+    Title,
+} from "@patternfly/react-core";
+
+import ConnectionError from "./error";
+import Preloader from "./preloader";
+import TriggerLink from "./trigger_link";
+import StatusLabel from "./status_label";
+
+const ResultsPageSRPM = (props) => {
+    let id = props.match.params.id;
+
+    const [hasError, setErrors] = useState(false);
+    const [loaded, setLoaded] = useState(false);
+    const [data, setData] = useState({});
+
+    useEffect(() => {
+        fetch(`${apiURL}/srpm-builds/${id}`)
+            .then((response) => response.json())
+            .then((data) => {
+                setData(data);
+                setLoaded(true);
+            })
+            .catch((err) => {
+                console.log(err);
+                setErrors(err);
+            });
+    }, []);
+
+    // If backend API is down
+    if (hasError) {
+        return <ConnectionError />;
+    }
+
+    // Show preloader if waiting for API data
+    if (!loaded) {
+        return <Preloader />;
+    }
+
+    // console.log(data);
+
+    if ("error" in data) {
+        return (
+            <PageSection>
+                <Card>
+                    <CardBody>
+                        <Title headingLevel="h1" size="lg">
+                            Not Found.
+                        </Title>
+                    </CardBody>
+                </Card>
+            </PageSection>
+        );
+    }
+
+    return (
+        <div>
+            <PageSection variant={PageSectionVariants.light}>
+                <TextContent>
+                    <Text component="h1">SRPM Build Logs</Text>
+                    <StatusLabel success={data.success} />
+                    <Text component="p">
+                        <strong>
+                            <TriggerLink builds={data} />
+                        </strong>
+                        <br />
+                        Submitted at {data.build_submitted_time}
+                    </Text>
+                </TextContent>
+            </PageSection>
+
+            <PageSection>
+                <Card>
+                    <CardBody>
+                        <div style={{ overflowX: "scroll" }}>
+                            <pre>
+                                <code>{data.logs}</code>
+                            </pre>
+                        </div>
+                    </CardBody>
+                </Card>
+            </PageSection>
+        </div>
+    );
+};
+
+export { ResultsPageSRPM };

@@ -9,6 +9,7 @@ import { ProjectInfo } from "./components/project_info";
 import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
 import { Status } from "./components/status";
+import { ResultsPageSRPM } from "./components/results_srpm";
 
 // Main Menu routes
 const routes = [
@@ -64,6 +65,12 @@ const AppRoutes = () => (
             component={Namespace}
             exact
             title="Namespace"
+        />
+        <Route
+            path="/results/srpm-builds/:id"
+            component={ResultsPageSRPM}
+            exact
+            title="SRPM Results"
         />
         <Route path="/" component={NotFound} title="404 Page Not Found" />
     </Switch>
