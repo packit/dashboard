@@ -15,39 +15,7 @@ import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-
-const StatusLabel = (props) => {
-    let chroot = props.chroot;
-    let status = props.status;
-    switch (status) {
-        case "success":
-            return (
-                <Tooltip content="Success">
-                    <span style={{ padding: "2px" }}>
-                        <Label color="green">{chroot}</Label>
-                    </span>
-                </Tooltip>
-            );
-        // No "break;" here cause return means that the break will be unreachable
-        case "failure":
-            return (
-                <Tooltip content="Failure">
-                    <span style={{ padding: "2px" }}>
-                        <Label color="red">{chroot}</Label>
-                    </span>
-                </Tooltip>
-            );
-        // No "break;" here cause return means that the break will be unreachable
-        default:
-            return (
-                <Tooltip content="Pending">
-                    <span style={{ padding: "2px" }}>
-                        <Label color="purple">{chroot}</Label>
-                    </span>
-                </Tooltip>
-            );
-    }
-};
+import ChrootStatus from "./chroot_status";
 
 const KojiBuildsTable = () => {
     // Headings
@@ -103,7 +71,7 @@ const KojiBuildsTable = () => {
                     },
                     {
                         title: (
-                            <StatusLabel
+                            <ChrootStatus
                                 chroot={koji_builds.chroot}
                                 status={koji_builds.status}
                             />

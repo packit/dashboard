@@ -10,6 +10,7 @@ import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
 import { Status } from "./components/status";
 import { ResultsPageSRPM } from "./components/results_srpm";
+import { ResultsPageCopr } from "./components/results_copr";
 
 // Main Menu routes
 const routes = [
@@ -68,6 +69,18 @@ const AppRoutes = () => (
         />
         <Route
             path="/results/srpm-builds/:id"
+            component={ResultsPageSRPM}
+            exact
+            title="SRPM Results"
+        />
+        <Route
+            path="/results/copr-builds/:id"
+            component={ResultsPageCopr}
+            exact
+            title="SRPM Results"
+        />
+        <Route
+            path="/results/koji-builds/:id"
             component={ResultsPageSRPM}
             exact
             title="SRPM Results"
