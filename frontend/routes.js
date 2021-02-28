@@ -6,11 +6,12 @@ import { Jobs } from "./components/jobs";
 import { Projects } from "./components/projects";
 import { Namespace } from "./components/namespace";
 import { ProjectInfo } from "./components/project_info";
-import { Support } from "./components/support";
 import { NotFound } from "./components/not_found";
 import { Status } from "./components/status";
 import { ResultsPageSRPM } from "./components/results_srpm";
 import { ResultsPageCopr } from "./components/results_copr";
+import { ResultsPageKoji } from "./components/results_koji";
+import { ResultsPageTestingFarm } from "./components/results_tf";
 
 // Main Menu routes
 const routes = [
@@ -77,13 +78,19 @@ const AppRoutes = () => (
             path="/results/copr-builds/:id"
             component={ResultsPageCopr}
             exact
-            title="SRPM Results"
+            title="Copr Results"
         />
         <Route
             path="/results/koji-builds/:id"
-            component={ResultsPageSRPM}
+            component={ResultsPageKoji}
             exact
-            title="SRPM Results"
+            title="Koji Results"
+        />
+        <Route
+            path="/results/testing-farm/:id"
+            component={ResultsPageTestingFarm}
+            exact
+            title="Testing Farm Results"
         />
         <Route path="/" component={NotFound} title="404 Page Not Found" />
     </Switch>
