@@ -1,9 +1,6 @@
-FROM fedora:32
+FROM quay.io/packit/base
 
-ENV HOME=/home/packit_dashboard \
-    ANSIBLE_STDOUT_CALLBACK=debug
-
-RUN dnf install -y ansible
+ENV HOME=/home/packit_dashboard
 
 COPY ./files /src/files
 COPY ./package.json /src
