@@ -64,7 +64,7 @@ const ResultsPageSRPM = (props) => {
         <div>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
-                    <Text component="h1">SRPM Build Logs</Text>
+                    <Text component="h1">SRPM Build</Text>
                     <StatusLabel success={data.success} />
                     <Text component="p">
                         <strong>
@@ -79,6 +79,9 @@ const ResultsPageSRPM = (props) => {
             <PageSection>
                 <Card>
                     <CardBody>
+                        <strong>
+                            <a href={data.url}>Downloadable SRPM</a>
+                        </strong>
                         <div style={{ overflowX: "scroll" }}>
                             <pre>
                                 <code>{data.logs}</code>

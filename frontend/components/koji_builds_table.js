@@ -24,7 +24,8 @@ const KojiBuildsTable = () => {
         { title: "Trigger", transforms: [cellWidth(25)] },
         "Chroot",
         { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
-        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
+        { title: "Build Logs", transforms: [sortable, cellWidth(15)] },
+        "Results",
     ];
 
     // Local State
@@ -87,7 +88,20 @@ const KojiBuildsTable = () => {
                             </strong>
                         ),
                     },
-                    // copr_builds.ref.substring(0, 8),
+                    {
+                        title: (
+                            <strong>
+                                <a
+                                    href={
+                                        "/results/koji-builds/" +
+                                        koji_builds.packit_id
+                                    }
+                                >
+                                    {koji_builds.packit_id}
+                                </a>
+                            </strong>
+                        ),
+                    },
                 ],
             };
             rowsList.push(singleRow);

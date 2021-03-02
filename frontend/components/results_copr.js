@@ -152,7 +152,7 @@ const ResultsPageCopr = (props) => {
                             </strong>
                             <br />
                             <br />
-                            <ul class="pf-c-list">
+                            <ul className="pf-c-list">
                                 <li>
                                     <code>
                                         sudo yum install -y dnf-plugins-core

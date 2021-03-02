@@ -25,7 +25,7 @@ const SRPMBuildstable = () => {
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Success", transforms: [cellWidth(10)] },
         { title: "Time Submitted", transforms: [cellWidth(15)] },
-        { title: "ID", transforms: [sortable, cellWidth(10)] },
+        { title: "Results", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State
@@ -79,7 +79,12 @@ const SRPMBuildstable = () => {
                     {
                         title: (
                             <strong>
-                                <a target="_blank" href={srpm_builds.log_url}>
+                                <a
+                                    href={
+                                        "/results/srpm-builds/" +
+                                        srpm_builds.srpm_build_id
+                                    }
+                                >
                                     {srpm_builds.srpm_build_id}
                                 </a>
                             </strong>
