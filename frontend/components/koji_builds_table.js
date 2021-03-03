@@ -15,39 +15,7 @@ import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-
-const StatusLabel = (props) => {
-    let chroot = props.chroot;
-    let status = props.status;
-    switch (status) {
-        case "success":
-            return (
-                <Tooltip content="Success">
-                    <span style={{ padding: "2px" }}>
-                        <Label color="green">{chroot}</Label>
-                    </span>
-                </Tooltip>
-            );
-        // No "break;" here cause return means that the break will be unreachable
-        case "failure":
-            return (
-                <Tooltip content="Failure">
-                    <span style={{ padding: "2px" }}>
-                        <Label color="red">{chroot}</Label>
-                    </span>
-                </Tooltip>
-            );
-        // No "break;" here cause return means that the break will be unreachable
-        default:
-            return (
-                <Tooltip content="Pending">
-                    <span style={{ padding: "2px" }}>
-                        <Label color="purple">{chroot}</Label>
-                    </span>
-                </Tooltip>
-            );
-    }
-};
+import ChrootStatus from "./chroot_status";
 
 const KojiBuildsTable = () => {
     // Headings
@@ -56,7 +24,8 @@ const KojiBuildsTable = () => {
         { title: "Trigger", transforms: [cellWidth(25)] },
         "Chroot",
         { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
-        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
+        { title: "Build Logs", transforms: [sortable, cellWidth(15)] },
+        "Results",
     ];
 
     // Local State
@@ -103,7 +72,7 @@ const KojiBuildsTable = () => {
                     },
                     {
                         title: (
-                            <StatusLabel
+                            <ChrootStatus
                                 chroot={koji_builds.chroot}
                                 status={koji_builds.status}
                             />
@@ -119,7 +88,20 @@ const KojiBuildsTable = () => {
                             </strong>
                         ),
                     },
-                    // copr_builds.ref.substring(0, 8),
+                    {
+                        title: (
+                            <strong>
+                                <a
+                                    href={
+                                        "/results/koji-builds/" +
+                                        koji_builds.packit_id
+                                    }
+                                >
+                                    {koji_builds.packit_id}
+                                </a>
+                            </strong>
+                        ),
+                    },
                 ],
             };
             rowsList.push(singleRow);

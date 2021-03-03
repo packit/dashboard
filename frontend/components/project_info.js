@@ -57,7 +57,7 @@ const ProjectInfo = (props) => {
         checkValidProject();
     }, []);
 
-    let details = <div>nopeses</div>;
+    let details = <div></div>;
 
     if (isValidProject && loaded) {
         details = (

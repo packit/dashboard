@@ -33,6 +33,7 @@ const TestingFarmResultsTable = () => {
         "Pipeline",
         { title: "Chroot", transforms: [sortable] },
         { title: "Status", transforms: [sortable] },
+        "Results",
     ];
 
     // Local State
@@ -86,6 +87,17 @@ const TestingFarmResultsTable = () => {
                     },
                     {
                         title: <StatusLabel status={test_results.status} />,
+                    },
+                    {
+                        title: (
+                            <strong>
+                                <a
+                                    href={`/results/testing-farm/${test_results.packit_id}`}
+                                >
+                                    {test_results.packit_id}
+                                </a>
+                            </strong>
+                        ),
                     },
                 ],
             };

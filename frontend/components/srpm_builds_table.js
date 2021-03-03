@@ -10,12 +10,13 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 
 import ConnectionError from "./error";
 import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
+import StatusLabel from "./status_label";
 
 const SRPMBuildstable = () => {
     // Headings
@@ -24,7 +25,7 @@ const SRPMBuildstable = () => {
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Success", transforms: [cellWidth(10)] },
         { title: "Time Submitted", transforms: [cellWidth(15)] },
-        { title: "ID", transforms: [sortable, cellWidth(10)] },
+        { title: "Results", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State
@@ -78,7 +79,12 @@ const SRPMBuildstable = () => {
                     {
                         title: (
                             <strong>
-                                <a target="_blank" href={srpm_builds.log_url}>
+                                <a
+                                    href={
+                                        "/results/srpm-builds/" +
+                                        srpm_builds.srpm_build_id
+                                    }
+                                >
                                     {srpm_builds.srpm_build_id}
                                 </a>
                             </strong>
@@ -143,14 +149,6 @@ const SRPMBuildstable = () => {
             </center>
         </div>
     );
-};
-
-const StatusLabel = (props) => {
-    if (props.success == true) {
-        return <Label color="green">Success</Label>;
-    } else {
-        return <Label color="red">Failed</Label>;
-    }
 };
 
 export default SRPMBuildstable;
