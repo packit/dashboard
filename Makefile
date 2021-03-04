@@ -1,5 +1,5 @@
 CURDIR := ${CURDIR}
-IMAGE ?= usercont/packit-dashboard:stg
+IMAGE ?= quay.io/packit/dashboard:stg
 TEST_IMAGE ?= packit-dashboard-tests
 TEST_TARGET ?= ./tests/
 CONTAINER_ENGINE ?= $(shell command -v podman 2> /dev/null || echo docker)

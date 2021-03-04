@@ -22,7 +22,7 @@ Please follow common guidelines for our projects [here](https://github.com/packi
 1. Build docker image
 
 ```
-docker build --rm -t usercont/packit-dashboard -f Dockerfile .
+make build-stg
 ```
 
 2. Generate private key
@@ -52,7 +52,7 @@ openssl x509 -req -days 365 -in secrets/signing-request.csr -signkey secrets/pri
 6. Start dashboard container
 
 ```
-docker run -p 443:8443 -v $(PWD)/secrets:/secrets -d usercont/packit-dashboard:stg
+make run-container-stg
 ```
 
 7. Install CA (optional)
@@ -64,7 +64,7 @@ sudo update-ca-certificates
 
 ### Increase System Limit for File Watchers
 
-While transpiling and packing code, webpack contionusly watches all dependencies for changes. It's not uncommon to encounter a system limit on the number of files you can monitor.
+While transpiling and packing code, webpack continuously watches all dependencies for changes. It's not uncommon to encounter a system limit on the number of files you can monitor.
 
 Increase it with
 
