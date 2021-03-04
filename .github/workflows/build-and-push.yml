@@ -26,10 +26,10 @@ jobs:
           tag=""
           case $branch in
               main)
-                  tag=stg
+                  tag="stg latest"
                   ;;
               stable)
-                  tag=prod
+                  tag="prod"
                   ;;
           esac
           echo "::set-output name=branch::$branch"
