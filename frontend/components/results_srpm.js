@@ -60,6 +60,12 @@ const ResultsPageSRPM = (props) => {
         );
     }
 
+    const srpmURL = data.url ? (
+        <a href={data.url}>Link to download</a>
+    ) : (
+        "Not available to download"
+    );
+
     return (
         <div>
             <PageSection variant={PageSectionVariants.light}>
@@ -73,15 +79,13 @@ const ResultsPageSRPM = (props) => {
                         <br />
                         Submitted at {data.build_submitted_time}
                     </Text>
+                    <Text component="p">SRPM: {srpmURL}</Text>
                 </TextContent>
             </PageSection>
 
             <PageSection>
                 <Card>
                     <CardBody>
-                        <strong>
-                            <a href={data.url}>Downloadable SRPM</a>
-                        </strong>
                         <div style={{ overflowX: "scroll" }}>
                             <pre>
                                 <code>{data.logs}</code>
