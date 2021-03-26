@@ -61,7 +61,7 @@ const ResultsPageSRPM = (props) => {
     }
 
     const srpmURL = data.url ? (
-        <a href={data.url}>Download</a>
+        <a href={data.url}>Link to download</a>
     ) : (
         "Not available to download"
     );
@@ -79,7 +79,7 @@ const ResultsPageSRPM = (props) => {
                         <br />
                         Submitted at {data.build_submitted_time}
                     </Text>
-                    <Text component="p">Built SRPM: {srpmURL}</Text>
+                    <Text component="p">SRPM: {srpmURL}</Text>
                 </TextContent>
             </PageSection>
 
