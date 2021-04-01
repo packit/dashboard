@@ -5,7 +5,7 @@ TEST_TARGET ?= ./tests/
 CONTAINER_ENGINE ?= $(shell command -v podman 2> /dev/null || echo docker)
 
 install-dependencies:
-	sudo dnf -y install python3-flask yarnpkg
+	sudo dnf -y install python3-flask yarnpkg npm
 	yarn install
 
 transpile-prod:
@@ -15,7 +15,7 @@ run-dev:
 	yarn webpack --mode development --watch & FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
 
 run-container-stg: build-stg
-	$(CONTAINER_ENGINE) run -p 8443:8443 -v $(CURDIR)/secrets:/secrets:z -i $(IMAGE)
+	$(CONTAINER_ENGINE) run --rm -p 8443:8443 -v $(CURDIR)/secrets:/secrets:z -i $(IMAGE)
 
 build-stg:
 	$(CONTAINER_ENGINE) build --rm -t $(IMAGE) -f Dockerfile .
