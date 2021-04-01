@@ -17,40 +17,36 @@ import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
 
 // Add every target to the chroots column and color code according to status
-const StatusLabel = (props) => {
-    let statusLabelList = [];
-    let chroot;
-    for (chroot in props.list) {
-        switch (props.list[chroot]) {
+const ChrootStatuses = (props) => {
+    let labels = [];
+
+    for (let chroot in props.ids) {
+        const id = props.ids[chroot];
+        const status = props.statuses[chroot];
+
+        let color = "purple";
+        switch (status) {
             case "success":
-                statusLabelList.push(
-                    <Tooltip content={props.list[chroot]}>
-                        <span style={{ padding: "2px" }}>
-                            <Label color="green">{chroot}</Label>
-                        </span>
-                    </Tooltip>
-                );
+                color = "green";
                 break;
             case "failure":
-                statusLabelList.push(
-                    <Tooltip content={props.list[chroot]}>
-                        <span style={{ padding: "2px" }}>
-                            <Label color="red">{chroot}</Label>
-                        </span>
-                    </Tooltip>
-                );
+                color = "red";
                 break;
-            default:
-                statusLabelList.push(
-                    <Tooltip content={props.list[chroot]}>
-                        <span style={{ padding: "2px" }}>
-                            <Label color="purple">{chroot}</Label>
-                        </span>
-                    </Tooltip>
-                );
         }
+
+        labels.push(
+            <Tooltip content={status}>
+                <span style={{ padding: "2px" }}>
+                    <Label color={color} href={"/results/copr-builds/" + id}>
+                        {chroot}
+                    </Label>
+                </span>
+            </Tooltip>
+        );
     }
-    return <div>{statusLabelList}</div>;
+
+    console.log(labels);
+    return <div>{labels}</div>;
 };
 
 const CoprBuildsTable = () => {
@@ -108,7 +104,10 @@ const CoprBuildsTable = () => {
                     },
                     {
                         title: (
-                            <StatusLabel list={copr_builds.status_per_chroot} />
+                            <ChrootStatuses
+                                statuses={copr_builds.status_per_chroot}
+                                ids={copr_builds.packit_id_per_chroot}
+                            />
                         ),
                     },
                     copr_builds.build_submitted_time,
