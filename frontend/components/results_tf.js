@@ -60,6 +60,12 @@ const ResultsPageTestingFarm = (props) => {
         );
     }
 
+    const webURL = data.web_url ? (
+        <a href={data.web_url}>Web URL</a>
+    ) : (
+        "URL has not been provided"
+    );
+
     return (
         <div>
             <PageSection variant={PageSectionVariants.light}>
@@ -94,9 +100,7 @@ const ResultsPageTestingFarm = (props) => {
                                     <td>
                                         <strong>Testing Farm URL</strong>
                                     </td>
-                                    <td>
-                                        <a href={data.web_url}>Web URL</a>
-                                    </td>
+                                    <td>{webURL}</td>
                                 </tr>
                                 <tr>
                                     <td>
