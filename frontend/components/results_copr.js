@@ -150,28 +150,29 @@ const ResultsPageCopr = (props) => {
                                 You can install the built RPMs by following
                                 these steps:
                             </strong>
-                            <br />
-                            <br />
-                            <ul className="pf-c-list">
-                                <li>
-                                    <code>
-                                        sudo yum install -y dnf-plugins-core
-                                    </code>{" "}
-                                    on RHEL 8 or CentOS Stream
-                                </li>
-                                <li>
-                                    <code>
-                                        sudo dnf install -y dnf-plugins-core
-                                    </code>{" "}
-                                    on Fedora
-                                </li>
-                                <li>
-                                    <code>
-                                        sudo dnf copr enable {data.copr_owner}/
-                                        {data.copr_project}
-                                    </code>
-                                </li>
-                            </ul>
+                        </Text>
+                        <br />
+                        <ul className="pf-c-list">
+                            <li>
+                                <code>
+                                    sudo yum install -y dnf-plugins-core
+                                </code>{" "}
+                                on RHEL 8 or CentOS Stream
+                            </li>
+                            <li>
+                                <code>
+                                    sudo dnf install -y dnf-plugins-core
+                                </code>{" "}
+                                on Fedora
+                            </li>
+                            <li>
+                                <code>
+                                    sudo dnf copr enable {data.copr_owner}/
+                                    {data.copr_project}
+                                </code>
+                            </li>
+                        </ul>
+                        <Text component="p">
                             <br />
                             Please note that the RPMs should be used only in a
                             testing environment.
