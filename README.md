@@ -14,9 +14,14 @@ Dashboard for [Packit Service](https://github.com/packit-service).
 ```
 
 ```bash
-# this will start the flask development server and webpack's --watch mode.
-# flask and react debug logs will be shown in the same terminal window
-:~/dashboard $ make run-dev
+# this will start the flask development server
+:~/dashboard $ make run-dev-flask
+# in another terminal
+:~/dashboard $ make run-dev-frontend
+
+# use the frontend port (i.e 3000 by default) for development
+# it will proxy non react requests to flask during dev
+# read the Makefile for details
 ```
 
 (you make have to use modify the make command if you want to run flask in a virtulenv instead of using `python3-flask` from the fedora repos.)
