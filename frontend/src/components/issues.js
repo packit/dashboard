@@ -18,7 +18,7 @@ const IssuesList = (props) => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`/api/projects/${forge}/${namespace}/${repoName}/issues`)
+        fetch(`${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/issues`)
             .then((response) => response.json())
             .then((data) => {
                 setIssueList(data);

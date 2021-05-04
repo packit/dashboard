@@ -34,9 +34,9 @@ const ProjectsList = (props) => {
 
     // If a namespace and forge are provided, then load those
     // otherwise load all projects
-    let jsonLink = `${apiURL}/projects?page=${page}&per_page=50`;
+    let jsonLink = `${process.env.REACT_APP_API_URL}/projects?page=${page}&per_page=50`;
     if (props.forge && props.namespace) {
-        jsonLink = `${apiURL}/projects/${props.forge}/${props.namespace}`;
+        jsonLink = `${process.env.REACT_APP_API_URL}/projects/${props.forge}/${props.namespace}`;
     }
 
     function fetchData() {

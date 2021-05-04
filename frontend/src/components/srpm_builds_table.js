@@ -7,33 +7,25 @@ import {
     TableVariant,
     sortable,
     SortByDirection,
+    cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 
 import ConnectionError from "./error";
-import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
+import Preloader from "./preloader";
+import ForgeIcon from "./forge_icon";
+import StatusLabel from "./status_label";
 
-const StatusLabel = (props) => {
-    if (props.status == "failed") {
-        return <Label color="red">Failed</Label>;
-    } else if (props.status == "passed") {
-        return <Label color="green">Passed</Label>;
-    } else if (props.status == "error") {
-        return <Label color="orange">Error</Label>;
-    } else {
-        return <Label color="purple">{props.status}</Label>;
-    }
-};
-
-const TestingFarmResultsTable = () => {
+const SRPMBuildstable = () => {
+    // Headings
     const column_list = [
-        "Trigger",
-        "Pipeline",
-        { title: "Chroot", transforms: [sortable] },
-        { title: "Status", transforms: [sortable] },
-        "Results",
+        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
+        { title: "Trigger", transforms: [cellWidth(15)] },
+        { title: "Success", transforms: [cellWidth(10)] },
+        { title: "Time Submitted", transforms: [cellWidth(15)] },
+        { title: "Results", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State
@@ -46,7 +38,7 @@ const TestingFarmResultsTable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${apiURL}/testing-farm/results?page=${page}&per_page=50`)
+        fetch(`${process.env.REACT_APP_API_URL}/srpm-builds?page=${page}&per_page=20`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -59,41 +51,41 @@ const TestingFarmResultsTable = () => {
             });
     }
 
+    // Convert fetched json into row format that the table can read
     function jsonToRow(res) {
         let rowsList = [];
-        res.map((test_results) => {
+
+        res.map((srpm_builds) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
+                            <ForgeIcon projectURL={srpm_builds.project_url} />
+                        ),
+                    },
+                    {
+                        title: (
                             <strong>
-                                <TriggerLink builds={test_results} />
+                                <TriggerLink builds={srpm_builds} />
                             </strong>
                         ),
                     },
                     {
-                        title: (
-                            <TFLogsURL
-                                link={test_results.web_url}
-                                pipeline={test_results.pipeline_id}
-                            />
-                        ),
+                        title: <StatusLabel success={srpm_builds.success} />,
                     },
                     {
-                        title: (
-                            <Label color="blue">{test_results.target}</Label>
-                        ),
-                    },
-                    {
-                        title: <StatusLabel status={test_results.status} />,
+                        title: <span>{srpm_builds.build_submitted_time}</span>,
                     },
                     {
                         title: (
                             <strong>
                                 <a
-                                    href={`/results/testing-farm/${test_results.packit_id}`}
+                                    href={
+                                        "/results/srpm-builds/" +
+                                        srpm_builds.srpm_build_id
+                                    }
                                 >
-                                    {test_results.packit_id}
+                                    {srpm_builds.srpm_build_id}
                                 </a>
                             </strong>
                         ),
@@ -102,7 +94,6 @@ const TestingFarmResultsTable = () => {
             };
             rowsList.push(singleRow);
         });
-        //   console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -119,12 +110,6 @@ const TestingFarmResultsTable = () => {
                 ? sortedRows
                 : sortedRows.reverse()
         );
-    }
-
-    // Load more items
-    function nextPage() {
-        // console.log("Next Page is " + page);
-        fetchData();
     }
 
     // Executes fetchData on first render of component
@@ -158,7 +143,7 @@ const TestingFarmResultsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={nextPage}>
+                <Button variant="control" onClick={fetchData}>
                     Load More
                 </Button>
             </center>
@@ -166,18 +151,4 @@ const TestingFarmResultsTable = () => {
     );
 };
 
-const TFLogsURL = (props) => {
-    // when the testing farm test is running, there is no url stored
-    // so instead of showing a fake link that leads to 404, do not show the link at all
-    if (props.link !== null) {
-        return (
-            <a target="_blank" href={props.link}>
-                {props.pipeline}
-            </a>
-        );
-    } else {
-        return <span>{props.pipeline}</span>;
-    }
-};
-
-export default TestingFarmResultsTable;
+export default SRPMBuildstable;

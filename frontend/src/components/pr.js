@@ -5,6 +5,7 @@ import Preloader from "./preloader";
 import TriggerInfo from "./trigger_info";
 
 import {
+    Button,
     DataList,
     DataListToggle,
     DataListCell,
@@ -14,25 +15,29 @@ import {
     DataListItemRow,
 } from "@patternfly/react-core";
 
-const BranchList = (props) => {
+const PullRequestList = (props) => {
     // Local State
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
+    const [page, setPage] = useState(1);
     const [expanded, setExpanded] = useState({});
-    const [branchList, setBranchList] = useState([]);
+    const [prList, setPRList] = useState([]);
 
-    // Repo Info
+    // PR Info
     const forge = props.forge;
     const namespace = props.namespace;
     const repoName = props.repoName;
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${apiURL}/projects/${forge}/${namespace}/${repoName}/branches`)
+        fetch(
+            `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/prs?page=${page}&per_page=10`
+        )
             .then((response) => response.json())
             .then((data) => {
-                setBranchList(branchList.concat(data));
+                setPRList(prList.concat(data));
                 setLoaded(true);
+                setPage(page + 1); // set next page
             })
             .catch((err) => {
                 console.log(err);
@@ -46,16 +51,16 @@ const BranchList = (props) => {
         fetchData();
     }, []);
 
-    function onToggle(branchName) {
+    function onToggle(prID) {
         // We cant just invert the previous state here
         // because its undefined for the first time
-        if (expanded[branchName]) {
+        if (expanded[prID]) {
             let copyExpanded = { ...expanded };
-            copyExpanded[branchName] = false;
+            copyExpanded[prID] = false;
             setExpanded(copyExpanded);
         } else {
             let copyExpanded = { ...expanded };
-            copyExpanded[branchName] = true;
+            copyExpanded[prID] = true;
             setExpanded(copyExpanded);
         }
     }
@@ -72,40 +77,46 @@ const BranchList = (props) => {
 
     return (
         <div>
-            <DataList aria-label="Branch List" isCompact>
-                {branchList.map((branch, index) => (
+            <DataList aria-label="PR List" isCompact>
+                {prList.map((pr, index) => (
                     <DataListItem
-                        aria-labelledby="Branch List Item"
+                        aria-labelledby="PR List Item"
                         key={index}
-                        isExpanded={expanded[branch.branch]}
+                        isExpanded={expanded[pr.pr_id]}
                     >
                         <DataListItemRow>
                             <DataListToggle
-                                onClick={() => onToggle(branch.branch)}
-                                isExpanded={expanded[branch.branch]}
-                                id={`branch-${branch.branch}`}
+                                onClick={() => onToggle(pr.pr_id)}
+                                isExpanded={expanded[pr.pr_id]}
+                                id={`pull-request-${pr.pr_id}`}
                                 aria-controls="ex-expand1"
                             />
                             <DataListItemCells
                                 dataListCells={[
-                                    <DataListCell key="Branch Name">
-                                        <div>#{branch.branch}</div>
+                                    <DataListCell key="data-list-title-pr">
+                                        <div>#{pr.pr_id}</div>
                                     </DataListCell>,
                                 ]}
                             />
                         </DataListItemRow>
                         <DataListContent
-                            aria-label="Branch Content"
+                            aria-label="PR Content"
                             id="ex-expand1"
-                            isHidden={!expanded[branch.branch]}
+                            isHidden={!expanded[pr.pr_id]}
                         >
-                            <TriggerInfo trigger={branch} />
+                            <TriggerInfo trigger={pr} />
                         </DataListContent>
                     </DataListItem>
                 ))}
             </DataList>
+            <center>
+                <br />
+                <Button variant="control" onClick={fetchData}>
+                    Load More
+                </Button>
+            </center>
         </div>
     );
 };
 
-export default BranchList;
+export default PullRequestList;

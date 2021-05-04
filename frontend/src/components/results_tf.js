@@ -22,7 +22,7 @@ const ResultsPageTestingFarm = (props) => {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch(`${apiURL}/testing-farm/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/testing-farm/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);

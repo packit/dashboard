@@ -10,22 +10,22 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button } from "@patternfly/react-core";
-
-import ConnectionError from "./error";
+import { Button, Label, Tooltip } from "@patternfly/react-core";
 import TriggerLink from "./trigger_link";
+import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-import StatusLabel from "./status_label";
+import ChrootStatus from "./chroot_status";
 
-const SRPMBuildstable = () => {
+const KojiBuildsTable = () => {
     // Headings
     const column_list = [
-        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(15)] },
-        { title: "Success", transforms: [cellWidth(10)] },
-        { title: "Time Submitted", transforms: [cellWidth(15)] },
-        { title: "Results", transforms: [sortable, cellWidth(10)] },
+        "", // no title, empty space for the forge icon
+        { title: "Trigger", transforms: [cellWidth(25)] },
+        "Chroot",
+        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
+        { title: "Build Logs", transforms: [sortable, cellWidth(15)] },
+        "Results",
     ];
 
     // Local State
@@ -38,7 +38,7 @@ const SRPMBuildstable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${apiURL}/srpm-builds?page=${page}&per_page=20`)
+        fetch(`${process.env.REACT_APP_API_URL}/koji-builds?page=${page}&per_page=20`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -55,37 +55,49 @@ const SRPMBuildstable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((srpm_builds) => {
+        res.map((koji_builds) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
-                            <ForgeIcon projectURL={srpm_builds.project_url} />
+                            <ForgeIcon projectURL={koji_builds.project_url} />
                         ),
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={srpm_builds} />
+                                <TriggerLink builds={koji_builds} />
                             </strong>
                         ),
                     },
                     {
-                        title: <StatusLabel success={srpm_builds.success} />,
+                        title: (
+                            <ChrootStatus
+                                chroot={koji_builds.chroot}
+                                status={koji_builds.status}
+                            />
+                        ),
                     },
+                    koji_builds.build_submitted_time,
                     {
-                        title: <span>{srpm_builds.build_submitted_time}</span>,
+                        title: (
+                            <strong>
+                                <a href={koji_builds.web_url} target="_blank">
+                                    {koji_builds.build_id}
+                                </a>
+                            </strong>
+                        ),
                     },
                     {
                         title: (
                             <strong>
                                 <a
                                     href={
-                                        "/results/srpm-builds/" +
-                                        srpm_builds.srpm_build_id
+                                        "/results/koji-builds/" +
+                                        koji_builds.packit_id
                                     }
                                 >
-                                    {srpm_builds.srpm_build_id}
+                                    {koji_builds.packit_id}
                                 </a>
                             </strong>
                         ),
@@ -94,6 +106,7 @@ const SRPMBuildstable = () => {
             };
             rowsList.push(singleRow);
         });
+        // console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -151,4 +164,4 @@ const SRPMBuildstable = () => {
     );
 };
 
-export default SRPMBuildstable;
+export default KojiBuildsTable;

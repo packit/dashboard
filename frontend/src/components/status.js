@@ -15,7 +15,7 @@ const Status = () => {
     const [title, setTitle] = useState("Checking....");
 
     function fetchHealth() {
-        fetch(`${apiURL}/healthz`)
+        fetch(`${process.env.REACT_APP_API_URL}/healthz`)
             .then((response) => {
                 console.log(response.status);
                 if (response.ok) {

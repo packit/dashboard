@@ -7,24 +7,32 @@ import {
     TableVariant,
     sortable,
     SortByDirection,
-    cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
-import TriggerLink from "./trigger_link";
+import { Button, Label } from "@patternfly/react-core";
+
 import ConnectionError from "./error";
 import Preloader from "./preloader";
-import ForgeIcon from "./forge_icon";
-import ChrootStatus from "./chroot_status";
+import TriggerLink from "./trigger_link";
 
-const KojiBuildsTable = () => {
-    // Headings
+const StatusLabel = (props) => {
+    if (props.status == "failed") {
+        return <Label color="red">Failed</Label>;
+    } else if (props.status == "passed") {
+        return <Label color="green">Passed</Label>;
+    } else if (props.status == "error") {
+        return <Label color="orange">Error</Label>;
+    } else {
+        return <Label color="purple">{props.status}</Label>;
+    }
+};
+
+const TestingFarmResultsTable = () => {
     const column_list = [
-        "", // no title, empty space for the forge icon
-        { title: "Trigger", transforms: [cellWidth(25)] },
-        "Chroot",
-        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
-        { title: "Build Logs", transforms: [sortable, cellWidth(15)] },
+        "Trigger",
+        "Pipeline",
+        { title: "Chroot", transforms: [sortable] },
+        { title: "Status", transforms: [sortable] },
         "Results",
     ];
 
@@ -38,7 +46,7 @@ const KojiBuildsTable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${apiURL}/koji-builds?page=${page}&per_page=20`)
+        fetch(`${process.env.REACT_APP_API_URL}/testing-farm/results?page=${page}&per_page=50`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -51,53 +59,41 @@ const KojiBuildsTable = () => {
             });
     }
 
-    // Convert fetched json into row format that the table can read
     function jsonToRow(res) {
         let rowsList = [];
-
-        res.map((koji_builds) => {
+        res.map((test_results) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
-                            <ForgeIcon projectURL={koji_builds.project_url} />
-                        ),
-                    },
-                    {
-                        title: (
                             <strong>
-                                <TriggerLink builds={koji_builds} />
+                                <TriggerLink builds={test_results} />
                             </strong>
                         ),
                     },
                     {
                         title: (
-                            <ChrootStatus
-                                chroot={koji_builds.chroot}
-                                status={koji_builds.status}
+                            <TFLogsURL
+                                link={test_results.web_url}
+                                pipeline={test_results.pipeline_id}
                             />
                         ),
                     },
-                    koji_builds.build_submitted_time,
                     {
                         title: (
-                            <strong>
-                                <a href={koji_builds.web_url} target="_blank">
-                                    {koji_builds.build_id}
-                                </a>
-                            </strong>
+                            <Label color="blue">{test_results.target}</Label>
                         ),
+                    },
+                    {
+                        title: <StatusLabel status={test_results.status} />,
                     },
                     {
                         title: (
                             <strong>
                                 <a
-                                    href={
-                                        "/results/koji-builds/" +
-                                        koji_builds.packit_id
-                                    }
+                                    href={`/results/testing-farm/${test_results.packit_id}`}
                                 >
-                                    {koji_builds.packit_id}
+                                    {test_results.packit_id}
                                 </a>
                             </strong>
                         ),
@@ -106,7 +102,7 @@ const KojiBuildsTable = () => {
             };
             rowsList.push(singleRow);
         });
-        // console.log(rowsList);
+        //   console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -123,6 +119,12 @@ const KojiBuildsTable = () => {
                 ? sortedRows
                 : sortedRows.reverse()
         );
+    }
+
+    // Load more items
+    function nextPage() {
+        // console.log("Next Page is " + page);
+        fetchData();
     }
 
     // Executes fetchData on first render of component
@@ -156,7 +158,7 @@ const KojiBuildsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={fetchData}>
+                <Button variant="control" onClick={nextPage}>
                     Load More
                 </Button>
             </center>
@@ -164,4 +166,18 @@ const KojiBuildsTable = () => {
     );
 };
 
-export default KojiBuildsTable;
+const TFLogsURL = (props) => {
+    // when the testing farm test is running, there is no url stored
+    // so instead of showing a fake link that leads to 404, do not show the link at all
+    if (props.link !== null) {
+        return (
+            <a target="_blank" href={props.link}>
+                {props.pipeline}
+            </a>
+        );
+    } else {
+        return <span>{props.pipeline}</span>;
+    }
+};
+
+export default TestingFarmResultsTable;

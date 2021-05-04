@@ -14,7 +14,7 @@ import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
 import ChrootStatus from "./chroot_status";
 
-const ResultsPageCopr = (props) => {
+const ResultsPageKoji = (props) => {
     let id = props.match.params.id;
 
     const [hasError, setErrors] = useState(false);
@@ -22,7 +22,7 @@ const ResultsPageCopr = (props) => {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch(`${apiURL}/copr-builds/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/koji-builds/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);
@@ -64,7 +64,7 @@ const ResultsPageCopr = (props) => {
         <div>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
-                    <Text component="h1">Copr Build Results</Text>
+                    <Text component="h1">Koji Build Results</Text>
                     <ChrootStatus chroot={data.chroot} status={data.status} />
                     <Text component="p">
                         <strong>
@@ -98,7 +98,7 @@ const ResultsPageCopr = (props) => {
                                 </tr>
                                 <tr>
                                     <td>
-                                        <strong>Copr URL</strong>
+                                        <strong>Koji URL</strong>
                                     </td>
                                     <td>
                                         <a href={data.web_url}>Web URL</a>
@@ -143,45 +143,9 @@ const ResultsPageCopr = (props) => {
                         </table>
                     </CardBody>
                 </Card>
-                <Card>
-                    <CardBody>
-                        <Text component="p">
-                            <strong>
-                                You can install the built RPMs by following
-                                these steps:
-                            </strong>
-                        </Text>
-                        <br />
-                        <ul className="pf-c-list">
-                            <li>
-                                <code>
-                                    sudo yum install -y dnf-plugins-core
-                                </code>{" "}
-                                on RHEL 8 or CentOS Stream
-                            </li>
-                            <li>
-                                <code>
-                                    sudo dnf install -y dnf-plugins-core
-                                </code>{" "}
-                                on Fedora
-                            </li>
-                            <li>
-                                <code>
-                                    sudo dnf copr enable {data.copr_owner}/
-                                    {data.copr_project}
-                                </code>
-                            </li>
-                        </ul>
-                        <Text component="p">
-                            <br />
-                            Please note that the RPMs should be used only in a
-                            testing environment.
-                        </Text>
-                    </CardBody>
-                </Card>
             </PageSection>
         </div>
     );
 };
 
-export { ResultsPageCopr };
+export { ResultsPageKoji };
