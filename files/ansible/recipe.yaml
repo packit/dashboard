@@ -8,6 +8,11 @@
     - import_tasks: common.yaml
     - import_tasks: httpd.yaml
 
+    - name: install node modules
+      command:
+        chdir: "{{ packit_dashboard_path }}"
+        cmd: npm install
+
     - name: bundle javascript
       command:
         chdir: "{{ packit_dashboard_path }}"
