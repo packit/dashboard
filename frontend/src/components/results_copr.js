@@ -60,6 +60,44 @@ const ResultsPageCopr = (props) => {
         );
     }
 
+    const installationInstructions =
+        data.status == "success" ? (
+            <Card>
+                <CardBody>
+                    <Text component="p">
+                        <strong>
+                            You can install the built RPMs by following these
+                            steps:
+                        </strong>
+                    </Text>
+                    <br />
+                    <ul className="pf-c-list">
+                        <li>
+                            <code>sudo yum install -y dnf-plugins-core</code> on
+                            RHEL 8 or CentOS Stream
+                        </li>
+                        <li>
+                            <code>sudo dnf install -y dnf-plugins-core</code> on
+                            Fedora
+                        </li>
+                        <li>
+                            <code>
+                                sudo dnf copr enable {data.copr_owner}/
+                                {data.copr_project}
+                            </code>
+                        </li>
+                    </ul>
+                    <Text component="p">
+                        <br />
+                        Please note that the RPMs should be used only in a
+                        testing environment.
+                    </Text>
+                </CardBody>
+            </Card>
+        ) : (
+            ""
+        );
+
     return (
         <div>
             <PageSection variant={PageSectionVariants.light}>
@@ -143,42 +181,7 @@ const ResultsPageCopr = (props) => {
                         </table>
                     </CardBody>
                 </Card>
-                <Card>
-                    <CardBody>
-                        <Text component="p">
-                            <strong>
-                                You can install the built RPMs by following
-                                these steps:
-                            </strong>
-                        </Text>
-                        <br />
-                        <ul className="pf-c-list">
-                            <li>
-                                <code>
-                                    sudo yum install -y dnf-plugins-core
-                                </code>{" "}
-                                on RHEL 8 or CentOS Stream
-                            </li>
-                            <li>
-                                <code>
-                                    sudo dnf install -y dnf-plugins-core
-                                </code>{" "}
-                                on Fedora
-                            </li>
-                            <li>
-                                <code>
-                                    sudo dnf copr enable {data.copr_owner}/
-                                    {data.copr_project}
-                                </code>
-                            </li>
-                        </ul>
-                        <Text component="p">
-                            <br />
-                            Please note that the RPMs should be used only in a
-                            testing environment.
-                        </Text>
-                    </CardBody>
-                </Card>
+                {installationInstructions}
             </PageSection>
         </div>
     );
