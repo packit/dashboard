@@ -10,14 +10,14 @@ install-dependencies:
 	cd frontend && yarn install
 	make transpile-prod
 
-# this will transpile jsx into js, minify everything and generate static js for production builds 
+# this will transpile jsx into js, minify everything and generate static js for production builds
 transpile-prod:
 	cd frontend && REACT_APP_API_URL=$(API_STG) yarn build
 
 
 # For Development Mode Only:
 # this will start the react dev server on :3000 (by default)
-# and flask on :5000 
+# and flask on :5000
 # do not use the flask port for frontend dev, as that will only show the frontend from the latest transpile-prod
 # interact with :3000 (react dev server) for frontend dev and it will automatically proxy non react requests to flask
 # while also proxying headers and cookies

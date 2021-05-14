@@ -46,7 +46,9 @@ const TestingFarmResultsTable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${process.env.REACT_APP_API_URL}/testing-farm/results?page=${page}&per_page=50`)
+        fetch(
+            `${process.env.REACT_APP_API_URL}/testing-farm/results?page=${page}&per_page=50`
+        )
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);

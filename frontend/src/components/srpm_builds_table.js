@@ -38,7 +38,9 @@ const SRPMBuildstable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${process.env.REACT_APP_API_URL}/srpm-builds?page=${page}&per_page=20`)
+        fetch(
+            `${process.env.REACT_APP_API_URL}/srpm-builds?page=${page}&per_page=20`
+        )
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
