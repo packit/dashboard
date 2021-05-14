@@ -3,7 +3,7 @@
   hosts: all
   vars:
     home_path: "{{ lookup('env', 'HOME') }}"
-    packit_dashboard_path: /src
+    packit_dashboard_path: /src/frontend
   tasks:
     - import_tasks: common.yaml
     - import_tasks: httpd.yaml
@@ -11,4 +11,4 @@
     - name: bundle javascript
       command:
         chdir: "{{ packit_dashboard_path }}"
-        cmd: npx webpack --mode production --optimize-minimize
+        cmd: npm run build

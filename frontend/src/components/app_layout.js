@@ -11,7 +11,7 @@ import {
     SkipToContent,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
-import packitLogo from "../../static/logo.png";
+import packitLogo from "../static/logo.png";
 
 const AppLayout = ({ children }) => {
     const logoProps = {

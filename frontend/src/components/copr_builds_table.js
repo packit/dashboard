@@ -10,22 +10,54 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button } from "@patternfly/react-core";
-
-import ConnectionError from "./error";
+import { Button, Label, Tooltip } from "@patternfly/react-core";
 import TriggerLink from "./trigger_link";
+import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-import StatusLabel from "./status_label";
 
-const SRPMBuildstable = () => {
+// Add every target to the chroots column and color code according to status
+const ChrootStatuses = (props) => {
+    let labels = [];
+
+    for (let chroot in props.ids) {
+        const id = props.ids[chroot];
+        const status = props.statuses[chroot];
+
+        let color = "purple";
+        switch (status) {
+            case "success":
+                color = "green";
+                break;
+            case "failure":
+                color = "red";
+                break;
+        }
+
+        labels.push(
+            <Tooltip content={status}>
+                <span style={{ padding: "2px" }}>
+                    <Label color={color} href={"/results/copr-builds/" + id}>
+                        {chroot}
+                    </Label>
+                </span>
+            </Tooltip>
+        );
+    }
+
+    console.log(labels);
+    return <div>{labels}</div>;
+};
+
+const CoprBuildsTable = () => {
     // Headings
     const column_list = [
-        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(15)] },
-        { title: "Success", transforms: [cellWidth(10)] },
-        { title: "Time Submitted", transforms: [cellWidth(15)] },
-        { title: "Results", transforms: [sortable, cellWidth(10)] },
+        "", // no title, empty space for the forge icon
+        { title: "Trigger", transforms: [cellWidth(25)] },
+        "Chroots",
+        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
+        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
+        // "Ref",
     ];
 
     // Local State
@@ -38,7 +70,9 @@ const SRPMBuildstable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${apiURL}/srpm-builds?page=${page}&per_page=20`)
+        fetch(
+            `${process.env.REACT_APP_API_URL}/copr-builds?page=${page}&per_page=20`
+        )
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -55,45 +89,45 @@ const SRPMBuildstable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((srpm_builds) => {
+        res.map((copr_builds) => {
             let singleRow = {
                 cells: [
                     {
                         title: (
-                            <ForgeIcon projectURL={srpm_builds.project_url} />
+                            <ForgeIcon projectURL={copr_builds.project_url} />
                         ),
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={srpm_builds} />
+                                <TriggerLink builds={copr_builds} />
                             </strong>
                         ),
                     },
                     {
-                        title: <StatusLabel success={srpm_builds.success} />,
+                        title: (
+                            <ChrootStatuses
+                                statuses={copr_builds.status_per_chroot}
+                                ids={copr_builds.packit_id_per_chroot}
+                            />
+                        ),
                     },
-                    {
-                        title: <span>{srpm_builds.build_submitted_time}</span>,
-                    },
+                    copr_builds.build_submitted_time,
                     {
                         title: (
                             <strong>
-                                <a
-                                    href={
-                                        "/results/srpm-builds/" +
-                                        srpm_builds.srpm_build_id
-                                    }
-                                >
-                                    {srpm_builds.srpm_build_id}
+                                <a href={copr_builds.web_url} target="_blank">
+                                    {copr_builds.build_id}
                                 </a>
                             </strong>
                         ),
                     },
+                    // copr_builds.ref.substring(0, 8),
                 ],
             };
             rowsList.push(singleRow);
         });
+        // console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -112,8 +146,20 @@ const SRPMBuildstable = () => {
         );
     }
 
-    // Executes fetchData on first render of component
-    // look at detailed comment in ./copr_builds_table.js
+    // Load more items
+    function nextPage() {
+        // console.log("Next Page is " + page);
+        fetchData();
+    }
+
+    // useEffect by default executes on every render of component
+    // here we only need it to execute on mount / first render
+    // so I simply added the second parameter (empty array three lines after this comment)
+
+    // But if you want different behaviour for first render and updated render
+    // look at https://stackoverflow.com/a/55075818/3809115
+    // and add code after the last line of the if statement in the ans
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -143,7 +189,7 @@ const SRPMBuildstable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={fetchData}>
+                <Button variant="control" onClick={nextPage}>
                     Load More
                 </Button>
             </center>
@@ -151,4 +197,4 @@ const SRPMBuildstable = () => {
     );
 };
 
-export default SRPMBuildstable;
+export default CoprBuildsTable;

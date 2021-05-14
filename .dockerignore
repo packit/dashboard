@@ -1,2 +1,6 @@
 secrets
 *.vscode/
+build
+node_modules
+.env
+yarn.lock

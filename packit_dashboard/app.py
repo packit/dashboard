@@ -2,8 +2,10 @@ from flask import Flask
 from packit_dashboard.home.routes import home
 from packit_dashboard.api.routes import api
 
-app = Flask("Packit Service Dashboard")
-
+app = Flask(
+    "Packit Service Dashboard",
+    static_folder="frontend/build/static",
+)
 
 app.register_blueprint(api)
 # Note: Declare any other flask blueprints or routes above this

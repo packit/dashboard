@@ -22,7 +22,7 @@ const ResultsPageSRPM = (props) => {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch(`${apiURL}/srpm-builds/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/srpm-builds/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);

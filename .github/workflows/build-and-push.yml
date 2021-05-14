@@ -24,16 +24,20 @@ jobs:
         run: |
           branch=${GITHUB_REF#refs/heads/}
           tag=""
+          api=""
           case $branch in
               main)
                   tag="stg latest"
+                  api="https://stg.packit.dev/api"
                   ;;
               stable)
                   tag="prod"
+                  api="https://prod.packit.dev/api"
                   ;;
           esac
           echo "::set-output name=branch::$branch"
           echo "::set-output name=tag::$tag"
+          echo "::set-output name=api::$api"
         id: branch_tag
 
       - name: Build Image
@@ -44,6 +48,7 @@ jobs:
           dockerfiles: ${{ matrix.dockerfile }}
           image: ${{ matrix.image }}
           tags: ${{ steps.branch_tag.outputs.tag }}
+          build-args: REACT_APP_API_URL=${{ steps.branch_tag.outputs.api }}
           oci: true
 
       - name: Push To Quay

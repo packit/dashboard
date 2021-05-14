@@ -31,7 +31,7 @@ const PullRequestList = (props) => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
         fetch(
-            `/api/projects/${forge}/${namespace}/${repoName}/prs?page=${page}&per_page=10`
+            `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/prs?page=${page}&per_page=10`
         )
             .then((response) => response.json())
             .then((data) => {
