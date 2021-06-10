@@ -63,6 +63,27 @@ const Dashboard = () => (
                 <GridItem lg={3}>
                     <Card>
                         <CardHeader>
+                            <BugIcon />
+                            &nbsp;<b>Issues</b>
+                        </CardHeader>
+
+                        <CardBody>
+                            If you ran into any issue, either using Packit
+                            Service or the tooling locally, try to find the
+                            project that is as closely related to your issue as
+                            possible (if you don't get it right, we can always
+                            fix it) and follow our guidelines regarding{" "}
+                            <a href="https://github.com/packit/contributing#reporting-bugs">
+                                reporting issues
+                            </a>
+                            .
+                        </CardBody>
+                    </Card>
+                </GridItem>
+
+                <GridItem lg={3}>
+                    <Card>
+                        <CardHeader>
                             <CodeIcon />
                             &nbsp;<b>Source code on GitHub</b>
                         </CardHeader>
@@ -77,26 +98,6 @@ const Dashboard = () => (
                             to follow our{" "}
                             <a href="https://github.com/packit/contributing">
                                 contribution guidelines
-                            </a>
-                        </CardBody>
-                    </Card>
-                </GridItem>
-
-                <GridItem lg={3}>
-                    <Card>
-                        <CardHeader>
-                            <BugIcon />
-                            &nbsp;<b>Issues</b>
-                        </CardHeader>
-
-                        <CardBody>
-                            If you ran into any issue, either using Packit
-                            Service or the tooling locally, try to find the
-                            project that is as closely related to your issue as
-                            possible (if you don't get it right, we can always
-                            fix it) and follow our guidelines regarding{" "}
-                            <a href="https://github.com/packit/contributing#reporting-bugs">
-                                reporting issues
                             </a>
                             .
                         </CardBody>
