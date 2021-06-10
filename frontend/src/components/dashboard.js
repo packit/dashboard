@@ -15,6 +15,7 @@ import {
     CodeIcon,
     BellIcon,
     CatalogIcon,
+    OutlinedCommentsIcon,
 } from "@patternfly/react-icons";
 
 const Dashboard = () => (
@@ -122,7 +123,8 @@ const Dashboard = () => (
                 <GridItem lg={3}>
                     <Card>
                         <CardHeader>
-                            <b>Contact us</b>
+                            <OutlinedCommentsIcon />
+                            &nbsp;<b>Contact us</b>
                         </CardHeader>
 
                         <CardBody>
