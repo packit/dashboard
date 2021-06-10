@@ -7,7 +7,6 @@ import { Projects } from "./components/projects";
 import { Namespace } from "./components/namespace";
 import { ProjectInfo } from "./components/project_info";
 import { NotFound } from "./components/not_found";
-import { Status } from "./components/status";
 import { ResultsPageSRPM } from "./components/results_srpm";
 import { ResultsPageCopr } from "./components/results_copr";
 import { ResultsPageKoji } from "./components/results_koji";
@@ -35,13 +34,6 @@ const routes = [
         label: "Projects",
         path: "/projects",
         title: "Projects | Packit Service",
-    },
-    {
-        component: Status,
-        exact: true,
-        label: "Status",
-        path: "/status",
-        title: "Status | Packit Service",
     },
 ];
 
