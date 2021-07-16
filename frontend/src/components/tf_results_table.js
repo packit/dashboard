@@ -33,6 +33,7 @@ const TestingFarmResultsTable = () => {
         "Pipeline",
         { title: "Chroot", transforms: [sortable] },
         { title: "Status", transforms: [sortable] },
+        "Time Submitted",
         "Results",
     ];
 
@@ -88,6 +89,9 @@ const TestingFarmResultsTable = () => {
                     },
                     {
                         title: <StatusLabel status={test_results.status} />,
+                    },
+                    {
+                        title: test_results.submitted_time || "not provided",
                     },
                     {
                         title: (
