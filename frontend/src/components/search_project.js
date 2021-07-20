@@ -27,23 +27,19 @@ const SearchProject = () => {
 
     function goToProjectDetails() {
         if (forge && namespace && repoName) {
-            if (repoName === "*") {
-                history.push(`/projects/${forge}/${namespace}`);
-            } else {
-                history.push(`/projects/${forge}/${namespace}/${repoName}`);
-            }
+            history.push(`/projects/${forge}/${namespace}/${repoName}`);
         } else if (forge && namespace) {
             history.push(`/projects/${forge}/${namespace}`);
+        } else if (forge && !namespace && !repoName) {
+            history.push(`/projects/${forge}`);
         } else {
             setWarning(true);
         }
     }
 
-    let emptyFormWarning;
+    let invalidFormWarning;
     if (showWarning) {
-        emptyFormWarning = (
-            <Alert variant="danger" title="Input fields should not be empty" />
-        );
+        invalidFormWarning = <Alert variant="danger" title="Invalid input" />;
     }
 
     return (
@@ -59,7 +55,7 @@ const SearchProject = () => {
                                 aria-describedby="forge"
                                 id="project-search-forge"
                                 value={forge}
-                                placeholder="github.com"
+                                placeholder="forge (e.g. github.com, required)"
                                 onChange={(e) => setForge(e)}
                             />
                         </GridItem>
@@ -83,7 +79,7 @@ const SearchProject = () => {
                                 aria-describedby="repo-name"
                                 id="project-search-repo-name"
                                 value={repoName}
-                                placeholder="the-repo-name or *"
+                                placeholder="the-repo-name"
                                 onChange={(e) => setRepoName(e)}
                             />
                         </GridItem>
@@ -100,7 +96,7 @@ const SearchProject = () => {
                         </GridItem>
                     </Grid>
 
-                    {emptyFormWarning}
+                    {invalidFormWarning}
                 </Form>
             </CardBody>
         </Card>

@@ -11,6 +11,7 @@ import { ResultsPageSRPM } from "./components/results_srpm";
 import { ResultsPageCopr } from "./components/results_copr";
 import { ResultsPageKoji } from "./components/results_koji";
 import { ResultsPageTestingFarm } from "./components/results_tf";
+import { Forge } from "./components/forge";
 
 // Main Menu routes
 const routes = [
@@ -60,6 +61,7 @@ const AppRoutes = () => (
             exact
             title="Namespace"
         />
+        <Route path="/projects/:forge/" component={Forge} exact title="Forge" />
         <Route
             path="/results/srpm-builds/:id"
             component={ResultsPageSRPM}

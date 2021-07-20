@@ -37,6 +37,8 @@ const ProjectsList = (props) => {
     let jsonLink = `${process.env.REACT_APP_API_URL}/projects?page=${page}&per_page=50`;
     if (props.forge && props.namespace) {
         jsonLink = `${process.env.REACT_APP_API_URL}/projects/${props.forge}/${props.namespace}`;
+    } else if (props.forge) {
+        jsonLink = `${process.env.REACT_APP_API_URL}/projects/${props.forge}?page=${page}&per_page=50`;
     }
 
     function fetchData() {
