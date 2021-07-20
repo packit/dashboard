@@ -52,12 +52,11 @@ const ChrootStatuses = (props) => {
 const CoprBuildsTable = () => {
     // Headings
     const column_list = [
-        "", // no title, empty space for the forge icon
-        { title: "Trigger", transforms: [cellWidth(25)] },
-        "Chroots",
-        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
-        { title: "Build ID", transforms: [sortable, cellWidth(15)] },
-        // "Ref",
+        { title: "", transforms: [cellWidth(5)] }, // space for forge icon
+        { title: "Trigger", transforms: [cellWidth(15)] },
+        { title: "Chroots", transforms: [cellWidth(60)] },
+        { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
+        { title: "COPR Build ID", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State

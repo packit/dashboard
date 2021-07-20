@@ -7,33 +7,46 @@ import {
     TableVariant,
     sortable,
     SortByDirection,
+    cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label } from "@patternfly/react-core";
+import { Button, Label, Tooltip } from "@patternfly/react-core";
 
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
+import ForgeIcon from "./forge_icon";
 
 const StatusLabel = (props) => {
-    if (props.status == "failed") {
-        return <Label color="red">Failed</Label>;
-    } else if (props.status == "passed") {
-        return <Label color="green">Passed</Label>;
-    } else if (props.status == "error") {
-        return <Label color="orange">Error</Label>;
-    } else {
-        return <Label color="purple">{props.status}</Label>;
+    let color = "purple";
+    switch (props.status) {
+        case "failed":
+            color = "red";
+            break;
+        case "passed":
+            color = "green";
+            break;
+        case "error":
+            color = "orange";
+            break;
     }
+
+    return (
+        <Tooltip content={props.status}>
+            <Label color={color} href={props.link}>
+                {props.target}
+            </Label>
+        </Tooltip>
+    );
 };
 
 const TestingFarmResultsTable = () => {
     const column_list = [
-        "Trigger",
-        "Pipeline",
-        { title: "Chroot", transforms: [sortable] },
-        { title: "Status", transforms: [sortable] },
-        "Results",
+        { title: "", transforms: [cellWidth(5)] }, // space for forge icon
+        { title: "Trigger", transforms: [cellWidth(35)] },
+        { title: "Target", transforms: [sortable, cellWidth(20)] },
+        { title: "Time Submitted", transforms: [cellWidth(20)] },
+        { title: "Results", transforms: [cellWidth(20)] },
     ];
 
     // Local State
@@ -68,26 +81,35 @@ const TestingFarmResultsTable = () => {
                 cells: [
                     {
                         title: (
+                            <ForgeIcon projectURL={test_results.project_url} />
+                        ),
+                    },
+                    {
+                        title: (
                             <strong>
                                 <TriggerLink builds={test_results} />
                             </strong>
                         ),
                     },
+                    // {
+                    //     title: (
+                    //         <TFLogsURL
+                    //             link={test_results.web_url}
+                    //             pipeline={test_results.pipeline_id}
+                    //         />
+                    //     ),
+                    // },
                     {
                         title: (
-                            <TFLogsURL
+                            <StatusLabel
+                                status={test_results.status}
+                                target={test_results.target}
                                 link={test_results.web_url}
-                                pipeline={test_results.pipeline_id}
                             />
                         ),
                     },
                     {
-                        title: (
-                            <Label color="blue">{test_results.target}</Label>
-                        ),
-                    },
-                    {
-                        title: <StatusLabel status={test_results.status} />,
+                        title: test_results.submitted_time || "not provided",
                     },
                     {
                         title: (
