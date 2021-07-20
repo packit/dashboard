@@ -21,11 +21,11 @@ import StatusLabel from "./status_label";
 const SRPMBuildstable = () => {
     // Headings
     const column_list = [
-        { title: "Forge", transforms: [cellWidth(10)] }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(15)] },
-        { title: "Success", transforms: [cellWidth(10)] },
-        { title: "Time Submitted", transforms: [cellWidth(15)] },
-        { title: "Results", transforms: [sortable, cellWidth(10)] },
+        { title: "", transforms: [cellWidth(5)] }, // space for forge icon
+        { title: "Trigger", transforms: [cellWidth(35)] },
+        { title: "Success", transforms: [cellWidth(20)] },
+        { title: "Time Submitted", transforms: [cellWidth(20)] },
+        { title: "Results", transforms: [cellWidth(20)] },
     ];
 
     // Local State
