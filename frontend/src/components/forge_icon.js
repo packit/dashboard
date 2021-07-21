@@ -3,10 +3,10 @@ import React from "react";
 import { Tooltip } from "@patternfly/react-core";
 
 import { getHostName } from "../utils/forge_urls";
-import { GithubIcon, GitlabIcon, CodeIcon } from "@patternfly/react-icons";
+import { GithubIcon, GitlabIcon, GitIcon } from "@patternfly/react-icons";
 
 const ForgeIcon = (props) => {
-    const forge = getHostName(props.projectURL);
+    const forge = getHostName(props.url);
 
     let forgeIcon;
     switch (forge) {
@@ -18,7 +18,7 @@ const ForgeIcon = (props) => {
             break;
         default:
             // patternfly doesnt have an icon for pagure
-            forgeIcon = <CodeIcon />;
+            forgeIcon = <GitIcon />;
             break;
     }
 

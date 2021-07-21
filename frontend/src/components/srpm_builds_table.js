@@ -61,9 +61,7 @@ const SRPMBuildstable = () => {
             let singleRow = {
                 cells: [
                     {
-                        title: (
-                            <ForgeIcon projectURL={srpm_builds.project_url} />
-                        ),
+                        title: <ForgeIcon url={srpm_builds.project_url} />,
                     },
                     {
                         title: (

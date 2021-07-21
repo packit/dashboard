@@ -80,9 +80,7 @@ const TestingFarmResultsTable = () => {
             let singleRow = {
                 cells: [
                     {
-                        title: (
-                            <ForgeIcon projectURL={test_results.project_url} />
-                        ),
+                        title: <ForgeIcon url={test_results.project_url} />,
                     },
                     {
                         title: (

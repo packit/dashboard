@@ -7,9 +7,8 @@ import {
     Label,
 } from "@patternfly/react-core";
 
-import { GithubIcon } from "@patternfly/react-icons";
-
 import ProjectsList from "./projects_list";
+import ForgeIcon from "./forge_icon";
 
 const Forge = (props) => {
     let forge = props.match.params.forge;
@@ -19,9 +18,7 @@ const Forge = (props) => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="p">
-                        <Label color="blue" icon={<GithubIcon />}>
-                            {forge}
-                        </Label>
+                        <ForgeIcon url={`https://${forge}`} /> {forge}
                     </Text>
                 </TextContent>
             </PageSection>

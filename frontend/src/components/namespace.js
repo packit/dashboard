@@ -7,8 +7,7 @@ import {
     Label,
 } from "@patternfly/react-core";
 
-import { GithubIcon } from "@patternfly/react-icons";
-
+import ForgeIcon from "./forge_icon";
 import ProjectsList from "./projects_list";
 
 const Namespace = (props) => {
@@ -21,7 +20,10 @@ const Namespace = (props) => {
                 <TextContent>
                     <Text component="h1">{namespace}</Text>
                     <Text component="p">
-                        <Label color="blue" icon={<GithubIcon />}>
+                        <Label
+                            color="blue"
+                            icon={<ForgeIcon url={`https://${forge}`} />}
+                        >
                             {forge}
                         </Label>
                     </Text>
