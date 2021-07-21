@@ -20,7 +20,9 @@ import IssuesList from "./issues";
 import ReleasesList from "./releases";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
-import { GithubIcon, ExternalLinkAltIcon } from "@patternfly/react-icons";
+import ForgeIcon from "./forge_icon";
+
+import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 
 const ProjectInfo = (props) => {
     let forge = props.match.params.forge;
@@ -134,7 +136,10 @@ const ProjectInfo = (props) => {
                 <TextContent>
                     <Text component="h1">{`${namespace}/${repoName}`}</Text>
                     <Text component="p">
-                        <Label color="blue" icon={<GithubIcon />}>
+                        <Label
+                            color="blue"
+                            icon={<ForgeIcon url={projectURL} />}
+                        >
                             {forge}
                         </Label>
                         <span style={{ marginLeft: "10px" }}>
