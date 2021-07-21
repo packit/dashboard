@@ -92,9 +92,7 @@ const CoprBuildsTable = () => {
             let singleRow = {
                 cells: [
                     {
-                        title: (
-                            <ForgeIcon projectURL={copr_builds.project_url} />
-                        ),
+                        title: <ForgeIcon url={copr_builds.project_url} />,
                     },
                     {
                         title: (

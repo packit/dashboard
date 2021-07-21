@@ -61,9 +61,7 @@ const KojiBuildsTable = () => {
             let singleRow = {
                 cells: [
                     {
-                        title: (
-                            <ForgeIcon projectURL={koji_builds.project_url} />
-                        ),
+                        title: <ForgeIcon url={koji_builds.project_url} />,
                     },
                     {
                         title: (
