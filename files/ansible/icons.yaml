@@ -1,0 +1,16 @@
+- name: Acquire favicons
+  shell: "ls /src/files/logos/{{ deployment }}/"
+  register: favicons
+
+- name: Install favicons
+  file:
+    src: "/src/files/logos/{{ deployment }}/{{ item }}"
+    dest: "{{ packit_dashboard_path }}/public/{{ item }}"
+    state: link
+  loop: "{{ favicons.stdout_lines }}"
+
+- name: Install logo for React
+  file:
+    src: "/src/files/logos/{{ deployment }}.png"
+    dest: "{{ packit_dashboard_path }}/src/static/logo.png"
+    state: link

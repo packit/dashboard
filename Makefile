@@ -5,10 +5,14 @@ TEST_TARGET ?= ./tests/
 CONTAINER_ENGINE ?= $(shell command -v podman 2> /dev/null || echo docker)
 API_STG = "https://stg.packit.dev/api"
 
-install-dependencies:
+install-dependencies: install-logos
 	sudo dnf -y install python3-flask yarnpkg npm
 	cd frontend && yarn install
 	make transpile-prod
+
+install-logos:
+	ln -s $(CURDIR)/files/logos/stg/* $(CURDIR)/frontend/public/
+	ln -s $(CURDIR)/files/logos/stg.png $(CURDIR)/frontend/src/static/logo.png
 
 # this will transpile jsx into js, minify everything and generate static js for production builds
 transpile-prod:

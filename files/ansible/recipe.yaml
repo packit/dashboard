@@ -3,10 +3,14 @@
   hosts: all
   vars:
     home_path: "{{ lookup('env', 'HOME') }}"
+    api_url: "{{ lookup('env', 'REACT_APP_API_URL') }}"
+    deployment: "{{ 'prod' if api_url == 'https://prod.packit.dev/api' else 'stg' }}"
     packit_dashboard_path: /src/frontend
   tasks:
     - import_tasks: common.yaml
     - import_tasks: httpd.yaml
+
+    - include_tasks: icons.yaml
 
     - name: install node modules
       command:
