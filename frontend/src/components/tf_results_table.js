@@ -16,29 +16,7 @@ import ConnectionError from "./error";
 import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
 import ForgeIcon from "./forge_icon";
-
-const StatusLabel = (props) => {
-    let color = "purple";
-    switch (props.status) {
-        case "failed":
-            color = "red";
-            break;
-        case "passed":
-            color = "green";
-            break;
-        case "error":
-            color = "orange";
-            break;
-    }
-
-    return (
-        <Tooltip content={props.status}>
-            <Label color={color} href={props.link}>
-                {props.target}
-            </Label>
-        </Tooltip>
-    );
-};
+import { TFStatusLabel } from "./status_labels";
 
 const TestingFarmResultsTable = () => {
     const column_list = [
@@ -46,7 +24,7 @@ const TestingFarmResultsTable = () => {
         { title: "Trigger", transforms: [cellWidth(35)] },
         { title: "Target", transforms: [sortable, cellWidth(20)] },
         { title: "Time Submitted", transforms: [cellWidth(20)] },
-        { title: "Results", transforms: [cellWidth(20)] },
+        { title: "Test Results", transforms: [cellWidth(20)] },
     ];
 
     // Local State
@@ -99,10 +77,10 @@ const TestingFarmResultsTable = () => {
                     // },
                     {
                         title: (
-                            <StatusLabel
+                            <TFStatusLabel
                                 status={test_results.status}
                                 target={test_results.target}
-                                link={test_results.web_url}
+                                link={`/results/testing-farm/${test_results.packit_id}`}
                             />
                         ),
                     },
@@ -112,10 +90,8 @@ const TestingFarmResultsTable = () => {
                     {
                         title: (
                             <strong>
-                                <a
-                                    href={`/results/testing-farm/${test_results.packit_id}`}
-                                >
-                                    {test_results.packit_id}
+                                <a href={test_results.web_url}>
+                                    {test_results.pipeline_id}
                                 </a>
                             </strong>
                         ),

@@ -15,6 +15,7 @@ import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
+import { StatusLabel } from "./status_labels";
 
 // Add every target to the chroots column and color code according to status
 const ChrootStatuses = (props) => {
@@ -24,28 +25,15 @@ const ChrootStatuses = (props) => {
         const id = props.ids[chroot];
         const status = props.statuses[chroot];
 
-        let color = "purple";
-        switch (status) {
-            case "success":
-                color = "green";
-                break;
-            case "failure":
-                color = "red";
-                break;
-        }
-
         labels.push(
-            <Tooltip content={status}>
-                <span style={{ padding: "2px" }}>
-                    <Label color={color} href={"/results/copr-builds/" + id}>
-                        {chroot}
-                    </Label>
-                </span>
-            </Tooltip>
+            <StatusLabel
+                status={status}
+                target={chroot}
+                link={`/results/copr-builds/${id}`}
+            />
         );
     }
 
-    console.log(labels);
     return <div>{labels}</div>;
 };
 

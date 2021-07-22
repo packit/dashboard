@@ -16,7 +16,7 @@ import ConnectionError from "./error";
 import TriggerLink from "./trigger_link";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-import StatusLabel from "./status_label";
+import { StatusLabel, toSRPMStatus } from "./status_labels";
 
 const SRPMBuildstable = () => {
     // Headings
@@ -71,7 +71,12 @@ const SRPMBuildstable = () => {
                         ),
                     },
                     {
-                        title: <StatusLabel success={srpm_builds.success} />,
+                        title: (
+                            <StatusLabel
+                                status={toSRPMStatus(srpm_builds.success)}
+                                link={`/results/srpm-builds/${srpm_builds.srpm_build_id}`}
+                            />
+                        ),
                     },
                     {
                         title: <span>{srpm_builds.build_submitted_time}</span>,

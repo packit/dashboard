@@ -15,17 +15,16 @@ import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-import ChrootStatus from "./chroot_status";
+import { StatusLabel } from "./status_labels";
 
 const KojiBuildsTable = () => {
     // Headings
     const column_list = [
-        "", // no title, empty space for the forge icon
-        { title: "Trigger", transforms: [cellWidth(25)] },
-        "Chroot",
-        { title: "Time Submitted", transforms: [sortable, cellWidth(15)] },
-        { title: "Build Logs", transforms: [sortable, cellWidth(15)] },
-        "Results",
+        { title: "", transforms: [cellWidth(5)] }, // space for forge icon
+        { title: "Trigger", transforms: [cellWidth(35)] },
+        { title: "Target", transforms: [sortable, cellWidth(20)] },
+        { title: "Time Submitted", transforms: [cellWidth(20)] },
+        { title: "Koji Build Logs", transforms: [cellWidth(20)] },
     ];
 
     // Local State
@@ -72,9 +71,10 @@ const KojiBuildsTable = () => {
                     },
                     {
                         title: (
-                            <ChrootStatus
-                                chroot={koji_builds.chroot}
+                            <StatusLabel
+                                target={koji_builds.chroot}
                                 status={koji_builds.status}
+                                link={`/results/koji-builds/${koji_builds.packit_id}`}
                             />
                         ),
                     },
@@ -84,20 +84,6 @@ const KojiBuildsTable = () => {
                             <strong>
                                 <a href={koji_builds.web_url} target="_blank">
                                     {koji_builds.build_id}
-                                </a>
-                            </strong>
-                        ),
-                    },
-                    {
-                        title: (
-                            <strong>
-                                <a
-                                    href={
-                                        "/results/koji-builds/" +
-                                        koji_builds.packit_id
-                                    }
-                                >
-                                    {koji_builds.packit_id}
                                 </a>
                             </strong>
                         ),
