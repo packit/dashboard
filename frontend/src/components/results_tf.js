@@ -104,7 +104,7 @@ const ResultsPageTestingFarm = (props) => {
                                         <a
                                             href={`/results/copr-builds/${data.copr_build_id}`}
                                         >
-                                            Results
+                                            Details
                                         </a>
                                     </td>
                                 </tr>
