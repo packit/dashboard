@@ -60,10 +60,10 @@ const ResultsPageTestingFarm = (props) => {
         );
     }
 
-    const webURL = data.web_url ? (
-        <a href={data.web_url}>Web URL</a>
+    const statusWithLink = data.web_url ? (
+        <a href={data.web_url}>{data.status}</a>
     ) : (
-        "URL has not been provided"
+        <>{data.status}</>
     );
 
     return (
@@ -94,13 +94,7 @@ const ResultsPageTestingFarm = (props) => {
                                     <td>
                                         <strong>Status</strong>
                                     </td>
-                                    <td>{data.status}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Testing Farm URL</strong>
-                                    </td>
-                                    <td>{webURL}</td>
+                                    <td>{statusWithLink}</td>
                                 </tr>
                                 <tr>
                                     <td>
@@ -110,7 +104,7 @@ const ResultsPageTestingFarm = (props) => {
                                         <a
                                             href={`/results/copr-builds/${data.copr_build_id}`}
                                         >
-                                            Results
+                                            Details
                                         </a>
                                     </td>
                                 </tr>
