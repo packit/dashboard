@@ -12,7 +12,7 @@ import {
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
-import ChrootStatus from "./chroot_status";
+import { StatusLabel } from "./status_labels";
 
 const ResultsPageCopr = (props) => {
     let id = props.match.params.id;
@@ -103,7 +103,11 @@ const ResultsPageCopr = (props) => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Copr Build Results</Text>
-                    <ChrootStatus chroot={data.chroot} status={data.status} />
+                    <StatusLabel
+                        target={data.chroot}
+                        status={data.status}
+                        link={data.web_url}
+                    />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />

@@ -3,18 +3,19 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@patternfly/react-core": "^4.15.0",
+    "@patternfly/react-icons": "^4.3.0",
+    "@patternfly/react-styles": "^4.3.0",
+    "@patternfly/react-table": "^4.5.7",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-router-dom": "^5.2.0",
     "react-scripts": "4.0.3",
-    "web-vitals": "^1.0.1",
-    "@patternfly/react-core": "^4.15.0",
-    "@patternfly/react-icons": "^4.3.0",
-    "@patternfly/react-styles": "^4.3.0",
-    "@patternfly/react-table": "^4.5.7"
+    "web-vitals": "^1.0.1"
   },
   "proxy": "http://localhost:5000",
   "scripts": {

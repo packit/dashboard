@@ -13,6 +13,7 @@ import {
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
+import { TFStatusLabel } from "./status_labels";
 
 const ResultsPageTestingFarm = (props) => {
     let id = props.match.params.id;
@@ -71,7 +72,11 @@ const ResultsPageTestingFarm = (props) => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Testing Farm Results</Text>
-                    <Label color="blue">{data.chroot}</Label>
+                    <TFStatusLabel
+                        status={data.status}
+                        target={data.chroot}
+                        link={data.web_url}
+                    />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />

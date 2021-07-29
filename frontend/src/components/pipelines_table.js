@@ -10,41 +10,66 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
+import { Button, Label, LabelGroup, Tooltip } from "@patternfly/react-core";
 import TriggerLink from "./trigger_link";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
-import { StatusLabel } from "./status_labels";
+import { StatusLabel, toSRPMStatus, TFStatusLabel } from "./status_labels";
+import coprLogo from "../static/copr.ico";
+import kojiLogo from "../static/koji.ico";
 
-// Add every target to the chroots column and color code according to status
-const ChrootStatuses = (props) => {
-    let labels = [];
+class Statuses extends React.Component {
+    constructor(props) {
+        super(props);
 
-    for (let chroot in props.ids) {
-        const id = props.ids[chroot];
-        const status = props.statuses[chroot];
-
-        labels.push(
-            <StatusLabel
-                status={status}
-                target={chroot}
-                link={`/results/copr-builds/${id}`}
-            />
-        );
+        this.labels = [];
+        for (let entry of props.entries) {
+            this.labels.push(
+                <props.statusClass
+                    status={entry.status}
+                    chroot={entry.target}
+                    target={entry.target}
+                    link={`results/${props.route}/${entry.packit_id}`}
+                />
+            );
+        }
     }
 
-    return <div>{labels}</div>;
-};
+    render() {
+        return <LabelGroup>{this.labels}</LabelGroup>;
+    }
+}
 
-const CoprBuildsTable = () => {
+function getBuilderLabel(run) {
+    let text = "none";
+    let icon = undefined;
+
+    if (run.copr.length > 0) {
+        icon = <img width={14} height={14} src={coprLogo} />;
+        text = "Copr";
+    } else if (run.koji.length > 0) {
+        icon = <img width={14} height={14} src={kojiLogo} />;
+        text = "Koji";
+    }
+
+    return (
+        <Label variant={"outline"} icon={icon}>
+            {text}
+        </Label>
+    );
+}
+
+const PipelinesTable = () => {
     // Headings
     const column_list = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
-        { title: "Chroots", transforms: [cellWidth(60)] },
         { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
-        { title: "COPR Build ID", transforms: [sortable, cellWidth(10)] },
+        { title: "SRPM", transforms: [cellWidth(5)] },
+        { title: "Built by", transforms: [cellWidth(5)] },
+        { title: "RPM builds", transforms: [cellWidth(30)] },
+        { title: "Testing Farm", transforms: [cellWidth(30)] },
     ];
 
     // Local State
@@ -57,9 +82,7 @@ const CoprBuildsTable = () => {
 
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(
-            `${process.env.REACT_APP_API_URL}/copr-builds?page=${page}&per_page=20`
-        )
+        fetch(`${process.env.REACT_APP_API_URL}/runs?page=${page}&per_page=20`)
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
@@ -76,43 +99,60 @@ const CoprBuildsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((copr_builds) => {
+        res.map((run) => {
             let singleRow = {
                 cells: [
                     {
-                        title: <ForgeIcon url={copr_builds.project_url} />,
+                        title: <ForgeIcon url={run.trigger.git_repo} />,
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={copr_builds} />
+                                <TriggerLink builds={run.trigger} />
                             </strong>
                         ),
                     },
+                    run.time_submitted,
                     {
                         title: (
-                            <ChrootStatuses
-                                statuses={copr_builds.status_per_chroot}
-                                ids={copr_builds.packit_id_per_chroot}
+                            <StatusLabel
+                                status={toSRPMStatus(run.srpm.success)}
+                                link={`/results/srpm-builds/${run.srpm.packit_id}`}
                             />
                         ),
                     },
-                    copr_builds.build_submitted_time,
+                    {
+                        title: getBuilderLabel(run),
+                    },
                     {
                         title: (
-                            <strong>
-                                <a href={copr_builds.web_url} target="_blank">
-                                    {copr_builds.build_id}
-                                </a>
-                            </strong>
+                            <>
+                                <Statuses
+                                    route={"copr-builds"}
+                                    statusClass={StatusLabel}
+                                    entries={run.copr}
+                                />
+                                <Statuses
+                                    route={"koji-builds"}
+                                    statusClass={StatusLabel}
+                                    entries={run.koji}
+                                />
+                            </>
                         ),
                     },
-                    // copr_builds.ref.substring(0, 8),
+                    {
+                        title: (
+                            <Statuses
+                                route={"testing-farm"}
+                                statusClass={TFStatusLabel}
+                                entries={run.test_run}
+                            />
+                        ),
+                    },
                 ],
             };
             rowsList.push(singleRow);
         });
-        // console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -133,17 +173,8 @@ const CoprBuildsTable = () => {
 
     // Load more items
     function nextPage() {
-        // console.log("Next Page is " + page);
         fetchData();
     }
-
-    // useEffect by default executes on every render of component
-    // here we only need it to execute on mount / first render
-    // so I simply added the second parameter (empty array three lines after this comment)
-
-    // But if you want different behaviour for first render and updated render
-    // look at https://stackoverflow.com/a/55075818/3809115
-    // and add code after the last line of the if statement in the ans
 
     useEffect(() => {
         fetchData();
@@ -182,4 +213,4 @@ const CoprBuildsTable = () => {
     );
 };
 
-export default CoprBuildsTable;
+export default PipelinesTable;

@@ -12,6 +12,7 @@ import { ResultsPageCopr } from "./components/results_copr";
 import { ResultsPageKoji } from "./components/results_koji";
 import { ResultsPageTestingFarm } from "./components/results_tf";
 import { Forge } from "./components/forge";
+import Pipelines from "./components/pipelines";
 
 // Main Menu routes
 const routes = [
@@ -28,6 +29,13 @@ const routes = [
         label: "Jobs",
         path: "/jobs",
         title: "Jobs | Packit Service",
+    },
+    {
+        component: Pipelines,
+        exact: true,
+        label: "Pipelines (beta)",
+        path: "/pipelines",
+        title: "Pipelines (beta) | Packit Service",
     },
     {
         component: Projects,

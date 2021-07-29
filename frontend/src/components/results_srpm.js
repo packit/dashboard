@@ -12,7 +12,7 @@ import {
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 import TriggerLink from "./trigger_link";
-import StatusLabel from "./status_label";
+import { StatusLabel, toSRPMStatus } from "./status_labels";
 
 const ResultsPageSRPM = (props) => {
     let id = props.match.params.id;
@@ -71,7 +71,7 @@ const ResultsPageSRPM = (props) => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">SRPM Build</Text>
-                    <StatusLabel success={data.success} />
+                    <StatusLabel status={toSRPMStatus(data.success)} />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />
