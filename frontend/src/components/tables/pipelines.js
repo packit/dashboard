@@ -42,14 +42,16 @@ class Statuses extends React.Component {
 }
 
 function getBuilderLabel(run) {
+    const iconStyle = { width: "14px", height: "14px" };
+
     let text = "none";
     let icon = undefined;
 
     if (run.copr.length > 0) {
-        icon = <img width={14} height={14} src={coprLogo} />;
+        icon = <img style={iconStyle} src={coprLogo} />;
         text = "Copr";
     } else if (run.koji.length > 0) {
-        icon = <img width={14} height={14} src={kojiLogo} />;
+        icon = <img style={iconStyle} src={kojiLogo} />;
         text = "Koji";
     }
 
