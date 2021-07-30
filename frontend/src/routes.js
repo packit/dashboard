@@ -7,10 +7,10 @@ import { Projects } from "./components/projects";
 import { Namespace } from "./components/namespace";
 import { ProjectInfo } from "./components/project_info";
 import { NotFound } from "./components/not_found";
-import { ResultsPageSRPM } from "./components/results_srpm";
-import { ResultsPageCopr } from "./components/results_copr";
-import { ResultsPageKoji } from "./components/results_koji";
-import { ResultsPageTestingFarm } from "./components/results_tf";
+import { ResultsPageSRPM } from "./components/results/srpm";
+import { ResultsPageCopr } from "./components/results/copr";
+import { ResultsPageKoji } from "./components/results/koji";
+import { ResultsPageTestingFarm } from "./components/results/testing_farm";
 import { Forge } from "./components/forge";
 import Pipelines from "./components/pipelines";
 

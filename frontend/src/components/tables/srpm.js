@@ -12,11 +12,11 @@ import {
 
 import { Button } from "@patternfly/react-core";
 
-import ConnectionError from "./error";
-import TriggerLink from "./trigger_link";
-import Preloader from "./preloader";
-import ForgeIcon from "./forge_icon";
-import { StatusLabel, toSRPMStatus } from "./status_labels";
+import ConnectionError from "../error";
+import TriggerLink from "../trigger_link";
+import Preloader from "../preloader";
+import ForgeIcon from "../forge_icon";
+import { StatusLabel, toSRPMStatus } from "../status_labels";
 
 const SRPMBuildstable = () => {
     // Headings
