@@ -11,20 +11,40 @@ import {
 } from "@patternfly/react-table";
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
-import TriggerLink from "./trigger_link";
-import ConnectionError from "./error";
-import Preloader from "./preloader";
-import ForgeIcon from "./forge_icon";
-import { StatusLabel } from "./status_labels";
+import TriggerLink from "../trigger_link";
+import ConnectionError from "../error";
+import Preloader from "../preloader";
+import ForgeIcon from "../forge_icon";
+import { StatusLabel } from "../status_labels";
 
-const KojiBuildsTable = () => {
+// Add every target to the chroots column and color code according to status
+const ChrootStatuses = (props) => {
+    let labels = [];
+
+    for (let chroot in props.ids) {
+        const id = props.ids[chroot];
+        const status = props.statuses[chroot];
+
+        labels.push(
+            <StatusLabel
+                status={status}
+                target={chroot}
+                link={`/results/copr-builds/${id}`}
+            />
+        );
+    }
+
+    return <div>{labels}</div>;
+};
+
+const CoprBuildsTable = () => {
     // Headings
     const column_list = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(35)] },
-        { title: "Target", transforms: [sortable, cellWidth(20)] },
-        { title: "Time Submitted", transforms: [cellWidth(20)] },
-        { title: "Koji Build Logs", transforms: [cellWidth(20)] },
+        { title: "Trigger", transforms: [cellWidth(15)] },
+        { title: "Chroots", transforms: [cellWidth(60)] },
+        { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
+        { title: "COPR Build ID", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State
@@ -38,7 +58,7 @@ const KojiBuildsTable = () => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
         fetch(
-            `${process.env.REACT_APP_API_URL}/koji-builds?page=${page}&per_page=20`
+            `${process.env.REACT_APP_API_URL}/copr-builds?page=${page}&per_page=20`
         )
             .then((response) => response.json())
             .then((data) => {
@@ -56,38 +76,38 @@ const KojiBuildsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((koji_builds) => {
+        res.map((copr_builds) => {
             let singleRow = {
                 cells: [
                     {
-                        title: <ForgeIcon url={koji_builds.project_url} />,
+                        title: <ForgeIcon url={copr_builds.project_url} />,
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={koji_builds} />
+                                <TriggerLink builds={copr_builds} />
                             </strong>
                         ),
                     },
                     {
                         title: (
-                            <StatusLabel
-                                target={koji_builds.chroot}
-                                status={koji_builds.status}
-                                link={`/results/koji-builds/${koji_builds.packit_id}`}
+                            <ChrootStatuses
+                                statuses={copr_builds.status_per_chroot}
+                                ids={copr_builds.packit_id_per_chroot}
                             />
                         ),
                     },
-                    koji_builds.build_submitted_time,
+                    copr_builds.build_submitted_time,
                     {
                         title: (
                             <strong>
-                                <a href={koji_builds.web_url} target="_blank">
-                                    {koji_builds.build_id}
+                                <a href={copr_builds.web_url} target="_blank">
+                                    {copr_builds.build_id}
                                 </a>
                             </strong>
                         ),
                     },
+                    // copr_builds.ref.substring(0, 8),
                 ],
             };
             rowsList.push(singleRow);
@@ -111,8 +131,20 @@ const KojiBuildsTable = () => {
         );
     }
 
-    // Executes fetchData on first render of component
-    // look at detailed comment in ./copr_builds_table.js
+    // Load more items
+    function nextPage() {
+        // console.log("Next Page is " + page);
+        fetchData();
+    }
+
+    // useEffect by default executes on every render of component
+    // here we only need it to execute on mount / first render
+    // so I simply added the second parameter (empty array three lines after this comment)
+
+    // But if you want different behaviour for first render and updated render
+    // look at https://stackoverflow.com/a/55075818/3809115
+    // and add code after the last line of the if statement in the ans
+
     useEffect(() => {
         fetchData();
     }, []);
@@ -142,7 +174,7 @@ const KojiBuildsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={fetchData}>
+                <Button variant="control" onClick={nextPage}>
                     Load More
                 </Button>
             </center>
@@ -150,4 +182,4 @@ const KojiBuildsTable = () => {
     );
 };
 
-export default KojiBuildsTable;
+export default CoprBuildsTable;

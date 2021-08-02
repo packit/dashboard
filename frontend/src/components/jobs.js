@@ -10,10 +10,10 @@ import {
     CardBody,
     Text,
 } from "@patternfly/react-core";
-import TestingFarmResultsTable from "./tf_results_table";
-import CoprBuildsTable from "./copr_builds_table";
-import KojiBuildsTable from "./koji_builds_table";
-import SRPMBuildsTable from "./srpm_builds_table";
+import TestingFarmResultsTable from "./tables/testing_farm";
+import CoprBuildsTable from "./tables/copr";
+import KojiBuildsTable from "./tables/koji";
+import SRPMBuildsTable from "./tables/srpm";
 
 const Jobs = () => {
     const [activeTabKey, setActiveTabKey] = React.useState(0);

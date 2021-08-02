@@ -6,7 +6,7 @@ import {
     Text,
 } from "@patternfly/react-core";
 
-import PipelinesTable from "./pipelines_table";
+import PipelinesTable from "./tables/pipelines";
 
 const Pipelines = () => {
     return (

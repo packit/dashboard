@@ -9,10 +9,10 @@ import {
     Title,
 } from "@patternfly/react-core";
 
-import ConnectionError from "./error";
-import Preloader from "./preloader";
-import TriggerLink from "./trigger_link";
-import { StatusLabel, toSRPMStatus } from "./status_labels";
+import ConnectionError from "../error";
+import Preloader from "../preloader";
+import TriggerLink from "../trigger_link";
+import { StatusLabel, toSRPMStatus } from "../status_labels";
 
 const ResultsPageSRPM = (props) => {
     let id = props.match.params.id;

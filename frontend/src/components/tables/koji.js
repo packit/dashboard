@@ -11,20 +11,20 @@ import {
 } from "@patternfly/react-table";
 
 import { Button, Label, Tooltip } from "@patternfly/react-core";
+import TriggerLink from "../trigger_link";
+import ConnectionError from "../error";
+import Preloader from "../preloader";
+import ForgeIcon from "../forge_icon";
+import { StatusLabel } from "../status_labels";
 
-import ConnectionError from "./error";
-import Preloader from "./preloader";
-import TriggerLink from "./trigger_link";
-import ForgeIcon from "./forge_icon";
-import { TFStatusLabel } from "./status_labels";
-
-const TestingFarmResultsTable = () => {
+const KojiBuildsTable = () => {
+    // Headings
     const column_list = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(35)] },
         { title: "Target", transforms: [sortable, cellWidth(20)] },
         { title: "Time Submitted", transforms: [cellWidth(20)] },
-        { title: "Test Results", transforms: [cellWidth(20)] },
+        { title: "Koji Build Logs", transforms: [cellWidth(20)] },
     ];
 
     // Local State
@@ -38,7 +38,7 @@ const TestingFarmResultsTable = () => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
         fetch(
-            `${process.env.REACT_APP_API_URL}/testing-farm/results?page=${page}&per_page=50`
+            `${process.env.REACT_APP_API_URL}/koji-builds?page=${page}&per_page=20`
         )
             .then((response) => response.json())
             .then((data) => {
@@ -52,46 +52,38 @@ const TestingFarmResultsTable = () => {
             });
     }
 
+    // Convert fetched json into row format that the table can read
     function jsonToRow(res) {
         let rowsList = [];
-        res.map((test_results) => {
+
+        res.map((koji_builds) => {
             let singleRow = {
                 cells: [
                     {
-                        title: <ForgeIcon url={test_results.project_url} />,
+                        title: <ForgeIcon url={koji_builds.project_url} />,
                     },
                     {
                         title: (
                             <strong>
-                                <TriggerLink builds={test_results} />
+                                <TriggerLink builds={koji_builds} />
                             </strong>
                         ),
                     },
-                    // {
-                    //     title: (
-                    //         <TFLogsURL
-                    //             link={test_results.web_url}
-                    //             pipeline={test_results.pipeline_id}
-                    //         />
-                    //     ),
-                    // },
                     {
                         title: (
-                            <TFStatusLabel
-                                status={test_results.status}
-                                target={test_results.target}
-                                link={`/results/testing-farm/${test_results.packit_id}`}
+                            <StatusLabel
+                                target={koji_builds.chroot}
+                                status={koji_builds.status}
+                                link={`/results/koji-builds/${koji_builds.packit_id}`}
                             />
                         ),
                     },
-                    {
-                        title: test_results.submitted_time || "not provided",
-                    },
+                    koji_builds.build_submitted_time,
                     {
                         title: (
                             <strong>
-                                <a href={test_results.web_url}>
-                                    {test_results.pipeline_id}
+                                <a href={koji_builds.web_url} target="_blank">
+                                    {koji_builds.build_id}
                                 </a>
                             </strong>
                         ),
@@ -100,7 +92,7 @@ const TestingFarmResultsTable = () => {
             };
             rowsList.push(singleRow);
         });
-        //   console.log(rowsList);
+        // console.log(rowsList);
         setRows(rows.concat(rowsList));
     }
 
@@ -117,12 +109,6 @@ const TestingFarmResultsTable = () => {
                 ? sortedRows
                 : sortedRows.reverse()
         );
-    }
-
-    // Load more items
-    function nextPage() {
-        // console.log("Next Page is " + page);
-        fetchData();
     }
 
     // Executes fetchData on first render of component
@@ -156,7 +142,7 @@ const TestingFarmResultsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={nextPage}>
+                <Button variant="control" onClick={fetchData}>
                     Load More
                 </Button>
             </center>
@@ -164,18 +150,4 @@ const TestingFarmResultsTable = () => {
     );
 };
 
-const TFLogsURL = (props) => {
-    // when the testing farm test is running, there is no url stored
-    // so instead of showing a fake link that leads to 404, do not show the link at all
-    if (props.link !== null) {
-        return (
-            <a target="_blank" href={props.link}>
-                {props.pipeline}
-            </a>
-        );
-    } else {
-        return <span>{props.pipeline}</span>;
-    }
-};
-
-export default TestingFarmResultsTable;
+export default KojiBuildsTable;
