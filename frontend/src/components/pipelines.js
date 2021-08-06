@@ -8,7 +8,7 @@ import {
 
 import PipelinesTable from "./tables/pipelines";
 
-const Pipelines = () => {
+const Pipelines = (props) => {
     return (
         <div>
             <PageSection variant={PageSectionVariants.light}>
@@ -18,7 +18,11 @@ const Pipelines = () => {
                 </TextContent>
             </PageSection>
             <PageSection>
-                <PipelinesTable />
+                <PipelinesTable
+                    forge={props.match.params.forge}
+                    namespaces={props.match.params.namespaces}
+                    repoName={props.match.params.repoName}
+                />
             </PageSection>
         </div>
     );

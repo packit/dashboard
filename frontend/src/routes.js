@@ -94,6 +94,12 @@ const AppRoutes = () => (
             exact
             title="Testing Farm Results"
         />
+        <Route
+            path="/pipelines/:forge/:namespaces*/:repoName"
+            component={Pipelines}
+            exact
+            title="Pipelines (beta)"
+        />
         <Route path="/" component={NotFound} title="404 Page Not Found" />
     </Switch>
 );
