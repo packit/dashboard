@@ -62,7 +62,7 @@ function getBuilderLabel(run) {
     );
 }
 
-const PipelinesTable = () => {
+const PipelinesTable = (props) => {
     // Headings
     const column_list = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
@@ -82,9 +82,16 @@ const PipelinesTable = () => {
     const [sortBy, setSortBy] = useState({});
     const [page, setPage] = useState(1);
 
+    const parts = [props.forge, props.namespaces, props.repoName].filter(
+        (part) => part !== undefined
+    );
+    const projectPart = parts.length > 0 ? `/${parts.join("/")}` : "";
+
     // Fetch data from dashboard backend (or if we want, directly from the API)
     function fetchData() {
-        fetch(`${process.env.REACT_APP_API_URL}/runs?page=${page}&per_page=20`)
+        fetch(
+            `${process.env.REACT_APP_API_URL}/runs${projectPart}?page=${page}&per_page=20`
+        )
             .then((response) => response.json())
             .then((data) => {
                 jsonToRow(data);
