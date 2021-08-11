@@ -35,9 +35,10 @@ jobs:
                   api="https://prod.packit.dev/api"
                   ;;
           esac
-          echo "::set-output name=branch::$branch"
-          echo "::set-output name=tag::$tag"
-          echo "::set-output name=api::$api"
+          echo "::set-output name=branch::${branch}"
+          unique_tag="${branch}-${GITHUB_SHA::7}"
+          echo "::set-output name=tag::${tag} ${unique_tag}"
+          echo "::set-output name=api::${api}"
         id: branch_tag
 
       - name: Build Image
