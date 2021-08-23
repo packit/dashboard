@@ -7,7 +7,11 @@ import {
     TextContent,
     Text,
     Title,
+    Toolbar,
+    ToolbarContent,
+    ToolbarItem,
 } from "@patternfly/react-core";
+import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
 import ConnectionError from "../error";
 import Preloader from "../preloader";
@@ -86,11 +90,18 @@ const ResultsPageSRPM = (props) => {
             <PageSection>
                 <Card>
                     <CardBody>
-                        <div style={{ overflowX: "scroll" }}>
-                            <pre>
-                                <code>{data.logs}</code>
-                            </pre>
-                        </div>
+                        <LogViewer
+                            data={data.logs}
+                            toolbar={
+                                <Toolbar>
+                                    <ToolbarContent>
+                                        <ToolbarItem>
+                                            <LogViewerSearch placeholder="Search value" />
+                                        </ToolbarItem>
+                                    </ToolbarContent>
+                                </Toolbar>
+                            }
+                        />
                     </CardBody>
                 </Card>
             </PageSection>
