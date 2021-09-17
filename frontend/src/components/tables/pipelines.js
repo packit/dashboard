@@ -42,7 +42,12 @@ class Statuses extends React.Component {
 }
 
 function getBuilderLabel(run) {
-    const iconStyle = { width: "14px", height: "14px" };
+    const iconStyle = {
+        minWidth: "14px",
+        minHeight: "14px",
+        width: "14px",
+        height: "14px",
+    };
 
     let text = "none";
     let icon = undefined;
