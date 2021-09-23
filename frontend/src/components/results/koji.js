@@ -13,6 +13,7 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { StatusLabel } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 const ResultsPageKoji = (props) => {
     let id = props.match.params.id;
@@ -123,19 +124,34 @@ const ResultsPageKoji = (props) => {
                                     <td>
                                         <strong>Build Submission Time</strong>
                                     </td>
-                                    <td>{data.build_submitted_time}</td>
+                                    <td>
+                                        <Timestamp
+                                            stamp={data.build_submitted_time}
+                                            verbose={true}
+                                        />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Build Start Time</strong>
                                     </td>
-                                    <td>{data.build_start_time}</td>
+                                    <td>
+                                        <Timestamp
+                                            stamp={data.build_start_time}
+                                            verbose={true}
+                                        />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
                                         <strong>Build Finish Time</strong>
                                     </td>
-                                    <td>{data.build_finished_time}</td>
+                                    <td>
+                                        <Timestamp
+                                            stamp={data.build_finished_time}
+                                            verbose={true}
+                                        />
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>

@@ -16,6 +16,7 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import { StatusLabel } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 // Add every target to the chroots column and color code according to status
 const ChrootStatuses = (props) => {
@@ -97,7 +98,13 @@ const CoprBuildsTable = () => {
                             />
                         ),
                     },
-                    copr_builds.build_submitted_time,
+                    {
+                        title: (
+                            <Timestamp
+                                stamp={copr_builds.build_submitted_time}
+                            />
+                        ),
+                    },
                     {
                         title: (
                             <strong>

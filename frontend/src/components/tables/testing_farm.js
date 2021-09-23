@@ -17,6 +17,7 @@ import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import ForgeIcon from "../forge_icon";
 import { TFStatusLabel } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 const TestingFarmResultsTable = () => {
     const column_list = [
@@ -85,7 +86,9 @@ const TestingFarmResultsTable = () => {
                         ),
                     },
                     {
-                        title: test_results.submitted_time || "not provided",
+                        title: (
+                            <Timestamp stamp={test_results.submitted_time} />
+                        ),
                     },
                     {
                         title: (

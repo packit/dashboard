@@ -16,6 +16,7 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import { StatusLabel } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 const KojiBuildsTable = () => {
     // Headings
@@ -78,7 +79,13 @@ const KojiBuildsTable = () => {
                             />
                         ),
                     },
-                    koji_builds.build_submitted_time,
+                    {
+                        title: (
+                            <Timestamp
+                                stamp={koji_builds.build_submitted_time}
+                            />
+                        ),
+                    },
                     {
                         title: (
                             <strong>
