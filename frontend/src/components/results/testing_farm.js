@@ -14,6 +14,7 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { TFStatusLabel } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 const ResultsPageTestingFarm = (props) => {
     let id = props.match.params.id;

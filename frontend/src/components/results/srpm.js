@@ -17,6 +17,7 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { StatusLabel, toSRPMStatus } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 const ResultsPageSRPM = (props) => {
     let id = props.match.params.id;
@@ -81,7 +82,11 @@ const ResultsPageSRPM = (props) => {
                             <TriggerLink builds={data} />
                         </strong>
                         <br />
-                        Submitted at {data.build_submitted_time}
+                        Submitted at{" "}
+                        <Timestamp
+                            stamp={data.build_submitted_time}
+                            verbose={true}
+                        />
                     </Text>
                     <Text component="p">SRPM: {srpmURL}</Text>
                 </TextContent>

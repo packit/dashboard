@@ -16,6 +16,7 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import { StatusLabel, toSRPMStatus, TFStatusLabel } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 
@@ -119,7 +120,7 @@ const PipelinesTable = () => {
                             </strong>
                         ),
                     },
-                    run.time_submitted,
+                    { title: <Timestamp stamp={run.time_submitted} /> },
                     {
                         title: (
                             <StatusLabel

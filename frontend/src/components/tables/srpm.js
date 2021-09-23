@@ -17,6 +17,7 @@ import TriggerLink from "../trigger_link";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import { StatusLabel, toSRPMStatus } from "../status_labels";
+import { Timestamp } from "../../utils/time";
 
 const SRPMBuildstable = () => {
     // Headings
@@ -79,7 +80,11 @@ const SRPMBuildstable = () => {
                         ),
                     },
                     {
-                        title: <span>{srpm_builds.build_submitted_time}</span>,
+                        title: (
+                            <Timestamp
+                                stamp={srpm_builds.build_submitted_time}
+                            />
+                        ),
                     },
                     {
                         title: (
