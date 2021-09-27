@@ -16,7 +16,6 @@ import packitLogo from "../static/logo.png";
 const AppLayout = ({ children }) => {
     const logoProps = {
         href: "/",
-        target: "_blank",
     };
     const [isNavOpen, setIsNavOpen] = React.useState(true);
     const [isMobileView, setIsMobileView] = React.useState(true);
