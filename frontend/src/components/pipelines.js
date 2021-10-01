@@ -13,7 +13,7 @@ const Pipelines = () => {
         <div>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
-                    <Text component="h1">Pipelines (beta)</Text>
+                    <Text component="h1">Pipelines</Text>
                     <Text component="p">Pipelines run by Packit Service.</Text>
                 </TextContent>
             </PageSection>

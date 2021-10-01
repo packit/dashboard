@@ -33,9 +33,9 @@ const routes = [
     {
         component: Pipelines,
         exact: true,
-        label: "Pipelines (beta)",
+        label: "Pipelines",
         path: "/pipelines",
-        title: "Pipelines (beta) | Packit Service",
+        title: "Pipelines | Packit Service",
     },
     {
         component: Projects,
