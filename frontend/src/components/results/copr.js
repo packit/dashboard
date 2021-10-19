@@ -61,6 +61,34 @@ const ResultsPageCopr = (props) => {
         );
     }
 
+    function getPackagesToInstall() {
+        let packagesToInstall = [];
+
+        for (let packageDict of data.built_packages) {
+            if (packageDict.arch != "src") {
+                const packageString =
+                    packageDict.name +
+                    "-" +
+                    (packageDict.epoch != 0 ? packageDict.epoch + ":" : "") +
+                    packageDict.version +
+                    "-" +
+                    packageDict.release +
+                    "." +
+                    packageDict.arch;
+                packagesToInstall.push(packageString);
+            }
+        }
+        return packagesToInstall;
+    }
+
+    const packagesInstallationInstructions = data.built_packages ? (
+        <li>
+            <code>sudo dnf install -y {getPackagesToInstall().join(" ")}</code>
+        </li>
+    ) : (
+        ""
+    );
+
     const installationInstructions =
         data.status == "success" ? (
             <Card>
@@ -87,6 +115,7 @@ const ResultsPageCopr = (props) => {
                                 {data.copr_project}
                             </code>
                         </li>
+                        {packagesInstallationInstructions}
                     </ul>
                     <Text component="p">
                         <br />
