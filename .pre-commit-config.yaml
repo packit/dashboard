@@ -44,10 +44,10 @@ repos:
         args: [--no-strict-optional, --ignore-missing-imports]
         additional_dependencies: [types-requests, types-Flask]
 
-  - repo: https://github.com/packit-service/pre-commit-hooks
+  - repo: https://github.com/packit/pre-commit-hooks
     rev: 77d2c91b31c161ccf9fb3b4259606f000f374c33
     hooks:
       - id: check-rebase
         args:
-          - git://github.com/packit-service/dashboard.git
+          - git://github.com/packit/dashboard.git
         stages: [manual, push]
