@@ -23,7 +23,7 @@ repos:
       - id: end-of-file-fixer
       - id: trailing-whitespace
   - repo: https://github.com/motet-a/jinjalint
-    rev: master
+    rev: 01e0a4d8f1ee775aee00eb9d715eff2b4cc49e4d
     hooks:
       - id: jinjalint
         types: [file]
@@ -45,7 +45,7 @@ repos:
         additional_dependencies: [types-requests, types-Flask]
 
   - repo: https://github.com/packit/pre-commit-hooks
-    rev: 77d2c91b31c161ccf9fb3b4259606f000f374c33
+    rev: b11abc61e8f5fe73297437148cd3ed15806883a0
     hooks:
       - id: check-rebase
         args:
