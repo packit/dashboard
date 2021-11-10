@@ -68,6 +68,21 @@ const ResultsPageTestingFarm = (props) => {
         <>{data.status}</>
     );
 
+    const coprBuildInfo = data.copr_build_id ? (
+        <tr>
+            <td>
+                <strong>COPR build</strong>
+            </td>
+            <td>
+                <a href={`/results/copr-builds/${data.copr_build_id}`}>
+                    Details
+                </a>
+            </td>
+        </tr>
+    ) : (
+        ""
+    );
+
     return (
         <div>
             <PageSection variant={PageSectionVariants.light}>
@@ -102,18 +117,7 @@ const ResultsPageTestingFarm = (props) => {
                                     </td>
                                     <td>{statusWithLink}</td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <strong>COPR build</strong>
-                                    </td>
-                                    <td>
-                                        <a
-                                            href={`/results/copr-builds/${data.copr_build_id}`}
-                                        >
-                                            Details
-                                        </a>
-                                    </td>
-                                </tr>
+                                {coprBuildInfo}
                                 <tr>
                                     <td>
                                         <strong>Pipeline ID</strong>
