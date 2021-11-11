@@ -108,6 +108,16 @@ const PipelinesTable = () => {
         let rowsList = [];
 
         res.map((run) => {
+            let srpm = run.srpm ? (
+                <StatusLabel
+                    status={toSRPMStatus(run.srpm.success)}
+                    link={`/results/srpm-builds/${run.srpm.packit_id}`}
+                />
+            ) : (
+                <Label variant={"outline"} icon={undefined}>
+                    {"none"}
+                </Label>
+            );
             let singleRow = {
                 cells: [
                     {
@@ -121,14 +131,7 @@ const PipelinesTable = () => {
                         ),
                     },
                     { title: <Timestamp stamp={run.time_submitted} /> },
-                    {
-                        title: (
-                            <StatusLabel
-                                status={toSRPMStatus(run.srpm.success)}
-                                link={`/results/srpm-builds/${run.srpm.packit_id}`}
-                            />
-                        ),
-                    },
+                    { title: srpm },
                     {
                         title: getBuilderLabel(run),
                     },
