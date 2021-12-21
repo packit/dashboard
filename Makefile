@@ -44,7 +44,7 @@ build-stg:
 push-stg: build-stg
 	$(CONTAINER_ENGINE) push $(IMAGE)
 
-oc-push-stg:
+oc-import-image:
 	oc import-image is/packit-dashboard:stg
 
 check:
