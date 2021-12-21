@@ -96,7 +96,9 @@ const ResultsPageSRPM = (props) => {
                 <Card>
                     <CardBody>
                         <LogViewer
-                            data={data.logs}
+                            data={
+                                data.logs ? data.logs : "Log is not available"
+                            }
                             toolbar={
                                 <Toolbar>
                                     <ToolbarContent>
