@@ -23,10 +23,9 @@ const SRPMBuildstable = () => {
     // Headings
     const column_list = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(35)] },
-        { title: "Success", transforms: [cellWidth(20)] },
-        { title: "Time Submitted", transforms: [cellWidth(20)] },
+        { title: "Trigger", transforms: [cellWidth(55)] },
         { title: "Results", transforms: [cellWidth(20)] },
+        { title: "Time Submitted", transforms: [cellWidth(20)] },
     ];
 
     // Local State
@@ -84,20 +83,6 @@ const SRPMBuildstable = () => {
                             <Timestamp
                                 stamp={srpm_builds.build_submitted_time}
                             />
-                        ),
-                    },
-                    {
-                        title: (
-                            <strong>
-                                <a
-                                    href={
-                                        "/results/srpm-builds/" +
-                                        srpm_builds.srpm_build_id
-                                    }
-                                >
-                                    {srpm_builds.srpm_build_id}
-                                </a>
-                            </strong>
                         ),
                     },
                 ],
