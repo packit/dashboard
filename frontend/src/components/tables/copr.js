@@ -45,7 +45,7 @@ const CoprBuildsTable = () => {
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Chroots", transforms: [cellWidth(60)] },
         { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
-        { title: "COPR Build ID", transforms: [sortable, cellWidth(10)] },
+        { title: "Copr Build", transforms: [sortable, cellWidth(10)] },
     ];
 
     // Local State
