@@ -25,7 +25,7 @@ const KojiBuildsTable = () => {
         { title: "Trigger", transforms: [cellWidth(35)] },
         { title: "Target", transforms: [sortable, cellWidth(20)] },
         { title: "Time Submitted", transforms: [cellWidth(20)] },
-        { title: "Koji Build Logs", transforms: [cellWidth(20)] },
+        { title: "Koji Build Task", transforms: [cellWidth(20)] },
     ];
 
     // Local State
