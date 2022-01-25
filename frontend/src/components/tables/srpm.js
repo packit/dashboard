@@ -73,7 +73,7 @@ const SRPMBuildstable = () => {
                     {
                         title: (
                             <StatusLabel
-                                status={toSRPMStatus(srpm_builds.success)}
+                                status={srpm_builds.status}
                                 link={`/results/srpm-builds/${srpm_builds.srpm_build_id}`}
                             />
                         ),

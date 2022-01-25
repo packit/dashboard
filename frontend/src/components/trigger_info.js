@@ -98,8 +98,8 @@ const TriggerInfo = (props) => {
                                 <td role="cell" data-label="SRPM Build ID">
                                     {build.srpm_build_id}
                                 </td>
-                                <td role="cell" data-label="Success">
-                                    {String(build.success)}
+                                <td role="cell" data-label="Status">
+                                    {build.status}
                                 </td>
                                 <td role="cell" data-label="Logs">
                                     <WebUrlIcon link={build.log_url} />
