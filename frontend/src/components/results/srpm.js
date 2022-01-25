@@ -105,7 +105,6 @@ const ResultsPageSRPM = (props) => {
         ""
     );
 
-
     const logs = data.copr_build_id ? (
         ""
     ) : (
