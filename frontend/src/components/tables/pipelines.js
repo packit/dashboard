@@ -110,7 +110,7 @@ const PipelinesTable = () => {
         res.map((run) => {
             let srpm = run.srpm ? (
                 <StatusLabel
-                    status={toSRPMStatus(run.srpm.success)}
+                    status={run.srpm.status}
                     link={`/results/srpm-builds/${run.srpm.packit_id}`}
                 />
             ) : (
