@@ -122,6 +122,7 @@ const ResultsPageSRPM = (props) => {
                                 </ToolbarContent>
                             </Toolbar>
                         }
+                        hasLineNumbers={false}
                     />
                 </CardBody>
             </Card>
