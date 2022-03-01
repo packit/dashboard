@@ -11,6 +11,7 @@ import { ResultsPageSRPM } from "./components/results/srpm";
 import { ResultsPageCopr } from "./components/results/copr";
 import { ResultsPageKoji } from "./components/results/koji";
 import { ResultsPageTestingFarm } from "./components/results/testing_farm";
+import { ResultsPageProposeDownstream } from "./components/results/propose_downstream";
 import { Forge } from "./components/forge";
 import Pipelines from "./components/pipelines";
 
@@ -93,6 +94,12 @@ const AppRoutes = () => (
             component={ResultsPageTestingFarm}
             exact
             title="Testing Farm Results"
+        />
+        <Route
+            path="/results/propose-downstream/:id"
+            component={ResultsPageProposeDownstream}
+            exact
+            title="Propose Results"
         />
         <Route path="/" component={NotFound} title="404 Page Not Found" />
     </Switch>
