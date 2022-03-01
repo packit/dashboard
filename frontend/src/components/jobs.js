@@ -14,6 +14,7 @@ import TestingFarmResultsTable from "./tables/testing_farm";
 import CoprBuildsTable from "./tables/copr";
 import KojiBuildsTable from "./tables/koji";
 import SRPMBuildsTable from "./tables/srpm";
+import ProposeDownstreamTable from "./tables/propose_downstream";
 
 const Jobs = () => {
     const [activeTabKey, setActiveTabKey] = React.useState(0);
@@ -61,6 +62,16 @@ const Jobs = () => {
                                 title={<TabTitleText>Test Runs</TabTitleText>}
                             >
                                 <TestingFarmResultsTable />
+                            </Tab>
+                            <Tab
+                                eventKey={4}
+                                title={
+                                    <TabTitleText>
+                                        Propose Downstreams
+                                    </TabTitleText>
+                                }
+                            >
+                                <ProposeDownstreamTable />
                             </Tab>
                         </Tabs>
                     </CardBody>
