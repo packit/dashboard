@@ -1,5 +1,11 @@
 import React from "react";
-import { getPRLink, getHostName, getBranchLink } from "../utils/forge_urls";
+import {
+    getPRLink,
+    getHostName,
+    getBranchLink,
+    getIssueLink,
+    getReleaseLink,
+} from "../utils/forge_urls";
 
 const TriggerLink = (props) => {
     let link = "";
@@ -23,6 +29,15 @@ const TriggerLink = (props) => {
             props.builds.repo_name,
             props.builds.pr_id
         );
+    } else if (props.builds.issue_id) {
+        jobSuffix = `#${props.builds.issue_id}`;
+
+        link = getIssueLink(
+            getHostName(gitRepo),
+            props.builds.repo_namespace,
+            props.builds.repo_name,
+            props.builds.issue_id
+        );
     } else if (props.builds.branch_name) {
         jobSuffix = `:${props.builds.branch_name}`;
 
@@ -31,6 +46,15 @@ const TriggerLink = (props) => {
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.branch_name
+        );
+    } else if (props.builds.release) {
+        jobSuffix = `#release:${props.builds.release}`;
+
+        link = getReleaseLink(
+            getHostName(gitRepo),
+            props.builds.repo_namespace,
+            props.builds.repo_name,
+            props.builds.release
         );
     }
 
