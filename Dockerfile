@@ -6,18 +6,18 @@ ENV REACT_APP_API_URL ${REACT_APP_API_URL}
 
 ENV HOME=/home/packit_dashboard
 
-COPY ./files /src/files
+WORKDIR /src
 
-WORKDIR "/src"
+COPY files/ files/
 
 RUN ansible-playbook -vv -c local -i localhost, files/ansible/install-deps.yaml \
     && dnf clean all
 
-COPY ./packit_dashboard  /src/packit_dashboard
-COPY ./frontend /src/frontend
+COPY packit_dashboard/  packit_dashboard/
+COPY frontend/ frontend/
 
 
-RUN ansible-playbook -vv -c local -i localhost, ./files/ansible/recipe.yaml
+RUN ansible-playbook -vv -c local -i localhost, files/ansible/recipe.yaml
 
 EXPOSE 8443
 
