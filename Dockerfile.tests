@@ -1,4 +1,4 @@
-FROM fedora:31
+FROM fedora:35
 
 ENV HOME=/home/packit_dashboard \
     ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3 \
