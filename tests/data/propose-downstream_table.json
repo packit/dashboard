@@ -1,0 +1,79 @@
+[
+  {
+    "packit_id": 1,
+    "status": "packit-dev",
+    "submitted_time": "3634916",
+    "status_per_downstream_pr": {
+      "fedora-34-x86_64": "running",
+      "fedora-36-x86_64": "error",
+      "fedora-rawhide-x86_64": "retry",
+      "epel-8-x86_64": "submitted",
+      "fedora-35-x86_64": "queued"
+    },
+    "packit_id_per_downstream_pr": {
+      "fedora-34-x86_64": 1,
+      "fedora-36-x86_64": 2,
+      "fedora-rawhide-x86_64": 3,
+      "epel-8-x86_64": 4,
+      "fedora-35-x86_64": 5
+    },
+    "pr_id": 234,
+    "issue_id": null,
+    "release": null,
+    "repo_namespace": "packit",
+    "repo_name": "packit",
+    "project_url": "https://github.com/packit/packit"
+  },
+
+  {
+    "packit_id": 6,
+    "status": "packit-dev",
+    "submitted_time": "3634916",
+    "status_per_downstream_pr": {
+      "fedora-34-x86_64": "running",
+      "fedora-36-x86_64": "error",
+      "fedora-rawhide-x86_64": "retry",
+      "epel-8-x86_64": "submitted",
+      "fedora-35-x86_64": "queued"
+    },
+    "packit_id_per_downstream_pr": {
+      "fedora-34-x86_64": 6,
+      "fedora-36-x86_64": 7,
+      "fedora-rawhide-x86_64": 8,
+      "epel-8-x86_64": 9,
+      "fedora-35-x86_64": 10
+    },
+    "pr_id": null,
+    "issue_id": 235,
+    "release": null,
+    "repo_namespace": "packit",
+    "repo_name": "packit",
+    "project_url": "https://github.com/packit/packit"
+  },
+
+  {
+    "packit_id": 11,
+    "status": "packit-dev",
+    "submitted_time": "3634916",
+    "status_per_downstream_pr": {
+      "fedora-34-x86_64": "running",
+      "fedora-36-x86_64": "error",
+      "fedora-rawhide-x86_64": "retry",
+      "epel-8-x86_64": "submitted",
+      "fedora-35-x86_64": "queued"
+    },
+    "packit_id_per_downstream_pr": {
+      "fedora-34-x86_64": 11,
+      "fedora-36-x86_64": 12,
+      "fedora-rawhide-x86_64": 13,
+      "epel-8-x86_64": 14,
+      "fedora-35-x86_64": 15
+    },
+    "pr_id": null,
+    "issue_id": null,
+    "release": "0.46.0",
+    "repo_namespace": "packit",
+    "repo_name": "packit",
+    "project_url": "https://github.com/packit/packit"
+  }
+]

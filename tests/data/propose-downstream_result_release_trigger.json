@@ -1,0 +1,16 @@
+{
+  "status": "submitted",
+  "branch": "fedora-36-x86_64",
+  "downstream_pr_url": "https://src.fedoraproject.org/rpms/python-ogr/pull-request/286",
+  "submitted_time": 1646654386,
+  "start_time": 1646654660,
+  "finished_time": 1646654752,
+  "logs": "uzasne logy\na taky fest\ntajne\n",
+  "repo_namespace": "packit",
+  "repo_name": "packit",
+  "git_repo": "https://github.com/packit/packit",
+  "pr_id": null,
+  "issue_id": null,
+  "branch_name": "main",
+  "release": "0.1.0"
+}
