@@ -38,4 +38,32 @@ function getBranchLink(forge, namespace, repoName, branchName) {
     return branchLink;
 }
 
-export { getHostName, getPRLink, getBranchLink };
+// getIssueLink - returns the issue link if possible otherwise an empty string
+function getIssueLink(forge, namespace, repoName, issueID) {
+    let issueLink = "";
+    switch (forge) {
+        case "github.com":
+            issueLink = `https://github.com/${namespace}/${repoName}/issues/${issueID}`;
+            break;
+        case "gitlab.com":
+            issueLink = `https://gitlab.com/${namespace}/${repoName}/issues/-/${issueID}`;
+            break;
+    }
+    return issueLink;
+}
+
+// getReleaseLink - returns the link to release if possible otherwise an empty string
+function getReleaseLink(forge, namespace, repoName, release) {
+    let releaseLink = "";
+    switch (forge) {
+        case "github.com":
+            releaseLink = `https://github.com/${namespace}/${repoName}/releases/tag/${release}`;
+            break;
+        case "gitlab.com":
+            releaseLink = `https://gitlab.com/${namespace}/${repoName}/-/tags/${release}`;
+            break;
+    }
+    return releaseLink;
+}
+
+export { getHostName, getPRLink, getBranchLink, getIssueLink, getReleaseLink };

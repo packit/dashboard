@@ -1,0 +1,16 @@
+{
+  "status": "running",
+  "branch": "fedora-34-x86_64",
+  "downstream_pr_url": "",
+  "submitted_time": 1646654386,
+  "start_time": 1646654660,
+  "finished_time": 1646654752,
+  "logs": "",
+  "repo_namespace": "packit",
+  "repo_name": "packit",
+  "git_repo": "https://github.com/packit/packit",
+  "pr_id": 234,
+  "issue_id": null,
+  "branch_name": "main",
+  "release": null
+}

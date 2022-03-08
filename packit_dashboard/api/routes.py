@@ -53,3 +53,11 @@ def project_releases(forge, namespace, repo_name):
 def project_issues(forge, namespace, repo_name):
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/issues"
     return jsonify(return_json(url))
+
+
+@api.route("/api/propose-downstream/")
+def propose_downstream():
+    page = request.args.get("page")
+    per_page = request.args.get("per_page")
+    url = f"{API_URL}/propose-downstream?page={page}&per_page={per_page}"
+    return jsonify(return_json(url))

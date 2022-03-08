@@ -1,5 +1,5 @@
 import React from "react";
-import { Label, Tooltip } from "@patternfly/react-core";
+import { Label, Tooltip, Spinner } from "@patternfly/react-core";
 
 import PropTypes from "prop-types";
 import {
@@ -7,6 +7,7 @@ import {
     ExclamationCircleIcon,
     ExclamationTriangleIcon,
     InfoCircleIcon,
+    RedoIcon,
 } from "@patternfly/react-icons";
 
 /**
@@ -125,6 +126,52 @@ class TFStatusLabel extends BaseStatusLabel {
 }
 
 /**
+ *  Status label that handles ProposeDownstreamTarget labels, since they have different
+ *  naming convention and meaning for each ProposeDownstreamTarget.
+ */
+class ProposeDownstreamTargetStatusLabel extends BaseStatusLabel {
+    static propTypes = {
+        link: PropTypes.string,
+        status: PropTypes.string,
+        target: PropTypes.string,
+    };
+
+    /**
+     * Creates ProposeDownstreamTarget status label. Label is set to target.
+     *
+     * @param {*} props Properties of the status label, minimal requirements are:
+     *  status and target.
+     */
+    constructor(props) {
+        super(props);
+
+        this.label = props.target;
+        switch (props.status) {
+            case "running":
+                this.color = "blue";
+                this.icon = <Spinner isSVG diameter="15px" />;
+                break;
+            case "error":
+                this.color = "red";
+                this.icon = <ExclamationCircleIcon />;
+                break;
+            case "retry":
+                this.color = "orange";
+                this.icon = <RedoIcon />;
+                break;
+            case "submitted":
+                this.color = "green";
+                this.icon = <CheckCircleIcon />;
+                break;
+            default:
+                this.color = "purple";
+                this.icon = <InfoCircleIcon />;
+                break;
+        }
+    }
+}
+
+/**
  * Provides basic mapping of `boolean` result of SRPM build to the `string`
  * representation that can be used by classes above.
  *
@@ -135,4 +182,9 @@ function toSRPMStatus(success) {
     return success ? "success" : "failure";
 }
 
-export { StatusLabel, TFStatusLabel, toSRPMStatus };
+export {
+    StatusLabel,
+    TFStatusLabel,
+    ProposeDownstreamTargetStatusLabel,
+    toSRPMStatus,
+};
