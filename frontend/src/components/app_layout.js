@@ -62,6 +62,9 @@ const AppLayout = ({ children }) => {
                 <NavItem key="status" id="status">
                     <a href="https://status.packit.dev">Status</a>
                 </NavItem>
+                <NavItem key="blog-posts" id="blog-posts">
+                    <a href="https://packit.dev/posts">Blog posts</a>
+                </NavItem>
                 <NavItem key="faq-page" id="faq-page">
                     <a target="_blank" href="https://packit.dev/docs/faq">
                         FAQ
