@@ -45,17 +45,14 @@ const Dashboard = () => (
                     <Card>
                         <CardHeader>
                             <BellIcon />
-                            &nbsp;<b>Features and bug fixes</b>
+                            &nbsp;<b>Blog posts</b>
                         </CardHeader>
 
                         <CardBody>
                             If you want to know about latest features introduced
                             to Packit and Packit Service, bug fixes and related
                             work being done, follow our{" "}
-                            <a href="https://packit.dev/posts/">
-                                weekly blog posts
-                            </a>
-                            .
+                            <a href="https://packit.dev/posts/">blog posts</a>.
                         </CardBody>
                     </Card>
                 </GridItem>
