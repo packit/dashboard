@@ -49,5 +49,5 @@ repos:
     hooks:
       - id: check-rebase
         args:
-          - git://github.com/packit/dashboard.git
+          - https://github.com/packit/dashboard.git
         stages: [manual, push]
