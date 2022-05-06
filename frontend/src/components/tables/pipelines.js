@@ -15,7 +15,12 @@ import TriggerLink from "../trigger_link";
 import ConnectionError from "../error";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
-import { StatusLabel, toSRPMStatus, TFStatusLabel } from "../status_labels";
+import {
+    StatusLabel,
+    toSRPMStatus,
+    TFStatusLabel,
+    ProposeDownstreamTargetStatusLabel,
+} from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
@@ -76,8 +81,9 @@ const PipelinesTable = () => {
         { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
         { title: "SRPM", transforms: [cellWidth(5)] },
         { title: "Built by", transforms: [cellWidth(5)] },
-        { title: "RPM builds", transforms: [cellWidth(30)] },
-        { title: "Testing Farm", transforms: [cellWidth(30)] },
+        { title: "RPM builds", transforms: [cellWidth(20)] },
+        { title: "Testing Farm", transforms: [cellWidth(20)] },
+        { title: "Propose Downstream", transforms: [cellWidth(20)] },
     ];
 
     // Local State
@@ -157,6 +163,15 @@ const PipelinesTable = () => {
                                 route={"testing-farm"}
                                 statusClass={TFStatusLabel}
                                 entries={run.test_run}
+                            />
+                        ),
+                    },
+                    {
+                        title: (
+                            <Statuses
+                                route={"propose-downstream"}
+                                statusClass={ProposeDownstreamTargetStatusLabel}
+                                entries={run.propose_downstream}
                             />
                         ),
                     },
