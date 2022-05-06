@@ -29,6 +29,8 @@ class Statuses extends React.Component {
     constructor(props) {
         super(props);
 
+        this.name = props.name;
+
         this.labels = [];
         for (let entry of props.entries) {
             this.labels.push(
@@ -43,7 +45,7 @@ class Statuses extends React.Component {
     }
 
     render() {
-        return <LabelGroup>{this.labels}</LabelGroup>;
+        return <LabelGroup categoryName={this.name}>{this.labels}</LabelGroup>;
     }
 }
 
@@ -67,9 +69,9 @@ function getBuilderLabel(run) {
     }
 
     return (
-        <Label variant={"outline"} icon={icon}>
-            {text}
-        </Label>
+        <>
+            {icon}&nbsp;<span>{text}</span>
+        </>
     );
 }
 
@@ -79,11 +81,7 @@ const PipelinesTable = () => {
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
-        { title: "SRPM", transforms: [cellWidth(5)] },
-        { title: "Built by", transforms: [cellWidth(5)] },
-        { title: "RPM builds", transforms: [cellWidth(20)] },
-        { title: "Testing Farm", transforms: [cellWidth(20)] },
-        { title: "Propose Downstream", transforms: [cellWidth(20)] },
+        { title: "Jobs", transforms: [cellWidth(70)] },
     ];
 
     // Local State
@@ -114,16 +112,6 @@ const PipelinesTable = () => {
         let rowsList = [];
 
         res.map((run) => {
-            let srpm = run.srpm ? (
-                <StatusLabel
-                    status={run.srpm.status}
-                    link={`/results/srpm-builds/${run.srpm.packit_id}`}
-                />
-            ) : (
-                <Label variant={"outline"} icon={undefined}>
-                    {"none"}
-                </Label>
-            );
             let singleRow = {
                 cells: [
                     {
@@ -137,42 +125,42 @@ const PipelinesTable = () => {
                         ),
                     },
                     { title: <Timestamp stamp={run.time_submitted} /> },
-                    { title: srpm },
-                    {
-                        title: getBuilderLabel(run),
-                    },
                     {
                         title: (
                             <>
                                 <Statuses
+                                    name={"SRPM"}
+                                    route={"srpm-builds"}
+                                    statusClass={StatusLabel}
+                                    entries={run.srpm ? [run.srpm] : []}
+                                />
+                                <Statuses
+                                    name={getBuilderLabel(run)}
                                     route={"copr-builds"}
                                     statusClass={StatusLabel}
                                     entries={run.copr}
                                 />
                                 <Statuses
+                                    name={getBuilderLabel(run)}
                                     route={"koji-builds"}
                                     statusClass={StatusLabel}
                                     entries={run.koji}
                                 />
+                                <Statuses
+                                    name={"Testing Farm"}
+                                    route={"testing-farm"}
+                                    statusClass={TFStatusLabel}
+                                    entries={run.test_run}
+                                />
+                                <Statuses
+                                    name={"Propose Downstream"}
+                                    route={"propose-downstream"}
+                                    statusClass={
+                                        ProposeDownstreamTargetStatusLabel
+                                    }
+                                    entries={run.propose_downstream}
+                                />
                             </>
-                        ),
-                    },
-                    {
-                        title: (
-                            <Statuses
-                                route={"testing-farm"}
-                                statusClass={TFStatusLabel}
-                                entries={run.test_run}
-                            />
-                        ),
-                    },
-                    {
-                        title: (
-                            <Statuses
-                                route={"propose-downstream"}
-                                statusClass={ProposeDownstreamTargetStatusLabel}
-                                entries={run.propose_downstream}
-                            />
                         ),
                     },
                 ],
