@@ -4,16 +4,16 @@
 
 repos:
   - repo: https://github.com/psf/black
-    rev: 22.1.0
+    rev: 22.3.0
     hooks:
       - id: black
         language_version: python3
   - repo: https://github.com/pre-commit/mirrors-prettier
-    rev: v2.5.1
+    rev: v2.6.2
     hooks:
       - id: prettier
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.1.0
+    rev: v4.2.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -22,14 +22,14 @@ repos:
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: trailing-whitespace
-  - repo: https://github.com/motet-a/jinjalint
-    rev: 01e0a4d8f1ee775aee00eb9d715eff2b4cc49e4d
-    hooks:
-      - id: jinjalint
-        types: [file]
-        files: \.(html)$
-        args:
-          - --parse-only
+  # - repo: https://github.com/motet-a/jinjalint
+  #   rev: 01e0a4d8f1ee775aee00eb9d715eff2b4cc49e4d
+  #   hooks:
+  #     - id: jinjalint
+  #       types: [file]
+  #       files: \.(html)$
+  #       args:
+  #         - --parse-only
   - repo: https://github.com/PyCQA/flake8
     rev: 4.0.1
     hooks:
@@ -38,14 +38,14 @@ repos:
           - --max-line-length=100
           - --per-file-ignores=packit_dashboard/packit_dashboard.wsgi:F401,E402
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v0.931
+    rev: v0.950
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
         additional_dependencies: [types-requests, types-Flask]
 
   - repo: https://github.com/packit/pre-commit-hooks
-    rev: 1da916777f5cc26ecf221b15e58ca51891d26d94
+    rev: 3bf9afc5ede12a4ee26e9451f306edf255749396
     hooks:
       - id: check-rebase
         args:
