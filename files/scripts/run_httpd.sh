@@ -1,12 +1,14 @@
 #!/usr/bin/bash
 
-set -x
+set -eux
 
-# Generate passwd file based on current uid
-grep -v ^packit /etc/passwd > ${HOME}/passwd
-printf "packit:x:$(id -u):0:Packit Service:/home/packit_dashboard:/bin/bash\n" >> ${HOME}/passwd
-export LD_PRELOAD=libnss_wrapper.so
-export NSS_WRAPPER_PASSWD=${HOME}/passwd
-export NSS_WRAPPER_GROUP=/etc/group
-
-httpd -DFOREGROUND
+exec mod_wsgi-express-3 start-server \
+    --https-port 8443 \
+    --access-log \
+    --log-to-terminal \
+    --ssl-certificate-file /secrets/fullchain.pem \
+    --ssl-certificate-key-file /secrets/privkey.pem \
+    --server-name dashboard.${DEPLOYMENT}.packit.dev \
+    --processes 2 \
+    --locale "C.UTF-8" \
+    /usr/share/packit_dashboard/packit_dashboard.wsgi

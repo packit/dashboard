@@ -13,8 +13,5 @@
           - npm
           - nss_wrapper
           - python3-mod_wsgi
-          - httpd
-          - mod_md
           - mod_ssl
-          - nss_wrapper
         state: present
