@@ -4,6 +4,11 @@
   vars:
     packit_dashboard_path: /src
   tasks:
+    - name: Enable nodejs:18
+      ansible.builtin.command:
+        cmd: dnf module enable -y nodejs:18/minimal
+        creates: /etc/dnf/modules.d/nodejs.module
+
     - name: Install all RPM/Python/Node packages needed to run dashboard
       dnf:
         name:
