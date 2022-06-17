@@ -2,7 +2,7 @@
 
 [dashboard.packit.dev](https://dashboard.packit.dev)
 
-<img src="./static/logo.png" alt="packit" width="200"/>
+<img src="./files/logos/prod.png" alt="Packit logo" width="200"/>
 
 Dashboard for [Packit Service](https://github.com/packit-service).
 
