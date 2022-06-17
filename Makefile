@@ -16,7 +16,7 @@ install-logos:
 
 # this will transpile jsx into js, minify everything and generate static js for production builds
 transpile-prod:
-	cd frontend && REACT_APP_API_URL=$(API_STG) yarn build
+	cd frontend && REACT_APP_API_URL=$(API_STG) yarn run build
 
 
 # For Development Mode Only:

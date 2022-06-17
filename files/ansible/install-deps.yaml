@@ -10,6 +10,7 @@
           - python3-pip
           - python3-flask
           - python3-requests
+          - yarnpkg
           - npm
           - nss_wrapper
           - python3-mod_wsgi
