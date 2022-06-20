@@ -11,8 +11,7 @@
           - python3-flask
           - python3-requests
           - yarnpkg
-          - npm
-          - nss_wrapper
+          - nodejs
           - python3-mod_wsgi
           - mod_ssl
         state: present
