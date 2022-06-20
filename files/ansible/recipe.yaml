@@ -15,9 +15,9 @@
     - name: install node modules
       command:
         chdir: "{{ packit_dashboard_path }}"
-        cmd: npm install
+        cmd: yarn install
 
     - name: bundle javascript
       command:
         chdir: "{{ packit_dashboard_path }}"
-        cmd: npm run build
+        cmd: yarn run build

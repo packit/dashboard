@@ -10,11 +10,9 @@
           - python3-pip
           - python3-flask
           - python3-requests
+          - yarnpkg
           - npm
           - nss_wrapper
           - python3-mod_wsgi
-          - httpd
-          - mod_md
           - mod_ssl
-          - nss_wrapper
         state: present

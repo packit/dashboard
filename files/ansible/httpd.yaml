@@ -1,13 +1,3 @@
-- name: copy httpd.conf
-  copy:
-    src: /src/files/cfg/httpd.conf
-    dest: /etc/httpd/conf/httpd.conf
-
-- name: copy httpd_packit.conf
-  copy:
-    src: /src/files/cfg/httpd_packit.conf
-    dest: /etc/httpd/conf.d/httpd_packit.conf
-
 - name: Copy packit_dashboard.wsgi file
   copy:
     src: /src/packit_dashboard/packit_dashboard.wsgi
@@ -19,15 +9,3 @@
     src: /src/files/scripts/run_httpd.sh
     dest: /usr/bin/run_httpd.sh
     mode: 0775
-
-- name: chmod a+rwx httpd dirs
-  file:
-    mode: a+rwx
-    state: directory
-    path: "{{ item }}"
-  with_items:
-    - /var/lib/httpd
-    - /var/log/httpd
-    - /run/httpd
-    - /etc/httpd/conf
-    - /etc/httpd/conf.d
