@@ -35,6 +35,7 @@ const Jobs = () => {
                     <CardBody>
                         <Tabs
                             isFilled
+                            mountOnEnter
                             activeKey={activeTabKey}
                             onSelect={handleTabClick}
                             isBox={true}
