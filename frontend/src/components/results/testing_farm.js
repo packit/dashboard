@@ -68,20 +68,35 @@ const ResultsPageTestingFarm = (props) => {
         <>{data.status}</>
     );
 
-    const coprBuildInfo = data.copr_build_id ? (
-        <tr>
-            <td>
-                <strong>COPR build</strong>
-            </td>
-            <td>
-                <a href={`/results/copr-builds/${data.copr_build_id}`}>
-                    Details
-                </a>
-            </td>
-        </tr>
-    ) : (
-        ""
-    );
+    function getCoprBuilds() {
+        let coprBuilds = [];
+        let title =
+            data.copr_build_ids.length == 1 ? "Copr build" : "Copr builds";
+
+        for (var i = 0; i < data.copr_build_ids.length; i++) {
+            var coprBuildId = data.copr_build_ids[i];
+            var linkText =
+                data.copr_build_ids.length == 1
+                    ? "Details"
+                    : `Build ${i + 1}  `;
+            coprBuilds.push(
+                <Label href={`/results/copr-builds/${coprBuildId}`}>
+                    {linkText}
+                </Label>
+            );
+        }
+
+        return (
+            <tr>
+                <td>
+                    <strong>{title}</strong>
+                </td>
+                <td>{coprBuilds}</td>
+            </tr>
+        );
+    }
+
+    const coprBuildInfo = data.copr_build_ids.length > 0 ? getCoprBuilds() : "";
 
     return (
         <div>
