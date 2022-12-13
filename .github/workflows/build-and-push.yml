@@ -17,7 +17,7 @@ jobs:
             image: dashboard
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
 
       - name: Extract branch name and set tag
         shell: bash
@@ -35,10 +35,10 @@ jobs:
                   api="https://prod.packit.dev/api"
                   ;;
           esac
-          echo "::set-output name=branch::${branch}"
+          echo "branch=${branch}" >> $GITHUB_OUTPUT
           unique_tag="${branch}-${GITHUB_SHA::7}"
-          echo "::set-output name=tag::${tag} ${unique_tag}"
-          echo "::set-output name=api::${api}"
+          echo "tag=${tag} ${unique_tag}" >> $GITHUB_OUTPUT
+          echo "api=${api}" >> $GITHUB_OUTPUT
         id: branch_tag
 
       - name: Build Image
