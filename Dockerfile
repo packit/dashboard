@@ -16,7 +16,6 @@ RUN ansible-playbook -vv -c local -i localhost, files/ansible/install-deps.yaml 
 COPY packit_dashboard/  packit_dashboard/
 COPY frontend/ frontend/
 
-
 RUN ansible-playbook -vv -c local -i localhost, files/ansible/recipe.yaml
 
 EXPOSE 8443
