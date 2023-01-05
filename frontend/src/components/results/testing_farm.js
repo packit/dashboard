@@ -96,6 +96,7 @@ const ResultsPageTestingFarm = (props) => {
         );
     }
 
+    data.copr_build_ids = data.copr_build_ids.filter((copr) => copr !== null);
     const coprBuildInfo = data.copr_build_ids.length > 0 ? getCoprBuilds() : "";
 
     return (
