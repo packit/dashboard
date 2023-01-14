@@ -50,9 +50,11 @@ const AppLayout = ({ children }) => {
                                 id={`${route.label}-${idx}`}
                             >
                                 <NavLink
-                                    exact
+                                    exact="true"
                                     to={route.path}
-                                    activeClassName="pf-m-current"
+                                    className={({ isActive }) =>
+                                        isActive ? "pf-m-current" : ""
+                                    }
                                 >
                                     {route.label}
                                 </NavLink>
