@@ -1,5 +1,5 @@
 import * as React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 
 import { Dashboard } from "./components/dashboard";
 import { Jobs } from "./components/jobs";
@@ -18,28 +18,28 @@ import Pipelines from "./components/pipelines";
 // Main Menu routes
 const routes = [
     {
-        component: Dashboard,
+        element: <Dashboard />,
         exact: true,
         label: "Home",
         path: "/",
         title: "Home | Packit Service",
     },
     {
-        component: Jobs,
+        element: <Jobs />,
         exact: true,
         label: "Jobs",
         path: "/jobs",
         title: "Jobs | Packit Service",
     },
     {
-        component: Pipelines,
+        element: <Pipelines />,
         exact: true,
         label: "Pipelines",
         path: "/pipelines",
         title: "Pipelines | Packit Service",
     },
     {
-        component: Projects,
+        element: <Projects />,
         exact: true,
         label: "Projects",
         path: "/projects",
@@ -48,61 +48,66 @@ const routes = [
 ];
 
 const AppRoutes = () => (
-    <Switch>
-        {routes.map(({ path, exact, component, title }, idx) => (
+    <Routes>
+        {routes.map(({ path, exact, element, title }, idx) => (
             <Route
                 path={path}
                 title={title}
                 exact={exact}
-                component={component}
+                element={element}
                 key={idx}
             />
         ))}
         <Route
             path="/projects/:forge/:namespace/:repoName"
-            component={ProjectInfo}
+            element={<ProjectInfo />}
             exact
             title="Project"
         />
         <Route
             path="/projects/:forge/:namespace"
-            component={Namespace}
+            element={<Namespace />}
             exact
             title="Namespace"
         />
-        <Route path="/projects/:forge/" component={Forge} exact title="Forge" />
+        <Route
+            path="/projects/:forge/"
+            element={<Forge />}
+            exact
+            title="Forge"
+        />
         <Route
             path="/results/srpm-builds/:id"
-            component={ResultsPageSRPM}
+            element={<ResultsPageSRPM />}
             exact
             title="SRPM Results"
         />
         <Route
             path="/results/copr-builds/:id"
-            component={ResultsPageCopr}
+            element={<ResultsPageCopr />}
             exact
             title="Copr Results"
         />
         <Route
             path="/results/koji-builds/:id"
-            component={ResultsPageKoji}
+            element={<ResultsPageKoji />}
             exact
             title="Koji Results"
         />
         <Route
             path="/results/testing-farm/:id"
-            component={ResultsPageTestingFarm}
+            element={<ResultsPageTestingFarm />}
             exact
             title="Testing Farm Results"
         />
         <Route
             path="/results/propose-downstream/:id"
-            component={ResultsPageProposeDownstream}
+            element={<ResultsPageProposeDownstream />}
             exact
             title="Propose Results"
         />
-        <Route path="/" component={NotFound} title="404 Page Not Found" />
-    </Switch>
+        <Route path="/" element={<NotFound />} title="404 Page Not Found" />
+    </Routes>
 );
 
 export { AppRoutes, routes };

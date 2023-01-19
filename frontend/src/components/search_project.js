@@ -13,7 +13,7 @@ import {
 
 import { SearchIcon } from "@patternfly/react-icons";
 
-import { useHistory } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const SearchProject = () => {
     const [namespace, setNamespace] = useState("");
@@ -23,15 +23,15 @@ const SearchProject = () => {
 
     // Name refers to HTML 5 History API
     // We use this to go to a dynamic link (/projects/<whatever the user entered>/../.. )
-    const history = useHistory();
+    const navigate = useNavigate();
 
     function goToProjectDetails() {
         if (forge && namespace && repoName) {
-            history.push(`/projects/${forge}/${namespace}/${repoName}`);
+            navigate(`/projects/${forge}/${namespace}/${repoName}`);
         } else if (forge && namespace) {
-            history.push(`/projects/${forge}/${namespace}`);
+            navigate(`/projects/${forge}/${namespace}`);
         } else if (forge && !namespace && !repoName) {
-            history.push(`/projects/${forge}`);
+            navigate(`/projects/${forge}`);
         } else {
             setWarning(true);
         }
