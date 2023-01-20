@@ -46,6 +46,7 @@ const BranchList = (props) => {
     // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     function onToggle(branchName) {

@@ -14,7 +14,6 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { TFStatusLabel } from "../status_labels";
-import { Timestamp } from "../../utils/time";
 import { useParams } from "react-router-dom";
 
 const ResultsPageTestingFarm = () => {
@@ -35,7 +34,7 @@ const ResultsPageTestingFarm = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }, []);
+    }, [id]);
 
     // If backend API is down
     if (hasError) {
@@ -72,12 +71,12 @@ const ResultsPageTestingFarm = () => {
     function getCoprBuilds() {
         let coprBuilds = [];
         let title =
-            data.copr_build_ids.length == 1 ? "Copr build" : "Copr builds";
+            data.copr_build_ids.length === 1 ? "Copr build" : "Copr builds";
 
         for (var i = 0; i < data.copr_build_ids.length; i++) {
             var coprBuildId = data.copr_build_ids[i];
             var linkText =
-                data.copr_build_ids.length == 1
+                data.copr_build_ids.length === 1
                     ? "Details"
                     : `Build ${i + 1}  `;
             coprBuilds.push(
@@ -127,7 +126,7 @@ const ResultsPageTestingFarm = () => {
                             role="grid"
                             aria-label="Testing farm table"
                         >
-                            <tbody role="rowgroup">
+                            <tbody>
                                 <tr>
                                     <td>
                                         <strong>Status</strong>

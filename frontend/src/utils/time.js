@@ -1,4 +1,4 @@
-import { Text, Tooltip } from "@patternfly/react-core";
+import { Tooltip } from "@patternfly/react-core";
 
 /*
  * Get a pretty string like 'an hour ago', 'yesterday', '3 months ago',
@@ -12,7 +12,7 @@ const prettyTimeDifference = (difference) => {
     let numericPart = dayDiff / 365;
     let units = " years ago";
 
-    if (dayDiff == 0) {
+    if (dayDiff === 0) {
         [numericPart, units] = [secondDiff / 3600, " hours ago"];
 
         if (secondDiff < 10) {
@@ -26,7 +26,7 @@ const prettyTimeDifference = (difference) => {
         } else if (secondDiff < 7200) {
             [numericPart, units] = [null, "an hour ago"];
         }
-    } else if (dayDiff == 1) {
+    } else if (dayDiff === 1) {
         [numericPart, units] = [null, "yesterday"];
     } else if (dayDiff < 7) {
         [numericPart, units] = [dayDiff, " days ago"];

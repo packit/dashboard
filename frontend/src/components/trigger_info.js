@@ -25,7 +25,7 @@ const TriggerInfo = (props) => {
     // NOTE: Since we did not need any advanced table features,
     // I used a regular html table instead of Patternfly React's table component
     let activeViewContent;
-    if (activeView == "Builds") {
+    if (activeView === "Builds") {
         activeViewContent = (
             <div>
                 <table
@@ -49,7 +49,7 @@ const TriggerInfo = (props) => {
                             </th>
                         </tr>
                     </thead>
-                    <tbody role="rowgroup">
+                    <tbody>
                         {props.trigger.builds.map((build, index) => (
                             <tr role="row" key={index}>
                                 <td role="cell" data-label="Build ID">
@@ -71,7 +71,7 @@ const TriggerInfo = (props) => {
             </div>
         );
     }
-    if (activeView == "SRPM Builds") {
+    if (activeView === "SRPM Builds") {
         activeViewContent = (
             <div>
                 <table
@@ -92,7 +92,7 @@ const TriggerInfo = (props) => {
                             </th>
                         </tr>
                     </thead>
-                    <tbody role="rowgroup">
+                    <tbody>
                         {props.trigger.srpm_builds.map((build, index) => (
                             <tr role="row" key={index}>
                                 <td role="cell" data-label="SRPM Build ID">
@@ -111,7 +111,7 @@ const TriggerInfo = (props) => {
             </div>
         );
     }
-    if (activeView == "Test Runs") {
+    if (activeView === "Test Runs") {
         activeViewContent = (
             <div>
                 <table
@@ -135,7 +135,7 @@ const TriggerInfo = (props) => {
                             </th>
                         </tr>
                     </thead>
-                    <tbody role="rowgroup">
+                    <tbody>
                         {props.trigger.tests.map((test, index) => (
                             <tr role="row">
                                 <td role="cell" data-label="Pipeline ID">

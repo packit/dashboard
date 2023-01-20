@@ -38,7 +38,7 @@ const ResultsPageProposeDownstream = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }, []);
+    }, [id]);
 
     // If backend API is down
     if (hasError) {
@@ -121,7 +121,7 @@ const ResultsPageProposeDownstream = () => {
                             role="grid"
                             aria-label="Propose table"
                         >
-                            <tbody role="rowgroup">
+                            <tbody>
                                 <tr>
                                     <td>
                                         <strong>Status</strong>

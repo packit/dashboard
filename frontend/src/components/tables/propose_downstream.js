@@ -39,7 +39,7 @@ const ProposeDownstreamStatuses = (props) => {
 
 const ProposeDownstreamsTable = () => {
     // Headings
-    const column_list = [
+    const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(25)] },
         { title: "Targets", transforms: [cellWidth(60)] },
@@ -47,7 +47,6 @@ const ProposeDownstreamsTable = () => {
     ];
 
     // Local State
-    const [columns, setColumns] = useState(column_list);
     const [rows, setRows] = useState([]);
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -75,7 +74,7 @@ const ProposeDownstreamsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((propose_downstream) => {
+        res.forEach((propose_downstream) => {
             let singleRow = {
                 cells: [
                     {
@@ -140,6 +139,7 @@ const ProposeDownstreamsTable = () => {
     // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down

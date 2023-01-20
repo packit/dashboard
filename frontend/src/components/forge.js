@@ -1,10 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import {
     PageSection,
     PageSectionVariants,
     TextContent,
     Text,
-    Label,
 } from "@patternfly/react-core";
 
 import ProjectsList from "./projects_list";

@@ -5,7 +5,6 @@ import {
     TableHeader,
     TableBody,
     TableVariant,
-    sortable,
     SortByDirection,
     cellWidth,
 } from "@patternfly/react-table";
@@ -16,12 +15,12 @@ import ConnectionError from "../error";
 import TriggerLink from "../trigger_link";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
-import { StatusLabel, toSRPMStatus } from "../status_labels";
+import { StatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 
 const SRPMBuildstable = () => {
     // Headings
-    const column_list = [
+    const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(55)] },
         { title: "Results", transforms: [cellWidth(20)] },
@@ -29,7 +28,6 @@ const SRPMBuildstable = () => {
     ];
 
     // Local State
-    const [columns, setColumns] = useState(column_list);
     const [rows, setRows] = useState([]);
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -57,7 +55,7 @@ const SRPMBuildstable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((srpm_builds) => {
+        res.forEach((srpm_builds) => {
             let singleRow = {
                 cells: [
                     {
@@ -111,6 +109,7 @@ const SRPMBuildstable = () => {
     // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down

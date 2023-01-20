@@ -16,7 +16,7 @@ import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import ConnectionError from "../error";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
-import { StatusLabel, toSRPMStatus } from "../status_labels";
+import { StatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import { useParams } from "react-router-dom";
 
@@ -38,7 +38,7 @@ const ResultsPageSRPM = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }, []);
+    }, [id]);
 
     // If backend API is down
     if (hasError) {

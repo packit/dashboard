@@ -10,7 +10,7 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 import TriggerLink from "../trigger_link";
 import ConnectionError from "../error";
 import Preloader from "../preloader";
@@ -20,7 +20,7 @@ import { Timestamp } from "../../utils/time";
 
 const KojiBuildsTable = () => {
     // Headings
-    const column_list = [
+    const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(35)] },
         { title: "Target", transforms: [sortable, cellWidth(20)] },
@@ -29,7 +29,6 @@ const KojiBuildsTable = () => {
     ];
 
     // Local State
-    const [columns, setColumns] = useState(column_list);
     const [rows, setRows] = useState([]);
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -57,7 +56,7 @@ const KojiBuildsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((koji_builds) => {
+        res.forEach((koji_builds) => {
             let singleRow = {
                 cells: [
                     {
@@ -89,7 +88,11 @@ const KojiBuildsTable = () => {
                     {
                         title: (
                             <strong>
-                                <a href={koji_builds.web_url} target="_blank">
+                                <a
+                                    href={koji_builds.web_url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
                                     {koji_builds.build_id}
                                 </a>
                             </strong>
@@ -122,6 +125,7 @@ const KojiBuildsTable = () => {
     // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down

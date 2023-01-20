@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
     PageSection,
     PageSectionVariants,
@@ -9,7 +9,6 @@ import {
     TabTitleText,
     Card,
     CardBody,
-    Divider,
     TextContent,
     Label,
 } from "@patternfly/react-core";
@@ -37,7 +36,7 @@ const ProjectInfo = () => {
         setActiveTabKey(tabIndex);
     };
 
-    function checkValidProject() {
+    const checkValidProject = useCallback(() => {
         fetch(
             `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}`
         )
@@ -53,12 +52,12 @@ const ProjectInfo = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }
+    }, [forge, namespace, repoName]);
 
     // Executes checkValidProject on first render of component
     useEffect(() => {
         checkValidProject();
-    }, []);
+    }, [checkValidProject]);
 
     let details = <div></div>;
 

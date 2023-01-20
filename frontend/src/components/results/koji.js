@@ -34,7 +34,7 @@ const ResultsPageKoji = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }, []);
+    }, [id]);
 
     // If backend API is down
     if (hasError) {
@@ -89,7 +89,7 @@ const ResultsPageKoji = () => {
                             role="grid"
                             aria-label="Builds Table"
                         >
-                            <tbody role="rowgroup">
+                            <tbody>
                                 <tr>
                                     <td>
                                         <strong>SRPM Build</strong>
