@@ -23,11 +23,10 @@ import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
 
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
+import { useParams } from "react-router-dom";
 
-const ProjectInfo = (props) => {
-    let forge = props.match.params.forge;
-    let namespace = props.match.params.namespace;
-    let repoName = props.match.params.repoName;
+const ProjectInfo = () => {
+    let { forge, namespace, repoName } = useParams();
 
     const [activeTabKey, setActiveTabKey] = React.useState(0);
     const [hasError, setErrors] = useState(false);

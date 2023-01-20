@@ -14,9 +14,10 @@ import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { StatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
+import { useParams } from "react-router-dom";
 
-const ResultsPageCopr = (props) => {
-    let id = props.match.params.id;
+const ResultsPageCopr = () => {
+    let { id } = useParams();
 
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);

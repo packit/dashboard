@@ -9,10 +9,10 @@ import {
 
 import ForgeIcon from "./forge_icon";
 import ProjectsList from "./projects_list";
+import { useParams } from "react-router-dom";
 
-const Namespace = (props) => {
-    let forge = props.match.params.forge;
-    let namespace = props.match.params.namespace;
+const Namespace = () => {
+    let { forge, namespace } = useParams();
 
     return (
         <div>
