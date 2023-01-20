@@ -9,9 +9,10 @@ import {
 
 import ProjectsList from "./projects_list";
 import ForgeIcon from "./forge_icon";
+import { useParams } from "react-router-dom";
 
-const Forge = (props) => {
-    let forge = props.match.params.forge;
+const Forge = () => {
+    let { forge } = useParams();
 
     return (
         <div>

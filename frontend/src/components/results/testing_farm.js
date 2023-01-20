@@ -15,9 +15,10 @@ import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { TFStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
+import { useParams } from "react-router-dom";
 
-const ResultsPageTestingFarm = (props) => {
-    let id = props.match.params.id;
+const ResultsPageTestingFarm = () => {
+    let { id } = useParams();
 
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);

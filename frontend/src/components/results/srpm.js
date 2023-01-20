@@ -18,9 +18,10 @@ import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { StatusLabel, toSRPMStatus } from "../status_labels";
 import { Timestamp } from "../../utils/time";
+import { useParams } from "react-router-dom";
 
-const ResultsPageSRPM = (props) => {
-    let id = props.match.params.id;
+const ResultsPageSRPM = () => {
+    let { id } = useParams();
 
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);

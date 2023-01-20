@@ -112,3 +112,6 @@ package-lock.json
 
 # Requre debug logs
 modules.out
+
+# Makefile cache
+.install-logos

@@ -18,9 +18,10 @@ import TriggerLink from "../trigger_link";
 import { ProposeDownstreamTargetStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
+import { useParams } from "react-router-dom";
 
-const ResultsPageProposeDownstream = (props) => {
-    let id = props.match.params.id;
+const ResultsPageProposeDownstream = () => {
+    let { id } = useParams();
 
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
