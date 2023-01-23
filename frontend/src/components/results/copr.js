@@ -34,7 +34,7 @@ const ResultsPageCopr = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }, []);
+    }, [id]);
 
     // If backend API is down
     if (hasError) {
@@ -66,11 +66,11 @@ const ResultsPageCopr = () => {
         let packagesToInstall = [];
 
         for (let packageDict of data.built_packages) {
-            if (packageDict.arch != "src") {
+            if (packageDict.arch !== "src") {
                 const packageString =
                     packageDict.name +
                     "-" +
-                    (packageDict.epoch != 0 ? packageDict.epoch + ":" : "") +
+                    (packageDict.epoch !== 0 ? packageDict.epoch + ":" : "") +
                     packageDict.version +
                     "-" +
                     packageDict.release +
@@ -91,7 +91,7 @@ const ResultsPageCopr = () => {
     );
 
     const installationInstructions =
-        data.status == "success" ? (
+        data.status === "success" ? (
             <Card>
                 <CardBody>
                     <Text component="p">
@@ -156,7 +156,7 @@ const ResultsPageCopr = () => {
                             role="grid"
                             aria-label="Builds Table"
                         >
-                            <tbody role="rowgroup">
+                            <tbody>
                                 <tr>
                                     <td>
                                         <strong>SRPM Build</strong>

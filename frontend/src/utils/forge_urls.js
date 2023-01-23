@@ -20,6 +20,8 @@ function getPRLink(forge, namespace, repoName, prID) {
         case "gitlab.com":
             prLink = `https://gitlab.com/${namespace}/${repoName}/-/merge_requests/${prID}`;
             break;
+        default:
+            break;
     }
     return prLink;
 }
@@ -33,6 +35,8 @@ function getBranchLink(forge, namespace, repoName, branchName) {
             break;
         case "gitlab.com":
             branchLink = `https://gitlab.com/${namespace}/${repoName}/-/tree/${branchName}`;
+            break;
+        default:
             break;
     }
     return branchLink;
@@ -48,6 +52,8 @@ function getIssueLink(forge, namespace, repoName, issueID) {
         case "gitlab.com":
             issueLink = `https://gitlab.com/${namespace}/${repoName}/issues/-/${issueID}`;
             break;
+        default:
+            break;
     }
     return issueLink;
 }
@@ -61,6 +67,8 @@ function getReleaseLink(forge, namespace, repoName, release) {
             break;
         case "gitlab.com":
             releaseLink = `https://gitlab.com/${namespace}/${repoName}/-/tags/${release}`;
+            break;
+        default:
             break;
     }
     return releaseLink;

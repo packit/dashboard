@@ -10,7 +10,7 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 
 import ConnectionError from "../error";
 import Preloader from "../preloader";
@@ -20,7 +20,7 @@ import { TFStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 
 const TestingFarmResultsTable = () => {
-    const column_list = [
+    const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(35)] },
         { title: "Target", transforms: [sortable, cellWidth(20)] },
@@ -29,7 +29,6 @@ const TestingFarmResultsTable = () => {
     ];
 
     // Local State
-    const [columns, setColumns] = useState(column_list);
     const [rows, setRows] = useState([]);
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -55,7 +54,7 @@ const TestingFarmResultsTable = () => {
 
     function jsonToRow(res) {
         let rowsList = [];
-        res.map((test_results) => {
+        res.forEach((test_results) => {
             let singleRow = {
                 cells: [
                     {
@@ -132,6 +131,7 @@ const TestingFarmResultsTable = () => {
     // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down
@@ -165,20 +165,6 @@ const TestingFarmResultsTable = () => {
             </center>
         </div>
     );
-};
-
-const TFLogsURL = (props) => {
-    // when the testing farm test is running, there is no url stored
-    // so instead of showing a fake link that leads to 404, do not show the link at all
-    if (props.link !== null) {
-        return (
-            <a target="_blank" href={props.link}>
-                {props.pipeline}
-            </a>
-        );
-    } else {
-        return <span>{props.pipeline}</span>;
-    }
 };
 
 export default TestingFarmResultsTable;

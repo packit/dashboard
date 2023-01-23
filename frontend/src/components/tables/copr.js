@@ -10,7 +10,7 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, Tooltip } from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 import TriggerLink from "../trigger_link";
 import ConnectionError from "../error";
 import Preloader from "../preloader";
@@ -40,7 +40,7 @@ const ChrootStatuses = (props) => {
 
 const CoprBuildsTable = () => {
     // Headings
-    const column_list = [
+    const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Chroots", transforms: [cellWidth(60)] },
@@ -49,7 +49,6 @@ const CoprBuildsTable = () => {
     ];
 
     // Local State
-    const [columns, setColumns] = useState(column_list);
     const [rows, setRows] = useState([]);
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -77,7 +76,7 @@ const CoprBuildsTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((copr_builds) => {
+        res.forEach((copr_builds) => {
             let singleRow = {
                 cells: [
                     {
@@ -108,7 +107,11 @@ const CoprBuildsTable = () => {
                     {
                         title: (
                             <strong>
-                                <a href={copr_builds.web_url} target="_blank">
+                                <a
+                                    href={copr_builds.web_url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
                                     {copr_builds.build_id}
                                 </a>
                             </strong>
@@ -154,6 +157,7 @@ const CoprBuildsTable = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down

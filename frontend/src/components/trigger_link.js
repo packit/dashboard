@@ -60,7 +60,7 @@ const TriggerLink = (props) => {
 
     if (link !== "") {
         return (
-            <a target="_blank" href={link}>
+            <a target="_blank" href={link} rel="noreferrer">
                 {props.builds.repo_namespace}/{props.builds.repo_name}
                 {jobSuffix}
             </a>

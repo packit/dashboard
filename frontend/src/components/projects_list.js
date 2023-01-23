@@ -30,7 +30,7 @@ const ProjectsList = (props) => {
     const [page, setPage] = useState(1);
     const [projects, setProjects] = useState([]);
     // by default, ignore non useful projects ie without any handled item
-    const [showUseful, setShowUseful] = useState(true);
+    const showUseful = true;
 
     // If a namespace and forge are provided, then load those
     // otherwise load all projects
@@ -84,6 +84,7 @@ const ProjectsList = (props) => {
     // here useEffect gets executed after page changes and it fetched more pages
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [page]);
 
     function loadMore() {
@@ -131,7 +132,11 @@ const ProjectsList = (props) => {
                                     {`${project.namespace}/${project.repo_name}`}
                                 </Link>
                                 <br />
-                                <a href={project.project_url} target="_blank">
+                                <a
+                                    href={project.project_url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
                                     <ExternalLinkAltIcon />
                                 </a>
                             </CardTitle>

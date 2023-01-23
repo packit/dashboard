@@ -10,14 +10,13 @@ import {
     cellWidth,
 } from "@patternfly/react-table";
 
-import { Button, Label, LabelGroup, Tooltip } from "@patternfly/react-core";
+import { Button, LabelGroup } from "@patternfly/react-core";
 import TriggerLink from "../trigger_link";
 import ConnectionError from "../error";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import {
     StatusLabel,
-    toSRPMStatus,
     TFStatusLabel,
     ProposeDownstreamTargetStatusLabel,
 } from "../status_labels";
@@ -61,10 +60,10 @@ function getBuilderLabel(run) {
     let icon = undefined;
 
     if (run.copr.length > 0) {
-        icon = <img style={iconStyle} src={coprLogo} />;
+        icon = <img style={iconStyle} src={coprLogo} alt="Copr logo" />;
         text = "Copr";
     } else if (run.koji.length > 0) {
-        icon = <img style={iconStyle} src={kojiLogo} />;
+        icon = <img style={iconStyle} src={kojiLogo} alt="Koji logo" />;
         text = "Koji";
     }
 
@@ -77,7 +76,7 @@ function getBuilderLabel(run) {
 
 const PipelinesTable = () => {
     // Headings
-    const column_list = [
+    const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
@@ -85,7 +84,6 @@ const PipelinesTable = () => {
     ];
 
     // Local State
-    const [columns, setColumns] = useState(column_list);
     const [rows, setRows] = useState([]);
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -111,7 +109,7 @@ const PipelinesTable = () => {
     function jsonToRow(res) {
         let rowsList = [];
 
-        res.map((run) => {
+        res.forEach((run) => {
             let singleRow = {
                 cells: [
                     {
@@ -192,6 +190,7 @@ const PipelinesTable = () => {
 
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down

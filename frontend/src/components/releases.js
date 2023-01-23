@@ -3,8 +3,6 @@ import React, { useState, useEffect } from "react";
 import ConnectionError from "./error";
 import Preloader from "./preloader";
 
-import { List, ListItem } from "@patternfly/react-core";
-
 const ReleasesList = (props) => {
     // Local State
     const [hasError, setErrors] = useState(false);
@@ -36,6 +34,7 @@ const ReleasesList = (props) => {
     // look at detailed comment in ./copr_builds_table.js
     useEffect(() => {
         fetchData();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // If backend API is down
@@ -65,7 +64,7 @@ const ReleasesList = (props) => {
                         </th>
                     </tr>
                 </thead>
-                <tbody role="rowgroup">
+                <tbody>
                     {releaseList.map((release, index) => (
                         <tr role="row" key={index}>
                             <td role="cell" data-label="Tag">
