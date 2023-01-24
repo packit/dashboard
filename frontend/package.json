@@ -11,6 +11,7 @@
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
+    "prettier": "^2.8.3",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
@@ -25,7 +26,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prettier": "prettier --write ."
   },
   "eslintConfig": {
     "ignorePatterns": [
@@ -42,8 +44,7 @@
     "overrides": [
       {
         "files": [
-          "*.js",
-          "*.html"
+          "*.js"
         ],
         "options": {
           "tabWidth": 4
