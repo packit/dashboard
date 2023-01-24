@@ -32,6 +32,19 @@ Dashboard for [Packit Service](https://github.com/packit-service).
 # now forget everything about npm, deploy flask the usual way
 ```
 
+> **Note**
+>
+> For more details on `pre-commit` see https://github.com/packit/contributing#pre-commit
+
+Running `pre-commit` is recommended for development, this will run a few tasks that are helpful
+
+```bash
+# install pre-commit on your system
+:~/dashboard $ pip3 install pre-commit
+# add pre-commit to git hooks for committing and pushing
+:~/dashboard $ pre-commit install -t pre-commit -t pre-push
+```
+
 ## More Info
 
 If you'd like to know more about [packit](https://github.com/packit-service), please check:
