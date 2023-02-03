@@ -29,7 +29,7 @@ transpile-prod:
 # if you change flask port for dev, also change it in frontend/package.json in the proxy key/value
 
 run-dev-frontend:
-	cd frontend && REACT_APP_API_URL=$(API_STG) yarn start
+	cd frontend && REACT_APP_API_URL=$(API_STG) GENERATE_SOURCEMAP=true HTTPS=true yarn start
 
 run-dev-flask:
 	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0

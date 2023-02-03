@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 
 import {
     Table,
     TableHeader,
     TableBody,
     TableVariant,
-    sortable,
-    SortByDirection,
     cellWidth,
 } from "@patternfly/react-table";
 
@@ -17,6 +15,7 @@ import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import { ProposeDownstreamTargetStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
+import { useInfiniteQuery } from "react-query";
 
 const ProposeDownstreamStatuses = (props) => {
     let labels = [];
@@ -40,35 +39,28 @@ const ProposeDownstreamStatuses = (props) => {
 const ProposeDownstreamsTable = () => {
     // Headings
     const columns = [
-        { title: "", transforms: [cellWidth(5)] }, // space for forge icon
+        {
+            title: <span className="pf-u-screen-reader">Forge</span>,
+            transforms: [cellWidth(5)],
+        }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(25)] },
         { title: "Targets", transforms: [cellWidth(60)] },
-        { title: "Time Submitted", transforms: [sortable, cellWidth(20)] },
+        { title: "Time Submitted", transforms: [cellWidth(20)] },
     ];
 
-    // Local State
-    const [rows, setRows] = useState([]);
-    const [hasError, setErrors] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const [sortBy, setSortBy] = useState({});
-    const [page, setPage] = useState(1);
-
     // Fetch data from dashboard backend (or if we want, directly from the API)
-    function fetchData() {
+    const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/propose-downstream?page=${page}&per_page=20`
+            `${process.env.REACT_APP_API_URL}/propose-downstream?page=${pageParam}&per_page=20`
         )
             .then((response) => response.json())
-            .then((data) => {
-                jsonToRow(data);
-                setLoaded(true);
-                setPage(page + 1); // set next page
-            })
-            .catch((err) => {
-                console.log(err);
-                setErrors(err);
-            });
-    }
+            .then((data) => jsonToRow(data));
+
+    const { isLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery("propose-downstream", fetchData, {
+            getNextPageParam: (_, allPages) => allPages.length + 1,
+            keepPreviousData: true,
+        });
 
     // Convert fetched json into row format that the table can read
     function jsonToRow(res) {
@@ -112,53 +104,28 @@ const ProposeDownstreamsTable = () => {
             };
             rowsList.push(singleRow);
         });
-        setRows(rows.concat(rowsList));
+        return rowsList;
     }
 
-    function onSort(_event, index, direction) {
-        const sortedRows = rows.sort((a, b) =>
-            a[index] < b[index] ? -1 : a[index] > b[index] ? 1 : 0
-        );
-        setSortBy({
-            index,
-            direction,
-        });
-        setRows(
-            direction === SortByDirection.asc
-                ? sortedRows
-                : sortedRows.reverse()
-        );
-    }
-
-    // Load more items
-    function nextPage() {
-        fetchData();
-    }
-
-    // Executes fetchData on first render of component
-    // look at detailed comment in ./copr_builds_table.js
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
+    const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
     // If backend API is down
-    if (hasError) {
+    if (isError) {
         return <ConnectionError />;
     }
 
     // Show preloader if waiting for API data
-    if (!loaded) {
+    // TODO(SpyTec): Replace with skeleton loader, we know the data will look like
+    if (isLoading) {
         return <Preloader />;
     }
 
     return (
         <div>
             <Table
-                aria-label="Sortable Table"
+                aria-label="Table of propose downstream runs"
                 variant={TableVariant.compact}
-                sortBy={sortBy}
-                onSort={onSort}
                 cells={columns}
                 rows={rows}
             >
@@ -167,8 +134,12 @@ const ProposeDownstreamsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={nextPage}>
-                    Load More
+                <Button
+                    variant="control"
+                    onClick={() => fetchNextPage()}
+                    isAriaDisabled={isFetching}
+                >
+                    {isFetching ? "Fetching data" : "Load more"}
                 </Button>
             </center>
         </div>

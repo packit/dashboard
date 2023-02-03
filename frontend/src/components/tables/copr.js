@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 
 import {
     Table,
     TableHeader,
     TableBody,
     TableVariant,
-    sortable,
-    SortByDirection,
     cellWidth,
 } from "@patternfly/react-table";
 
@@ -17,6 +15,7 @@ import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
 import { StatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
+import { useInfiniteQuery } from "react-query";
 
 // Add every target to the chroots column and color code according to status
 const ChrootStatuses = (props) => {
@@ -28,6 +27,7 @@ const ChrootStatuses = (props) => {
 
         labels.push(
             <StatusLabel
+                key={chroot}
                 status={status}
                 target={chroot}
                 link={`/results/copr-builds/${id}`}
@@ -41,36 +41,29 @@ const ChrootStatuses = (props) => {
 const CoprBuildsTable = () => {
     // Headings
     const columns = [
-        { title: "", transforms: [cellWidth(5)] }, // space for forge icon
+        {
+            title: <span className="pf-u-screen-reader">Forge</span>,
+            transforms: [cellWidth(5)],
+        }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(15)] },
         { title: "Chroots", transforms: [cellWidth(60)] },
-        { title: "Time Submitted", transforms: [sortable, cellWidth(10)] },
-        { title: "Copr Build", transforms: [sortable, cellWidth(10)] },
+        { title: "Time Submitted", transforms: [cellWidth(10)] },
+        { title: "Copr Build", transforms: [cellWidth(10)] },
     ];
 
-    // Local State
-    const [rows, setRows] = useState([]);
-    const [hasError, setErrors] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const [sortBy, setSortBy] = useState({});
-    const [page, setPage] = useState(1);
-
     // Fetch data from dashboard backend (or if we want, directly from the API)
-    function fetchData() {
+    const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/copr-builds?page=${page}&per_page=20`
+            `${process.env.REACT_APP_API_URL}/copr-builds?page=${pageParam}&per_page=20`
         )
             .then((response) => response.json())
-            .then((data) => {
-                jsonToRow(data);
-                setLoaded(true);
-                setPage(page + 1); // set next page
-            })
-            .catch((err) => {
-                console.log(err);
-                setErrors(err);
-            });
-    }
+            .then((data) => jsonToRow(data));
+
+    const { isLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery("copr", fetchData, {
+            getNextPageParam: (_, allPages) => allPages.length + 1,
+            keepPreviousData: true,
+        });
 
     // Convert fetched json into row format that the table can read
     function jsonToRow(res) {
@@ -117,66 +110,32 @@ const CoprBuildsTable = () => {
                             </strong>
                         ),
                     },
-                    // copr_builds.ref.substring(0, 8),
                 ],
             };
             rowsList.push(singleRow);
         });
-        // console.log(rowsList);
-        setRows(rows.concat(rowsList));
+        return rowsList;
     }
 
-    function onSort(_event, index, direction) {
-        const sortedRows = rows.sort((a, b) =>
-            a[index] < b[index] ? -1 : a[index] > b[index] ? 1 : 0
-        );
-        setSortBy({
-            index,
-            direction,
-        });
-        setRows(
-            direction === SortByDirection.asc
-                ? sortedRows
-                : sortedRows.reverse()
-        );
-    }
-
-    // Load more items
-    function nextPage() {
-        // console.log("Next Page is " + page);
-        fetchData();
-    }
-
-    // useEffect by default executes on every render of component
-    // here we only need it to execute on mount / first render
-    // so I simply added the second parameter (empty array three lines after this comment)
-
-    // But if you want different behaviour for first render and updated render
-    // look at https://stackoverflow.com/a/55075818/3809115
-    // and add code after the last line of the if statement in the ans
-
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
+    const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
     // If backend API is down
-    if (hasError) {
+    if (isError) {
         return <ConnectionError />;
     }
 
     // Show preloader if waiting for API data
-    if (!loaded) {
+    // TODO(SpyTec): Replace with skeleton loader, we know the data will look like
+    if (isLoading) {
         return <Preloader />;
     }
 
     return (
         <div>
             <Table
-                aria-label="Sortable Table"
+                aria-label="Table of Copr builds"
                 variant={TableVariant.compact}
-                sortBy={sortBy}
-                onSort={onSort}
                 cells={columns}
                 rows={rows}
             >
@@ -185,8 +144,12 @@ const CoprBuildsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={nextPage}>
-                    Load More
+                <Button
+                    variant="control"
+                    onClick={() => fetchNextPage()}
+                    isAriaDisabled={isFetching}
+                >
+                    {isFetching ? "Fetching data" : "Load more"}
                 </Button>
             </center>
         </div>

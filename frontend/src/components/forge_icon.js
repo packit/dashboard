@@ -17,13 +17,13 @@ const ForgeIcon = (props) => {
             forgeIcon = <GitlabIcon />;
             break;
         default:
-            // patternfly doesnt have an icon for pagure
+            // patternfly doesn't have an icon for pagure
             forgeIcon = <GitIcon />;
             break;
     }
 
     return (
-        <Tooltip position="top" content={<span>{forge}</span>}>
+        <Tooltip position="top" content={forge} aria="labelledby">
             {forgeIcon}
         </Tooltip>
     );
