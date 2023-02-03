@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useMemo } from "react";
 
 import {
     Table,
     TableHeader,
     TableBody,
     TableVariant,
-    sortable,
-    SortByDirection,
     cellWidth,
 } from "@patternfly/react-table";
 
@@ -18,39 +16,30 @@ import TriggerLink from "../trigger_link";
 import ForgeIcon from "../forge_icon";
 import { TFStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
+import { useInfiniteQuery } from "react-query";
 
 const TestingFarmResultsTable = () => {
     const columns = [
         { title: "", transforms: [cellWidth(5)] }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(35)] },
-        { title: "Target", transforms: [sortable, cellWidth(20)] },
+        { title: "Target", transforms: [cellWidth(20)] },
         { title: "Time Submitted", transforms: [cellWidth(20)] },
         { title: "Test Results", transforms: [cellWidth(20)] },
     ];
 
-    // Local State
-    const [rows, setRows] = useState([]);
-    const [hasError, setErrors] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const [sortBy, setSortBy] = useState({});
-    const [page, setPage] = useState(1);
-
     // Fetch data from dashboard backend (or if we want, directly from the API)
-    function fetchData() {
+    const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/testing-farm/results?page=${page}&per_page=50`
+            `${process.env.REACT_APP_API_URL}/testing-farm/results?page=${pageParam}&per_page=50`
         )
             .then((response) => response.json())
-            .then((data) => {
-                jsonToRow(data);
-                setLoaded(true);
-                setPage(page + 1); // set next page
-            })
-            .catch((err) => {
-                console.log(err);
-                setErrors(err);
-            });
-    }
+            .then((data) => jsonToRow(data));
+
+    const { isLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery("copr", fetchData, {
+            getNextPageParam: (_, allPages) => allPages.length + 1,
+            keepPreviousData: true,
+        });
 
     function jsonToRow(res) {
         let rowsList = [];
@@ -67,14 +56,6 @@ const TestingFarmResultsTable = () => {
                             </strong>
                         ),
                     },
-                    // {
-                    //     title: (
-                    //         <TFLogsURL
-                    //             link={test_results.web_url}
-                    //             pipeline={test_results.pipeline_id}
-                    //         />
-                    //     ),
-                    // },
                     {
                         title: (
                             <TFStatusLabel
@@ -102,55 +83,27 @@ const TestingFarmResultsTable = () => {
             };
             rowsList.push(singleRow);
         });
-        //   console.log(rowsList);
-        setRows(rows.concat(rowsList));
+        return rowsList;
     }
 
-    function onSort(_event, index, direction) {
-        const sortedRows = rows.sort((a, b) =>
-            a[index] < b[index] ? -1 : a[index] > b[index] ? 1 : 0
-        );
-        setSortBy({
-            index,
-            direction,
-        });
-        setRows(
-            direction === SortByDirection.asc
-                ? sortedRows
-                : sortedRows.reverse()
-        );
-    }
-
-    // Load more items
-    function nextPage() {
-        // console.log("Next Page is " + page);
-        fetchData();
-    }
-
-    // Executes fetchData on first render of component
-    // look at detailed comment in ./copr_builds_table.js
-    useEffect(() => {
-        fetchData();
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
+    const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
     // If backend API is down
-    if (hasError) {
+    if (isError) {
         return <ConnectionError />;
     }
 
     // Show preloader if waiting for API data
-    if (!loaded) {
+    if (isLoading) {
         return <Preloader />;
     }
 
     return (
         <div>
             <Table
-                aria-label="Sortable Table"
+                aria-label="Table of Testing Farm runs"
                 variant={TableVariant.compact}
-                sortBy={sortBy}
-                onSort={onSort}
                 cells={columns}
                 rows={rows}
             >
@@ -159,8 +112,12 @@ const TestingFarmResultsTable = () => {
             </Table>
             <center>
                 <br />
-                <Button variant="control" onClick={nextPage}>
-                    Load More
+                <Button
+                    variant="control"
+                    onClick={() => fetchNextPage()}
+                    isAriaDisabled={isFetching}
+                >
+                    {isFetching ? "Fetching data" : "Load more"}
                 </Button>
             </center>
         </div>
