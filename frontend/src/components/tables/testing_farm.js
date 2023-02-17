@@ -102,7 +102,7 @@ const TestingFarmResultsTable = () => {
     return (
         <div>
             <Table
-                aria-label="Table of Testing Farm runs"
+                aria-label="Testing Farm runs"
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}

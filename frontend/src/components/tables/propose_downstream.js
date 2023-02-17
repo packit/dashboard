@@ -124,7 +124,7 @@ const ProposeDownstreamsTable = () => {
     return (
         <div>
             <Table
-                aria-label="Table of propose downstream runs"
+                aria-label="Propose downstream runs"
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}

@@ -38,6 +38,9 @@ class BaseStatusLabel extends React.Component {
                 <span style={{ padding: "2px" }}>
                     <Label icon={this.icon} color={this.color} href={this.link}>
                         {this.label}
+                        <span className="pf-u-screen-reader">
+                            {this.tooltipText}
+                        </span>
                     </Label>
                 </span>
             </Tooltip>

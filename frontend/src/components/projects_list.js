@@ -24,6 +24,12 @@ import ConnectionError from "./error";
 import Preloader from "./preloader";
 import { Link } from "react-router-dom";
 
+function goToProjectInfo(project) {
+    const urlArray = project.project_url.split("/");
+    const forge = urlArray[2];
+    return `/projects/${forge}/${project.namespace}/${project.repo_name}`;
+}
+
 const ProjectsList = (props) => {
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
@@ -91,12 +97,6 @@ const ProjectsList = (props) => {
         setPage(page + 1);
     }
 
-    function goToProjectInfo(project) {
-        const urlArray = project.project_url.split("/");
-        const forge = urlArray[2];
-        return `/projects/${forge}/${project.namespace}/${project.repo_name}`;
-    }
-
     let loadButton = (
         <center>
             <br />
@@ -126,9 +126,9 @@ const ProjectsList = (props) => {
             <Gallery hasGutter>
                 {projects.map((project, index) => (
                     <GalleryItem key={index}>
-                        <Card isHoverable>
+                        <Card>
                             <CardTitle>
-                                <Link to={() => goToProjectInfo(project)}>
+                                <Link to={goToProjectInfo(project)}>
                                     {`${project.namespace}/${project.repo_name}`}
                                 </Link>
                                 <br />
@@ -136,6 +136,7 @@ const ProjectsList = (props) => {
                                     href={project.project_url}
                                     target="_blank"
                                     rel="noreferrer"
+                                    aria-label="External link to project"
                                 >
                                     <ExternalLinkAltIcon />
                                 </a>
@@ -146,6 +147,7 @@ const ProjectsList = (props) => {
                                         <Tooltip
                                             position={TooltipPosition.top}
                                             content={"Branches Handled"}
+                                            aria="labelledby"
                                         >
                                             <CodeBranchIcon />
                                         </Tooltip>
@@ -155,6 +157,7 @@ const ProjectsList = (props) => {
                                         <Tooltip
                                             position={TooltipPosition.top}
                                             content={"Issues Handled"}
+                                            aria="labelledby"
                                         >
                                             <SecurityIcon />
                                         </Tooltip>
@@ -164,6 +167,7 @@ const ProjectsList = (props) => {
                                         <Tooltip
                                             position={TooltipPosition.top}
                                             content={"Releases Handled"}
+                                            aria="labelledby"
                                         >
                                             <BuildIcon />
                                         </Tooltip>
@@ -173,6 +177,7 @@ const ProjectsList = (props) => {
                                         <Tooltip
                                             position={TooltipPosition.top}
                                             content={"Pull Requests Handled"}
+                                            aria="labelledby"
                                         >
                                             <BlueprintIcon />
                                         </Tooltip>

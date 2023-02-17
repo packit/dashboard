@@ -176,7 +176,7 @@ const PipelinesTable = () => {
     return (
         <div>
             <Table
-                aria-label="Table of pipeline runs"
+                aria-label="Pipeline runs"
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}

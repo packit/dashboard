@@ -100,7 +100,7 @@ const SRPMBuildstable = () => {
     return (
         <div>
             <Table
-                aria-label="Table of SRPM builds"
+                aria-label="SRPM builds"
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}
