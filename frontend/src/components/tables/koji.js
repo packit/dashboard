@@ -114,7 +114,7 @@ const KojiBuildsTable = () => {
     return (
         <div>
             <Table
-                aria-label="Table of Koji builds"
+                aria-label="Koji builds"
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}

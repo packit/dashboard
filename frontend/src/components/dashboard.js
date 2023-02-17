@@ -27,7 +27,7 @@ const Dashboard = () => (
         <PageSection>
             <Grid hasGutter>
                 <GridItem lg={3}>
-                    <Card>
+                    <Card isFullHeight>
                         <CardHeader>
                             <CatalogIcon />
                             &nbsp;<b>Documentation</b>
@@ -42,7 +42,7 @@ const Dashboard = () => (
                 </GridItem>
 
                 <GridItem lg={3}>
-                    <Card>
+                    <Card isFullHeight>
                         <CardHeader>
                             <BellIcon />
                             &nbsp;<b>Blog posts</b>
@@ -58,7 +58,7 @@ const Dashboard = () => (
                 </GridItem>
 
                 <GridItem lg={3}>
-                    <Card>
+                    <Card isFullHeight>
                         <CardHeader>
                             <BugIcon />
                             &nbsp;<b>Issues</b>
@@ -79,7 +79,7 @@ const Dashboard = () => (
                 </GridItem>
 
                 <GridItem lg={3}>
-                    <Card>
+                    <Card isFullHeight>
                         <CardHeader>
                             <CodeIcon />
                             &nbsp;<b>Source code on GitHub</b>
@@ -102,7 +102,7 @@ const Dashboard = () => (
                 </GridItem>
 
                 <GridItem lg={3}>
-                    <Card>
+                    <Card isFullHeight>
                         <CardHeader>
                             <InfoCircleIcon />
                             &nbsp;<b>Status page</b>

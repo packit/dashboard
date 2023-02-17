@@ -134,7 +134,7 @@ const CoprBuildsTable = () => {
     return (
         <div>
             <Table
-                aria-label="Table of Copr builds"
+                aria-label="Copr builds"
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}
