@@ -82,7 +82,7 @@ const ResultsPageTestingFarm = () => {
             coprBuilds.push(
                 <Label href={`/results/copr-builds/${coprBuildId}`}>
                     {linkText}
-                </Label>
+                </Label>,
             );
         }
 

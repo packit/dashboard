@@ -59,7 +59,7 @@ const AppLayout = ({ children }) => {
                                     {route.label}
                                 </NavLink>
                             </NavItem>
-                        )
+                        ),
                 )}
                 <NavItem key="status" id="status">
                     <a href="https://status.packit.dev">Status</a>

@@ -5,7 +5,6 @@ import json
 # Common utility functions used in multiple files in the packit_dashboard package
 # Returns python parsable json object from URL
 def return_json(url, method="GET", **kwargs):
-
     output = None
 
     tries = 6
