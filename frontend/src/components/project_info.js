@@ -38,7 +38,7 @@ const ProjectInfo = () => {
 
     const checkValidProject = useCallback(() => {
         fetch(
-            `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}`
+            `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}`,
         )
             .then((response) => response.json())
             .then((data) => {

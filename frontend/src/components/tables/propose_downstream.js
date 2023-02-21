@@ -29,7 +29,7 @@ const ProposeDownstreamStatuses = (props) => {
                 link={`/results/propose-downstream/${id}`}
                 status={status}
                 target={target}
-            />
+            />,
         );
     }
 
@@ -51,7 +51,7 @@ const ProposeDownstreamsTable = () => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/propose-downstream?page=${pageParam}&per_page=20`
+            `${process.env.REACT_APP_API_URL}/propose-downstream?page=${pageParam}&per_page=20`,
         )
             .then((response) => response.json())
             .then((data) => jsonToRow(data));

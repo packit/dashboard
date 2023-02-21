@@ -27,7 +27,7 @@ const TriggerLink = (props) => {
             getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
-            props.builds.pr_id
+            props.builds.pr_id,
         );
     } else if (props.builds.issue_id) {
         jobSuffix = `#${props.builds.issue_id}`;
@@ -36,7 +36,7 @@ const TriggerLink = (props) => {
             getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
-            props.builds.issue_id
+            props.builds.issue_id,
         );
     } else if (props.builds.branch_name) {
         jobSuffix = `:${props.builds.branch_name}`;
@@ -45,7 +45,7 @@ const TriggerLink = (props) => {
             getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
-            props.builds.branch_name
+            props.builds.branch_name,
         );
     } else if (props.builds.release) {
         jobSuffix = `#release:${props.builds.release}`;
@@ -54,7 +54,7 @@ const TriggerLink = (props) => {
             getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
-            props.builds.release
+            props.builds.release,
         );
     }
 
