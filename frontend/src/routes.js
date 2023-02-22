@@ -20,6 +20,7 @@ import KojiBuildsTable from "./components/tables/koji";
 import SyncReleaseTable from "./components/tables/sync_release";
 import SRPMBuildsTable from "./components/tables/srpm";
 import TestingFarmResultsTable from "./components/tables/testing_farm";
+import Usage from "./components/usage";
 
 // Main Menu routes
 const routes = [
@@ -134,6 +135,13 @@ const routes = [
                     <ResultsPageSyncReleaseRuns job="pull-from-upstream" />
                 ),
                 title: "Pull From Upstream Results | Packit Service",
+            },
+            {
+                element: <Usage />,
+                exact: true,
+                label: "Usage",
+                path: "/usage",
+                title: "Usage | Packit Service",
             },
         ],
     },
