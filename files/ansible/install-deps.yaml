@@ -14,6 +14,8 @@
         name:
           - python3-pip
           - python3-flask
+          - python3-flask-cors
+          - python3-cachetools
           - python3-requests
           - yarnpkg
           - nodejs
