@@ -16,6 +16,7 @@ import {
     TableVariant,
     cellWidth,
 } from "@patternfly/react-table";
+import { ChartDonut } from "@patternfly/react-charts";
 
 import ConnectionError from "../error";
 import Preloader from "../preloader";
@@ -24,19 +25,7 @@ import { StatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import { useParams } from "react-router-dom";
 
-const UsageTable = () => {
-    // Headings
-    const columns = [
-        {
-            title: <span className="pf-u-screen-reader">Forge</span>,
-            transforms: [cellWidth(5)],
-        }, // space for forge icon
-        { title: "Trigger", transforms: [cellWidth(15)] },
-        { title: "Chroots", transforms: [cellWidth(60)] },
-        { title: "Time Submitted", transforms: [cellWidth(10)] },
-        { title: "Copr Build", transforms: [cellWidth(10)] },
-    ];
-
+const UsageComponent = () => {
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [data, setData] = useState({});
@@ -81,164 +70,162 @@ const UsageTable = () => {
         );
     }
 
-    const projects_to_list = Object.keys(
-        data.active_projects.top_projects_by_events_handled
-    ).map((key, i) => (
-        <tr>
-            <td>
-                <a href={key}>{key}</a>
-            </td>
-            <td>{data.active_projects.top_projects_by_events_handled[key]}</td>
-        </tr>
-    ));
+    function getChartData(top_projects, sum_of_all) {
+        const top_projects_rest =
+            sum_of_all -
+            Object.keys(top_projects).reduce(
+                (a, v) => (a = a + top_projects[v]),
+                0
+            );
+        const top_projects_data = [
+            ...Object.keys(top_projects).map((key, i) => ({
+                x: `${key.replace("https://", "")}`,
+                y: top_projects[key],
+            })),
+            { x: "other projects", y: top_projects_rest },
+        ];
+        const top_projects_legend = [
+            ...Object.keys(top_projects).map((key, i) => ({
+                name: `${key.replace("https://", "")}: ${
+                    top_projects[key]
+                } (${Math.floor((100 * top_projects[key]) / sum_of_all)}%)`,
+            })),
+            { name: `other projects: ${top_projects_rest}` },
+        ];
+        return [top_projects_data, top_projects_legend];
+    }
 
-    const projects_to_list_copr_builds = Object.keys(
-        data.jobs.copr_build_groups.top_projects_by_job_runs
-    ).map((key, i) => (
-        <tr>
-            <td>
-                <a href={key}>{key}</a>
-            </td>
-            <td>{data.jobs.copr_build_groups.top_projects_by_job_runs[key]}</td>
-        </tr>
-    ));
+    function getInstanceChartData(instances) {
+        const instances_to_chart_data = Object.keys(instances)
+            .filter((inst) => !inst.includes("fedoraproject.org"))
+            .map((key, i) => ({
+                x: `${key}`,
+                y: instances[key],
+            }));
+        const instances_to_chart_legend = Object.keys(instances)
+            .filter((inst) => !inst.includes("fedoraproject.org"))
+            .map((key, i) => ({
+                name: `${key}: ${instances[key]}`,
+            }));
+        const instances_to_chart_count = Object.keys(instances)
+            .filter((inst) => !inst.includes("fedoraproject.org"))
+            .reduce((a, v) => (a = a + instances[v]), 0);
+        return [
+            instances_to_chart_data,
+            instances_to_chart_legend,
+            instances_to_chart_count,
+        ];
+    }
 
-    const projects_to_list_test_runs = Object.keys(
-        data.jobs.tft_test_run_groups.top_projects_by_job_runs
-    ).map((key, i) => (
-        <tr>
-            <td>
-                <a href={key}>{key}</a>
-            </td>
-            <td>
-                {data.jobs.tft_test_run_groups.top_projects_by_job_runs[key]}
-            </td>
-        </tr>
-    ));
+    function getProjectChart(data_and_labels, job_name, total_number) {
+        return (
+            <div style={{ height: "300px", width: "660px" }}>
+                <ChartDonut
+                    ariaDesc={
+                        "Number of " +
+                        `${job_name}` +
+                        " triggered for top projects"
+                    }
+                    ariaTitle={
+                        "Number of " +
+                        `${job_name}` +
+                        " triggered for top projects"
+                    }
+                    constrainToVisibleArea={true}
+                    data={data_and_labels[0]}
+                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
+                    legendData={data_and_labels[1]}
+                    legendOrientation="vertical"
+                    legendPosition="right"
+                    padding={{
+                        bottom: 20,
+                        left: 20,
+                        right: 380, // Adjusted to accommodate legend
+                        top: 20,
+                    }}
+                    subTitle={job_name}
+                    title={total_number}
+                    width={550}
+                />
+            </div>
+        );
+    }
+    function getInstanceChart(data_and_labels_total_number, job_name) {
+        return (
+            <div style={{ height: "300px", width: "660px" }}>
+                <ChartDonut
+                    ariaDesc="Number of project on each instance"
+                    ariaTitle="Number of project on each instance"
+                    constrainToVisibleArea={true}
+                    data={data_and_labels_total_number[0]}
+                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
+                    legendData={data_and_labels_total_number[1]}
+                    legendOrientation="vertical"
+                    legendPosition="right"
+                    padding={{
+                        bottom: 20,
+                        left: 20,
+                        right: 380, // Adjusted to accommodate legend
+                        top: 20,
+                    }}
+                    subTitle={job_name}
+                    title={data_and_labels_total_number[2]}
+                    width={550}
+                />
+            </div>
+        );
+    }
 
-    const instances_to_list = Object.keys(data.all_projects.instances).map(
-        (key, i) => (
-            <tr>
-                <td>{key}</td>
-                <td>
-                    <a href={`projects/${key}`}>
-                        {data.all_projects.instances[key]}
-                    </a>
-                </td>
-                <td>{data.active_projects.instances[key]}</td>
-            </tr>
+    function getReadableJobName(job_name) {
+        return job_name
+            .toLowerCase()
+            .split(" ")
+            .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
+            .join(" ");
+    }
+
+    const all_projects_instance_chart = getInstanceChart(
+        getInstanceChartData(data.all_projects.instances),
+        "All projects"
+    );
+    const active_projects_instance_chart = getInstanceChart(
+        getInstanceChartData(data.active_projects.instances),
+        "Active projects"
+    );
+
+    const job_charts = Object.keys(data.jobs).map((key, i) =>
+        getProjectChart(
+            getChartData(
+                data.jobs[key].top_projects_by_job_runs,
+                data.jobs[key].job_runs
+            ),
+            getReadableJobName(key.replaceAll("_", " "))
+                .replace(" Groups", "s")
+                .replace(" Targets", "s")
+                .replace("Vm", "VM")
+                .replace("Tft", "TFT")
+                .replace("Srpm", "SRPM"),
+            data.jobs[key].job_runs
         )
     );
 
     return (
         <div>
             <PageSection>
-                <table
-                    className="pf-c-table pf-m-compact pf-m-grid-md"
-                    role="grid"
-                    aria-label="Projects Table"
-                >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>All projects</strong>
-                            </td>
-                            <td>{data.all_projects.project_count}</td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Active projects</strong>
-                            </td>
-                            <td>{data.active_projects.project_count}</td>
-                        </tr>
-                    </tbody>
-                </table>
+                <Card>
+                    <CardBody>
+                        {all_projects_instance_chart}
+                        {active_projects_instance_chart}
+                    </CardBody>
+                </Card>
             </PageSection>
-
             <PageSection>
-                <table
-                    className="pf-c-table pf-m-compact pf-m-grid-md"
-                    role="grid"
-                    aria-label="Instances"
-                >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>Instance</strong>
-                            </td>
-                            <td>
-                                <strong>Number of all projects</strong>
-                            </td>
-                            <td>
-                                <strong>Number of active projects</strong>
-                            </td>
-                        </tr>
-                        {instances_to_list}
-                    </tbody>
-                </table>
-            </PageSection>
-
-            <PageSection>
-                <table
-                    className="pf-c-table pf-m-compact pf-m-grid-md"
-                    role="grid"
-                    aria-label="TOP Active Projects Table"
-                >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>TOP {top} Active projects</strong>
-                            </td>
-                            <td>
-                                <strong>Number of events</strong>
-                            </td>
-                        </tr>
-                        {projects_to_list}
-                    </tbody>
-                </table>
-            </PageSection>
-
-            <PageSection>
-                <table
-                    className="pf-c-table pf-m-compact pf-m-grid-md"
-                    role="grid"
-                    aria-label="TOP Build Projects Table"
-                >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>Copr Builds TOP {top} projects</strong>
-                            </td>
-                            <td>
-                                <strong>Number of Copr builds</strong>
-                            </td>
-                        </tr>
-                        {projects_to_list_copr_builds}
-                    </tbody>
-                </table>
-            </PageSection>
-
-            <PageSection>
-                <table
-                    className="pf-c-table pf-m-compact pf-m-grid-md"
-                    role="grid"
-                    aria-label="TOP Test Projects Table"
-                >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <strong>Test Runs TOP {top} projects</strong>
-                            </td>
-                            <td>
-                                <strong>Number of Copr builds</strong>
-                            </td>
-                        </tr>
-                        {projects_to_list_test_runs}
-                    </tbody>
-                </table>
+                <Card>
+                    <CardBody>{job_charts}</CardBody>
+                </Card>
             </PageSection>
         </div>
     );
 };
 
-export default UsageTable;
+export default UsageComponent;

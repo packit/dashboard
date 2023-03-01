@@ -6,7 +6,7 @@ import {
     Text,
 } from "@patternfly/react-core";
 
-import UsageTable from "./tables/usage";
+import UsageComponent from "./tables/usage";
 
 const Usage = () => {
     return (
@@ -17,7 +17,7 @@ const Usage = () => {
                     <Text component="p">Usage of Packit Service.</Text>
                 </TextContent>
             </PageSection>
-            <UsageTable />
+            <UsageComponent />
         </div>
     );
 };
