@@ -16,7 +16,7 @@ import ForgeIcon from "../forge_icon";
 import {
     StatusLabel,
     TFStatusLabel,
-    ProposeDownstreamTargetStatusLabel,
+    SyncReleaseTargetStatusLabel,
 } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import coprLogo from "../../static/copr.ico";
@@ -145,10 +145,14 @@ const PipelinesTable = () => {
                                 <Statuses
                                     name={"Propose Downstream"}
                                     route={"propose-downstream"}
-                                    statusClass={
-                                        ProposeDownstreamTargetStatusLabel
-                                    }
+                                    statusClass={SyncReleaseTargetStatusLabel}
                                     entries={run.propose_downstream}
+                                />
+                                <Statuses
+                                    name={"Pull From Upstream"}
+                                    route={"pull-from-upstream"}
+                                    statusClass={SyncReleaseTargetStatusLabel}
+                                    entries={run.pull_from_upstream}
                                 />
                             </>
                         ),

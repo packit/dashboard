@@ -12,12 +12,12 @@ import { Projects } from "./components/projects";
 import { ProjectInfo } from "./components/project_info";
 import { ResultsPageCopr } from "./components/results/copr";
 import { ResultsPageKoji } from "./components/results/koji";
-import { ResultsPageProposeDownstream } from "./components/results/propose_downstream";
+import { ResultsPageSyncReleaseRuns } from "./components/results/sync_release";
 import { ResultsPageSRPM } from "./components/results/srpm";
 import { ResultsPageTestingFarm } from "./components/results/testing_farm";
 import CoprBuildsTable from "./components/tables/copr";
 import KojiBuildsTable from "./components/tables/koji";
-import ProposeDownstreamTable from "./components/tables/propose_downstream";
+import SyncReleaseTable from "./components/tables/sync_release";
 import SRPMBuildsTable from "./components/tables/srpm";
 import TestingFarmResultsTable from "./components/tables/testing_farm";
 
@@ -63,9 +63,14 @@ const routes = [
                         path: "testing-farm-runs",
                     },
                     {
-                        element: <ProposeDownstreamTable />,
+                        element: <SyncReleaseTable job="propose-downstream" />,
                         label: "Propose Downstreams",
                         path: "propose-downstreams",
+                    },
+                    {
+                        element: <SyncReleaseTable job="pull-from-upstream" />,
+                        label: "Pull From Upstreams",
+                        path: "pull-from-upstreams",
                     },
                 ],
             },
@@ -118,8 +123,17 @@ const routes = [
             },
             {
                 path: "/results/propose-downstream/:id",
-                element: <ResultsPageProposeDownstream />,
+                element: (
+                    <ResultsPageSyncReleaseRuns job="propose-downstream" />
+                ),
                 title: "Propose Results | Packit Service",
+            },
+            {
+                path: "/results/pull-from-upstream/:id",
+                element: (
+                    <ResultsPageSyncReleaseRuns job="pull-from-upstream" />
+                ),
+                title: "Pull From Upstream Results | Packit Service",
             },
         ],
     },
@@ -180,9 +194,15 @@ const AppRoutes = () => (
         />
         <Route
             path="/results/propose-downstream/:id"
-            element={<ResultsPageProposeDownstream />}
+            element={<ResultsPageSyncReleaseRuns job="propose-downstream" />}
             exact
             title="Propose Results"
+        />
+        <Route
+            path="/results/pull-from-upstream/:id"
+            element={<ResultsPageSyncReleaseRuns job="pull-from-upstream" />}
+            exact
+            title="Pull From Upstream Results"
         />
         <Route path="/" element={<NotFound />} title="404 Page Not Found" />
     </Routes>

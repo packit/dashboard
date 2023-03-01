@@ -154,10 +154,10 @@ class TFStatusLabel extends BaseStatusLabel {
 }
 
 /**
- *  Status label that handles ProposeDownstreamTarget labels, since they have different
- *  naming convention and meaning for each ProposeDownstreamTarget.
+ *  Status label that handles SyncReleaseTarget labels, since they have different
+ *  naming convention and meaning for each SyncReleaseTarget.
  */
-class ProposeDownstreamTargetStatusLabel extends BaseStatusLabel {
+class SyncReleaseTargetStatusLabel extends BaseStatusLabel {
     static propTypes = {
         link: PropTypes.string,
         status: PropTypes.string,
@@ -165,7 +165,7 @@ class ProposeDownstreamTargetStatusLabel extends BaseStatusLabel {
     };
 
     /**
-     * Creates ProposeDownstreamTarget status label. Label is set to target.
+     * Creates SyncReleaseTarget status label. Label is set to target.
      *
      * @param {*} props Properties of the status label, minimal requirements are:
      *  status and target.
@@ -213,6 +213,6 @@ function toSRPMStatus(success) {
 export {
     StatusLabel,
     TFStatusLabel,
-    ProposeDownstreamTargetStatusLabel,
+    SyncReleaseTargetStatusLabel,
     toSRPMStatus,
 };

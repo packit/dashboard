@@ -15,12 +15,12 @@ import {
 import ConnectionError from "../error";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
-import { ProposeDownstreamTargetStatusLabel } from "../status_labels";
+import { SyncReleaseTargetStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useParams } from "react-router-dom";
 
-const ResultsPageProposeDownstream = () => {
+const ResultsPageSyncReleaseRuns = (props) => {
     let { id } = useParams();
 
     const [hasError, setErrors] = useState(false);
@@ -28,7 +28,7 @@ const ResultsPageProposeDownstream = () => {
     const [data, setData] = useState({});
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/propose-downstream/${id}`)
+        fetch(`${process.env.REACT_APP_API_URL}/${props.job}/${id}`)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);
@@ -38,7 +38,7 @@ const ResultsPageProposeDownstream = () => {
                 console.log(err);
                 setErrors(err);
             });
-    }, [id]);
+    }, [id, props.job]);
 
     // If backend API is down
     if (hasError) {
@@ -98,8 +98,12 @@ const ResultsPageProposeDownstream = () => {
         <div>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
-                    <Text component="h1">Propose Downstream Results</Text>
-                    <ProposeDownstreamTargetStatusLabel
+                    <Text component="h1">
+                        {props.job === "pull-from-upstream"
+                            ? "Pull from upstream results"
+                            : "Propose downstream results"}
+                    </Text>
+                    <SyncReleaseTargetStatusLabel
                         status={data.status}
                         target={data.branch}
                         link={data.downstream_pr_url}
@@ -119,7 +123,7 @@ const ResultsPageProposeDownstream = () => {
                         <table
                             className="pf-c-table pf-m-compact pf-m-grid-md"
                             role="grid"
-                            aria-label="Propose table"
+                            aria-label="Sync release table"
                         >
                             <tbody>
                                 <tr>
@@ -177,4 +181,4 @@ const ResultsPageProposeDownstream = () => {
     );
 };
 
-export { ResultsPageProposeDownstream };
+export { ResultsPageSyncReleaseRuns };
