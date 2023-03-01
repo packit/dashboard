@@ -25,14 +25,14 @@ import { StatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import { useParams } from "react-router-dom";
 
-const UsageComponent = () => {
+const UsageComponent = (props) => {
     const [hasError, setErrors] = useState(false);
     const [loaded, setLoaded] = useState(false);
     const [data, setData] = useState({});
     const top = 5;
 
     useEffect(() => {
-        fetch(`${process.env.REACT_APP_API_URL}/usage?top=${top}`)
+        fetch("http://127.0.0.1:5000/api/usage/" + props.what)
             .then((response) => response.json())
             .then((data) => {
                 setData(data);
