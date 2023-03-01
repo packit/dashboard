@@ -13,11 +13,11 @@ import TriggerLink from "../trigger_link";
 import ConnectionError from "../error";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
-import { ProposeDownstreamTargetStatusLabel } from "../status_labels";
+import { SyncReleaseTargetStatusLabel } from "../status_labels";
 import { Timestamp } from "../../utils/time";
 import { useInfiniteQuery } from "react-query";
 
-const ProposeDownstreamStatuses = (props) => {
+const SyncReleaseStatuses = (props) => {
     let labels = [];
 
     for (let target in props.ids) {
@@ -25,8 +25,8 @@ const ProposeDownstreamStatuses = (props) => {
         const status = props.statuses[target];
 
         labels.push(
-            <ProposeDownstreamTargetStatusLabel
-                link={`/results/propose-downstream/${id}`}
+            <SyncReleaseTargetStatusLabel
+                link={`/results/${props.job}/${id}`}
                 status={status}
                 target={target}
             />,
@@ -36,7 +36,7 @@ const ProposeDownstreamStatuses = (props) => {
     return <div>{labels}</div>;
 };
 
-const ProposeDownstreamsTable = () => {
+const SyncReleaseTable = (props) => {
     // Headings
     const columns = [
         {
@@ -51,13 +51,13 @@ const ProposeDownstreamsTable = () => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/propose-downstream?page=${pageParam}&per_page=20`,
+            `${process.env.REACT_APP_API_URL}/${props.job}?page=${pageParam}&per_page=20`,
         )
             .then((response) => response.json())
             .then((data) => jsonToRow(data));
 
     const { isLoading, isError, fetchNextPage, data, isFetching } =
-        useInfiniteQuery("propose-downstream", fetchData, {
+        useInfiniteQuery(props.job, fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
             keepPreviousData: true,
         });
@@ -83,13 +83,14 @@ const ProposeDownstreamsTable = () => {
                     },
                     {
                         title: (
-                            <ProposeDownstreamStatuses
+                            <SyncReleaseStatuses
                                 statuses={
                                     propose_downstream.status_per_downstream_pr
                                 }
                                 ids={
                                     propose_downstream.packit_id_per_downstream_pr
                                 }
+                                job={props.job}
                             />
                         ),
                     },
@@ -124,7 +125,11 @@ const ProposeDownstreamsTable = () => {
     return (
         <div>
             <Table
-                aria-label="Propose downstream runs"
+                aria-label={
+                    props.job === "pull-from-upstream"
+                        ? "Table of pull from upstream runs"
+                        : "Table of propose downstream runs"
+                }
                 variant={TableVariant.compact}
                 cells={columns}
                 rows={rows}
@@ -146,4 +151,4 @@ const ProposeDownstreamsTable = () => {
     );
 };
 
-export default ProposeDownstreamsTable;
+export default SyncReleaseTable;
