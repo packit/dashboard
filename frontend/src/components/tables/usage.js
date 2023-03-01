@@ -211,19 +211,15 @@ const UsageComponent = (props) => {
 
     return (
         <div>
-            <PageSection>
-                <Card>
-                    <CardBody>
-                        {all_projects_instance_chart}
-                        {active_projects_instance_chart}
-                    </CardBody>
-                </Card>
-            </PageSection>
-            <PageSection>
-                <Card>
-                    <CardBody>{job_charts}</CardBody>
-                </Card>
-            </PageSection>
+            <Card>
+                <CardBody>
+                    {all_projects_instance_chart}
+                    {active_projects_instance_chart}
+                </CardBody>
+            </Card>
+            <Card>
+                <CardBody>{job_charts}</CardBody>
+            </Card>
         </div>
     );
 };
