@@ -1,5 +1,4 @@
-import * as React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, Outlet, matchRoutes, useLocation } from "react-router-dom";
 import {
     Brand,
     Nav,
@@ -12,14 +11,33 @@ import {
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 import packitLogo from "../static/logo.png";
+import { useState, useEffect } from "react";
 
-const AppLayout = ({ children }) => {
+const AppLayout = () => {
+    const location = useLocation();
+    const [activeLocationLabel, setActiveLocationLabel] = useState("");
+    const currentRouteTree = matchRoutes(routes, location);
+    // Dynamically set page title and update currently active page in sidebar
+    useEffect(() => {
+        // it matches everything that has to do with the current URL. Start from the leaf and work up to set title if at all.
+        for (let index = currentRouteTree.length - 1; index >= 0; index--) {
+            const element = currentRouteTree[index];
+            if (element.route.label) {
+                setActiveLocationLabel(element.route.label);
+            }
+            if (element.route?.title) {
+                document.title = element.route.title;
+                break;
+            }
+        }
+    }, [currentRouteTree]);
+
     const logoProps = {
         href: "/",
     };
-    const [isNavOpen, setIsNavOpen] = React.useState(true);
-    const [isMobileView, setIsMobileView] = React.useState(true);
-    const [isNavOpenMobile, setIsNavOpenMobile] = React.useState(false);
+    const [isNavOpen, setIsNavOpen] = useState(true);
+    const [isMobileView, setIsMobileView] = useState(true);
+    const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
     const onNavToggleMobile = () => {
         setIsNavOpenMobile(!isNavOpenMobile);
     };
@@ -38,24 +56,17 @@ const AppLayout = ({ children }) => {
             onNavToggle={isMobileView ? onNavToggleMobile : onNavToggle}
         />
     );
-
     const Navigation = (
         <Nav id="nav-primary-simple" theme="dark">
             <NavList id="nav-list-simple">
-                {routes.map(
-                    (route, idx) =>
+                {routes[0].children.map(
+                    (route, index) =>
                         route.label && (
                             <NavItem
-                                key={`${route.label}-${idx}`}
-                                id={`${route.label}-${idx}`}
+                                key={route.label}
+                                isActive={activeLocationLabel === route.label}
                             >
-                                <NavLink
-                                    exact="true"
-                                    to={route.path}
-                                    className={({ isActive }) =>
-                                        isActive ? "pf-m-current" : ""
-                                    }
-                                >
+                                <NavLink itemID={index} to={route.path}>
                                     {route.label}
                                 </NavLink>
                             </NavItem>
@@ -99,7 +110,7 @@ const AppLayout = ({ children }) => {
             onPageResize={onPageResize}
             skipToContent={PageSkipToContent}
         >
-            {children}
+            <Outlet />
         </Page>
     );
 };

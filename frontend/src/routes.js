@@ -14,36 +14,81 @@ import { ResultsPageTestingFarm } from "./components/results/testing_farm";
 import { ResultsPageProposeDownstream } from "./components/results/propose_downstream";
 import { Forge } from "./components/forge";
 import Pipelines from "./components/pipelines";
+import { AppLayout } from "./components/app_layout";
 
 // Main Menu routes
 const routes = [
     {
-        element: <Dashboard />,
-        exact: true,
+        element: <AppLayout />,
         label: "Home",
         path: "/",
-        title: "Home | Packit Service",
-    },
-    {
-        element: <Jobs />,
-        exact: true,
-        label: "Jobs",
-        path: "/jobs",
-        title: "Jobs | Packit Service",
-    },
-    {
-        element: <Pipelines />,
-        exact: true,
-        label: "Pipelines",
-        path: "/pipelines",
-        title: "Pipelines | Packit Service",
-    },
-    {
-        element: <Projects />,
-        exact: true,
-        label: "Projects",
-        path: "/projects",
-        title: "Projects | Packit Service",
+        title: "Packit Service",
+        children: [
+            {
+                element: <Dashboard />,
+                index: true,
+                label: "Home",
+                path: "/",
+            },
+            {
+                element: <Jobs />,
+                label: "Jobs",
+                path: "/jobs",
+                title: "Jobs | Packit Service",
+            },
+            {
+                element: <Pipelines />,
+                label: "Pipelines",
+                path: "/pipelines",
+                title: "Pipelines | Packit Service",
+            },
+            {
+                element: <Projects />,
+                label: "Projects",
+                path: "/projects",
+                title: "Projects | Packit Service",
+            },
+            {
+                path: "/projects/:forge/",
+                element: <Forge />,
+                title: "Project Forge | Packit Service",
+            },
+            {
+                path: "/projects/:forge/:namespace",
+                element: <Namespace />,
+                title: "Project Namespace | Packit Service",
+            },
+            {
+                path: "/projects/:forge/:namespace/:repoName",
+                element: <ProjectInfo />,
+                title: "Project | Packit Service",
+            },
+            {
+                path: "/results/srpm-builds/:id",
+                element: <ResultsPageSRPM />,
+                title: "SRPM Results | Packit Service",
+            },
+            {
+                path: "/results/copr-builds/:id",
+                element: <ResultsPageCopr />,
+                title: "Copr Results | Packit Service",
+            },
+            {
+                path: "/results/koji-builds/:id",
+                element: <ResultsPageKoji />,
+                title: "Koji Results | Packit Service",
+            },
+            {
+                path: "/results/testing-farm/:id",
+                element: <ResultsPageTestingFarm />,
+                title: "Testing Farm Results | Packit Service",
+            },
+            {
+                path: "/results/propose-downstream/:id",
+                element: <ResultsPageProposeDownstream />,
+                title: "Propose Results | Packit Service",
+            },
+        ],
     },
 ];
 
