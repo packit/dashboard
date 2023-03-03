@@ -1,84 +1,72 @@
-import * as React from "react";
 import {
+    Nav,
+    NavItem,
+    NavList,
+    PageGroup,
+    PageNavigation,
     PageSection,
     PageSectionVariants,
-    Tabs,
-    Tab,
-    TabTitleText,
-    TextContent,
-    Card,
-    CardBody,
     Text,
+    TextContent,
 } from "@patternfly/react-core";
-import TestingFarmResultsTable from "./tables/testing_farm";
-import CoprBuildsTable from "./tables/copr";
-import KojiBuildsTable from "./tables/koji";
-import SRPMBuildsTable from "./tables/srpm";
-import ProposeDownstreamTable from "./tables/propose_downstream";
-
+import { useEffect } from "react";
+import {
+    matchRoutes,
+    NavLink,
+    Outlet,
+    useLocation,
+    useNavigate,
+} from "react-router-dom";
+import { routes } from "../routes";
+const JOBS_ROUTE = "/jobs";
 const Jobs = () => {
-    const [activeTabKey, setActiveTabKey] = React.useState(0);
-    const handleTabClick = (event, tabIndex) => {
-        setActiveTabKey(tabIndex);
-    };
+    const location = useLocation();
+    const currentRouteTree = matchRoutes(routes, location);
+    const jobRoutes = currentRouteTree.find((r) => r.pathname === JOBS_ROUTE)
+        .route.children;
+    const activeJobRoute = currentRouteTree.find((r) =>
+        r.pathname.includes(JOBS_ROUTE + "/")
+    );
+
+    // if we're not inside a specific route, default to copr-builds and redirect
+    const navigate = useNavigate();
+    useEffect(() => {
+        if (!activeJobRoute) {
+            navigate("/jobs/copr-builds");
+        }
+    }, [activeJobRoute, navigate]);
+
     return (
-        <div>
+        <PageGroup>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Jobs</Text>
                     <Text component="p">List of jobs by Packit Service</Text>
                 </TextContent>
             </PageSection>
-
             <PageSection>
-                <Card>
-                    <CardBody>
-                        <Tabs
-                            isFilled
-                            mountOnEnter
-                            activeKey={activeTabKey}
-                            onSelect={handleTabClick}
-                            isBox={true}
-                        >
-                            <Tab
-                                eventKey={0}
-                                title={<TabTitleText>Copr Builds</TabTitleText>}
-                            >
-                                <CoprBuildsTable />
-                            </Tab>
-                            <Tab
-                                eventKey={1}
-                                title={<TabTitleText>Koji Builds</TabTitleText>}
-                            >
-                                <KojiBuildsTable />
-                            </Tab>
-                            <Tab
-                                eventKey={2}
-                                title={<TabTitleText>SRPM Builds</TabTitleText>}
-                            >
-                                <SRPMBuildsTable />
-                            </Tab>
-                            <Tab
-                                eventKey={3}
-                                title={<TabTitleText>Test Runs</TabTitleText>}
-                            >
-                                <TestingFarmResultsTable />
-                            </Tab>
-                            <Tab
-                                eventKey={4}
-                                title={
-                                    <TabTitleText>
-                                        Propose Downstreams
-                                    </TabTitleText>
-                                }
-                            >
-                                <ProposeDownstreamTable />
-                            </Tab>
-                        </Tabs>
-                    </CardBody>
-                </Card>
+                <PageNavigation>
+                    <Nav aria-label="Job types" variant="tertiary">
+                        <NavList>
+                            {jobRoutes.map((route) => (
+                                <NavItem
+                                    key={route.path}
+                                    isActive={
+                                        route.path ===
+                                        activeJobRoute?.route.path
+                                    }
+                                >
+                                    <NavLink to={"/jobs/" + route.path}>
+                                        {route.label}
+                                    </NavLink>
+                                </NavItem>
+                            ))}
+                        </NavList>
+                    </Nav>
+                </PageNavigation>
+                <Outlet />
             </PageSection>
-        </div>
+        </PageGroup>
     );
 };
 
