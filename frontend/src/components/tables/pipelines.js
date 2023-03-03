@@ -30,16 +30,17 @@ class Statuses extends React.Component {
         this.name = props.name;
 
         this.labels = [];
-        for (let entry of props.entries) {
+        props.entries.forEach((entry, i) => {
             this.labels.push(
                 <props.statusClass
+                    key={i}
                     status={entry.status}
                     chroot={entry.target}
                     target={entry.target}
-                    link={`results/${props.route}/${entry.packit_id}`}
+                    link={`/results/${props.route}/${entry.packit_id}`}
                 />,
             );
-        }
+        });
     }
 
     render() {

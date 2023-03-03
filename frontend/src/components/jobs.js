@@ -25,7 +25,7 @@ const Jobs = () => {
     const jobRoutes = currentRouteTree.find((r) => r.pathname === JOBS_ROUTE)
         .route.children;
     const activeJobRoute = currentRouteTree.find((r) =>
-        r.pathname.includes(JOBS_ROUTE + "/")
+        r.pathname.includes(JOBS_ROUTE + "/"),
     );
 
     // if we're not inside a specific route, default to copr-builds and redirect

@@ -9,6 +9,7 @@ import {
     InfoCircleIcon,
     RedoIcon,
 } from "@patternfly/react-icons";
+import { Link } from "react-router-dom";
 
 /**
  * Represents an internal base class for status labels. Handles rendering and basic
@@ -29,6 +30,7 @@ class BaseStatusLabel extends React.Component {
     constructor(props) {
         super(props);
         this.link = props.link;
+        this.isExternalLink = props.link.startsWith("http");
         this.tooltipText = props.status;
     }
 
@@ -36,7 +38,30 @@ class BaseStatusLabel extends React.Component {
         return (
             <Tooltip content={this.tooltipText}>
                 <span style={{ padding: "2px" }}>
-                    <Label icon={this.icon} color={this.color} href={this.link}>
+                    <Label
+                        icon={this.icon}
+                        color={this.color}
+                        render={({ className, content, componentRef }) => {
+                            return this.isExternalLink ? (
+                                <a
+                                    href={this.link}
+                                    className={className}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                >
+                                    {content}
+                                </a>
+                            ) : (
+                                <Link
+                                    to={this.link}
+                                    className={className}
+                                    innerRef={componentRef}
+                                >
+                                    {content}
+                                </Link>
+                            );
+                        }}
+                    >
                         {this.label}
                         <span className="pf-u-screen-reader">
                             {this.tooltipText}
