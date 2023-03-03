@@ -156,11 +156,14 @@ const ProjectInfo = () => {
 };
 
 const ProjectLink = (props) => {
-    const handleClick = () => window.open(props.link, "_blank");
     if (props.link === "") {
-        return "";
+        return <></>;
     }
-    return <ExternalLinkAltIcon onClick={handleClick} />;
+    return (
+        <a href={props.link} target="_blank" rel="noreferrer">
+            <ExternalLinkAltIcon />
+        </a>
+    );
 };
 
 export { ProjectInfo };
