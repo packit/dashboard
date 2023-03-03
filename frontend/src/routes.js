@@ -1,20 +1,25 @@
 import * as React from "react";
 import { Route, Routes } from "react-router-dom";
 
+import { AppLayout } from "./components/app_layout";
 import { Dashboard } from "./components/dashboard";
+import { Forge } from "./components/forge";
 import { Jobs } from "./components/jobs";
-import { Projects } from "./components/projects";
 import { Namespace } from "./components/namespace";
-import { ProjectInfo } from "./components/project_info";
 import { NotFound } from "./components/not_found";
-import { ResultsPageSRPM } from "./components/results/srpm";
+import Pipelines from "./components/pipelines";
+import { Projects } from "./components/projects";
+import { ProjectInfo } from "./components/project_info";
 import { ResultsPageCopr } from "./components/results/copr";
 import { ResultsPageKoji } from "./components/results/koji";
-import { ResultsPageTestingFarm } from "./components/results/testing_farm";
 import { ResultsPageProposeDownstream } from "./components/results/propose_downstream";
-import { Forge } from "./components/forge";
-import Pipelines from "./components/pipelines";
-import { AppLayout } from "./components/app_layout";
+import { ResultsPageSRPM } from "./components/results/srpm";
+import { ResultsPageTestingFarm } from "./components/results/testing_farm";
+import CoprBuildsTable from "./components/tables/copr";
+import KojiBuildsTable from "./components/tables/koji";
+import ProposeDownstreamTable from "./components/tables/propose_downstream";
+import SRPMBuildsTable from "./components/tables/srpm";
+import TestingFarmResultsTable from "./components/tables/testing_farm";
 
 // Main Menu routes
 const routes = [
@@ -35,6 +40,34 @@ const routes = [
                 label: "Jobs",
                 path: "/jobs",
                 title: "Jobs | Packit Service",
+                children: [
+                    {
+                        element: <CoprBuildsTable />,
+                        index: true,
+                        label: "Copr Builds",
+                        path: "copr-builds",
+                    },
+                    {
+                        element: <KojiBuildsTable />,
+                        label: "Koji Builds",
+                        path: "koji-builds",
+                    },
+                    {
+                        element: <SRPMBuildsTable />,
+                        label: "SRPM Builds",
+                        path: "srpm-builds",
+                    },
+                    {
+                        element: <TestingFarmResultsTable />,
+                        label: "Testing Farm Runs",
+                        path: "testing-farm-runs",
+                    },
+                    {
+                        element: <ProposeDownstreamTable />,
+                        label: "Propose Downstreams",
+                        path: "propose-downstreams",
+                    },
+                ],
             },
             {
                 element: <Pipelines />,
