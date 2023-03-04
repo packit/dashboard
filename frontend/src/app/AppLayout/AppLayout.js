@@ -5,13 +5,16 @@ import {
     NavList,
     NavItem,
     Page,
+    PageHeaderTools,
     PageHeader,
     PageSidebar,
+    Button,
     SkipToContent,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 import packitLogo from "../../static/logo.png";
 import { useState, useEffect } from "react";
+import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons";
 
 const AppLayout = () => {
     const location = useLocation();
@@ -47,6 +50,23 @@ const AppLayout = () => {
     const onPageResize = (props) => {
         setIsMobileView(props.mobileView);
     };
+
+    const HeaderTools = (
+        <PageHeaderTools>
+            <Button
+                component="a"
+                href={`https://github.com/packit/dashboard/commit/${process.env.REACT_APP_GIT_SHA}`}
+                target="_blank"
+                rel="noreferrer"
+                variant="link"
+                icon={<ExternalLinkSquareAltIcon />}
+                iconPosition="right"
+                aria-label="External link to page source commit"
+            >
+                {process.env.REACT_APP_GIT_SHA.substring(0, 7)}
+            </Button>
+        </PageHeaderTools>
+    );
     const Header = (
         <PageHeader
             logo={<Brand src={packitLogo} alt="Packit Logo" />}
@@ -54,6 +74,7 @@ const AppLayout = () => {
             showNavToggle
             isNavOpen={isNavOpen}
             onNavToggle={isMobileView ? onNavToggleMobile : onNavToggle}
+            headerTools={HeaderTools}
         />
     );
     const Navigation = (
