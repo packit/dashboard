@@ -135,7 +135,10 @@ const ResultsPageSRPM = () => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">SRPM Build</Text>
-                    <StatusLabel status={data.status} />
+                    <StatusLabel
+                        status={data.status}
+                        link={data.copr_web_url}
+                    />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />
