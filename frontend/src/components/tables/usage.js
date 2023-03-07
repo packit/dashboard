@@ -1,4 +1,11 @@
-import { PageSection, Card, CardBody, Title } from "@patternfly/react-core";
+import {
+    PageSection,
+    Card,
+    CardBody,
+    Title,
+    Flex,
+    FlexItem,
+} from "@patternfly/react-core";
 import { ChartDonut } from "@patternfly/react-charts";
 
 import ConnectionError from "../error";
@@ -92,60 +99,68 @@ const UsageComponent = (props) => {
 
     function getProjectChart(data_and_labels, job_name, total_number) {
         return (
-            <div style={{ height: "300px", width: "660px" }}>
-                <ChartDonut
-                    ariaDesc={
-                        "Number of " +
-                        `${job_name}` +
-                        " triggered for top projects"
-                    }
-                    ariaTitle={
-                        "Number of " +
-                        `${job_name}` +
-                        " triggered for top projects"
-                    }
-                    constrainToVisibleArea={true}
-                    data={data_and_labels[0]}
-                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
-                    legendData={data_and_labels[1]}
-                    legendOrientation="vertical"
-                    legendPosition="right"
-                    padding={{
-                        bottom: 20,
-                        left: 20,
-                        right: 380, // Adjusted to accommodate legend
-                        top: 20,
-                    }}
-                    subTitle={job_name}
-                    title={total_number}
-                    width={550}
-                />
-            </div>
+            <FlexItem>
+                <Card>
+                    <CardBody>
+                        <ChartDonut
+                            ariaDesc={
+                                "Number of " +
+                                `${job_name}` +
+                                " triggered for top projects"
+                            }
+                            ariaTitle={
+                                "Number of " +
+                                `${job_name}` +
+                                " triggered for top projects"
+                            }
+                            constrainToVisibleArea={true}
+                            data={data_and_labels[0]}
+                            labels={({ datum }) => `${datum.x}: ${datum.y}`}
+                            legendData={data_and_labels[1]}
+                            legendOrientation="vertical"
+                            legendPosition="right"
+                            padding={{
+                                bottom: 20,
+                                left: 0,
+                                right: 350, // Adjusted to accommodate legend
+                                top: 20,
+                            }}
+                            subTitle={job_name}
+                            title={total_number}
+                            width={500}
+                        />
+                    </CardBody>
+                </Card>
+            </FlexItem>
         );
     }
     function getInstanceChart(data_and_labels_total_number, job_name) {
         return (
-            <div style={{ height: "300px", width: "660px" }}>
-                <ChartDonut
-                    ariaDesc="Number of project on each instance"
-                    ariaTitle="Number of project on each instance"
-                    constrainToVisibleArea={true}
-                    data={data_and_labels_total_number[0]}
-                    labels={({ datum }) => `${datum.x}: ${datum.y}`}
-                    legendData={data_and_labels_total_number[1]}
-                    legendOrientation="vertical"
-                    legendPosition="right"
-                    padding={{
-                        bottom: 20,
-                        left: 20,
-                        right: 380, // Adjusted to accommodate legend
-                        top: 20,
-                    }}
-                    subTitle={job_name}
-                    title={data_and_labels_total_number[2]}
-                    width={550}
-                />
-            </div>
+            <FlexItem>
+                <Card>
+                    <CardBody>
+                        <ChartDonut
+                            ariaDesc="Number of project on each instance"
+                            ariaTitle="Number of project on each instance"
+                            constrainToVisibleArea={true}
+                            data={data_and_labels_total_number[0]}
+                            labels={({ datum }) => `${datum.x}: ${datum.y}`}
+                            legendData={data_and_labels_total_number[1]}
+                            legendOrientation="vertical"
+                            legendPosition="right"
+                            padding={{
+                                bottom: 20,
+                                left: 0,
+                                right: 350, // Adjusted to accommodate legend
+                                top: 20,
+                            }}
+                            subTitle={job_name}
+                            title={data_and_labels_total_number[2]}
+                            width={500}
+                        />
+                    </CardBody>
+                </Card>
+            </FlexItem>
         );
     }
 
@@ -186,12 +201,16 @@ const UsageComponent = (props) => {
         <>
             <Card>
                 <CardBody>
-                    {all_projects_instance_chart}
-                    {active_projects_instance_chart}
+                    <Flex>
+                        {all_projects_instance_chart}
+                        {active_projects_instance_chart}
+                    </Flex>
                 </CardBody>
             </Card>
             <Card>
-                <CardBody>{job_charts}</CardBody>
+                <CardBody>
+                    <Flex>{job_charts}</Flex>
+                </CardBody>
             </Card>
         </>
     );
