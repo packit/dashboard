@@ -1,60 +1,33 @@
-import React, { useState, useEffect } from "react";
-import {
-    PageSection,
-    Card,
-    CardBody,
-    PageSectionVariants,
-    TextContent,
-    Text,
-    Title,
-} from "@patternfly/react-core";
-
-import {
-    Table,
-    TableHeader,
-    TableBody,
-    TableVariant,
-    cellWidth,
-} from "@patternfly/react-table";
+import { PageSection, Card, CardBody, Title } from "@patternfly/react-core";
 import { ChartDonut } from "@patternfly/react-charts";
 
 import ConnectionError from "../error";
 import Preloader from "../preloader";
-import TriggerLink from "../trigger_link";
-import { StatusLabel } from "../status_labels";
-import { Timestamp } from "../../utils/time";
-import { useParams } from "react-router-dom";
+import { useQuery } from "react-query";
 
 const UsageComponent = (props) => {
-    const [hasError, setErrors] = useState(false);
-    const [loaded, setLoaded] = useState(false);
-    const [data, setData] = useState({});
-    const top = 5;
+    const fetchData = () =>
+        fetch("http://127.0.0.1:5000/api/usage/" + props.what).then(
+            (response) => response.json(),
+        );
 
-    useEffect(() => {
-        fetch("http://127.0.0.1:5000/api/usage/" + props.what)
-            .then((response) => response.json())
-            .then((data) => {
-                setData(data);
-                setLoaded(true);
-            })
-            .catch((err) => {
-                console.log(err);
-                setErrors(err);
-            });
-    }, []);
+    const { data, isLoading, isError } = useQuery(
+        "usage" + props.what,
+        fetchData,
+        {
+            keepPreviousData: true,
+        },
+    );
 
     // If backend API is down
-    if (hasError) {
+    if (isError) {
         return <ConnectionError />;
     }
 
     // Show preloader if waiting for API data
-    if (!loaded) {
+    if (isLoading) {
         return <Preloader />;
     }
-
-    // console.log(data);
 
     if ("error" in data) {
         return (
@@ -75,7 +48,7 @@ const UsageComponent = (props) => {
             sum_of_all -
             Object.keys(top_projects).reduce(
                 (a, v) => (a = a + top_projects[v]),
-                0
+                0,
             );
         const top_projects_data = [
             ...Object.keys(top_projects).map((key, i) => ({
@@ -186,18 +159,18 @@ const UsageComponent = (props) => {
 
     const all_projects_instance_chart = getInstanceChart(
         getInstanceChartData(data.all_projects.instances),
-        "All projects"
+        "All projects",
     );
     const active_projects_instance_chart = getInstanceChart(
         getInstanceChartData(data.active_projects.instances),
-        "Active projects"
+        "Active projects",
     );
 
     const job_charts = Object.keys(data.jobs).map((key, i) =>
         getProjectChart(
             getChartData(
                 data.jobs[key].top_projects_by_job_runs,
-                data.jobs[key].job_runs
+                data.jobs[key].job_runs,
             ),
             getReadableJobName(key.replaceAll("_", " "))
                 .replace(" Groups", "s")
@@ -205,8 +178,8 @@ const UsageComponent = (props) => {
                 .replace("Vm", "VM")
                 .replace("Tft", "TFT")
                 .replace("Srpm", "SRPM"),
-            data.jobs[key].job_runs
-        )
+            data.jobs[key].job_runs,
+        ),
     );
 
     return (
