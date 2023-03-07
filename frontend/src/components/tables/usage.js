@@ -12,15 +12,15 @@ import ConnectionError from "../error";
 import Preloader from "../preloader";
 import { useQuery } from "react-query";
 
-const UsageComponent = (props) => {
-    const fetchData = () =>
-        fetch("http://127.0.0.1:5000/api/usage/" + props.what).then(
-            (response) => response.json(),
-        );
+const fetchDataByGranularity = (granularity) =>
+    fetch("http://127.0.0.1:5000/api/usage/" + granularity).then((response) =>
+        response.json(),
+    );
 
+const UsageComponent = (props) => {
     const { data, isLoading, isError } = useQuery(
         "usage" + props.what,
-        fetchData,
+        () => fetchDataByGranularity(props.what),
         {
             keepPreviousData: true,
         },
