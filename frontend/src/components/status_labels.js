@@ -25,12 +25,12 @@ class BaseStatusLabel extends React.Component {
      * Constructs basic status label. Tooltip text defaults to status.
      *
      * @param {*} props Properties of the status label, minimal requirements are:
-     *  link and status.
+     *  status.
      */
     constructor(props) {
         super(props);
         this.link = props.link;
-        this.isExternalLink = props.link.startsWith("http");
+        this.isExternalLink = props.link && props.link.startsWith("http");
         this.tooltipText = props.status;
     }
 
