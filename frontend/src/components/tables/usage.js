@@ -183,7 +183,7 @@ const UsageComponent = (props) => {
     );
 
     return (
-        <div>
+        <>
             <Card>
                 <CardBody>
                     {all_projects_instance_chart}
@@ -193,7 +193,7 @@ const UsageComponent = (props) => {
             <Card>
                 <CardBody>{job_charts}</CardBody>
             </Card>
-        </div>
+        </>
     );
 };
 
