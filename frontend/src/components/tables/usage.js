@@ -13,8 +13,8 @@ import Preloader from "../preloader";
 import { useQuery } from "react-query";
 
 const fetchDataByGranularity = (granularity) =>
-    fetch("http://127.0.0.1:5000/api/usage/" + granularity).then((response) =>
-        response.json(),
+    fetch(`${process.env.REACT_APP_API_URL}/usage/${granularity}`).then(
+        (response) => response.json(),
     );
 
 const UsageComponent = (props) => {
