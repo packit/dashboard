@@ -80,34 +80,34 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
     return result
 
 
-@api.route("/api/usage/last-day")
+@api.route("/api/usage/past-day")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
-def usage_last_day():
+def usage_past_day():
     yesterday_date = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
     return _get_usage_data_from_packit_api(usage_from=yesterday_date)
 
 
-@api.route("/api/usage/last-week")
+@api.route("/api/usage/past-week")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
-def usage_last_week():
-    last_week_date = (datetime.today() - timedelta(days=7)).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=last_week_date)
+def usage_past_week():
+    past_week_date = (datetime.today() - timedelta(days=7)).strftime("%Y-%m-%d")
+    return _get_usage_data_from_packit_api(usage_from=past_week_date)
 
 
-@api.route("/api/usage/last-month")
+@api.route("/api/usage/past-month")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(days=1).seconds)
-def usage_last_month():
+def usage_past_month():
     now = datetime.today()
-    last_month_last_day = now.replace(day=1) - timedelta(days=1)
-    last_month_date = now.replace(
-        year=last_month_last_day.year, month=last_month_last_day.month
+    past_month_past_day = now.replace(day=1) - timedelta(days=1)
+    past_month_date = now.replace(
+        year=past_month_past_day.year, month=past_month_past_day.month
     ).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=last_month_date)
+    return _get_usage_data_from_packit_api(usage_from=past_month_date)
 
 
-@api.route("/api/usage/last-year")
+@api.route("/api/usage/past-year")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(days=1).seconds)
-def usage_last_year():
+def usage_past_year():
     now = datetime.now()
-    last_year_date = now.replace(year=now.year - 1).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=last_year_date)
+    past_year_date = now.replace(year=now.year - 1).strftime("%Y-%m-%d")
+    return _get_usage_data_from_packit_api(usage_from=past_year_date)

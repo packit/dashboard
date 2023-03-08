@@ -36,17 +36,17 @@ const Usage = () => {
                             onSelect={handleTabClick}
                             isBox={true}
                         >
-                            <Tab eventKey={0} title="Last day">
-                                <UsageComponent what="last-day" />
+                            <Tab eventKey={0} title="Past day">
+                                <UsageComponent what="past-day" />
                             </Tab>
-                            <Tab eventKey={1} title="Last week">
-                                <UsageComponent what="last-week" />
+                            <Tab eventKey={1} title="Past week">
+                                <UsageComponent what="past-week" />
                             </Tab>
-                            <Tab eventKey={2} title="Last month">
-                                <UsageComponent what="last-month" />
+                            <Tab eventKey={2} title="Past month">
+                                <UsageComponent what="past-month" />
                             </Tab>
-                            <Tab eventKey={3} title="Last year">
-                                <UsageComponent what="last-year" />
+                            <Tab eventKey={3} title="Past year">
+                                <UsageComponent what="past-year" />
                             </Tab>
                         </Tabs>
                     </CardBody>
