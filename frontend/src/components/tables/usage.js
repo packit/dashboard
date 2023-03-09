@@ -13,9 +13,7 @@ import Preloader from "../preloader";
 import { useQuery } from "react-query";
 
 const fetchDataByGranularity = (granularity) =>
-    fetch(`${process.env.REACT_APP_API_URL}/usage/${granularity}`).then(
-        (response) => response.json(),
-    );
+    fetch(`/api/usage/${granularity}`).then((response) => response.json());
 
 const UsageComponent = (props) => {
     const { data, isLoading, isError } = useQuery(
