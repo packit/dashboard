@@ -13,7 +13,7 @@ import {
 } from "@patternfly/react-core";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
-import ConnectionError from "../error";
+import ConnectionError from "../error_connection";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { StatusLabel } from "../status_labels";

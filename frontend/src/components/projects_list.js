@@ -20,7 +20,7 @@ import {
     ExternalLinkAltIcon,
 } from "@patternfly/react-icons";
 
-import ConnectionError from "./error";
+import ConnectionError from "./error_connection";
 import Preloader from "./preloader";
 import { Link } from "react-router-dom";
 

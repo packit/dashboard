@@ -12,7 +12,7 @@ import {
     ToolbarItem,
 } from "@patternfly/react-core";
 
-import ConnectionError from "../error";
+import ConnectionError from "../error_connection";
 import Preloader from "../preloader";
 import TriggerLink from "../trigger_link";
 import { SyncReleaseTargetStatusLabel } from "../status_labels";

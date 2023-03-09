@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 
-import ConnectionError from "./error";
+import ConnectionError from "./error_connection";
 import Preloader from "./preloader";
 
 const ReleasesList = (props) => {

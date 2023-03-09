@@ -8,7 +8,7 @@ import {
 } from "@patternfly/react-core";
 import { ChartDonut } from "@patternfly/react-charts";
 
-import ConnectionError from "../error";
+import ConnectionError from "../error_connection";
 import Preloader from "../preloader";
 import { useQuery } from "react-query";
 

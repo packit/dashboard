@@ -10,7 +10,7 @@ import {
 
 import { Button } from "@patternfly/react-core";
 
-import ConnectionError from "../error";
+import ConnectionError from "../error_connection";
 import TriggerLink from "../trigger_link";
 import Preloader from "../preloader";
 import ForgeIcon from "../forge_icon";
