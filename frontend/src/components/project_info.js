@@ -17,7 +17,7 @@ import PullRequestList from "./pr";
 import BranchList from "./branch";
 import IssuesList from "./issues";
 import ReleasesList from "./releases";
-import ConnectionError from "./error";
+import ConnectionError from "./error_connection";
 import Preloader from "./preloader";
 import ForgeIcon from "./forge_icon";
 

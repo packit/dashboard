@@ -5,13 +5,16 @@ import {
     EmptyStateVariant,
     EmptyStateBody,
     Title,
+    Icon,
 } from "@patternfly/react-core";
 
-import { ExclamationCircleIcon } from "@patternfly/react-icons";
+import { ExclamationTriangleIcon } from "@patternfly/react-icons";
 
 const ConnectionError = () => (
     <EmptyState variant={EmptyStateVariant.small}>
-        <EmptyStateIcon icon={ExclamationCircleIcon} color="#C9190B" />
+        <Icon>
+            <EmptyStateIcon icon={ExclamationTriangleIcon} color="#f0ab00" />
+        </Icon>
         <Title headingLevel="h2" size="lg">
             Unable to connect
         </Title>
