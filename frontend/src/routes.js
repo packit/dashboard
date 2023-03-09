@@ -21,6 +21,7 @@ import SyncReleaseTable from "./components/tables/sync_release";
 import SRPMBuildsTable from "./components/tables/srpm";
 import TestingFarmResultsTable from "./components/tables/testing_farm";
 import Usage from "./components/usage";
+import AppError from "./components/error_app";
 
 // Main Menu routes
 const routes = [
@@ -29,6 +30,7 @@ const routes = [
         label: "Home",
         path: "/",
         title: "Packit Service",
+        errorElement: <AppError />,
         children: [
             {
                 element: <Dashboard />,
