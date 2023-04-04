@@ -131,7 +131,9 @@ const PipelinesTable = () => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/runs?page=${pageParam}&per_page=20`,
+            `${
+                import.meta.env.VITE_API_URL
+            }/runs?page=${pageParam}&per_page=20`,
         )
             .then((response) => response.json())
             .then((data: PipelineRun[]) => jsonToRow(data));

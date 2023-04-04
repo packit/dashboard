@@ -1,14 +1,10 @@
-declare module "*.jpg" {
-    const path: string;
-    export default path;
+/// <reference types="vite/client" />
+interface ImportMetaEnv {
+    readonly VITE_API_URL: string?;
+    readonly VITE_GIT_SHA: string?;
+    // more env variables...
 }
 
-declare module "*.png" {
-    const path: string;
-    export default path;
-}
-
-declare module "*.ico" {
-    const path: string;
-    export default path;
+interface ImportMeta {
+    readonly env: ImportMetaEnv;
 }

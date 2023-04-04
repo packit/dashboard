@@ -51,7 +51,7 @@ const ResultsPageKoji = () => {
     useTitle("Koji Results");
     let { id } = useParams();
 
-    const URL = `${process.env.REACT_APP_API_URL}/koji-builds/${id}`;
+    const URL = `${import.meta.env.VITE_API_URL}/koji-builds/${id}`;
     const { data, isError, isLoading } = useQuery<
         KojiBuild | { error: string }
     >([URL], () => fetchKojiBuilds(URL));

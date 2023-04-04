@@ -54,7 +54,9 @@ const AppLayout = () => {
         <PageHeaderTools>
             <Button
                 component="a"
-                href={`https://github.com/packit/dashboard/commit/${process.env.REACT_APP_GIT_SHA}`}
+                href={`https://github.com/packit/dashboard/commit/${
+                    import.meta.env.VITE_GIT_SHA
+                }`}
                 target="_blank"
                 rel="noreferrer"
                 variant="link"
@@ -62,7 +64,7 @@ const AppLayout = () => {
                 iconPosition="right"
                 aria-label="External link to page source commit"
             >
-                {process.env.REACT_APP_GIT_SHA?.substring(0, 7)}
+                {import.meta.env.VITE_GIT_SHA?.substring(0, 7)}
             </Button>
         </PageHeaderTools>
     );

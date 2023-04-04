@@ -67,7 +67,9 @@ const BranchList: React.FC<BranchListProps> = (props) => {
     const forge = props.forge;
     const namespace = props.namespace;
     const repoName = props.repoName;
-    const URL = `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/branches`;
+    const URL = `${
+        import.meta.env.VITE_API_URL
+    }/projects/${forge}/${namespace}/${repoName}/branches`;
 
     const { data, isError, isLoading } = useQuery([URL], () =>
         fetchBranchList(URL),

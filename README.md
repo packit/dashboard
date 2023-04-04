@@ -19,7 +19,7 @@ Dashboard for [Packit Service](https://github.com/packit-service).
 # in another terminal
 :~/dashboard $ make run-dev-frontend
 
-# use the frontend port (i.e 3000 by default) for development
+# use the frontend application for development
 # it will proxy non react requests to flask during dev
 # read the Makefile for details
 ```

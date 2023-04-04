@@ -20,7 +20,9 @@ const IssuesList: React.FC<IssuesListProps> = ({
     namespace,
     repoName,
 }) => {
-    const URL = `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/issues`;
+    const URL = `${
+        import.meta.env.VITE_API_URL
+    }/projects/${forge}/${namespace}/${repoName}/issues`;
     // TODO: Setup interface or type for issues endpoint
     const { data, isLoading, isError } = useQuery<string[]>([URL], () =>
         fetchData(URL),

@@ -25,7 +25,9 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
     namespace,
     repoName,
 }) => {
-    const URL = `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/releases`;
+    const URL = `${
+        import.meta.env.VITE_API_URL
+    }/projects/${forge}/${namespace}/${repoName}/releases`;
     const { data, isError, isLoading } = useQuery([URL], () => fetchData(URL));
 
     // If backend API is down

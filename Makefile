@@ -17,9 +17,9 @@ install-dependencies: .install-logos
 	ln -s -f $(CURDIR)/files/logos/stg.png $(CURDIR)/frontend/src/static/logo.png
 	touch $@
 
-# this will transpile jsx into js, minify everything and generate static js for production builds
+# this will transpile tsx into js, minify everything and generate static js for production builds
 transpile-prod:
-	cd frontend && REACT_APP_GIT_SHA=$(GIT_SHA) REACT_APP_API_URL=$(API_STG) yarn run build
+	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_STG) yarn run build
 
 
 # For Development Mode Only:
@@ -31,7 +31,7 @@ transpile-prod:
 # if you change flask port for dev, also change it in frontend/package.json in the proxy key/value
 
 run-dev-frontend:
-	cd frontend && REACT_APP_GIT_SHA=$(GIT_SHA) REACT_APP_API_URL=$(API_STG) GENERATE_SOURCEMAP=true HTTPS=true yarn start
+	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_STG) GENERATE_SOURCEMAP=true HTTPS=true yarn start
 
 run-dev-flask:
 	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
@@ -41,8 +41,8 @@ run-container-stg: build-stg
 
 build-stg:
 	$(CONTAINER_ENGINE) build --rm \
-		--build-arg REACT_APP_API_URL=$(API_STG) \
-		--build-arg REACT_APP_GIT_SHA=$(GIT_SHA) \
+		--build-arg VITE_API_URL=$(API_STG) \
+		--build-arg VITE_GIT_SHA=$(GIT_SHA) \
 		-t $(IMAGE) -f Dockerfile .
 
 push-stg: build-stg
