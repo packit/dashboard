@@ -50,7 +50,9 @@ jobs:
           dockerfiles: ${{ matrix.dockerfile }}
           image: ${{ matrix.image }}
           tags: ${{ steps.branch_tag.outputs.tag }}
-          build-args: REACT_APP_API_URL=${{ steps.branch_tag.outputs.api }} REACT_APP_GIT_SHA=${{ steps.branch_tag.outputs.commit_sha }}
+          build-args: |
+            REACT_APP_API_URL=${{ steps.branch_tag.outputs.api }}
+            REACT_APP_GIT_SHA=${{ steps.branch_tag.outputs.commit_sha }}
           oci: true
 
       - name: Push To Quay
