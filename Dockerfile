@@ -1,11 +1,11 @@
 FROM quay.io/packit/base
 
 # set default value, can be overriden by --build-arg while building
-ARG REACT_APP_API_URL=https://stg.packit.dev/api
-ENV REACT_APP_API_URL ${REACT_APP_API_URL}
+ARG VITE_API_URL=https://stg.packit.dev/api
+ENV VITE_API_URL ${VITE_API_URL}
 
-ARG REACT_APP_GIT_SHA=dev
-ENV REACT_APP_GIT_SHA ${REACT_APP_GIT_SHA}
+ARG VITE_GIT_SHA=dev
+ENV VITE_GIT_SHA ${VITE_GIT_SHA}
 
 ENV HOME=/home/packit_dashboard
 

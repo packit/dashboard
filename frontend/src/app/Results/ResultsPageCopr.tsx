@@ -82,7 +82,7 @@ const ResultsPageCopr = () => {
     useTitle("Copr Results");
     let { id } = useParams();
 
-    const URL = `${process.env.REACT_APP_API_URL}/copr-builds/${id}`;
+    const URL = `${import.meta.env.VITE_API_URL}/copr-builds/${id}`;
     const { data, isError, isLoading } = useQuery<
         CoprResult | { error: string }
     >([URL], () => fetchSyncRelease(URL));

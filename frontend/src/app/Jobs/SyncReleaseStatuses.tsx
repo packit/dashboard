@@ -54,6 +54,7 @@ const SyncReleaseStatuses: React.FC<SyncReleaseStatusesProps> = (props) => {
 
         labels.push(
             <SyncReleaseTargetStatusLabel
+                key={id}
                 link={`/results/${props.job}/${id}`}
                 status={status}
                 target={target}
@@ -81,7 +82,9 @@ const SyncReleaseTable: React.FC<SyncReleaseTableProps> = ({ job }) => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }) =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/${job}?page=${pageParam}&per_page=20`,
+            `${
+                import.meta.env.VITE_API_URL
+            }/${job}?page=${pageParam}&per_page=20`,
         )
             .then((response) => response.json())
             .then((data) => jsonToRow(data));

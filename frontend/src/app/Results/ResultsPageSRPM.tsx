@@ -54,7 +54,7 @@ const ResultsPageSRPM = () => {
     useTitle("SRPM Results");
     let { id } = useParams();
 
-    const URL = `${process.env.REACT_APP_API_URL}/srpm-builds/${id}`;
+    const URL = `${import.meta.env.VITE_API_URL}/srpm-builds/${id}`;
     const { data, isError, isLoading } = useQuery<
         SRPMBuild | { error: string }
     >([URL], () => fetchSRPMBuild(URL));

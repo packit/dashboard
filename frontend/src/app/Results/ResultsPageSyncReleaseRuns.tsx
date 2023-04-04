@@ -61,7 +61,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     useTitle(displayText);
     let { id } = useParams();
 
-    const URL = `${process.env.REACT_APP_API_URL}/${job}/${id}`;
+    const URL = `${import.meta.env.VITE_API_URL}/${job}/${id}`;
     const { data, isError, isLoading } = useQuery<
         SyncReleaseRun | { error: string }
     >([URL], () => fetchSyncRelease(URL));

@@ -75,7 +75,7 @@ const ResultsPageTestingFarm = () => {
     useTitle("Testing Farm Results");
     let { id } = useParams();
 
-    const URL = `${process.env.REACT_APP_API_URL}/testing-farm/${id}`;
+    const URL = `${import.meta.env.VITE_API_URL}/testing-farm/${id}`;
     const { data, isError, isLoading } = useQuery([URL], () =>
         fetchTestingFarm(URL),
     );

@@ -61,7 +61,9 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
 }) => {
     const [expanded, setExpanded] = useState<{ [key: string]: boolean }>({});
 
-    const URL = `${process.env.REACT_APP_API_URL}/projects/${forge}/${namespace}/${repoName}/prs`;
+    const URL = `${
+        import.meta.env.VITE_API_URL
+    }/projects/${forge}/${namespace}/${repoName}/prs`;
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const { data, isLoading, isError, fetchNextPage } = useInfiniteQuery(
         [URL],

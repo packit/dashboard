@@ -53,7 +53,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }): Promise<Project> =>
         fetch(
-            `${process.env.REACT_APP_API_URL}/projects?page=${pageParam}`,
+            `${import.meta.env.VITE_API_URL}/projects?page=${pageParam}`,
         ).then((response) => response.json());
 
     const { isLoading, isError, fetchNextPage, data } = useInfiniteQuery(
