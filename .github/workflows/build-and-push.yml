@@ -39,6 +39,7 @@ jobs:
           unique_tag="${branch}-${GITHUB_SHA::7}"
           echo "tag=${tag} ${unique_tag}" >> $GITHUB_OUTPUT
           echo "api=${api}" >> $GITHUB_OUTPUT
+          echo "commit_sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
         id: branch_tag
 
       - name: Build Image
@@ -49,7 +50,7 @@ jobs:
           dockerfiles: ${{ matrix.dockerfile }}
           image: ${{ matrix.image }}
           tags: ${{ steps.branch_tag.outputs.tag }}
-          build-args: REACT_APP_API_URL=${{ steps.branch_tag.outputs.api }}
+          build-args: REACT_APP_API_URL=${{ steps.branch_tag.outputs.api }} REACT_APP_GIT_SHA=${{ steps.branch_tag.outputs.commit_sha }}
           oci: true
 
       - name: Push To Quay
