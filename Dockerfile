@@ -4,6 +4,9 @@ FROM quay.io/packit/base
 ARG REACT_APP_API_URL=https://stg.packit.dev/api
 ENV REACT_APP_API_URL ${REACT_APP_API_URL}
 
+ARG REACT_APP_GIT_SHA=dev
+ENV REACT_APP_GIT_SHA ${REACT_APP_GIT_SHA}
+
 ENV HOME=/home/packit_dashboard
 
 WORKDIR /src

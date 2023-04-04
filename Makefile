@@ -42,7 +42,7 @@ run-container-stg: build-stg
 build-stg:
 	$(CONTAINER_ENGINE) build --rm \
 		--build-arg REASCT_APP_API_URL=$(API_STG) \
-		--build-arg GIT_SHA=$(GIT_SHA) \
+		--build-arg REACT_APP_GIT_SHA=$(GIT_SHA) \
 		-t $(IMAGE) -f Dockerfile .
 
 push-stg: build-stg
