@@ -9,7 +9,14 @@
     "@patternfly/react-log-viewer": "4.87.77",
     "@patternfly/react-styles": "^4.92.3",
     "@patternfly/react-table": "^4.112.6",
+    "@storybook/components": "^7.0.24",
+    "@storybook/core-events": "^7.0.24",
+    "@storybook/manager-api": "^7.0.24",
+    "@storybook/preview-api": "^7.0.24",
+    "@storybook/theming": "^7.0.24",
+    "@storybook/types": "^7.0.24",
     "@tanstack/react-query": "^4.29.7",
+    "@testing-library/dom": "^9.3.1",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^14.4.3",
@@ -17,15 +24,21 @@
     "@types/node": "^18.15.10",
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
-    "@vitejs/plugin-react": "^3.1.0",
+    "@vitejs/plugin-react": "^4.0.1",
+    "eslint": "^8.43.0",
+    "msw": "^1.2.1",
+    "msw-storybook-addon": "^1.8.0",
     "prettier": "^2.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-router": "^6.14.0",
     "react-router-dom": "^6.6.2",
     "surge": "^0.23.1",
     "typescript": "^5.0.2",
     "vite": "^4.2.3",
-    "vite-bundle-visualizer": "^0.7.0"
+    "vite-bundle-visualizer": "^0.7.0",
+    "vite-plugin-svgr": "^3.2.0",
+    "vite-tsconfig-paths": "^4.2.0"
   },
   "proxy": "http://127.0.0.1:5000",
   "scripts": {
@@ -34,7 +47,9 @@
     "build:analyze": "vite-bundle-visualizer --open",
     "preview": "vite preview",
     "lint": "eslint .",
-    "prettier": "prettier --write ."
+    "prettier": "prettier --write .",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "eslintConfig": {
     "ignorePatterns": [
@@ -43,8 +58,17 @@
       "frontend/*"
     ],
     "extends": [
-      "react-app",
-      "react-app/jest"
+      "plugin:storybook/recommended"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "prettier": {
@@ -70,5 +94,26 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-a11y": "^7.0.9",
+    "@storybook/addon-actions": "^7.0.9",
+    "@storybook/addon-essentials": "^7.0.9",
+    "@storybook/addon-interactions": "^7.0.9",
+    "@storybook/addon-links": "^7.0.9",
+    "@storybook/blocks": "^7.0.18",
+    "@storybook/builder-vite": "^7.0.18",
+    "@storybook/node-logger": "^7.0.9",
+    "@storybook/react": "^7.0.9",
+    "@storybook/react-vite": "^7.0.18",
+    "@storybook/testing-library": "^0.1.0",
+    "babel-plugin-named-exports-order": "^0.0.2",
+    "eslint-plugin-storybook": "^0.6.12",
+    "prop-types": "^15.8.1",
+    "storybook": "^7.0.9",
+    "storybook-addon-react-router-v6": "^1.0.0"
+  },
+  "msw": {
+    "workerDirectory": "public"
   }
 }

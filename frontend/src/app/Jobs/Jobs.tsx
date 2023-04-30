@@ -11,33 +11,29 @@ import {
 } from "@patternfly/react-core";
 import { useEffect } from "react";
 import {
-    matchRoutes,
     NavLink,
     Outlet,
     useLocation,
+    useMatches,
     useNavigate,
 } from "react-router-dom";
-import { routes } from "../routes";
 import { useTitle } from "../utils/useTitle";
 
-const JOBS_ROUTE = "/jobs";
 const Jobs = () => {
     useTitle("Jobs");
     const location = useLocation();
-    const currentRouteTree = matchRoutes(routes, location);
-    const jobRoutes = currentRouteTree?.find((r) => r.pathname === JOBS_ROUTE)
-        ?.route.children;
-    const activeJobRoute = currentRouteTree?.find((r) =>
-        r.pathname.includes(JOBS_ROUTE + "/"),
+    const matches = useMatches();
+    const currentMatch = matches.find(
+        (match) => match.pathname === location.pathname,
     );
 
     // if we're not inside a specific route, default to copr-builds and redirect
     const navigate = useNavigate();
     useEffect(() => {
-        if (!activeJobRoute) {
+        if (matches[matches.length - 1].id === "jobs") {
             navigate("/jobs/copr-builds");
         }
-    }, [activeJobRoute, navigate]);
+    }, [navigate]);
 
     return (
         <PageGroup>
@@ -51,19 +47,54 @@ const Jobs = () => {
                 <PageNavigation>
                     <Nav aria-label="Job types" variant="tertiary">
                         <NavList>
-                            {jobRoutes?.map((route) => (
-                                <NavItem
-                                    key={route.path}
-                                    isActive={
-                                        route.path ===
-                                        activeJobRoute?.route.path
-                                    }
-                                >
-                                    <NavLink to={"/jobs/" + route.path}>
-                                        {route.handle?.label}
-                                    </NavLink>
-                                </NavItem>
-                            ))}
+                            <NavItem
+                                isActive={currentMatch?.id === "copr-builds"}
+                            >
+                                <NavLink to={"copr-builds"}>
+                                    Copr Builds
+                                </NavLink>
+                            </NavItem>
+                            <NavItem
+                                isActive={currentMatch?.id === "koji-builds"}
+                            >
+                                <NavLink to={"koji-builds"}>
+                                    Koji Builds
+                                </NavLink>
+                            </NavItem>
+                            <NavItem
+                                isActive={currentMatch?.id === "srpm-builds"}
+                            >
+                                <NavLink to={"srpm-builds"}>
+                                    SRPM Builds
+                                </NavLink>
+                            </NavItem>
+                            <NavItem
+                                isActive={
+                                    currentMatch?.id === "testing-farm-runs"
+                                }
+                            >
+                                <NavLink to={"testing-farm-runs"}>
+                                    Testing Farm Runs
+                                </NavLink>
+                            </NavItem>
+                            <NavItem
+                                isActive={
+                                    currentMatch?.id === "propose-downstreams"
+                                }
+                            >
+                                <NavLink to={"propose-downstreams"}>
+                                    Propose Downstreams
+                                </NavLink>
+                            </NavItem>
+                            <NavItem
+                                isActive={
+                                    currentMatch?.id === "pull-from-upstreams"
+                                }
+                            >
+                                <NavLink to={"pull-from-upstreams"}>
+                                    Pull From Upstreams
+                                </NavLink>
+                            </NavItem>
                         </NavList>
                     </Nav>
                 </PageNavigation>
