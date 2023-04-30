@@ -6,7 +6,7 @@ import {
 } from "@patternfly/react-core";
 
 import { useParams } from "react-router-dom";
-import { ForgeIcon } from "./ForgeIcon";
+import { ForgeIcon } from "../Forge/ForgeIcon";
 import { ProjectsList } from "../Projects/ProjectsList";
 import { useTitle } from "../utils/useTitle";
 
@@ -15,7 +15,7 @@ const Forge = () => {
     let { forge } = useParams();
 
     return (
-        <div>
+        <>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="p">
@@ -26,7 +26,7 @@ const Forge = () => {
             <PageSection>
                 <ProjectsList forge={forge} />
             </PageSection>
-        </div>
+        </>
     );
 };
 

@@ -2,7 +2,7 @@ import { RouteObject } from "react-router-dom";
 
 import { AppLayout } from "./AppLayout/AppLayout";
 import { Dashboard } from "./Dashboard/Dashboard";
-import { Forge } from "./Forge/Forge";
+import { Forge } from "./Projects/Forge";
 import { Jobs } from "./Jobs/Jobs";
 import { Namespace } from "./Projects/Namespace";
 import { NotFound } from "./NotFound/NotFound";
@@ -26,12 +26,12 @@ import { ErrorApp } from "./Errors/ErrorApp";
 // Those with labels indicate they should be in sidebar
 const routes: RouteObject[] = [
     {
-        element: <AppLayout />,
+        Component: AppLayout,
         path: "/",
         errorElement: <ErrorApp />,
         children: [
             {
-                element: <Dashboard />,
+                Component: Dashboard,
                 index: true,
                 path: "/",
                 handle: {
@@ -39,7 +39,8 @@ const routes: RouteObject[] = [
                 },
             },
             {
-                element: <Jobs />,
+                Component: Jobs,
+                id: "jobs",
                 path: "/jobs",
                 handle: {
                     label: "Jobs",
@@ -48,6 +49,7 @@ const routes: RouteObject[] = [
                     {
                         element: <CoprBuildsTable />,
                         index: true,
+                        id: "copr-builds",
                         path: "copr-builds",
                         handle: {
                             label: "Copr Builds",
@@ -55,6 +57,7 @@ const routes: RouteObject[] = [
                     },
                     {
                         element: <KojiBuildsTable />,
+                        id: "koji-builds",
                         path: "koji-builds",
                         handle: {
                             label: "Koji Builds",
@@ -62,6 +65,7 @@ const routes: RouteObject[] = [
                     },
                     {
                         element: <SRPMBuildsTable />,
+                        id: "srpm-builds",
                         path: "srpm-builds",
                         handle: {
                             label: "SRPM Builds",
@@ -69,6 +73,7 @@ const routes: RouteObject[] = [
                     },
                     {
                         element: <TestingFarmResultsTable />,
+                        id: "testing-farm-runs",
                         path: "testing-farm-runs",
                         handle: {
                             label: "Testing Farm Runs",
@@ -76,6 +81,7 @@ const routes: RouteObject[] = [
                     },
                     {
                         element: <SyncReleaseTable job="propose-downstream" />,
+                        id: "propose-downstreams",
                         path: "propose-downstreams",
                         handle: {
                             label: "Propose Downstreams",
@@ -83,6 +89,7 @@ const routes: RouteObject[] = [
                     },
                     {
                         element: <SyncReleaseTable job="pull-from-upstream" />,
+                        id: "pull-from-upstreams",
                         path: "pull-from-upstreams",
                         handle: {
                             label: "Pull From Upstreams",
