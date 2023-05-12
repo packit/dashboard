@@ -38,7 +38,7 @@ const Jobs = () => {
             navigate("/jobs/copr-builds");
         }
     }, [activeJobRoute, navigate]);
-    console.log(jobRoutes);
+
     return (
         <PageGroup>
             <PageSection variant={PageSectionVariants.light}>

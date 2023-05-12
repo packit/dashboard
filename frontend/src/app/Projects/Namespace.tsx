@@ -14,7 +14,7 @@ import { useTitle } from "../utils/useTitle";
 
 const Namespace = () => {
     useTitle("Project Namespace");
-    // TODO: Can we assert this somehow?
+
     let { forge, namespace } = useParams();
 
     return (
