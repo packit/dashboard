@@ -10,6 +10,7 @@ const prettyTimeDifference = (difference: number) => {
     let secondDiff = difference;
     let dayDiff = Math.floor(difference / (60 * 60 * 24));
 
+    // we set this to null further down the code to indicate estimates like "just now" and "a minute ago"
     let numericPart: number | null = dayDiff / 365;
     let units = " years ago";
 

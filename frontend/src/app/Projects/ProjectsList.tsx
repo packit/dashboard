@@ -35,7 +35,7 @@ interface Project {
     issues_handled: number;
 }
 
-function goToProjectInfo(project: Project) {
+function getProjectInfoURL(project: Project) {
     const urlArray = project.project_url?.split("/");
     const forge = urlArray[2];
     return `/projects/${forge}/${project.namespace}/${project.repo_name}`;
@@ -50,15 +50,6 @@ interface ProjectsListProps {
 
 // TODO: Move data fetching to parent components
 const ProjectsList: React.FC<ProjectsListProps> = (props) => {
-    // If a namespace and forge are provided, then load those
-    // otherwise load all projects
-    // let jsonLink = `${process.env.REACT_APP_API_URL}/projects?page=${page}&per_page=50`;
-    // if (props.forge && props.namespace) {
-    //     jsonLink = `${process.env.REACT_APP_API_URL}/projects/${props.forge}/${props.namespace}`;
-    // } else if (props.forge) {
-    //     jsonLink = `${process.env.REACT_APP_API_URL}/projects/${props.forge}?page=${page}&per_page=50`;
-    // }
-
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }): Promise<Project> =>
         fetch(
@@ -107,7 +98,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                     <GalleryItem key={index}>
                         <Card>
                             <CardTitle>
-                                <Link to={goToProjectInfo(project)}>
+                                <Link to={getProjectInfoURL(project)}>
                                     {`${project.namespace}/${project.repo_name}`}
                                 </Link>
                                 <br />

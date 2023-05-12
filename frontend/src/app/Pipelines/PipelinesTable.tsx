@@ -22,24 +22,26 @@ import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useInfiniteQuery } from "react-query";
 
-interface StatusesInterface {
+interface StatusItem {
+    packit_id: number;
+    status?: string;
+    target: string;
+}
+
+interface StatusItemSRPM {
+    packit_id: number;
+    status: string;
+    target?: string;
+}
+
+interface StatusesProps {
     route: string;
     name: string | React.ReactNode;
-    entries:
-        | {
-              packit_id: number;
-              status: string;
-              target?: string;
-          }[]
-        | {
-              packit_id: number;
-              status?: string;
-              target: string;
-          }[];
+    entries: (StatusItem | StatusItemSRPM)[];
     statusClass: typeof StatusLabel;
 }
 
-const Statuses: React.FC<StatusesInterface> = (props) => {
+const Statuses: React.FC<StatusesProps> = (props) => {
     const labels = useMemo(() => {
         const labelled: React.ReactNode[] = [];
         props.entries.forEach((entry, i) => {
@@ -62,37 +64,23 @@ const Statuses: React.FC<StatusesInterface> = (props) => {
     );
 };
 
+interface PipelineItem {
+    packit_id: number;
+    target: string;
+    status: string;
+}
+
 interface PipelineRun {
     merged_run_id: number;
     srpm: {
         packit_id: number;
         status: string;
     };
-    copr: {
-        packit_id: number;
-        target: string;
-        status: string;
-    }[];
-    koji: {
-        packit_id: number;
-        target: string;
-        status: string;
-    }[]; // TODO
-    test_run: {
-        packit_id: number;
-        target: string;
-        status: string;
-    }[];
-    propose_downstream: {
-        packit_id: number;
-        target: string;
-        status: string;
-    }[];
-    pull_from_upstream: {
-        packit_id: number;
-        target: string;
-        status: string;
-    }[];
+    copr: PipelineItem[];
+    koji: PipelineItem[];
+    test_run: PipelineItem[];
+    propose_downstream: PipelineItem[];
+    pull_from_upstream: PipelineItem[];
     time_submitted: number;
     trigger: {
         repo_namespace: string;
