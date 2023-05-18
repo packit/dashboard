@@ -82,21 +82,21 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
 @api.route("/api/usage/past-day")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
 def usage_past_day():
-    yesterday_date = (datetime.today() - timedelta(days=1)).strftime("%Y-%m-%d")
+    yesterday_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
     return _get_usage_data_from_packit_api(usage_from=yesterday_date)
 
 
 @api.route("/api/usage/past-week")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
 def usage_past_week():
-    past_week_date = (datetime.today() - timedelta(days=7)).strftime("%Y-%m-%d")
+    past_week_date = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
     return _get_usage_data_from_packit_api(usage_from=past_week_date)
 
 
 @api.route("/api/usage/past-month")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(days=1).seconds)
 def usage_past_month():
-    now = datetime.today()
+    now = datetime.now()
     past_month_past_day = now.replace(day=1) - timedelta(days=1)
     past_month_date = now.replace(
         year=past_month_past_day.year, month=past_month_past_day.month
