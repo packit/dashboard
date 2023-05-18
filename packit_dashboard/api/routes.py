@@ -1,4 +1,4 @@
-from flask import Blueprint, jsonify, request
+from flask import Blueprint, jsonify, request, escape
 from flask_cors import CORS
 from packit_dashboard.utils import return_json
 from packit_dashboard.config import API_URL
@@ -8,11 +8,11 @@ from cachetools.func import ttl_cache
 api = Blueprint("api", __name__)
 CORS(api)
 
-# The react frontend will request information here instead of fetching directly
+# The React frontend will request information here instead of fetching directly
 # from the main API.
 # This is because it will be easier to implement caching API requests here.
-# (Flask-Caching etc)
-# However if you want to do this client side, just delete these and use apiURL in JS
+# (Flask-Caching etc.)
+# However, if you want to do this client side, just delete these and use apiURL in JS
 
 
 _CACHE_MAXSIZE = 100
@@ -20,32 +20,32 @@ _CACHE_MAXSIZE = 100
 
 @api.route("/api/copr-builds/")
 def copr_builds():
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
+    page = escape(request.args.get("page"))
+    per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/copr-builds?page={page}&per_page={per_page}"
     return jsonify(return_json(url))
 
 
 @api.route("/api/testing-farm/")
 def testing_farm():
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
+    page = escape(request.args.get("page"))
+    per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/testing-farm/results?page={page}&per_page={per_page}"
     return jsonify(return_json(url))
 
 
 @api.route("/api/projects/")
 def projects():
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
+    page = escape(request.args.get("page"))
+    per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/projects?page={page}&per_page={per_page}"
     return jsonify(return_json(url))
 
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/prs/")
 def project_prs(forge, namespace, repo_name):
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
+    page = escape(request.args.get("page"))
+    per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/prs?page={page}&per_page={per_page}"
     return jsonify(return_json(url))
 
@@ -64,8 +64,8 @@ def project_issues(forge, namespace, repo_name):
 
 @api.route("/api/propose-downstream/")
 def propose_downstream():
-    page = request.args.get("page")
-    per_page = request.args.get("per_page")
+    page = escape(request.args.get("page"))
+    per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/propose-downstream?page={page}&per_page={per_page}"
     return jsonify(return_json(url))
 
@@ -76,8 +76,7 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
         url += f"&from={usage_from}"
     if usage_to:
         url += f"&to={usage_to}"
-    result = jsonify(return_json(url))
-    return result
+    return jsonify(return_json(url))
 
 
 @api.route("/api/usage/past-day")
