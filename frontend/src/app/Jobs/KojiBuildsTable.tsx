@@ -16,7 +16,7 @@ import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface KojiBuild {
     packit_id: number;
@@ -58,8 +58,8 @@ const KojiBuildsTable = () => {
             .then((response) => response.json())
             .then((data) => jsonToRow(data));
 
-    const { isLoading, isError, fetchNextPage, data, isFetching } =
-        useInfiniteQuery("koji", fetchData, {
+    const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery(["koji"], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
             keepPreviousData: true,
         });
@@ -127,7 +127,7 @@ const KojiBuildsTable = () => {
 
     // Show preloader if waiting for API data
     // TODO(SpyTec): Replace with skeleton loader, we know the data will look like
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

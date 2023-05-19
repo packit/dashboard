@@ -17,7 +17,7 @@ import { TriggerLink } from "../Trigger/TriggerLink";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { TFStatusLabel } from "../StatusLabel/TFStatusLabel";
 import { Timestamp } from "../utils/Timestamp";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface TestingFarmResult {
     packit_id: number;
@@ -52,8 +52,8 @@ const TestingFarmResultsTable = () => {
             .then((response) => response.json())
             .then((data) => jsonToRow(data));
 
-    const { isLoading, isError, fetchNextPage, data, isFetching } =
-        useInfiniteQuery("copr", fetchData, {
+    const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery(["copr"], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
             keepPreviousData: true,
         });
@@ -110,7 +110,7 @@ const TestingFarmResultsTable = () => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

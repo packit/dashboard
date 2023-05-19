@@ -2,7 +2,7 @@ import React from "react";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 // Fetch data from dashboard backend (or if we want, directly from the API)
 async function fetchData(URL: string): Promise<ProjectRelease[]> {
@@ -28,7 +28,9 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
     const URL = `${
         import.meta.env.VITE_API_URL
     }/projects/${forge}/${namespace}/${repoName}/releases`;
-    const { data, isError, isLoading } = useQuery([URL], () => fetchData(URL));
+    const { data, isError, isInitialLoading } = useQuery([URL], () =>
+        fetchData(URL),
+    );
 
     // If backend API is down
     if (isError) {
@@ -36,7 +38,7 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

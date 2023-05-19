@@ -4,7 +4,7 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 
 import { List, ListItem } from "@patternfly/react-core";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 const fetchData = (url: string) => {
     return fetch(url).then((response) => response.json());
@@ -24,7 +24,7 @@ const IssuesList: React.FC<IssuesListProps> = ({
         import.meta.env.VITE_API_URL
     }/projects/${forge}/${namespace}/${repoName}/issues`;
     // TODO: Setup interface or type for issues endpoint
-    const { data, isLoading, isError } = useQuery<string[]>([URL], () =>
+    const { data, isInitialLoading, isError } = useQuery<string[]>([URL], () =>
         fetchData(URL),
     );
 
@@ -34,7 +34,7 @@ const IssuesList: React.FC<IssuesListProps> = ({
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

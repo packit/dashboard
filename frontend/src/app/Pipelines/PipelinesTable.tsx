@@ -20,7 +20,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface StatusItem {
     packit_id: number;
@@ -138,8 +138,8 @@ const PipelinesTable = () => {
             .then((response) => response.json())
             .then((data: PipelineRun[]) => jsonToRow(data));
 
-    const { isLoading, isError, fetchNextPage, data, isFetching } =
-        useInfiniteQuery("pipelines", fetchData, {
+    const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery(["pipelines"], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
             keepPreviousData: true,
         });
@@ -221,7 +221,7 @@ const PipelinesTable = () => {
 
     // Show preloader if waiting for API data
     // TODO(SpyTec): Replace with skeleton loader, we know the data will look like
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

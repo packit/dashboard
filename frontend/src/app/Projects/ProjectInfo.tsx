@@ -24,7 +24,7 @@ import { ForgeIcon } from "../Forge/ForgeIcon";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface ProjectDetails {
     namespace: string;
@@ -61,12 +61,12 @@ export const ProjectInfo = () => {
         import.meta.env.VITE_API_URL
     }/projects/${forge}/${namespace}/${repoName}`;
 
-    const { data, isError, isLoading } = useQuery(
+    const { data, isError, isInitialLoading } = useQuery(
         [forge, namespace, repoName],
         () => fetchProjectInfo(URL),
     );
 
-    if (isError || (data === undefined && !isLoading)) {
+    if (isError || (data === undefined && !isInitialLoading)) {
         return <ErrorConnection />;
     }
 
@@ -77,7 +77,7 @@ export const ProjectInfo = () => {
                 Not Found.
             </Title>
         );
-    } else if (!isLoading && repoName && namespace && forge) {
+    } else if (!isInitialLoading && repoName && namespace && forge) {
         content = (
             <Tabs
                 isFilled

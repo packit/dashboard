@@ -20,7 +20,7 @@ import { Timestamp } from "../utils/Timestamp";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface ResultsPageSyncReleaseRunsProps {
     job: "propose-downstream" | "pull-from-upstream";
@@ -62,7 +62,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     let { id } = useParams();
 
     const URL = `${import.meta.env.VITE_API_URL}/${job}/${id}`;
-    const { data, isError, isLoading } = useQuery<
+    const { data, isError, isInitialLoading } = useQuery<
         SyncReleaseRun | { error: string }
     >([URL], () => fetchSyncRelease(URL));
 
@@ -72,7 +72,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     }
 
     // Show preloader if waiting for API data
-    if (isLoading || data === undefined) {
+    if (isInitialLoading || data === undefined) {
         return <Preloader />;
     }
 

@@ -23,7 +23,7 @@ import {
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { Link } from "react-router-dom";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface Project {
     namespace: string;
@@ -56,7 +56,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             `${import.meta.env.VITE_API_URL}/projects?page=${pageParam}`,
         ).then((response) => response.json());
 
-    const { isLoading, isError, fetchNextPage, data } = useInfiniteQuery(
+    const { isInitialLoading, isError, fetchNextPage, data } = useInfiniteQuery(
         ["ProjectsList"],
         fetchData,
         {
@@ -87,7 +87,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 
