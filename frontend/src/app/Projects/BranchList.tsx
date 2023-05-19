@@ -13,7 +13,7 @@ import {
     DataListItemCells,
     DataListItemRow,
 } from "@patternfly/react-core";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface CoprBuild {
     build_id: string;
@@ -71,7 +71,7 @@ const BranchList: React.FC<BranchListProps> = (props) => {
         import.meta.env.VITE_API_URL
     }/projects/${forge}/${namespace}/${repoName}/branches`;
 
-    const { data, isError, isLoading } = useQuery([URL], () =>
+    const { data, isError, isInitialLoading } = useQuery([URL], () =>
         fetchBranchList(URL),
     );
 
@@ -95,7 +95,7 @@ const BranchList: React.FC<BranchListProps> = (props) => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

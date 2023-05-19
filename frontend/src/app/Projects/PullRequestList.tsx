@@ -14,7 +14,7 @@ import {
     DataListItemCells,
     DataListItemRow,
 } from "@patternfly/react-core";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 interface CoprBuild {
     build_id: string;
@@ -65,7 +65,7 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
         import.meta.env.VITE_API_URL
     }/projects/${forge}/${namespace}/${repoName}/prs`;
     // Fetch data from dashboard backend (or if we want, directly from the API)
-    const { data, isLoading, isError, fetchNextPage } = useInfiniteQuery(
+    const { data, isInitialLoading, isError, fetchNextPage } = useInfiniteQuery(
         [URL],
         ({ pageParam = 1 }) => fetchData(URL, pageParam),
         {
@@ -96,7 +96,7 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

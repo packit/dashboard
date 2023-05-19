@@ -10,7 +10,7 @@ import { ChartDonut } from "@patternfly/react-charts";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageListProps["what"]) =>
@@ -21,8 +21,8 @@ interface UsageListProps {
 }
 
 const UsageList: React.FC<UsageListProps> = (props) => {
-    const { data, isLoading, isError } = useQuery<UsageListData>(
-        "usage" + props.what,
+    const { data, isInitialLoading, isError } = useQuery<UsageListData>(
+        ["usage" + props.what],
         () => fetchDataByGranularity(props.what),
         {
             keepPreviousData: true,
@@ -35,7 +35,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

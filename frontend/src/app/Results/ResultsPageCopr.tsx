@@ -16,7 +16,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface BuildPackage {
     arch: string;
@@ -83,7 +83,7 @@ const ResultsPageCopr = () => {
     let { id } = useParams();
 
     const URL = `${import.meta.env.VITE_API_URL}/copr-builds/${id}`;
-    const { data, isError, isLoading } = useQuery<
+    const { data, isError, isInitialLoading } = useQuery<
         CoprResult | { error: string }
     >([URL], () => fetchSyncRelease(URL));
 
@@ -93,7 +93,7 @@ const ResultsPageCopr = () => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading || data === undefined) {
+    if (isInitialLoading || data === undefined) {
         return <Preloader />;
     }
 

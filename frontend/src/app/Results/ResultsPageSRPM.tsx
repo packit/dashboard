@@ -20,7 +20,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 interface SRPMBuild {
     status: string;
@@ -55,7 +55,7 @@ const ResultsPageSRPM = () => {
     let { id } = useParams();
 
     const URL = `${import.meta.env.VITE_API_URL}/srpm-builds/${id}`;
-    const { data, isError, isLoading } = useQuery<
+    const { data, isError, isInitialLoading } = useQuery<
         SRPMBuild | { error: string }
     >([URL], () => fetchSRPMBuild(URL));
 
@@ -65,7 +65,7 @@ const ResultsPageSRPM = () => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading || data === undefined) {
+    if (isInitialLoading || data === undefined) {
         return <Preloader />;
     }
 

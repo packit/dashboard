@@ -16,7 +16,7 @@ import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import { Timestamp } from "../utils/Timestamp";
-import { useInfiniteQuery } from "react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface UpstreamDownstreamJobs {
     packit_id: number;
@@ -89,8 +89,8 @@ const SyncReleaseTable: React.FC<SyncReleaseTableProps> = ({ job }) => {
             .then((response) => response.json())
             .then((data) => jsonToRow(data));
 
-    const { isLoading, isError, fetchNextPage, data, isFetching } =
-        useInfiniteQuery(job, fetchData, {
+    const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
+        useInfiniteQuery([job], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
             keepPreviousData: true,
         });
@@ -153,7 +153,7 @@ const SyncReleaseTable: React.FC<SyncReleaseTableProps> = ({ job }) => {
 
     // Show preloader if waiting for API data
     // TODO(SpyTec): Replace with skeleton loader, we know the data will look like
-    if (isLoading) {
+    if (isInitialLoading) {
         return <Preloader />;
     }
 

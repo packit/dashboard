@@ -16,7 +16,7 @@ import { TriggerLink } from "../Trigger/TriggerLink";
 import { TFStatusLabel } from "../StatusLabel/TFStatusLabel";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { useQuery } from "react-query";
+import { useQuery } from "@tanstack/react-query";
 
 export interface TestingFarmOverview {
     pipeline_id: string; // UUID
@@ -76,7 +76,7 @@ const ResultsPageTestingFarm = () => {
     let { id } = useParams();
 
     const URL = `${import.meta.env.VITE_API_URL}/testing-farm/${id}`;
-    const { data, isError, isLoading } = useQuery([URL], () =>
+    const { data, isError, isInitialLoading } = useQuery([URL], () =>
         fetchTestingFarm(URL),
     );
 
@@ -86,7 +86,7 @@ const ResultsPageTestingFarm = () => {
     }
 
     // Show preloader if waiting for API data
-    if (isLoading || data === undefined) {
+    if (isInitialLoading || data === undefined) {
         return <Preloader />;
     }
 
