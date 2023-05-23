@@ -1,4 +1,4 @@
-FROM quay.io/packit/base
+FROM quay.io/packit/base:c9s
 
 # set default value, can be overriden by --build-arg while building
 ARG VITE_API_URL=https://stg.packit.dev/api
