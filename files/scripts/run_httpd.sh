@@ -2,9 +2,12 @@
 
 set -eux
 
-INSTANCE=
-if [ -n "${DEPLOYMENT}" ] && [ "${DEPLOYMENT}" != "prod" ]; then
-    INSTANCE=".${DEPLOYMENT}"
+if [[ "${DEPLOYMENT:=dev}" == "dev" ]]; then
+    SERVER_NAME="dashboard.localhost"
+elif [[ "${DEPLOYMENT}" == "prod" ]]; then
+    SERVER_NAME="dashboard.packit.dev"
+else
+    SERVER_NAME="dashboard.${DEPLOYMENT}.packit.dev"
 fi
 
 # See "mod_wsgi-express-3 start-server --help" for details on
@@ -20,7 +23,7 @@ exec mod_wsgi-express-3 start-server \
     --hsts-policy "max-age=31536000;includeSubDomains" \
     --ssl-certificate-file /secrets/fullchain.pem \
     --ssl-certificate-key-file /secrets/privkey.pem \
-    --server-name dashboard${INSTANCE}.packit.dev \
+    --server-name ${SERVER_NAME} \
     --processes 2 \
     --locale "C.UTF-8" \
     /usr/share/packit_dashboard/packit_dashboard.wsgi
