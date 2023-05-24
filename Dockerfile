@@ -11,14 +11,14 @@ ENV HOME=/home/packit_dashboard
 
 WORKDIR /src
 
-COPY files/ files/
-
+COPY files/ansible/install-deps.yaml files/ansible/
 RUN ansible-playbook -vv -c local -i localhost, files/ansible/install-deps.yaml \
     && dnf clean all
 
 COPY packit_dashboard/  packit_dashboard/
 COPY frontend/ frontend/
 
+COPY files/ files/
 RUN ansible-playbook -vv -c local -i localhost, files/ansible/recipe.yaml
 
 EXPOSE 8443
