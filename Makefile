@@ -37,7 +37,7 @@ run-dev-flask:
 	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
 
 run-container-stg: build-stg
-	$(CONTAINER_ENGINE) run --rm -p 8443:8443 -v $(CURDIR)/secrets:/secrets:z -i $(IMAGE)
+	$(CONTAINER_ENGINE) run -i --rm -u 1234 -p 8443:8443 -v $(CURDIR)/secrets:/secrets:ro,z $(IMAGE)
 
 build-stg:
 	$(CONTAINER_ENGINE) build --rm \
