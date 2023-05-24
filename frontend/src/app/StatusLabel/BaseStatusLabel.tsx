@@ -33,7 +33,7 @@ export const BaseStatusLabel: React.FC<BaseStatusLabelProps> = (props) => {
                     render={({ className, content, componentRef }) => {
                         // the `downstream_pr_url` can be undefined if
                         // looking at propose downstream job details
-                        if (!props.link) return <></>;
+                        if (!props.link) return <>{content}</>;
                         return props.link.startsWith("http") ? (
                             <a
                                 href={props.link}
