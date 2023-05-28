@@ -18,7 +18,7 @@ const Projects = () => {
                 <TextContent>
                     <Text component="h1">Projects</Text>
                     <Text component="p">
-                        List of repos with Packit Service enabled
+                        List of repositories with Packit Service enabled
                     </Text>
                 </TextContent>
             </PageSection>
