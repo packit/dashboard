@@ -4,6 +4,7 @@ import {
     PageSectionVariants,
     TextContent,
     Text,
+    PageGroup,
 } from "@patternfly/react-core";
 
 import { ProjectSearch } from "./ProjectSearch";
@@ -22,12 +23,12 @@ const Projects = () => {
                     </Text>
                 </TextContent>
             </PageSection>
-            <PageSection>
-                <ProjectSearch />
-            </PageSection>
-            <PageSection>
-                <ProjectsList />
-            </PageSection>
+            <PageGroup>
+                <PageSection>
+                    <ProjectSearch />
+                    <ProjectsList />
+                </PageSection>
+            </PageGroup>
         </>
     );
 };

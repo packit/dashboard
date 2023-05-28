@@ -9,6 +9,10 @@ import {
     GridItem,
     Button,
     TextInput,
+    Panel,
+    InputGroup,
+    PanelMain,
+    PanelMainBody,
 } from "@patternfly/react-core";
 
 import { SearchIcon } from "@patternfly/react-icons";
@@ -43,11 +47,11 @@ const ProjectSearch = () => {
     }
 
     return (
-        <Card>
-            <CardBody>
-                <Form>
-                    <Grid sm={6} md={4} lg={3} xl2={3}>
-                        <GridItem>
+        <Panel>
+            <PanelMain>
+                <PanelMainBody>
+                    <Form>
+                        <InputGroup>
                             <TextInput
                                 isRequired
                                 type="text"
@@ -58,8 +62,6 @@ const ProjectSearch = () => {
                                 placeholder="forge (e.g. github.com, required)"
                                 onChange={(e) => setForge(e)}
                             />
-                        </GridItem>
-                        <GridItem>
                             <TextInput
                                 isRequired
                                 type="text"
@@ -70,8 +72,6 @@ const ProjectSearch = () => {
                                 placeholder="the-namespace"
                                 onChange={(e) => setNamespace(e)}
                             />
-                        </GridItem>
-                        <GridItem>
                             <TextInput
                                 isRequired
                                 type="text"
@@ -82,24 +82,19 @@ const ProjectSearch = () => {
                                 placeholder="the-repo-name"
                                 onChange={(e) => setRepoName(e)}
                             />
-                        </GridItem>
-                        <GridItem>
-                            <Bullseye>
-                                <Button
-                                    variant="plain"
-                                    aria-label="Search"
-                                    onClick={goToProjectDetails}
-                                >
-                                    <SearchIcon />
-                                </Button>
-                            </Bullseye>
-                        </GridItem>
-                    </Grid>
-
-                    {invalidFormWarning}
-                </Form>
-            </CardBody>
-        </Card>
+                            <Button
+                                variant="plain"
+                                aria-label="Search"
+                                onClick={goToProjectDetails}
+                            >
+                                <SearchIcon />
+                            </Button>
+                        </InputGroup>
+                        {invalidFormWarning}
+                    </Form>
+                </PanelMainBody>
+            </PanelMain>
+        </Panel>
     );
 };
 
