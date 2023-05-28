@@ -10,6 +10,8 @@ import {
     Gallery,
     GalleryItem,
     CardBody,
+    CardFooter,
+    CardHeader,
 } from "@patternfly/react-core";
 
 import {
@@ -96,22 +98,25 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             <Gallery hasGutter>
                 {flatPages.map((project, index) => (
                     <GalleryItem key={index}>
-                        <Card>
-                            <CardTitle>
-                                <Link to={getProjectInfoURL(project)}>
-                                    {`${project.namespace}/${project.repo_name}`}
-                                </Link>
-                                <br />
-                                <a
-                                    href={project.project_url}
-                                    target="_blank"
-                                    rel="noreferrer"
-                                    aria-label="External link to project"
-                                >
-                                    <ExternalLinkAltIcon />
-                                </a>
-                            </CardTitle>
-                            <CardBody>
+                        <Card isFullHeight>
+                            <CardHeader>
+                                <CardTitle>
+                                    <Link to={getProjectInfoURL(project)}>
+                                        {`${project.namespace}/${project.repo_name}`}
+                                    </Link>
+                                    <br />
+                                    <a
+                                        href={project.project_url}
+                                        target="_blank"
+                                        rel="noreferrer"
+                                        aria-label="External link to project"
+                                    >
+                                        <ExternalLinkAltIcon />
+                                    </a>
+                                </CardTitle>
+                            </CardHeader>
+                            <CardBody></CardBody>
+                            <CardFooter>
                                 <Flex>
                                     <FlexItem>
                                         <Tooltip
@@ -154,7 +159,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                                         {project.prs_handled}
                                     </FlexItem>
                                 </Flex>
-                            </CardBody>
+                            </CardFooter>
                         </Card>
                     </GalleryItem>
                 ))}
