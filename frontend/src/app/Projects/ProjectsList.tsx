@@ -26,6 +26,14 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { Link } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+    TableComposable,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
+} from "@patternfly/react-table";
 
 interface Project {
     namespace: string;
@@ -50,8 +58,20 @@ interface ProjectsListProps {
     repo_name?: string;
 }
 
+const columnNames = {
+    name: "Repositories",
+    branches: "Branches",
+    prs: "Pull requests",
+    workspaces: "Workspaces",
+    lastCommit: "Last commit",
+};
+
+type ColumnKey = keyof typeof columnNames;
+
 // TODO: Move data fetching to parent components
 const ProjectsList: React.FC<ProjectsListProps> = (props) => {
+    const [expandedCells, setExpandedCells] =
+        React.useState<Record<string, ColumnKey>>();
     // Fetch data from dashboard backend (or if we want, directly from the API)
     const fetchData = ({ pageParam = 1 }): Promise<Project> =>
         fetch(
@@ -68,15 +88,6 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
     );
 
     const flatPages = useMemo(() => data?.pages.flat() ?? [], [data?.pages]);
-
-    let loadButton = (
-        <center>
-            <br />
-            <Button variant="control" onClick={() => fetchNextPage()}>
-                Load More
-            </Button>
-        </center>
-    );
 
     // // Hide the Load More Button if we're displaying projects of one namespace only
     // if (props.forge && props.namespace) {
@@ -95,76 +106,90 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
 
     return (
         <>
-            <Gallery hasGutter>
-                {flatPages.map((project, index) => (
-                    <GalleryItem key={index}>
-                        <Card isFullHeight>
-                            <CardHeader>
-                                <CardTitle>
+            <TableComposable aria-label="Projects">
+                <Thead>
+                    <Tr>
+                        <Th>Repositories</Th>
+                        <Th>Branches Handled</Th>
+                        <Th>Issues Handled</Th>
+                        <Th>Releases Handled</Th>
+                        <Th>Pull Requests Handled</Th>
+                        <Th />
+                    </Tr>
+                </Thead>
+                {flatPages.map((project, index) => {
+                    const expandedCellKey = expandedCells
+                        ? expandedCells[project.repo_name]
+                        : null;
+                    const isRowExpanded = !!expandedCellKey;
+                    return (
+                        <Tbody
+                            key={project.repo_name}
+                            isExpanded={isRowExpanded}
+                        >
+                            <Tr>
+                                <Td
+                                    width={25}
+                                    dataLabel={columnNames.name}
+                                    component="th"
+                                >
                                     <Link to={getProjectInfoURL(project)}>
                                         {`${project.namespace}/${project.repo_name}`}
                                     </Link>
-                                    <br />
+                                </Td>
+                                <Td
+                                    width={10}
+                                    dataLabel={columnNames.branches}
+                                    // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                                >
+                                    <CodeBranchIcon key="icon" />{" "}
+                                    {project.branches_handled}
+                                </Td>
+                                <Td
+                                    width={10}
+                                    dataLabel={columnNames.branches}
+                                    // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                                >
+                                    <SecurityIcon key="icon" />{" "}
+                                    {project.issues_handled}
+                                </Td>
+                                <Td
+                                    width={10}
+                                    dataLabel={columnNames.branches}
+                                    // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                                >
+                                    <BuildIcon key="icon" />{" "}
+                                    {project.releases_handled}
+                                </Td>
+                                <Td
+                                    width={15}
+                                    dataLabel={columnNames.branches}
+                                    // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                                >
+                                    <BlueprintIcon key="icon" />{" "}
+                                    {project.prs_handled}
+                                </Td>
+                                <Td dataLabel={columnNames.branches}>
                                     <a
                                         href={project.project_url}
                                         target="_blank"
                                         rel="noreferrer"
                                         aria-label="External link to project"
                                     >
-                                        <ExternalLinkAltIcon />
+                                        Open external link
                                     </a>
-                                </CardTitle>
-                            </CardHeader>
-                            <CardBody></CardBody>
-                            <CardFooter>
-                                <Flex>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Branches Handled"}
-                                            aria="labelledby"
-                                        >
-                                            <CodeBranchIcon />
-                                        </Tooltip>
-                                        {project.branches_handled}
-                                    </FlexItem>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Issues Handled"}
-                                            aria="labelledby"
-                                        >
-                                            <SecurityIcon />
-                                        </Tooltip>
-                                        {project.issues_handled}
-                                    </FlexItem>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Releases Handled"}
-                                            aria="labelledby"
-                                        >
-                                            <BuildIcon />
-                                        </Tooltip>
-                                        {project.releases_handled}
-                                    </FlexItem>
-                                    <FlexItem>
-                                        <Tooltip
-                                            position={TooltipPosition.top}
-                                            content={"Pull Requests Handled"}
-                                            aria="labelledby"
-                                        >
-                                            <BlueprintIcon />
-                                        </Tooltip>
-                                        {project.prs_handled}
-                                    </FlexItem>
-                                </Flex>
-                            </CardFooter>
-                        </Card>
-                    </GalleryItem>
-                ))}
-            </Gallery>
-            {loadButton}
+                                </Td>
+                            </Tr>
+                        </Tbody>
+                    );
+                })}
+            </TableComposable>
+            <center>
+                <br />
+                <Button variant="control" onClick={() => fetchNextPage()}>
+                    Load More
+                </Button>
+            </center>
         </>
     );
 };
