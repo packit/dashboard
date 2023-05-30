@@ -4,7 +4,7 @@ from packit_dashboard.api.routes import api
 
 app = Flask(
     "Packit Service Dashboard",
-    static_folder="frontend/build/static",
+    static_folder="frontend/dist/assets",
 )
 
 app.register_blueprint(api)
