@@ -18,9 +18,6 @@
         cmd: yarn install
 
     - name: bundle javascript
-      # TODO: remove this once the Node.js-stack stops using legacy crypto
-      environment:
-        NODE_OPTIONS: "--openssl-legacy-provider"
       command:
         chdir: "{{ packit_dashboard_path }}"
         cmd: yarn run build
