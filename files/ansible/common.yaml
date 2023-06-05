@@ -15,7 +15,7 @@
   tags:
     - no-cache
   register: src_path
-- name: Let'secrets make sure {{ packit_dashboard_path }} is present
+- name: Make sure {{ packit_dashboard_path }} is present
   assert:
     that:
       - "src_path.stat.isdir"
