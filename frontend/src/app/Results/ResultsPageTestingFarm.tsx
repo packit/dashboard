@@ -13,7 +13,7 @@ import {
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink } from "../Trigger/TriggerLink";
-import { TFStatusLabel } from "../StatusLabel/TFStatusLabel";
+import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
@@ -121,7 +121,7 @@ const ResultsPageTestingFarm = () => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Testing Farm Results</Text>
-                    <TFStatusLabel
+                    <StatusLabel
                         status={data.status}
                         target={data.chroot}
                         link={data.web_url}

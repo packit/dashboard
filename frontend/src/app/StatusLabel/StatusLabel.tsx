@@ -22,12 +22,18 @@ export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
     useEffect(() => {
         switch (props.status) {
             case "success":
+            case "passed":
                 setColor("green");
                 setIcon(<CheckCircleIcon />);
                 break;
             case "failure":
+            case "failed":
                 setColor("red");
                 setIcon(<ExclamationCircleIcon />);
+                break;
+            case "error":
+                setColor("orange");
+                setIcon(<ExclamationTriangleIcon />);
                 break;
         }
     }, [props.status]);
