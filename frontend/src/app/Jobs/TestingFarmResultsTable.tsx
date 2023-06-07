@@ -15,7 +15,7 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink } from "../Trigger/TriggerLink";
 import { ForgeIcon } from "../Forge/ForgeIcon";
-import { TFStatusLabel } from "../StatusLabel/TFStatusLabel";
+import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -75,7 +75,7 @@ const TestingFarmResultsTable = () => {
                     },
                     {
                         title: (
-                            <TFStatusLabel
+                            <StatusLabel
                                 status={test_result.status}
                                 target={test_result.target}
                                 link={`/results/testing-farm/${test_result.packit_id}`}

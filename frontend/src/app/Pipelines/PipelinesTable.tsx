@@ -15,7 +15,6 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
-import { TFStatusLabel } from "../StatusLabel/TFStatusLabel";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import coprLogo from "../../static/copr.ico";
@@ -186,7 +185,7 @@ const PipelinesTable = () => {
                                 <Statuses
                                     name={"Testing Farm"}
                                     route={"testing-farm"}
-                                    statusClass={TFStatusLabel}
+                                    statusClass={StatusLabel}
                                     entries={run.test_run}
                                 />
                                 <Statuses
