@@ -94,4 +94,33 @@ function getReleaseLink(
     return releaseLink;
 }
 
-export { getHostName, getPRLink, getBranchLink, getIssueLink, getReleaseLink };
+// getCommitLink - returns a link to the commit
+function getCommitLink(
+    forge: string,
+    namespace: string,
+    repoName: string,
+    commit_hash: string,
+) {
+    let commitLink = `https://${forge}/${namespace}/${repoName}`;
+    switch (forge) {
+        case "github.com":
+            commitLink += `/commit/${commit_hash}`;
+            break;
+        case "src.fedoraproject.org":
+            commitLink += `/c/${commit_hash}`;
+            break;
+        default: // various Gitlab instances
+            commitLink += `/-/commit/${commit_hash}`;
+            break;
+    }
+    return commitLink;
+}
+
+export {
+    getHostName,
+    getPRLink,
+    getBranchLink,
+    getIssueLink,
+    getReleaseLink,
+    getCommitLink,
+};
