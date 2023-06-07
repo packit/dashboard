@@ -34,7 +34,7 @@ run-dev-frontend:
 	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) GENERATE_SOURCEMAP=true HTTPS=true yarn start
 
 run-dev-flask:
-	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
+	FLASK_DEBUG=1 FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
 
 run-container-stg: build-stg
 	$(CONTAINER_ENGINE) run -i --rm -u 1234 -p 8443:8443 -v $(CURDIR)/secrets:/secrets:ro,z $(IMAGE)
