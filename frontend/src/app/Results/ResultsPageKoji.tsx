@@ -129,16 +129,16 @@ const ResultsPageKoji = () => {
                                         <a href={data.web_url}>Web URL</a>
                                     </td>
                                 </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Build Logs</strong>
-                                    </td>
-                                    <td>
-                                        <a href={data.build_logs_url}>
-                                            Build Logs URL
-                                        </a>
-                                    </td>
-                                </tr>
+                                {/*                                 <tr> */}
+                                {/*                                     <td> */}
+                                {/*                                         <strong>Build Logs</strong> */}
+                                {/*                                     </td> */}
+                                {/*                                     <td> */}
+                                {/*                                         <a href={data.build_logs_url}> */}
+                                {/*                                             Build Logs URL */}
+                                {/*                                         </a> */}
+                                {/*                                     </td> */}
+                                {/*                                 </tr> */}
 
                                 <tr>
                                     <td>
