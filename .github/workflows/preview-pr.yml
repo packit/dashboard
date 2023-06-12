@@ -49,3 +49,9 @@ jobs:
 
       - name: Deploy the dashboard to surge.sh
         run: surge ./frontend/dist $DOMAIN --token ${{ secrets.SURGE_TOKEN }}
+
+      - name: Install ‹ogr›, cause why not
+        run: python3 -m pip install ogr
+
+      - name: Notify PR about the deployment
+        run: python3 .github/notify.py $DOMAIN
