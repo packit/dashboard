@@ -3,7 +3,7 @@ IMAGE ?= quay.io/packit/dashboard:stg
 TEST_IMAGE ?= packit-dashboard-tests
 TEST_TARGET ?= ./tests/
 CONTAINER_ENGINE ?= $(shell command -v podman 2> /dev/null || echo docker)
-API_STG = "https://stg.packit.dev/api"
+API_URL ?= "https://stg.packit.dev/api"
 GIT_SHA_FETCH := $(shell git rev-parse HEAD)
 export GIT_SHA=$(GIT_SHA_FETCH)
 
@@ -19,7 +19,7 @@ install-dependencies: .install-logos
 
 # this will transpile tsx into js, minify everything and generate static js for production builds
 transpile-prod:
-	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_STG) yarn run build
+	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) yarn run build
 
 
 # For Development Mode Only:
@@ -31,7 +31,7 @@ transpile-prod:
 # if you change flask port for dev, also change it in frontend/package.json in the proxy key/value
 
 run-dev-frontend:
-	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_STG) GENERATE_SOURCEMAP=true HTTPS=true yarn start
+	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) GENERATE_SOURCEMAP=true HTTPS=true yarn start
 
 run-dev-flask:
 	FLASK_ENV=development FLASK_APP=packit_dashboard.app flask-3 run --host=0.0.0.0
@@ -41,7 +41,7 @@ run-container-stg: build-stg
 
 build-stg:
 	$(CONTAINER_ENGINE) build --rm \
-		--build-arg VITE_API_URL=$(API_STG) \
+		--build-arg VITE_API_URL=$(API_URL) \
 		--build-arg VITE_GIT_SHA=$(GIT_SHA) \
 		-t $(IMAGE) -f Dockerfile .
 

@@ -42,7 +42,7 @@ jobs:
         run: |
           (cd frontend && yarn install);
           make .install-logos
-          make transpile-prod
+          API_URL="https://prod.packit.dev/api" make transpile-prod
 
       - name: Install deploy dependencies
         run: yarn global add surge
