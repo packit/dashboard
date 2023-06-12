@@ -44,6 +44,9 @@ def projects():
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/prs/")
 def project_prs(forge, namespace, repo_name):
+    forge = escape(forge)
+    namespace = escape(namespace)
+    repo_name = escape(repo_name)
     page = escape(request.args.get("page"))
     per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/prs?page={page}&per_page={per_page}"
@@ -52,12 +55,18 @@ def project_prs(forge, namespace, repo_name):
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/releases/")
 def project_releases(forge, namespace, repo_name):
+    forge = escape(forge)
+    namespace = escape(namespace)
+    repo_name = escape(repo_name)
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/releases"
     return jsonify(return_json(url))
 
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/issues/")
 def project_issues(forge, namespace, repo_name):
+    forge = escape(forge)
+    namespace = escape(namespace)
+    repo_name = escape(repo_name)
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/issues"
     return jsonify(return_json(url))
 
