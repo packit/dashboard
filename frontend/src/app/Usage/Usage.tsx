@@ -11,6 +11,7 @@ import {
 } from "@patternfly/react-core";
 
 import { UsageList } from "./UsageList";
+import { UsageInterval } from "./UsageInterval";
 import { useTitle } from "../utils/useTitle";
 
 const Usage = () => {
@@ -43,15 +44,19 @@ const Usage = () => {
                         >
                             <Tab eventKey={0} title="Past day">
                                 <UsageList what="past-day" />
+                                <UsageInterval days={0} hours={1} count={24} />
                             </Tab>
                             <Tab eventKey={1} title="Past week">
                                 <UsageList what="past-week" />
+                                <UsageInterval days={1} hours={0} count={7} />
                             </Tab>
                             <Tab eventKey={2} title="Past month">
                                 <UsageList what="past-month" />
+                                <UsageInterval days={1} hours={0} count={30} />
                             </Tab>
                             <Tab eventKey={3} title="Past year">
                                 <UsageList what="past-year" />
+                                <UsageInterval days={7} hours={0} count={52} />
                             </Tab>
                         </Tabs>
                     </CardBody>
