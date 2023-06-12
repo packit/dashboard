@@ -4,6 +4,7 @@
 import os
 from datetime import datetime, timedelta
 from pathlib import Path
+from typing import Union
 
 from cachetools.func import ttl_cache
 from flask import Blueprint, request, escape, render_template
@@ -131,6 +132,80 @@ def usage_past_year():
     now = datetime.now()
     past_year_date = now.replace(year=now.year - 1).strftime("%Y-%m-%d")
     return _get_usage_data_from_packit_api(usage_from=past_year_date)
+
+
+# format the chart needs is a list of {"x": "datetimelegend", "y": value}
+CHART_DATA_TYPE = list[dict[str, str]]
+
+
+@ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
+def _get_usage_interval_data(
+    days: int, hours: int, count: int
+) -> dict[str, Union[str, CHART_DATA_TYPE, dict[str, CHART_DATA_TYPE]]]:
+    """
+    :param days: number of days for the interval length
+    :param hours: number of days for the interval length
+    :param count: number of intervals
+    :return: usage data for the COUNT number of intervals
+      (delta is DAYS number of days and HOURS number of hours)
+    """
+    delta = timedelta(days=days, hours=hours)
+
+    current_date = datetime.now()
+    days_legend = []
+    for _ in range(count):
+        days_legend.append(current_date)
+        current_date -= delta
+
+    result_jobs: dict[str, CHART_DATA_TYPE] = {}
+    result_events: dict[str, CHART_DATA_TYPE] = {}
+    result_active_projects: CHART_DATA_TYPE = []
+
+    for day in reversed(days_legend):
+        day_from = (day - delta).isoformat()
+        day_to = day.isoformat()
+        legend = day.strftime("%H:%M" if (hours and not days) else "%Y-%m-%d")
+
+        interval_result = _get_usage_data_from_packit_api(
+            usage_from=day_from, usage_to=day_to, top=0
+        ).json
+
+        for job, data in interval_result["jobs"].items():
+            result_jobs.setdefault(job, [])
+            result_jobs[job].append({"x": legend, "y": data["job_runs"]})
+
+        for event, data in interval_result["events"].items():
+            result_events.setdefault(event, [])
+            result_events[event].append({"x": legend, "y": data["events_handled"]})
+
+        result_active_projects.append(
+            {"x": legend, "y": interval_result["active_projects"].get("project_count")}
+        )
+
+    return {
+        "jobs": result_jobs,
+        "events": result_events,
+        "from": days_legend[0].isoformat(),
+        "to": days_legend[-1].isoformat(),
+        "active_projects": result_active_projects,
+    }
+
+
+@api.route("/api/usage/intervals")
+def usage_intervals_past():
+    """
+    Returns the data for trend charts.
+
+    Use `days` and `hours` parameters to define interval and `count` to set number of intervals.
+
+    Examples:
+    /api/usage/intervals/past?days=7&hours=0&count=52 for the weekly data of the last year
+    /api/usage/intervals?days=0&hours=1&count=24 for the hourly data of the last day
+    """
+    count = int(escape(request.args.get("count", "10")))
+    delta_hours = int(escape(request.args.get("hours", "0")))
+    delta_days = int(escape(request.args.get("days", "0")))
+    return _get_usage_interval_data(hours=delta_hours, days=delta_days, count=count)
 
 
 @api.route("/api/images/architecture.svg")
