@@ -10,11 +10,18 @@ import {
     PageSidebar,
     Button,
     SkipToContent,
+    Text,
+    TextContent,
+    Popover,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 import packitLogo from "../../static/logo.png";
 import { useState, useEffect } from "react";
-import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons";
+import {
+    ExternalLinkSquareAltIcon,
+    ExternalLinkAltIcon,
+    CodeBranchIcon,
+} from "@patternfly/react-icons";
 
 const AppLayout = () => {
     const location = useLocation();
@@ -52,20 +59,39 @@ const AppLayout = () => {
 
     const HeaderTools = (
         <PageHeaderTools>
-            <Button
-                component="a"
-                href={`https://github.com/packit/dashboard/commit/${
-                    import.meta.env.VITE_GIT_SHA
-                }`}
-                target="_blank"
-                rel="noreferrer"
-                variant="link"
-                icon={<ExternalLinkSquareAltIcon />}
-                iconPosition="right"
-                aria-label="External link to page source commit"
+            <Popover
+                headerContent={"About open source"}
+                bodyContent={
+                    <TextContent>
+                        <Text>
+                            This service is open source, so all of its code is
+                            inspectable. Explore repositories to view and
+                            contribute to the source code.
+                        </Text>
+                        <Button
+                            component="a"
+                            target="_blank"
+                            variant="link"
+                            icon={<ExternalLinkAltIcon />}
+                            iconPosition="right"
+                            isInline
+                            href={`https://github.com/packit/dashboard/commit/${
+                                import.meta.env.VITE_GIT_SHA
+                            }`}
+                        >
+                            Source code
+                        </Button>
+                    </TextContent>
+                }
             >
-                {import.meta.env.VITE_GIT_SHA?.substring(0, 7)}
-            </Button>
+                <Button
+                    variant="plain"
+                    aria-label="About Open Services"
+                    className="pf-u-pl-sm header-button"
+                >
+                    <CodeBranchIcon />
+                </Button>
+            </Popover>
         </PageHeaderTools>
     );
     const Header = (
