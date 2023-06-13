@@ -115,3 +115,6 @@ modules.out
 
 # Makefile cache
 .install-logos
+
+# https://github.com/mswjs/msw/discussions/1015
+frontend/public/mockServiceWorker.js
