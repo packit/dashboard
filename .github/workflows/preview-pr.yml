@@ -2,7 +2,14 @@
 ### and stolen from https://github.com/patternfly/patternfly/blob/v5/.github/workflows/pr-preview.yml
 
 name: Deploy PR previews
-on: pull_request_target
+on:
+  pull_request_target:
+  workflow_dispatch:
+    inputs:
+      pr_id:
+        description: PR ID to be deployed to the surge.sh
+        required: true
+        default: 0
 
 concurrency: preview-${{ github.ref }}
 
@@ -12,8 +19,8 @@ jobs:
     env:
       SURGE_TOKEN: ${{ secrets.SURGE_TOKEN             }}
       GH_PR_TOKEN: ${{ secrets.RELEASEBOT_GITHUB_TOKEN }}
-      GH_PR_NUM: ${{ github.event.number             }}
-      DOMAIN: packit-dashboard-pr-${{ github.event.number }}.surge.sh
+      GH_PR_NUM: ${{ github.event.inputs.pr_id || github.event.number }}
+      DOMAIN: packit-dashboard-pr-${{ github.event.inputs.pr_id || github.event.number }}.surge.sh
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
