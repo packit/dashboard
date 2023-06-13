@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import {
     CheckCircleIcon,
     ExclamationCircleIcon,
+    ExclamationTriangleIcon,
     InfoCircleIcon,
 } from "@patternfly/react-icons";
 import { BaseStatusLabel, BaseStatusLabelProps } from "./BaseStatusLabel";
