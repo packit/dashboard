@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 
+import datetime
 import logging
 import os
 import sys
@@ -12,6 +13,7 @@ def main():
         logging.error("Usage: notify domain")
         sys.exit(1)
 
+    time = datetime.datetime.utcnow().strftime("%a %d %b %Y, %H:%M UTC")
     domain = sys.argv[1]
 
     service = GithubService(token=os.getenv("GH_PR_TOKEN"))
@@ -22,7 +24,7 @@ def main():
     pr = project.get_pr(pr_id)
     comments = pr.get_comments(author=service.user.get_username())
 
-    body = f"Preview: https://{domain}"
+    body = f"Preview: https://{domain} (deployed at {time})"
 
     if comments:
         comments[0].body = body
