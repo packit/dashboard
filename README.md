@@ -6,7 +6,12 @@
 
 Dashboard for [Packit Service](https://github.com/packit-service).
 
+Uses [Packit Service API](https://prod.packit.dev/api) (or the [staging API](https://stg.packit.dev/api)
+for [the staging instance](https://dashboard.packit.dev)).
+
 ## Local Development
+
+### Running the dashboard locally
 
 ```bash
 # install dependencies
@@ -31,6 +36,16 @@ Dashboard for [Packit Service](https://github.com/packit-service).
 :~/dashboard $ make transpile-prod
 # now forget everything about npm, deploy flask the usual way
 ```
+
+### Running the dashboard in a container
+
+```bash
+:~/dashboard $ make run-container-stg
+```
+
+For more details, see the [contribution guide](CONTRIBUTING.md).
+
+### Pre-commit
 
 > **Note**
 >
