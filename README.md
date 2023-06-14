@@ -7,7 +7,7 @@
 Dashboard for [Packit Service](https://github.com/packit-service).
 
 Uses [Packit Service API](https://prod.packit.dev/api) (or the [staging API](https://stg.packit.dev/api)
-for [the staging instance](https://dashboard.packit.dev)).
+for [the staging instance](https://dashboard.stg.packit.dev)).
 
 ## Local Development
 
