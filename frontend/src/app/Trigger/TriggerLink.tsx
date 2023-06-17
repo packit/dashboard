@@ -1,7 +1,6 @@
 import React from "react";
 import {
     getPRLink,
-    getHostName,
     getBranchLink,
     getIssueLink,
     getReleaseLink,
@@ -37,7 +36,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `#${props.builds.pr_id}`;
 
         link = getPRLink(
-            getHostName(gitRepo),
+            gitRepo,
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.pr_id,
@@ -46,7 +45,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `#${props.builds.issue_id}`;
 
         link = getIssueLink(
-            getHostName(gitRepo),
+            gitRepo,
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.issue_id,
@@ -55,7 +54,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `:${props.builds.branch_name}`;
 
         link = getBranchLink(
-            getHostName(gitRepo),
+            gitRepo,
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.branch_name,
@@ -64,7 +63,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `#release:${props.builds.release}`;
 
         link = getReleaseLink(
-            getHostName(gitRepo),
+            gitRepo,
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.release,
