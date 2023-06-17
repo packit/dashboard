@@ -261,12 +261,17 @@ const ResultsPageCopr = () => {
                                     <td>
                                         <strong>Commit SHA</strong>
                                     </td>
-                                    <td><a href={getCommitLink(
-                                            getHostName(data.git_repo),
-                                            data.repo_namespace,
-                                            data.repo_name,
-                                            data.commit_sha,
-                                        )}>{data.commit_sha}</a>
+                                    <td>
+                                        <a
+                                            href={getCommitLink(
+                                                getHostName(data.git_repo),
+                                                data.repo_namespace,
+                                                data.repo_name,
+                                                data.commit_sha,
+                                            )}
+                                        >
+                                            {data.commit_sha}
+                                        </a>
                                     </td>
                                 </tr>
                             </tbody>
