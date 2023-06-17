@@ -121,7 +121,14 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
                             <DataListItemCells
                                 dataListCells={[
                                     <DataListCell key="data-list-title-pr">
-                                        <Link to={getPRLink(forge, namespace, repoName, pr.pr_id)}>
+                                        <Link
+                                            to={getPRLink(
+                                                forge,
+                                                namespace,
+                                                repoName,
+                                                pr.pr_id,
+                                            )}
+                                        >
                                             #{pr.pr_id}
                                         </Link>
                                     </DataListCell>,

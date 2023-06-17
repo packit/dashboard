@@ -120,7 +120,14 @@ const BranchList: React.FC<BranchListProps> = (props) => {
                             <DataListItemCells
                                 dataListCells={[
                                     <DataListCell key="Branch Name">
-                                        <Link to={getBranchLink(forge, namespace, repoName, branch.branch)}>
+                                        <Link
+                                            to={getBranchLink(
+                                                forge,
+                                                namespace,
+                                                repoName,
+                                                branch.branch,
+                                            )}
+                                        >
                                             #{branch.branch}
                                         </Link>
                                     </DataListCell>,
