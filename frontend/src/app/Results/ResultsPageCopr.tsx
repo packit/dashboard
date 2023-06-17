@@ -17,6 +17,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
+import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 
 interface BuildPackage {
