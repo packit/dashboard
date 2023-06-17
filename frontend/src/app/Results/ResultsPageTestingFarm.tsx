@@ -156,7 +156,11 @@ const ResultsPageTestingFarm = () => {
                                     <td>
                                         <strong>Pipeline ID</strong>
                                     </td>
-                                    <td>{data.pipeline_id}</td>
+                                    <td>
+                                        <a href={data.web_url}>
+                                            {data.pipeline_id}
+                                        </a>
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>
