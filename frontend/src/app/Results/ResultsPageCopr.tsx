@@ -18,7 +18,6 @@ import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { getCommitLink } from "../utils/forgeUrls";
-import { getHostName } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 
 interface BuildPackage {
@@ -264,7 +263,7 @@ const ResultsPageCopr = () => {
                                     <td>
                                         <a
                                             href={getCommitLink(
-                                                getHostName(data.git_repo),
+                                                data.git_repo,
                                                 data.repo_namespace,
                                                 data.repo_name,
                                                 data.commit_sha,
