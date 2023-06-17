@@ -7,6 +7,7 @@ import {
     TextContent,
     Text,
     Title,
+    Label,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -16,6 +17,8 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
+import { getCommitLink } from "../utils/forgeUrls";
+import { getHostName } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 
 interface BuildPackage {
@@ -195,11 +198,11 @@ const ResultsPageCopr = () => {
                                         <strong>SRPM Build</strong>
                                     </td>
                                     <td>
-                                        <a
+                                        <Label
                                             href={`/results/srpm-builds/${data.srpm_build_id}`}
                                         >
-                                            SRPM Logs
-                                        </a>
+                                            Details
+                                        </Label>
                                     </td>
                                 </tr>
                                 <tr>
@@ -258,7 +261,18 @@ const ResultsPageCopr = () => {
                                     <td>
                                         <strong>Commit SHA</strong>
                                     </td>
-                                    <td>{data.commit_sha}</td>
+                                    <td>
+                                        <a
+                                            href={getCommitLink(
+                                                getHostName(data.git_repo),
+                                                data.repo_namespace,
+                                                data.repo_name,
+                                                data.commit_sha,
+                                            )}
+                                        >
+                                            {data.commit_sha}
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
