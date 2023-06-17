@@ -12,8 +12,10 @@ import {
     DataListContent,
     DataListItemCells,
     DataListItemRow,
+    Link,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
+import { getBranchLink } from "../utils/forgeUrls";
 
 interface CoprBuild {
     build_id: string;
@@ -118,7 +120,9 @@ const BranchList: React.FC<BranchListProps> = (props) => {
                             <DataListItemCells
                                 dataListCells={[
                                     <DataListCell key="Branch Name">
-                                        <div>#{branch.branch}</div>
+                                        <Link to={getBranchLink(forge, namespace, repoName, branch.branch)}>
+                                            #{branch.branch}
+                                        </Link>
                                     </DataListCell>,
                                 ]}
                             />
