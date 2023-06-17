@@ -13,8 +13,8 @@ import {
     DataListContent,
     DataListItemCells,
     DataListItemRow,
-    Link,
 } from "@patternfly/react-core";
+import { Link } from "react-router-dom";
 import { getPRLink } from "../utils/forgeUrls";
 import { useInfiniteQuery } from "@tanstack/react-query";
 

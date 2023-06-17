@@ -12,8 +12,8 @@ import {
     DataListContent,
     DataListItemCells,
     DataListItemRow,
-    Link,
 } from "@patternfly/react-core";
+import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBranchLink } from "../utils/forgeUrls";
 
