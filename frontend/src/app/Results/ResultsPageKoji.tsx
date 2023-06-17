@@ -7,6 +7,7 @@ import {
     TextContent,
     Text,
     Title,
+    Label,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -114,11 +115,11 @@ const ResultsPageKoji = () => {
                                         <strong>SRPM Build</strong>
                                     </td>
                                     <td>
-                                        <a
+                                        <Label
                                             href={`/results/srpm-builds/${data.srpm_build_id}`}
                                         >
-                                            SRPM Logs
-                                        </a>
+                                            Details
+                                        </Label>
                                     </td>
                                 </tr>
                                 <tr>
