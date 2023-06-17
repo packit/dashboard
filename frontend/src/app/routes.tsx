@@ -147,6 +147,9 @@ const routes: RouteObject[] = [
             {
                 element: <Usage />,
                 path: "/usage",
+                handle: {
+                    label: "Pipelines",
+                },
             },
             {
                 element: <NotFound />,
