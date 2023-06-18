@@ -2,7 +2,7 @@ import React from "react";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-
+import { getIssueLink } from "../utils/forgeUrls";
 import { List, ListItem } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
 
@@ -40,7 +40,20 @@ const IssuesList: React.FC<IssuesListProps> = ({
 
     return (
         <List>
-            {data?.map((issue) => <ListItem key={issue}>#{issue}</ListItem>)}
+            {data?.map((issue) => (
+                <ListItem key={issue}>
+                    <a
+                        href={getIssueLink(
+                            `https://${forge}/${namespace}/${repoName}`,
+                            parseInt(issue),
+                        )}
+                        rel="noreferrer"
+                        target="_blank"
+                    >
+                        #{issue}
+                    </a>
+                </ListItem>
+            ))}
         </List>
     );
 };

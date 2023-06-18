@@ -14,7 +14,6 @@ import {
     DataListItemCells,
     DataListItemRow,
 } from "@patternfly/react-core";
-import { Link } from "react-router-dom";
 import { getPRLink } from "../utils/forgeUrls";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
@@ -121,14 +120,16 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
                             <DataListItemCells
                                 dataListCells={[
                                     <DataListCell key="data-list-title-pr">
-                                        <Link
-                                            to={getPRLink(
+                                        <a
+                                            href={getPRLink(
                                                 `https://${forge}/${namespace}/${repoName}`,
                                                 pr.pr_id,
                                             )}
+                                            rel="noreferrer"
+                                            target="_blank"
                                         >
                                             #{pr.pr_id}
-                                        </Link>
+                                        </a>
                                     </DataListCell>,
                                 ]}
                             />
