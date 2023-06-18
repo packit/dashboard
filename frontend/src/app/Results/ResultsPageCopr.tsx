@@ -266,6 +266,8 @@ const ResultsPageCopr = () => {
                                                 data.git_repo,
                                                 data.commit_sha,
                                             )}
+                                            rel="noreferrer"
+                                            target="_blank"
                                         >
                                             {data.commit_sha}
                                         </a>
