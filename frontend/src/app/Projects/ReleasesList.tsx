@@ -3,6 +3,7 @@ import React from "react";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { useQuery } from "@tanstack/react-query";
+import { getReleaseLink, getCommitLink } from "../utils/forgeUrls";
 
 // Fetch data from dashboard backend (or if we want, directly from the API)
 async function fetchData(URL: string): Promise<ProjectRelease[]> {
@@ -62,10 +63,28 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
                 {data?.map((release, index) => (
                     <tr role="row" key={index}>
                         <td role="cell" data-label="Tag">
-                            {release.tag_name}
+                            <a
+                                href={getReleaseLink(
+                                    `https://${forge}/${namespace}/${repoName}`,
+                                    release.tag_name,
+                                )}
+                                rel="noreferrer"
+                                target="_blank"
+                            >
+                                {release.tag_name}
+                            </a>
                         </td>
                         <td role="cell" data-label="Commit Hash">
-                            {release.commit_hash}
+                            <a
+                                href={getCommitLink(
+                                    `https://${forge}/${namespace}/${repoName}`,
+                                    release.commit_hash,
+                                )}
+                                rel="noreferrer"
+                                target="_blank"
+                            >
+                                {release.commit_hash}
+                            </a>
                         </td>
                     </tr>
                 ))}

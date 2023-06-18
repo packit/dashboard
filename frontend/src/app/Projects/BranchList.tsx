@@ -13,7 +13,6 @@ import {
     DataListItemCells,
     DataListItemRow,
 } from "@patternfly/react-core";
-import { Link } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { getBranchLink } from "../utils/forgeUrls";
 
@@ -120,14 +119,16 @@ const BranchList: React.FC<BranchListProps> = (props) => {
                             <DataListItemCells
                                 dataListCells={[
                                     <DataListCell key="Branch Name">
-                                        <Link
-                                            to={getBranchLink(
+                                        <a
+                                            href={getBranchLink(
                                                 `https://${forge}/${namespace}/${repoName}`,
                                                 branch.branch,
                                             )}
+                                            rel="noreferrer"
+                                            target="_blank"
                                         >
-                                            #{branch.branch}
-                                        </Link>
+                                            {branch.branch}
+                                        </a>
                                     </DataListCell>,
                                 ]}
                             />
