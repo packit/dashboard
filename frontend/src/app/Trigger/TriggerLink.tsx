@@ -4,6 +4,7 @@ import {
     getBranchLink,
     getIssueLink,
     getReleaseLink,
+    getHostName,
 } from "../utils/forgeUrls";
 
 interface TriggerLinkProps {
@@ -36,7 +37,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `#${props.builds.pr_id}`;
 
         link = getPRLink(
-            gitRepo,
+            getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.pr_id,
@@ -45,7 +46,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `#${props.builds.issue_id}`;
 
         link = getIssueLink(
-            gitRepo,
+            getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.issue_id,
@@ -54,7 +55,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `:${props.builds.branch_name}`;
 
         link = getBranchLink(
-            gitRepo,
+            getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.branch_name,
@@ -63,7 +64,7 @@ const TriggerLink: React.FC<TriggerLinkProps> = (props) => {
         jobSuffix = `#release:${props.builds.release}`;
 
         link = getReleaseLink(
-            gitRepo,
+            getHostName(gitRepo),
             props.builds.repo_namespace,
             props.builds.repo_name,
             props.builds.release,

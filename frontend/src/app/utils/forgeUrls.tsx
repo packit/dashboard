@@ -12,12 +12,11 @@ function getHostName(url: string | URL) {
 
 // getPRLink - returns the PR link if possible otherwise an empty string
 function getPRLink(
-    gitRepo: string,
+    forge: string,
     namespace: string,
     repoName: string,
     prID: number,
 ) {
-    const forge = getHostName(gitRepo);
     let prLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
@@ -35,12 +34,11 @@ function getPRLink(
 
 // getBranchLink - returns the branch link if possible otherwise an empty string
 function getBranchLink(
-    gitRepo: string,
+    forge: string,
     namespace: string,
     repoName: string,
     branchName: string,
 ) {
-    const forge = getHostName(gitRepo);
     let branchLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
@@ -58,12 +56,11 @@ function getBranchLink(
 
 // getIssueLink - returns the issue link if possible otherwise an empty string
 function getIssueLink(
-    gitRepo: string,
+    forge: string,
     namespace: string,
     repoName: string,
     issueID: number,
 ) {
-    const forge = getHostName(gitRepo);
     let issueLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
@@ -81,12 +78,11 @@ function getIssueLink(
 
 // getReleaseLink - returns the link to release if possible otherwise an empty string
 function getReleaseLink(
-    gitRepo: string,
+    forge: string,
     namespace: string,
     repoName: string,
     release: string,
 ) {
-    const forge = getHostName(gitRepo);
     let releaseLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
@@ -104,12 +100,11 @@ function getReleaseLink(
 
 // getCommitLink - returns a link to the commit
 function getCommitLink(
-    gitRepo: string,
+    forge: string,
     namespace: string,
     repoName: string,
     commit_hash: string,
 ) {
-    const forge = getHostName(gitRepo);
     let commitLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
