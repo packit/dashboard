@@ -17,6 +17,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
+import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 
 interface KojiBuild {
@@ -178,7 +179,18 @@ const ResultsPageKoji = () => {
                                     <td>
                                         <strong>Commit SHA</strong>
                                     </td>
-                                    <td>{data.commit_sha}</td>
+                                    <td>
+                                        <a
+                                            href={getCommitLink(
+                                                data.git_repo,
+                                                data.commit_sha,
+                                            )}
+                                            rel="noreferrer"
+                                            target="_blank"
+                                        >
+                                            {data.commit_sha}
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>

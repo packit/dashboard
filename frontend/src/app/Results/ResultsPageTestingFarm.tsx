@@ -16,6 +16,7 @@ import { TriggerLink } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
+import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 
 export interface TestingFarmOverview {
@@ -157,7 +158,11 @@ const ResultsPageTestingFarm = () => {
                                         <strong>Pipeline ID</strong>
                                     </td>
                                     <td>
-                                        <a href={data.web_url}>
+                                        <a
+                                            href={data.web_url}
+                                            rel="noreferrer"
+                                            target="_blank"
+                                        >
                                             {data.pipeline_id}
                                         </a>
                                     </td>
@@ -166,7 +171,18 @@ const ResultsPageTestingFarm = () => {
                                     <td>
                                         <strong>Commit SHA</strong>
                                     </td>
-                                    <td>{data.commit_sha}</td>
+                                    <td>
+                                        <a
+                                            href={getCommitLink(
+                                                data.git_repo,
+                                                data.commit_sha,
+                                            )}
+                                            rel="noreferrer"
+                                            target="_blank"
+                                        >
+                                            {data.commit_sha}
+                                        </a>
+                                    </td>
                                 </tr>
                             </tbody>
                         </table>
