@@ -122,9 +122,7 @@ const BranchList: React.FC<BranchListProps> = (props) => {
                                     <DataListCell key="Branch Name">
                                         <Link
                                             to={getBranchLink(
-                                                forge,
-                                                namespace,
-                                                repoName,
+                                                `https://${forge}/${namespace}/${repoName}`,
                                                 branch.branch,
                                             )}
                                         >
