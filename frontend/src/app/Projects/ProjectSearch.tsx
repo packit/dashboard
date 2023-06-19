@@ -41,6 +41,31 @@ const ProjectSearch = () => {
         }
     }
 
+    function handleForgeChange(url: string) {
+        // Remove protocol if any
+        url = url.replace("http://", "").replace("https://", "");
+
+        // Split to forge - namespace - repo_name and update states
+        var parts = url.split("/");
+        setForge(parts[0]);
+        switch (parts.length) {
+            case 1:
+                break;
+            case 2:
+                setNamespace(parts[1]);
+                break;
+            case 3:
+                setNamespace(parts[1]);
+                setRepoName(parts[2]);
+                break;
+            default:
+                // GitLab namespace can contain slash
+                setNamespace(`${parts[1]}/${parts[2]}`);
+                setRepoName(parts[3]);
+                break;
+        }
+    }
+
     let invalidFormWarning;
     if (showWarning) {
         invalidFormWarning = <Alert variant="danger" title="Invalid input" />;
@@ -59,8 +84,8 @@ const ProjectSearch = () => {
                                 aria-describedby="forge"
                                 id="project-search-forge"
                                 value={forge}
-                                placeholder="forge (e.g. github.com, required)"
-                                onChange={(e) => setForge(e)}
+                                placeholder="Git forge (e.g. github.com) or paste repo URL (e.g. github.com/packit/packit)"
+                                onChange={(e) => handleForgeChange(e)}
                             />
                             <TextInput
                                 isRequired
@@ -69,7 +94,7 @@ const ProjectSearch = () => {
                                 aria-describedby="namespace"
                                 id="project-search-namespace"
                                 value={namespace}
-                                placeholder="the-namespace"
+                                placeholder="Git repo namespace (optional)"
                                 onChange={(e) => setNamespace(e)}
                             />
                             <TextInput
@@ -79,7 +104,7 @@ const ProjectSearch = () => {
                                 aria-describedby="repo-name"
                                 id="project-search-repo-name"
                                 value={repoName}
-                                placeholder="the-repo-name"
+                                placeholder="Git repo name (optional)"
                                 onChange={(e) => setRepoName(e)}
                             />
                             <Button
