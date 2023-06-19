@@ -264,8 +264,6 @@ const ResultsPageCopr = () => {
                                         <a
                                             href={getCommitLink(
                                                 data.git_repo,
-                                                data.repo_namespace,
-                                                data.repo_name,
                                                 data.commit_sha,
                                             )}
                                         >

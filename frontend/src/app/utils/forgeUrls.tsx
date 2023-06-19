@@ -11,118 +11,68 @@ function getHostName(url: string | URL) {
 }
 
 // getPRLink - returns the PR link if possible otherwise an empty string
-function getPRLink(
-    gitRepo: string,
-    namespace: string,
-    repoName: string,
-    prID: number,
-) {
+function getPRLink(gitRepo: string, prID: number) {
     const forge = getHostName(gitRepo);
-    let prLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
-            prLink = `${prLink}/pull/${prID}`;
-            break;
+            return `${gitRepo}/pull/${prID}`;
         case "gitlab.com":
-            prLink = `${prLink}/-/merge_requests/${prID}`;
-            break;
+            return `${gitRepo}/-/merge_requests/${prID}`;
         default: // various Gitlab instances
-            prLink = `${prLink}/-/merge_requests/${prID}`;
-            break;
+            return `${gitRepo}/-/merge_requests/${prID}`;
     }
-    return prLink;
 }
 
 // getBranchLink - returns the branch link if possible otherwise an empty string
-function getBranchLink(
-    gitRepo: string,
-    namespace: string,
-    repoName: string,
-    branchName: string,
-) {
+function getBranchLink(gitRepo: string, branchName: string) {
     const forge = getHostName(gitRepo);
-    let branchLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
-            branchLink = `${branchLink}/tree/${branchName}`;
-            break;
+            return `${gitRepo}/tree/${branchName}`;
         case "gitlab.com":
-            branchLink = `${branchLink}/-/tree/${branchName}`;
-            break;
+            return `${gitRepo}/-/tree/${branchName}`;
         default: // various Gitlab instances
-            branchLink = `${branchLink}/-/tree/${branchName}`;
-            break;
+            return `${gitRepo}/-/tree/${branchName}`;
     }
-    return branchLink;
 }
 
 // getIssueLink - returns the issue link if possible otherwise an empty string
-function getIssueLink(
-    gitRepo: string,
-    namespace: string,
-    repoName: string,
-    issueID: number,
-) {
+function getIssueLink(gitRepo: string, issueID: number) {
     const forge = getHostName(gitRepo);
-    let issueLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
-            issueLink = `${issueLink}/issues/${issueID}`;
-            break;
+            return `${gitRepo}/issues/${issueID}`;
         case "gitlab.com":
-            issueLink = `${issueLink}/issues/-/${issueID}`;
-            break;
+            return `${gitRepo}/issues/-/${issueID}`;
         default: // various Gitlab instances
-            issueLink = `${issueLink}/issues/-/${issueID}`;
-            break;
+            return `${gitRepo}/issues/-/${issueID}`;
     }
-    return issueLink;
 }
 
 // getReleaseLink - returns the link to release if possible otherwise an empty string
-function getReleaseLink(
-    gitRepo: string,
-    namespace: string,
-    repoName: string,
-    release: string,
-) {
+function getReleaseLink(gitRepo: string, release: string) {
     const forge = getHostName(gitRepo);
-    let releaseLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
-            releaseLink = `${releaseLink}/releases/tag/${release}`;
-            break;
+            return `${gitRepo}/releases/tag/${release}`;
         case "gitlab.com":
-            releaseLink = `${releaseLink}/-/tags/${release}`;
-            break;
+            return `${gitRepo}/-/tags/${release}`;
         default: // various Gitlab instances
-            releaseLink = `${releaseLink}/-/tags/${release}`;
-            break;
+            return `${gitRepo}/-/tags/${release}`;
     }
-    return releaseLink;
 }
 
 // getCommitLink - returns a link to the commit
-function getCommitLink(
-    gitRepo: string,
-    namespace: string,
-    repoName: string,
-    commit_hash: string,
-) {
+function getCommitLink(gitRepo: string, commit_hash: string) {
     const forge = getHostName(gitRepo);
-    let commitLink = `https://${forge}/${namespace}/${repoName}`;
     switch (forge) {
         case "github.com":
-            commitLink += `/commit/${commit_hash}`;
-            break;
+            return `${gitRepo}/commit/${commit_hash}`;
         case "src.fedoraproject.org":
-            commitLink += `/c/${commit_hash}`;
-            break;
+            return `${gitRepo}/c/${commit_hash}`;
         default: // various Gitlab instances
-            commitLink += `/-/commit/${commit_hash}`;
-            break;
+            return `${gitRepo}/-/commit/${commit_hash}`;
     }
-    return commitLink;
 }
 
 export {

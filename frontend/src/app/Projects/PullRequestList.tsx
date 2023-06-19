@@ -123,9 +123,7 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
                                     <DataListCell key="data-list-title-pr">
                                         <Link
                                             to={getPRLink(
-                                                forge,
-                                                namespace,
-                                                repoName,
+                                                `https://${forge}/${namespace}/${repoName}`,
                                                 pr.pr_id,
                                             )}
                                         >
