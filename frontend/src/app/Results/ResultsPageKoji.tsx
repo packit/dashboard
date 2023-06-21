@@ -8,6 +8,10 @@ import {
     Text,
     Title,
     Label,
+    DescriptionList,
+    DescriptionListDescription,
+    DescriptionListGroup,
+    DescriptionListTerm,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -83,7 +87,7 @@ const ResultsPageKoji = () => {
     }
 
     return (
-        <div>
+        <>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Koji Build Results</Text>
@@ -104,100 +108,99 @@ const ResultsPageKoji = () => {
             <PageSection>
                 <Card>
                     <CardBody>
-                        {/* TODO: Change to PatternFly table component */}
-                        <table
-                            className="pf-c-table pf-m-compact pf-m-grid-md"
-                            role="grid"
-                            aria-label="Builds Table"
+                        <DescriptionList
+                            columnModifier={{
+                                default: "1Col",
+                                sm: "2Col",
+                            }}
                         >
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>SRPM Build</strong>
-                                    </td>
-                                    <td>
-                                        <Label
-                                            href={`/results/srpm-builds/${data.srpm_build_id}`}
-                                        >
-                                            Details
-                                        </Label>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Koji URL</strong>
-                                    </td>
-                                    <td>
-                                        <a href={data.web_url}>Web URL</a>
-                                    </td>
-                                </tr>
-                                {/*                                 <tr> */}
-                                {/*                                     <td> */}
-                                {/*                                         <strong>Build Logs</strong> */}
-                                {/*                                     </td> */}
-                                {/*                                     <td> */}
-                                {/*                                         <a href={data.build_logs_url}> */}
-                                {/*                                             Build Logs URL */}
-                                {/*                                         </a> */}
-                                {/*                                     </td> */}
-                                {/*                                 </tr> */}
-
-                                <tr>
-                                    <td>
-                                        <strong>Build Submission Time</strong>
-                                    </td>
-                                    <td>
-                                        <Timestamp
-                                            stamp={data.build_submitted_time}
-                                            verbose={true}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Build Start Time</strong>
-                                    </td>
-                                    <td>
-                                        <Timestamp
-                                            stamp={data.build_start_time}
-                                            verbose={true}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Build Finish Time</strong>
-                                    </td>
-                                    <td>
-                                        <Timestamp
-                                            stamp={data.build_finished_time}
-                                            verbose={true}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Commit SHA</strong>
-                                    </td>
-                                    <td>
-                                        <a
-                                            href={getCommitLink(
-                                                data.git_repo,
-                                                data.commit_sha,
-                                            )}
-                                            rel="noreferrer"
-                                            target="_blank"
-                                        >
-                                            {data.commit_sha}
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    SRPM Build
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Label
+                                        href={`/results/srpm-builds/${data.srpm_build_id}`}
+                                    >
+                                        Details
+                                    </Label>
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Koji URL
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={data.web_url}
+                                        rel="noreferrer"
+                                        target={"_blank"}
+                                    >
+                                        Web URL
+                                    </a>
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Build Logs
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={data.build_logs_url}
+                                        rel="noreferrer"
+                                        target={"_blank"}
+                                    >
+                                        Build Logs URL
+                                    </a>
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Build Submitted Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Timestamp
+                                        stamp={data.build_submitted_time}
+                                        verbose={true}
+                                    />
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Build Start Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Timestamp
+                                        stamp={data.build_start_time}
+                                        verbose={true}
+                                    />
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Build Finish Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Timestamp
+                                        stamp={data.build_finished_time}
+                                        verbose={true}
+                                    />
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Commit SHA
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={getCommitLink(
+                                            data.git_repo,
+                                            data.commit_sha,
+                                        )}
+                                        rel="noreferrer"
+                                        target="_blank"
+                                    >
+                                        {data.commit_sha}
+                                    </a>
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                        </DescriptionList>
                     </CardBody>
                 </Card>
             </PageSection>
-        </div>
+        </>
     );
 };
 
