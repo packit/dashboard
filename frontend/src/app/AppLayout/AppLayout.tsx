@@ -61,6 +61,7 @@ const AppLayout = () => {
         <PageHeaderTools>
             <Popover
                 headerContent={"About open source"}
+                flipBehavior={["bottom-end"]}
                 bodyContent={
                     <TextContent>
                         <Text>
