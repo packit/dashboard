@@ -10,6 +10,12 @@ import {
     Toolbar,
     ToolbarContent,
     ToolbarItem,
+    DescriptionList,
+    DescriptionListGroup,
+    DescriptionListTerm,
+    DescriptionListDescription,
+    Divider,
+    Label,
 } from "@patternfly/react-core";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
@@ -21,6 +27,7 @@ import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
+import { TableComposable, Td, Th, Tr } from "@patternfly/react-table";
 
 interface SRPMBuild {
     status: string;
@@ -92,25 +99,25 @@ const ResultsPageSRPM = () => {
     const submittedAt = data.build_submitted_time ? (
         <Timestamp stamp={data.build_submitted_time} verbose={true} />
     ) : (
-        "not available"
+        "Not available"
     );
 
     const startedAt = data.build_start_time ? (
         <Timestamp stamp={data.build_start_time} verbose={true} />
     ) : (
-        "not available"
+        "Not available"
     );
 
     const finishedAt = data.build_finished_time ? (
         <Timestamp stamp={data.build_finished_time} verbose={true} />
     ) : (
-        "not available"
+        "Not available"
     );
 
     const coprLogsUrl = data.logs_url ? (
         <a href={data.logs_url}>Logs URL</a>
     ) : (
-        "not available"
+        "Not available"
     );
 
     const coprInfo = data.copr_build_id ? (
@@ -151,7 +158,7 @@ const ResultsPageSRPM = () => {
     );
 
     return (
-        <div>
+        <>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">SRPM Build</Text>
@@ -163,21 +170,81 @@ const ResultsPageSRPM = () => {
                         <strong>
                             <TriggerLink builds={data} />
                         </strong>
-                        <br />
-                        Submitted at: {submittedAt}
-                        <br />
-                        Started at: {startedAt}
-                        <br />
-                        Finished at: {finishedAt}
-                        <br />
                     </Text>
-                    {coprInfo}
-                    <Text component="p">SRPM: {srpmURL}</Text>
                 </TextContent>
             </PageSection>
-
+            <Divider></Divider>
+            <PageSection>
+                <Card>
+                    <CardBody>
+                        <DescriptionList
+                            columnModifier={{
+                                default: "1Col",
+                                sm: "2Col",
+                            }}
+                        >
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Copr Web URL
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {coprLogsUrl}
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Copr SRPM Build
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={data.copr_web_url}
+                                        rel="noreferrer"
+                                        target={"_blank"}
+                                    >
+                                        Build
+                                    </a>
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Copr SRPM Results
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {data.url ? (
+                                        <a
+                                            href={data.url}
+                                            rel="noreferrer"
+                                            target={"_blank"}
+                                        >
+                                            SRPM
+                                        </a>
+                                    ) : (
+                                        "Not available"
+                                    )}
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Build Submitted Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {submittedAt}
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Build Start Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {startedAt}
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Build Finish Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {finishedAt}
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                        </DescriptionList>
+                    </CardBody>
+                </Card>
+            </PageSection>
             {logs}
-        </div>
+        </>
     );
 };
 

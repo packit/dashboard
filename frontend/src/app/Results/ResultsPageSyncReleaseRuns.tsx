@@ -14,6 +14,10 @@ import {
     Button,
     ToolbarGroup,
     Tooltip,
+    DescriptionList,
+    DescriptionListDescription,
+    DescriptionListGroup,
+    DescriptionListTerm,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -102,7 +106,9 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     }
 
     const linkToDownstreamPR = data.downstream_pr_url ? (
-        <a href={data.downstream_pr_url}>Click here</a>
+        <a href={data.downstream_pr_url} rel="noreferrer" target="_blank">
+            Click here
+        </a>
     ) : (
         <>Link will be available after successful downstream PR submission.</>
     );
@@ -245,60 +251,58 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
             <PageSection>
                 <Card>
                     <CardBody>
-                        {/* TODO: Change to PatternFly table component */}
-                        <table
-                            className="pf-c-table pf-m-compact pf-m-grid-md"
-                            role="grid"
-                            aria-label="Sync release table"
+                        <DescriptionList
+                            columnModifier={{
+                                default: "1Col",
+                                sm: "2Col",
+                            }}
                         >
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>Status</strong>
-                                    </td>
-                                    <td>{data.status}</td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Submission Time</strong>
-                                    </td>
-                                    <td>
-                                        <Timestamp
-                                            stamp={data.submitted_time}
-                                            verbose={true}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Start Time</strong>
-                                    </td>
-                                    <td>
-                                        <Timestamp
-                                            stamp={data.start_time}
-                                            verbose={true}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Finish Time</strong>
-                                    </td>
-                                    <td>
-                                        <Timestamp
-                                            stamp={data.finished_time}
-                                            verbose={true}
-                                        />
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Link to downstream PR</strong>
-                                    </td>
-                                    <td>{linkToDownstreamPR}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Status
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {data.status}
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Submitted Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Timestamp
+                                        stamp={data.submitted_time}
+                                        verbose={true}
+                                    />
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Start Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Timestamp
+                                        stamp={data.start_time}
+                                        verbose={true}
+                                    />
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Finish Time
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <Timestamp
+                                        stamp={data.finished_time}
+                                        verbose={true}
+                                    />
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Link to downstream PR
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {linkToDownstreamPR}
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                        </DescriptionList>
                     </CardBody>
                 </Card>
             </PageSection>

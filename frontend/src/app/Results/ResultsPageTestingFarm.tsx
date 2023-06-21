@@ -8,6 +8,10 @@ import {
     Text,
     Title,
     Label,
+    DescriptionList,
+    DescriptionListDescription,
+    DescriptionListGroup,
+    DescriptionListTerm,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -53,12 +57,12 @@ function getCoprBuilds(copr_build_ids: number[]) {
     }
 
     return (
-        <tr>
-            <td>
-                <strong>{title}</strong>
-            </td>
-            <td>{coprBuilds}</td>
-        </tr>
+        <>
+            <DescriptionListTerm>{title}</DescriptionListTerm>
+            <DescriptionListDescription>
+                {coprBuilds}
+            </DescriptionListDescription>
+        </>
     );
 }
 
@@ -106,7 +110,9 @@ const ResultsPageTestingFarm = () => {
     }
 
     const statusWithLink = data.web_url ? (
-        <a href={data.web_url}>{data.status}</a>
+        <a href={data.web_url} target="_blank" rel="noreferrer">
+            {data.status}
+        </a>
     ) : (
         <>{data.status}</>
     );
@@ -118,7 +124,7 @@ const ResultsPageTestingFarm = () => {
             : "";
 
     return (
-        <div>
+        <>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Testing Farm Results</Text>
@@ -135,61 +141,62 @@ const ResultsPageTestingFarm = () => {
                     </Text>
                 </TextContent>
             </PageSection>
-
             <PageSection>
                 <Card>
                     <CardBody>
-                        {/* TODO: Change to PatternFly table component */}
-                        <table
-                            className="pf-c-table pf-m-compact pf-m-grid-md"
-                            role="grid"
-                            aria-label="Testing farm table"
+                        <DescriptionList
+                            columnModifier={{
+                                default: "1Col",
+                                sm: "2Col",
+                            }}
                         >
-                            <tbody>
-                                <tr>
-                                    <td>
-                                        <strong>Status</strong>
-                                    </td>
-                                    <td>{statusWithLink}</td>
-                                </tr>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Status
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {statusWithLink}
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
                                 {coprBuildInfo}
-                                <tr>
-                                    <td>
-                                        <strong>Pipeline ID</strong>
-                                    </td>
-                                    <td>
-                                        <a
-                                            href={data.web_url}
-                                            rel="noreferrer"
-                                            target="_blank"
-                                        >
-                                            {data.pipeline_id}
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <strong>Commit SHA</strong>
-                                    </td>
-                                    <td>
-                                        <a
-                                            href={getCommitLink(
-                                                data.git_repo,
-                                                data.commit_sha,
-                                            )}
-                                            rel="noreferrer"
-                                            target="_blank"
-                                        >
-                                            {data.commit_sha}
-                                        </a>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Pipeline ID
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={data.web_url}
+                                        rel="noreferrer"
+                                        target="_blank"
+                                    >
+                                        {data.pipeline_id}
+                                    </a>
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                            <DescriptionListGroup>
+                                <DescriptionListTerm>
+                                    Commit SHA
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={getCommitLink(
+                                            data.git_repo,
+                                            data.commit_sha,
+                                        )}
+                                        rel="noreferrer"
+                                        target="_blank"
+                                    >
+                                        {data.commit_sha}
+                                    </a>
+                                </DescriptionListDescription>
+                            </DescriptionListGroup>
+                        </DescriptionList>
                     </CardBody>
                 </Card>
             </PageSection>
-        </div>
+        </>
     );
 };
 
