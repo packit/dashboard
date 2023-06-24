@@ -114,22 +114,6 @@ const ResultsPageSRPM = () => {
         "Not available"
     );
 
-    const coprLogsUrl = data.logs_url ? (
-        <a href={data.logs_url}>Logs URL</a>
-    ) : (
-        "Not available"
-    );
-
-    const coprInfo = data.copr_build_id ? (
-        <Text component="p">
-            Copr Web URL: <a href={data.copr_web_url}>URL</a>
-            <br />
-            Copr SRPM build logs: {coprLogsUrl}
-        </Text>
-    ) : (
-        ""
-    );
-
     const logs = data.copr_build_id ? (
         ""
     ) : (
@@ -162,10 +146,7 @@ const ResultsPageSRPM = () => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">SRPM Build</Text>
-                    <StatusLabel
-                        status={data.status}
-                        link={data.copr_web_url}
-                    />
+
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />
@@ -185,39 +166,50 @@ const ResultsPageSRPM = () => {
                         >
                             <DescriptionListGroup>
                                 <DescriptionListTerm>
-                                    Copr Web URL
+                                    Status
                                 </DescriptionListTerm>
                                 <DescriptionListDescription>
-                                    {coprLogsUrl}
+                                    <StatusLabel
+                                        status={data.status}
+                                        link={data.copr_web_url}
+                                    />
                                 </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Copr SRPM Build
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <a
-                                        href={data.copr_web_url}
-                                        rel="noreferrer"
-                                        target={"_blank"}
-                                    >
-                                        Build
-                                    </a>
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Copr SRPM Results
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    {data.url ? (
-                                        <a
-                                            href={data.url}
-                                            rel="noreferrer"
-                                            target={"_blank"}
-                                        >
-                                            SRPM
-                                        </a>
-                                    ) : (
-                                        "Not available"
-                                    )}
-                                </DescriptionListDescription>
+                                {data.url ? (
+                                    <>
+                                        <DescriptionListTerm>
+                                            Copr
+                                        </DescriptionListTerm>
+                                        <DescriptionListDescription>
+                                            <a
+                                                href={data.url}
+                                                rel="noreferrer"
+                                                target={"_blank"}
+                                            >
+                                                Results
+                                            </a>
+                                        </DescriptionListDescription>
+                                        <DescriptionListDescription>
+                                            <a
+                                                href={data.copr_web_url}
+                                                rel="noreferrer"
+                                                target={"_blank"}
+                                            >
+                                                Build
+                                            </a>{" "}
+                                            (
+                                            <a
+                                                href={data.logs_url}
+                                                rel="noreferrer"
+                                                target={"_blank"}
+                                            >
+                                                Logs
+                                            </a>
+                                            )
+                                        </DescriptionListDescription>
+                                    </>
+                                ) : (
+                                    <></>
+                                )}
                             </DescriptionListGroup>
                             <DescriptionListGroup>
                                 <DescriptionListTerm>

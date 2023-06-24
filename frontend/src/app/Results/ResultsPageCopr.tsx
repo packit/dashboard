@@ -1,4 +1,3 @@
-import React from "react";
 import {
     PageSection,
     Card,
@@ -34,7 +33,7 @@ interface BuildPackage {
     version: string;
 }
 
-interface CoprResult {
+export interface CoprResult {
     build_id: string;
     status: string;
     chroot: string;
@@ -78,7 +77,7 @@ function getPackagesToInstall(built_packages: BuildPackage[]) {
     return packagesToInstall;
 }
 
-const fetchSyncRelease = (url: string) =>
+export const fetchSyncRelease = (url: string) =>
     fetch(url).then((response) => {
         if (!response.ok && response.status !== 404) {
             throw Promise.reject(response);
@@ -86,11 +85,13 @@ const fetchSyncRelease = (url: string) =>
         return response.json();
     });
 
+export const API_COPR_BUILDS = `${import.meta.env.VITE_API_URL}/copr-builds/`;
+
 const ResultsPageCopr = () => {
     useTitle("Copr Results");
     let { id } = useParams();
+    const URL = API_COPR_BUILDS + id;
 
-    const URL = `${import.meta.env.VITE_API_URL}/copr-builds/${id}`;
     const { data, isError, isInitialLoading } = useQuery<
         CoprResult | { error: string }
     >([URL], () => fetchSyncRelease(URL));
@@ -209,7 +210,7 @@ const ResultsPageCopr = () => {
                                     </Label>
                                 </DescriptionListDescription>
                                 <DescriptionListTerm>
-                                    Copr URL
+                                    Copr build
                                 </DescriptionListTerm>
                                 <DescriptionListDescription>
                                     <a
@@ -217,19 +218,31 @@ const ResultsPageCopr = () => {
                                         rel="noreferrer"
                                         target={"_blank"}
                                     >
-                                        Web URL
-                                    </a>
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Build Logs
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
+                                        {data.build_id}
+                                    </a>{" "}
+                                    (
                                     <a
                                         href={data.build_logs_url}
                                         rel="noreferrer"
                                         target={"_blank"}
                                     >
-                                        Build Logs URL
+                                        Logs
+                                    </a>
+                                    )
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Commit SHA
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={getCommitLink(
+                                            data.git_repo,
+                                            data.commit_sha,
+                                        )}
+                                        rel="noreferrer"
+                                        target="_blank"
+                                    >
+                                        {data.commit_sha.substring(0, 7)}
                                     </a>
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
@@ -260,23 +273,6 @@ const ResultsPageCopr = () => {
                                         stamp={data.build_finished_time}
                                         verbose={true}
                                     />
-                                </DescriptionListDescription>
-                            </DescriptionListGroup>
-                            <DescriptionListGroup>
-                                <DescriptionListTerm>
-                                    Commit SHA
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <a
-                                        href={getCommitLink(
-                                            data.git_repo,
-                                            data.commit_sha,
-                                        )}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        {data.commit_sha}
-                                    </a>
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
                         </DescriptionList>
