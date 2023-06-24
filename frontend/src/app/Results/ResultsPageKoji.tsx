@@ -126,7 +126,7 @@ const ResultsPageKoji = () => {
                                     </Label>
                                 </DescriptionListDescription>
                                 <DescriptionListTerm>
-                                    Koji URL
+                                    Koji Build
                                 </DescriptionListTerm>
                                 <DescriptionListDescription>
                                     <a
@@ -134,19 +134,31 @@ const ResultsPageKoji = () => {
                                         rel="noreferrer"
                                         target={"_blank"}
                                     >
-                                        Web URL
-                                    </a>
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Build Logs
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
+                                        {data.build_id}
+                                    </a>{" "}
+                                    (
                                     <a
                                         href={data.build_logs_url}
                                         rel="noreferrer"
                                         target={"_blank"}
                                     >
-                                        Build Logs URL
+                                        Logs
+                                    </a>
+                                    )
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Commit SHA
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    <a
+                                        href={getCommitLink(
+                                            data.git_repo,
+                                            data.commit_sha,
+                                        )}
+                                        rel="noreferrer"
+                                        target="_blank"
+                                    >
+                                        {data.commit_sha.substring(0, 7)}
                                     </a>
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
@@ -177,23 +189,6 @@ const ResultsPageKoji = () => {
                                         stamp={data.build_finished_time}
                                         verbose={true}
                                     />
-                                </DescriptionListDescription>
-                            </DescriptionListGroup>
-                            <DescriptionListGroup>
-                                <DescriptionListTerm>
-                                    Commit SHA
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <a
-                                        href={getCommitLink(
-                                            data.git_repo,
-                                            data.commit_sha,
-                                        )}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        {data.commit_sha}
-                                    </a>
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
                         </DescriptionList>
