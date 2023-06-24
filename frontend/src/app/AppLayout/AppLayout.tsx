@@ -1,26 +1,32 @@
 import { NavLink, Outlet, matchRoutes, useLocation } from "react-router-dom";
 import {
-    Brand,
     Nav,
     NavList,
     NavItem,
     Page,
-    PageHeaderTools,
-    PageHeader,
     PageSidebar,
     Button,
     SkipToContent,
     Text,
     TextContent,
     Popover,
+    Masthead,
+    MastheadBrand,
+    MastheadContent,
+    MastheadMain,
+    MastheadToggle,
+    PageToggleButton,
+    Toolbar,
+    ToolbarContent,
+    ToolbarItem,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 import packitLogo from "../../static/logo.png";
 import { useState, useEffect } from "react";
 import {
-    ExternalLinkSquareAltIcon,
     ExternalLinkAltIcon,
     CodeBranchIcon,
+    BarsIcon,
 } from "@patternfly/react-icons";
 
 const AppLayout = () => {
@@ -41,9 +47,6 @@ const AppLayout = () => {
         }
     }, [currentRouteTree]);
 
-    const logoProps = {
-        href: "/",
-    };
     const [isNavOpen, setIsNavOpen] = useState(true);
     const [isMobileView, setIsMobileView] = useState(true);
     const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
@@ -57,54 +60,74 @@ const AppLayout = () => {
         setIsMobileView(props.mobileView);
     };
 
-    const HeaderTools = (
-        <PageHeaderTools>
-            <Popover
-                headerContent={"About open source"}
-                flipBehavior={["bottom-end"]}
-                bodyContent={
-                    <TextContent>
-                        <Text>
-                            This service is open source, so all of its code is
-                            inspectable. Explore repositories to view and
-                            contribute to the source code.
-                        </Text>
+    const headerToolbar = (
+        <Toolbar id="header-toolbar">
+            <ToolbarContent>
+                <ToolbarItem alignment={{ default: "alignRight" }}>
+                    <Popover
+                        headerContent={"About open source"}
+                        flipBehavior={["bottom-end"]}
+                        bodyContent={
+                            <TextContent>
+                                <Text>
+                                    This service is open source, so all of its
+                                    code is inspectable. Explore repositories to
+                                    view and contribute to the source code.
+                                </Text>
+                                <Button
+                                    component="a"
+                                    target="_blank"
+                                    variant="link"
+                                    icon={<ExternalLinkAltIcon />}
+                                    iconPosition="right"
+                                    isInline
+                                    href={`https://github.com/packit/dashboard/commit/${
+                                        import.meta.env.VITE_GIT_SHA
+                                    }`}
+                                >
+                                    Source code
+                                </Button>
+                            </TextContent>
+                        }
+                    >
                         <Button
-                            component="a"
-                            target="_blank"
-                            variant="link"
-                            icon={<ExternalLinkAltIcon />}
-                            iconPosition="right"
-                            isInline
-                            href={`https://github.com/packit/dashboard/commit/${
-                                import.meta.env.VITE_GIT_SHA
-                            }`}
+                            variant="plain"
+                            aria-label="About Open Services"
                         >
-                            Source code
+                            <CodeBranchIcon />
                         </Button>
-                    </TextContent>
-                }
-            >
-                <Button
-                    variant="plain"
-                    aria-label="About Open Services"
-                    className="pf-u-pl-sm header-button"
-                >
-                    <CodeBranchIcon />
-                </Button>
-            </Popover>
-        </PageHeaderTools>
+                    </Popover>
+                </ToolbarItem>
+            </ToolbarContent>
+        </Toolbar>
     );
+
     const Header = (
-        <PageHeader
-            logo={<Brand src={packitLogo} alt="Packit Logo" />}
-            logoProps={logoProps}
-            showNavToggle
-            isNavOpen={isNavOpen}
-            onNavToggle={isMobileView ? onNavToggleMobile : onNavToggle}
-            headerTools={HeaderTools}
-        />
+        <Masthead>
+            <MastheadToggle>
+                <PageToggleButton
+                    variant="plain"
+                    aria-label="Global navigation"
+                    isNavOpen={isNavOpen}
+                    onNavToggle={isMobileView ? onNavToggleMobile : onNavToggle}
+                    id="vertical-nav-toggle"
+                >
+                    <BarsIcon />
+                </PageToggleButton>
+            </MastheadToggle>
+            <MastheadMain>
+                <MastheadBrand href="/">
+                    <img
+                        src={packitLogo}
+                        style={{ height: "60px" }}
+                        alt="Packit Logo"
+                    />
+                </MastheadBrand>
+            </MastheadMain>
+            <MastheadContent>{headerToolbar}</MastheadContent>
+        </Masthead>
     );
+
     const Navigation = (
         <Nav id="nav-primary-simple" theme="dark">
             <NavList id="nav-list-simple">
