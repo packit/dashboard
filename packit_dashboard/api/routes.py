@@ -1,9 +1,11 @@
-from flask import Blueprint, jsonify, request, escape
-from flask_cors import CORS
-from packit_dashboard.utils import return_json
-from packit_dashboard.config import API_URL
 from datetime import datetime, timedelta
+
 from cachetools.func import ttl_cache
+from flask import Blueprint, request, escape
+from flask_cors import CORS
+
+from packit_dashboard.config import API_URL
+from packit_dashboard.utils import make_response
 
 api = Blueprint("api", __name__)
 CORS(api)
@@ -23,7 +25,7 @@ def copr_builds():
     page = escape(request.args.get("page"))
     per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/copr-builds?page={page}&per_page={per_page}"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/testing-farm/")
@@ -31,7 +33,7 @@ def testing_farm():
     page = escape(request.args.get("page"))
     per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/testing-farm/results?page={page}&per_page={per_page}"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/projects/")
@@ -39,7 +41,7 @@ def projects():
     page = escape(request.args.get("page"))
     per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/projects?page={page}&per_page={per_page}"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/prs/")
@@ -50,7 +52,7 @@ def project_prs(forge, namespace, repo_name):
     page = escape(request.args.get("page"))
     per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/prs?page={page}&per_page={per_page}"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/releases/")
@@ -59,7 +61,7 @@ def project_releases(forge, namespace, repo_name):
     namespace = escape(namespace)
     repo_name = escape(repo_name)
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/releases"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/projects/<forge>/<namespace>/<repo_name>/issues/")
@@ -68,7 +70,7 @@ def project_issues(forge, namespace, repo_name):
     namespace = escape(namespace)
     repo_name = escape(repo_name)
     url = f"{API_URL}/projects/{forge}/{namespace}/{repo_name}/issues"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/propose-downstream/")
@@ -76,7 +78,7 @@ def propose_downstream():
     page = escape(request.args.get("page"))
     per_page = escape(request.args.get("per_page"))
     url = f"{API_URL}/propose-downstream?page={page}&per_page={per_page}"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
@@ -85,7 +87,7 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
         url += f"&from={usage_from}"
     if usage_to:
         url += f"&to={usage_to}"
-    return jsonify(return_json(url))
+    return make_response(url)
 
 
 @api.route("/api/usage/past-day")
