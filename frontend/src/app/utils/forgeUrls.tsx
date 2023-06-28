@@ -16,8 +16,9 @@ function getPRLink(gitRepo: string, prID: number) {
     switch (forge) {
         case "github.com":
             return `${gitRepo}/pull/${prID}`;
-        case "gitlab.com":
-            return `${gitRepo}/-/merge_requests/${prID}`;
+        case "src.fedoraproject.org":
+        case "pagure.io":
+            return `${gitRepo}/pull-request/${prID}`;
         default: // various Gitlab instances
             return `${gitRepo}/-/merge_requests/${prID}`;
     }
@@ -29,8 +30,9 @@ function getBranchLink(gitRepo: string, branchName: string) {
     switch (forge) {
         case "github.com":
             return `${gitRepo}/tree/${branchName}`;
-        case "gitlab.com":
-            return `${gitRepo}/-/tree/${branchName}`;
+        case "src.fedoraproject.org":
+        case "pagure.io":
+            return `${gitRepo}/tree/${branchName}`;
         default: // various Gitlab instances
             return `${gitRepo}/-/tree/${branchName}`;
     }
@@ -42,8 +44,9 @@ function getIssueLink(gitRepo: string, issueID: number) {
     switch (forge) {
         case "github.com":
             return `${gitRepo}/issues/${issueID}`;
-        case "gitlab.com":
-            return `${gitRepo}/issues/-/${issueID}`;
+        case "src.fedoraproject.org":
+        case "pagure.io":
+            return `${gitRepo}/issue/${issueID}`;
         default: // various Gitlab instances
             return `${gitRepo}/issues/-/${issueID}`;
     }
@@ -69,6 +72,7 @@ function getCommitLink(gitRepo: string, commit_hash: string) {
         case "github.com":
             return `${gitRepo}/commit/${commit_hash}`;
         case "src.fedoraproject.org":
+        case "pagure.io":
             return `${gitRepo}/c/${commit_hash}`;
         default: // various Gitlab instances
             return `${gitRepo}/-/commit/${commit_hash}`;
