@@ -194,7 +194,7 @@
            id="tspan158"
            style="fill:#ee0000;fill-opacity:1">packit-worker</tspan></text></g></a><a
      id="a1464"
-     xlink:href="https://github.com/packit/dashboard/{{ packit_dashboard_ref }}/stable"
+     xlink:href="https://github.com/packit/dashboard/tree/{{ packit_dashboard_ref }}"
      target="_blank"><g
        id="g1344"><g
          id="g975"
