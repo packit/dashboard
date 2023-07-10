@@ -17,10 +17,8 @@ jobs:
   deploy-preview:
     runs-on: ubuntu-20.04
     env:
-      SURGE_TOKEN: ${{ secrets.SURGE_TOKEN             }}
-      GH_PR_TOKEN: ${{ secrets.RELEASEBOT_GITHUB_TOKEN }}
-      GH_PR_NUM: ${{ github.event.inputs.pr_id || github.event.number }}
       DOMAIN: packit-dashboard-pr-${{ github.event.inputs.pr_id || github.event.number }}.surge.sh
+      GH_PR_NUM: ${{ github.event.inputs.pr_id || github.event.number }}
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v3
@@ -56,9 +54,13 @@ jobs:
 
       - name: Deploy the dashboard to surge.sh
         run: surge ./frontend/dist $DOMAIN --token ${{ secrets.SURGE_TOKEN }}
+        env:
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN }}
 
       - name: Install ‹ogr›, cause why not
         run: python3 -m pip install ogr
 
       - name: Notify PR about the deployment
         run: python3 .github/notify.py $DOMAIN
+        env:
+          GH_PR_TOKEN: ${{ secrets.RELEASEBOT_GITHUB_TOKEN }}
