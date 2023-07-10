@@ -37,6 +37,9 @@ jobs:
       - name: Merge the changes with the ‹main›
         run: git merge --no-edit tmp
 
+      - name: Check out the script from the ‹main› branch
+        run: git checkout origin/main .github/notify.py
+
       - uses: actions/setup-node@v3
         with:
           node-version: 18
