@@ -58,7 +58,7 @@ const Jobs = () => {
                                 isActive={currentMatch?.id === "koji-builds"}
                             >
                                 <NavLink to={"koji-builds"}>
-                                    Koji Builds
+                                    Upstream Koji Builds
                                 </NavLink>
                             </NavItem>
                             <NavItem
