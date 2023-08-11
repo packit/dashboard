@@ -60,7 +60,7 @@ const routes: RouteObject[] = [
                         id: "koji-builds",
                         path: "koji-builds",
                         handle: {
-                            label: "Koji Builds",
+                            label: "Upstream Koji Builds",
                         },
                     },
                     {
