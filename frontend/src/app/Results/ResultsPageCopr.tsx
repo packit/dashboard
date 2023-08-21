@@ -60,7 +60,7 @@ function getPackagesToInstall(built_packages: BuildPackage[]) {
             const packageString =
                 packageDict.name +
                 "-" +
-                (packageDict.epoch !== 0 ? packageDict.epoch + ":" : "") +
+                (packageDict.epoch ? packageDict.epoch + ":" : "") +
                 packageDict.version +
                 "-" +
                 packageDict.release +
