@@ -3,16 +3,19 @@
 
 import os
 from datetime import datetime, timedelta
+from logging import getLogger
 from pathlib import Path
 from typing import Union
 
 from cachetools.func import ttl_cache
-from flask import Blueprint, request, escape, render_template
+from flask import Blueprint, request, escape, render_template, current_app
 from flask_cors import CORS
 
 import packit_dashboard
 from packit_dashboard.config import API_URL
 from packit_dashboard.utils import make_response
+
+logger = getLogger("packit_dashboard")
 
 api = Blueprint(
     "api",
@@ -98,6 +101,7 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
         url += f"&from={usage_from}"
     if usage_to:
         url += f"&to={usage_to}"
+    current_app.logger.debug(f"Calling usage endpoint: {url}")
     return make_response(url)
 
 
