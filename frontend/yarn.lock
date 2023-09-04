@@ -2247,7 +2247,7 @@
     prettier "^2.8.0"
     recast "^0.23.1"
 
-"@storybook/components@7.4.0", "@storybook/components@^7.0.24":
+"@storybook/components@7.4.0", "@storybook/components@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/components/-/components-7.4.0.tgz#0cc83ff89dd9cdcde3eaeeb7b3fbcf2036ba6fb8"
   integrity sha512-GGnQrI4NXwri/PqNjhO1vNv4tC7RBjY87ce9WHBq1ueat3kBakdqV97NzScoldXarkkKK6grBqmhw9jE5PfzhQ==
@@ -2299,7 +2299,7 @@
     resolve-from "^5.0.0"
     ts-dedent "^2.0.0"
 
-"@storybook/core-events@7.4.0", "@storybook/core-events@^7.0.24":
+"@storybook/core-events@7.4.0", "@storybook/core-events@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/core-events/-/core-events-7.4.0.tgz#0d50d254d65a678065d5906ac1dcab64396f2f6a"
   integrity sha512-JavEo4dw7TQdF5pSKjk4RtqLgsG2R/eWRI8vZ3ANKa0ploGAnQR/eMTfSxf6TUH3ElBWLJhi+lvUCkKXPQD+dw==
@@ -2424,7 +2424,7 @@
     "@storybook/global" "^5.0.0"
     "@storybook/preview-api" "7.4.0"
 
-"@storybook/manager-api@7.4.0", "@storybook/manager-api@^7.0.24":
+"@storybook/manager-api@7.4.0", "@storybook/manager-api@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/manager-api/-/manager-api-7.4.0.tgz#aee0153df1583459b7e1e64e1d8c46fb49a584c8"
   integrity sha512-sBfkkt0eZGTozeKrbzMtWLEOQrgqdk24OUJlkc2IDaucR1CBNjoCMjNeYg7cLDw0rXE8W3W3AdWtJnfsUbLMAQ==
@@ -2465,7 +2465,7 @@
   resolved "https://registry.yarnpkg.com/@storybook/postinstall/-/postinstall-7.4.0.tgz#81f3bef31b566e26d616f9c3ce567f07ff143cc7"
   integrity sha512-ZVBZggqkuj7ysfuHSCd/J7ovWV06zY9uWf+VU+Zw7ZeojDT8QHFrCurPsN7D9679j9vRU1/kSzqvAiStALS33g==
 
-"@storybook/preview-api@7.4.0", "@storybook/preview-api@^7.0.24":
+"@storybook/preview-api@7.4.0", "@storybook/preview-api@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/preview-api/-/preview-api-7.4.0.tgz#46818910545735bef43965651eef380a6f481f4b"
   integrity sha512-ndXO0Nx+eE7ktVE4EqHpQZ0guX7yYBdruDdJ7B739C0+OoPWsJN7jAzUqq0NXaBcYrdaU5gTy+KnWJUt8R+OyA==
@@ -2570,7 +2570,7 @@
     "@testing-library/user-event" "^13.2.1"
     ts-dedent "^2.2.0"
 
-"@storybook/theming@7.4.0", "@storybook/theming@^7.0.24":
+"@storybook/theming@7.4.0", "@storybook/theming@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/theming/-/theming-7.4.0.tgz#f5d9f8f55c41e08c0f50b57d9fb0e159ed595274"
   integrity sha512-eLjEf6G3cqlegfutF/iUrec9LrUjKDj7K4ZhGdACWrf7bQcODs99EK62e9/d8GNKr4b+QMSEuM6XNGaqdPnuzQ==
@@ -2580,7 +2580,7 @@
     "@storybook/global" "^5.0.0"
     memoizerific "^1.11.3"
 
-"@storybook/types@7.4.0", "@storybook/types@^7.0.24":
+"@storybook/types@7.4.0", "@storybook/types@^7.4.0":
   version "7.4.0"
   resolved "https://registry.yarnpkg.com/@storybook/types/-/types-7.4.0.tgz#71ce550d4d469f6aaf9777fc7432db9fb67f53f9"
   integrity sha512-XyzYkmeklywxvElPrIWLczi/PWtEdgTL6ToT3++FVxptsC2LZKS3Ue+sBcQ9xRZhkRemw4HQHwed5EW3dO8yUg==
