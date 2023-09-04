@@ -154,7 +154,9 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
                 <CardBody>
                     <Flex>
                         {getLineChart(
-                            Object.keys(data.jobs),
+                            Object.keys(data.jobs).filter(
+                                (obj) => obj !== "sync_release_runs",
+                            ),
                             data.jobs,
                             "Number of processed jobs",
                         )}
