@@ -13,6 +13,7 @@ import {
     ChartLine,
     createContainer,
     ChartLegendTooltip,
+    ChartThemeColor,
 } from "@patternfly/react-charts";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -124,6 +125,7 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
                                 legendOrientation="vertical"
                                 legendPosition="right"
                                 minDomain={{ y: 0 }}
+                                themeColor={ChartThemeColor.multiUnordered}
                                 padding={{
                                     bottom: 50,
                                     left: 0, // Adjusted to accommodate axis label
