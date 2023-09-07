@@ -139,7 +139,7 @@ def usage_past_year():
 
 
 # format the chart needs is a list of {"x": "datetimelegend", "y": value}
-CHART_DATA_TYPE = list[dict[str, str]]
+CHART_DATA_TYPE = list[dict[str, Union[str, int]]]
 
 
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
@@ -162,6 +162,7 @@ def _get_usage_interval_data(
         current_date -= delta
 
     result_jobs: dict[str, CHART_DATA_TYPE] = {}
+    result_jobs_project_count: dict[str, CHART_DATA_TYPE] = {}
     result_events: dict[str, CHART_DATA_TYPE] = {}
     result_active_projects: CHART_DATA_TYPE = []
 
@@ -171,12 +172,16 @@ def _get_usage_interval_data(
         legend = day.strftime("%H:%M" if (hours and not days) else "%Y-%m-%d")
 
         interval_result = _get_usage_data_from_packit_api(
-            usage_from=day_from, usage_to=day_to, top=0
+            usage_from=day_from, usage_to=day_to, top=100000
         ).json
 
         for job, data in interval_result["jobs"].items():
             result_jobs.setdefault(job, [])
             result_jobs[job].append({"x": legend, "y": data["job_runs"]})
+            result_jobs_project_count.setdefault(job, [])
+            result_jobs_project_count[job].append(
+                {"x": legend, "y": len(data["top_projects_by_job_runs"])}
+            )
 
         for event, data in interval_result["events"].items():
             result_events.setdefault(event, [])
@@ -188,6 +193,7 @@ def _get_usage_interval_data(
 
     return {
         "jobs": result_jobs,
+        "jobs_project_count": result_jobs_project_count,
         "events": result_events,
         "from": days_legend[0].isoformat(),
         "to": days_legend[-1].isoformat(),

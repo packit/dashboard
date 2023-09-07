@@ -161,9 +161,21 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
                             "Number of processed jobs",
                         )}
                         {getLineChart(
+                            Object.keys(data.jobs_project_count).filter(
+                                (obj) => obj !== "sync_release_runs",
+                            ),
+                            data.jobs_project_count,
+                            "Number of projects with processed jobs of this type",
+                        )}
+                        {getLineChart(
                             ["sync_release_runs"],
                             data.jobs,
                             "Number of synced releases",
+                        )}
+                        {getLineChart(
+                            ["sync_release_runs"],
+                            data.jobs_project_count,
+                            "Number of projects with synced releases",
                         )}
                         {getLineChart(
                             ["active_projects"],
