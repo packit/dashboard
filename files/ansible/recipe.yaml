@@ -15,7 +15,7 @@
     - name: install node modules
       command:
         chdir: "{{ packit_dashboard_path }}"
-        cmd: yarn install
+        cmd: yarn install --production --frozen-lockfile
 
     - name: bundle javascript
       command:
