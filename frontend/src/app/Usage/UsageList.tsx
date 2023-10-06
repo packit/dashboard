@@ -17,7 +17,7 @@ const fetchDataByGranularity = (granularity: UsageListProps["what"]) =>
     fetch(`/api/usage/${granularity}`).then((response) => response.json());
 
 interface UsageListProps {
-    what: "past-day" | "past-week" | "past-month" | "past-year";
+    what: "past-day" | "past-week" | "past-month" | "past-year" | "total";
 }
 
 const UsageList: React.FC<UsageListProps> = (props) => {

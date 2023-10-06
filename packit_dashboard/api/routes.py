@@ -138,6 +138,14 @@ def usage_past_year():
     return _get_usage_data_from_packit_api(usage_from=past_year_date)
 
 
+@api.route("/api/usage/total")
+@ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(days=1).seconds)
+def usage_total():
+    now = datetime.now()
+    past_date = now.replace(year=now.year - 100).strftime("%Y-%m-%d")
+    return _get_usage_data_from_packit_api(usage_from=past_date)
+
+
 # format the chart needs is a list of {"x": "datetimelegend", "y": value}
 CHART_DATA_TYPE = list[dict[str, Union[str, int]]]
 
