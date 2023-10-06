@@ -58,6 +58,9 @@ const Usage = () => {
                                 <UsageList what="past-year" />
                                 <UsageInterval days={7} hours={0} count={52} />
                             </Tab>
+                            <Tab eventKey={4} title="Total">
+                                <UsageList what="total" />
+                            </Tab>
                         </Tabs>
                     </CardBody>
                 </Card>
