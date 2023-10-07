@@ -97,7 +97,6 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
     const coprDetails = results.map((result) => {
         if (!result.data || typeof result.data !== "object")
             return <>Loading</>;
-        console.log(result.data);
         if ("error" in result.data) {
             return <>Error {result.data["error"]}</>;
         } else if ("build_id" in result.data) {
@@ -195,6 +194,12 @@ const ResultsPageTestingFarm = () => {
         <>{data?.status}</>
     );
 
+    const onCopyHash = () => {
+        if (data) {
+            navigator.clipboard.writeText(data.commit_sha.substring(0, 7));
+        }
+    };
+
     return (
         <>
             <PageSection variant={PageSectionVariants.light}>
@@ -203,7 +208,28 @@ const ResultsPageTestingFarm = () => {
 
                     <Text component="p">
                         <strong>
-                            {data ? <TriggerLink builds={data} /> : <></>}
+                            {data ? (
+                                <>
+                                    <TriggerLink builds={data} />
+                                    <ClipboardCopy
+                                        variant="inline-compact"
+                                        onCopy={onCopyHash}
+                                    >
+                                        <a
+                                            href={getCommitLink(
+                                                data.git_repo,
+                                                data.commit_sha,
+                                            )}
+                                            rel="noreferrer"
+                                            target="_blank"
+                                        >
+                                            {data.commit_sha.substring(0, 7)}
+                                        </a>
+                                    </ClipboardCopy>
+                                </>
+                            ) : (
+                                <></>
+                            )}
                         </strong>
                         <br />
                     </Text>
@@ -258,26 +284,6 @@ const ResultsPageTestingFarm = () => {
                                             >
                                                 {data.pipeline_id}
                                             </ClipboardCopy>
-                                        </DescriptionListDescription>
-                                    </DescriptionListGroup>
-                                    <DescriptionListGroup>
-                                        <DescriptionListTerm>
-                                            Commit SHA
-                                        </DescriptionListTerm>
-                                        <DescriptionListDescription>
-                                            <a
-                                                href={getCommitLink(
-                                                    data.git_repo,
-                                                    data.commit_sha,
-                                                )}
-                                                rel="noreferrer"
-                                                target="_blank"
-                                            >
-                                                {data.commit_sha.substring(
-                                                    0,
-                                                    7,
-                                                )}
-                                            </a>
                                         </DescriptionListDescription>
                                     </DescriptionListGroup>
                                 </DescriptionList>
