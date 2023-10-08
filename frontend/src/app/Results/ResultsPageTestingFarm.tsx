@@ -7,19 +7,16 @@ import {
     TextContent,
     Text,
     Title,
-    Label,
     DescriptionList,
     DescriptionListDescription,
     DescriptionListGroup,
     DescriptionListTerm,
-    Divider,
     DataList,
     DataListItemRow,
     DataListItem,
     DataListContent,
     DataListItemCells,
     DataListCell,
-    Spinner,
     DataListToggle,
     ClipboardCopy,
 } from "@patternfly/react-core";
@@ -29,6 +26,7 @@ import { TriggerLink } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
+import { Timestamp } from "../utils/Timestamp";
 import { getCommitLink } from "../utils/forgeUrls";
 import { QueriesOptions, useQueries, useQuery } from "@tanstack/react-query";
 import {
@@ -271,8 +269,6 @@ const ResultsPageTestingFarm = () => {
                                                 link={data.web_url}
                                             />
                                         </DescriptionListDescription>
-                                    </DescriptionListGroup>
-                                    <DescriptionListGroup>
                                         <DescriptionListTerm>
                                             Pipeline ID
                                         </DescriptionListTerm>
@@ -281,9 +277,21 @@ const ResultsPageTestingFarm = () => {
                                                 isReadOnly
                                                 hoverTip="Copy"
                                                 clickTip="Copied"
+                                                variant="inline-compact"
                                             >
                                                 {data.pipeline_id}
                                             </ClipboardCopy>
+                                        </DescriptionListDescription>
+                                    </DescriptionListGroup>
+                                    <DescriptionListGroup>
+                                        <DescriptionListTerm>
+                                            Run Submitted Time
+                                        </DescriptionListTerm>
+                                        <DescriptionListDescription>
+                                            <Timestamp
+                                                stamp={data.submitted_time}
+                                                verbose={true}
+                                            />
                                         </DescriptionListDescription>
                                     </DescriptionListGroup>
                                 </DescriptionList>
