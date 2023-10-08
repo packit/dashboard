@@ -28,13 +28,19 @@ import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { Timestamp } from "../utils/Timestamp";
 import { getCommitLink } from "../utils/forgeUrls";
-import { QueriesOptions, useQueries, useQuery } from "@tanstack/react-query";
+import {
+    QueriesOptions,
+    UseQueryResult,
+    useQueries,
+    useQuery,
+} from "@tanstack/react-query";
 import {
     API_COPR_BUILDS,
     CoprResult,
     fetchSyncRelease,
 } from "./ResultsPageCopr";
 import { Preloader } from "../Preloader/Preloader";
+import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
 
 export interface TestingFarmOverview {
     pipeline_id: string; // UUID
@@ -65,9 +71,10 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
     const [coprQueries, setCoprQueries] = useState<[...QueriesOptions<any>]>(
         [],
     );
+    type QueryResult = UseQueryResult<CoprResult | { error: string }>;
     const results = useQueries<(CoprResult | { error: string })[]>({
         queries: coprQueries,
-    });
+    }) as QueryResult[];
     useEffect(() => {
         const queries: typeof coprQueries = [];
         copr_build_ids.forEach((id) => {
@@ -98,12 +105,7 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
         if ("error" in result.data) {
             return <>Error {result.data["error"]}</>;
         } else if ("build_id" in result.data) {
-            return (
-                <>
-                    <div>{result.data.build_id}</div>
-                    <div>{result.data.status}</div>
-                </>
-            );
+            return <ResultsPageCoprDetails data={result.data} />;
         }
     });
     for (let i = 0; i < copr_build_ids.length; i++) {
@@ -111,7 +113,7 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
         let isExpanded = expandedBuilds.includes(coprBuildId);
         coprBuilds.push(
             <DataListItem key={coprBuildId} isExpanded={isExpanded}>
-                <DataListItemRow>
+                <DataListItemRow key={coprBuildId + "row"}>
                     <DataListToggle
                         isExpanded={isExpanded}
                         id={`copr-build-toggle${coprBuildId}`}
@@ -131,6 +133,7 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
                     ></DataListItemCells>
                 </DataListItemRow>
                 <DataListContent
+                    key={coprBuildId + "content"}
                     aria-label="Copr build detail"
                     isHidden={!isExpanded}
                     id={`copr-build-expand${coprBuildId}`}
