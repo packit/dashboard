@@ -112,7 +112,7 @@ const routes: RouteObject[] = [
                 },
             },
             {
-                path: "/projects/:forge/",
+                path: "/projects/:forge",
                 element: <Forge />,
             },
             {
