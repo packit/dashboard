@@ -24,6 +24,7 @@ import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
+import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
 
 interface BuildPackage {
     arch: string;
@@ -120,56 +121,6 @@ const ResultsPageCopr = () => {
         );
     }
 
-    const packagesInstallationInstructions = data.built_packages ? (
-        <ListItem>
-            <code>
-                sudo dnf install -y{" "}
-                {getPackagesToInstall(data.built_packages).join(" ")}
-            </code>
-        </ListItem>
-    ) : (
-        ""
-    );
-
-    const installationInstructions =
-        data.status === "success" ? (
-            <Card>
-                <CardBody>
-                    <Text component="p">
-                        <strong>
-                            You can install the built RPMs by following these
-                            steps:
-                        </strong>
-                    </Text>
-                    <br />
-                    <List>
-                        <ListItem>
-                            <code>sudo yum install -y dnf-plugins-core</code> on
-                            RHEL 8 or CentOS Stream
-                        </ListItem>
-                        <ListItem>
-                            <code>sudo dnf install -y dnf-plugins-core</code> on
-                            Fedora
-                        </ListItem>
-                        <ListItem>
-                            <code>
-                                sudo dnf copr enable {data.copr_owner}/
-                                {data.copr_project}
-                            </code>
-                        </ListItem>
-                        {packagesInstallationInstructions}
-                    </List>
-                    <Text component="p">
-                        <br />
-                        Please note that the RPMs should be used only in a
-                        testing environment.
-                    </Text>
-                </CardBody>
-            </Card>
-        ) : (
-            ""
-        );
-
     return (
         <>
             <PageSection variant={PageSectionVariants.light}>
@@ -192,93 +143,57 @@ const ResultsPageCopr = () => {
             <PageSection>
                 <Card>
                     <CardBody>
-                        <DescriptionList
-                            columnModifier={{
-                                default: "1Col",
-                                sm: "2Col",
-                            }}
-                        >
-                            <DescriptionListGroup>
-                                <DescriptionListTerm>
-                                    SRPM Build
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <Label
-                                        href={`/results/srpm-builds/${data.srpm_build_id}`}
-                                    >
-                                        Details
-                                    </Label>
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Copr build
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <a
-                                        href={data.web_url}
-                                        rel="noreferrer"
-                                        target={"_blank"}
-                                    >
-                                        {data.build_id}
-                                    </a>{" "}
-                                    (
-                                    <a
-                                        href={data.build_logs_url}
-                                        rel="noreferrer"
-                                        target={"_blank"}
-                                    >
-                                        Logs
-                                    </a>
-                                    )
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Commit SHA
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <a
-                                        href={getCommitLink(
-                                            data.git_repo,
-                                            data.commit_sha,
-                                        )}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        {data.commit_sha.substring(0, 7)}
-                                    </a>
-                                </DescriptionListDescription>
-                            </DescriptionListGroup>
-                            <DescriptionListGroup>
-                                <DescriptionListTerm>
-                                    Build Submitted Time
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <Timestamp
-                                        stamp={data.build_submitted_time}
-                                        verbose={true}
-                                    />
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Build Start Time
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <Timestamp
-                                        stamp={data.build_start_time}
-                                        verbose={true}
-                                    />
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Build Finish Time
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <Timestamp
-                                        stamp={data.build_finished_time}
-                                        verbose={true}
-                                    />
-                                </DescriptionListDescription>
-                            </DescriptionListGroup>
-                        </DescriptionList>
+                        <ResultsPageCoprDetails data={data} />
                     </CardBody>
                 </Card>
-                {installationInstructions}
+                <Card>
+                    <CardBody>
+                        <Text component="p">
+                            <strong>
+                                You can install the built RPMs by following
+                                these steps:
+                            </strong>
+                        </Text>
+                        <br />
+                        <List>
+                            <ListItem>
+                                <code>
+                                    sudo yum install -y dnf-plugins-core
+                                </code>{" "}
+                                on RHEL 8 or CentOS Stream
+                            </ListItem>
+                            <ListItem>
+                                <code>
+                                    sudo dnf install -y dnf-plugins-core
+                                </code>{" "}
+                                on Fedora
+                            </ListItem>
+                            <ListItem>
+                                <code>
+                                    sudo dnf copr enable {data.copr_owner}/
+                                    {data.copr_project}
+                                </code>
+                            </ListItem>
+                            {data.built_packages ? (
+                                <ListItem>
+                                    <code>
+                                        sudo dnf install -y{" "}
+                                        {getPackagesToInstall(
+                                            data.built_packages,
+                                        ).join(" ")}
+                                    </code>
+                                </ListItem>
+                            ) : (
+                                <></>
+                            )}
+                        </List>
+                        <Text component="p">
+                            <br />
+                            Please note that the RPMs should be used only in a
+                            testing environment.
+                        </Text>
+                    </CardBody>
+                </Card>
             </PageSection>
         </>
     );
