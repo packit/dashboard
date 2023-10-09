@@ -1,4 +1,10 @@
-import { NavLink, Outlet, matchRoutes, useLocation } from "react-router-dom";
+import {
+    NavLink,
+    Outlet,
+    RouteObject,
+    matchRoutes,
+    useLocation,
+} from "react-router-dom";
 import {
     Nav,
     NavList,
@@ -19,10 +25,11 @@ import {
     Toolbar,
     ToolbarContent,
     ToolbarItem,
+    NavExpandable,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 import packitLogo from "../../static/logo.png";
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import {
     ExternalLinkAltIcon,
     CodeBranchIcon,
@@ -32,6 +39,7 @@ import {
 const AppLayout = () => {
     const location = useLocation();
     const [activeLocationLabel, setActiveLocationLabel] = useState("");
+    const [activeLocationCategory, setActiveLocationCategory] = useState("");
     const currentRouteTree = matchRoutes(routes, location);
     // Dynamically set page title and update currently active page in sidebar
     useEffect(() => {
@@ -43,6 +51,7 @@ const AppLayout = () => {
             const element = currentRouteTree[index];
             if (element.route.handle?.label) {
                 setActiveLocationLabel(element.route.handle.label);
+                setActiveLocationCategory(element.route.handle.category || "");
             }
         }
     }, [currentRouteTree]);
@@ -128,42 +137,87 @@ const AppLayout = () => {
         </Masthead>
     );
 
+    const NavigationRoute: React.FC<{ route: RouteObject; index: string }> = ({
+        route,
+        index,
+    }) => (
+        <NavItem
+            key={route.handle.label}
+            isActive={activeLocationLabel === route.handle.label}
+        >
+            <NavLink itemID={index.toString()} to={route.path ?? ""}>
+                {route.handle.label}
+            </NavLink>
+        </NavItem>
+    );
+    const addedCategories: string[] = [];
     const Navigation = (
         <Nav id="nav-primary-simple" theme="dark">
             <NavList id="nav-list-simple">
-                {routes[0].children?.map(
-                    (route, index) =>
-                        route.handle?.label && (
-                            <NavItem
-                                key={route.handle.label}
+                {routes[0].children?.map((route, index) => {
+                    if (route.handle?.category) {
+                        if (addedCategories.includes(route.handle.category))
+                            return;
+                        const categoryRoutes = routes[0].children?.filter(
+                            (r) => r.handle?.category === route.handle.category,
+                        );
+                        addedCategories.push(route.handle.category);
+                        return (
+                            <NavExpandable
+                                key={route.handle.category}
+                                title={route.handle.category}
+                                groupId={`nav-expandable-group-${route.handle.category}`}
                                 isActive={
-                                    activeLocationLabel === route.handle.label
+                                    activeLocationCategory ===
+                                    route.handle.category
                                 }
+                                isExpanded
                             >
-                                <NavLink
-                                    itemID={index.toString()}
-                                    to={route.path ?? ""}
-                                >
-                                    {route.handle.label}
-                                </NavLink>
-                            </NavItem>
-                        ),
-                )}
-                <NavItem key="status" id="status">
-                    <a href="https://status.packit.dev">Status</a>
-                </NavItem>
-                <NavItem key="blog-posts" id="blog-posts">
-                    <a href="https://packit.dev/posts">Blog posts</a>
-                </NavItem>
-                <NavItem key="faq-page" id="faq-page">
-                    <a
-                        target="_blank"
-                        href="https://packit.dev/docs/faq"
-                        rel="noreferrer"
-                    >
-                        FAQ
-                    </a>
-                </NavItem>
+                                {categoryRoutes?.map((r, i) => (
+                                    <NavigationRoute
+                                        route={r}
+                                        index={
+                                            r.path ||
+                                            index.toString() + i.toString()
+                                        }
+                                    />
+                                ))}
+                            </NavExpandable>
+                        );
+                    }
+                    return (
+                        route.handle?.label && (
+                            <NavigationRoute
+                                route={route}
+                                index={index.toString()}
+                            />
+                        )
+                    );
+                })}
+                <NavExpandable
+                    title="External links"
+                    groupId="nav-expandable-group-external"
+                    // isActive={
+                    //     activeGroup === "nav-expandable-group-1"
+                    // }
+                    isExpanded
+                >
+                    <NavItem key="status" id="status">
+                        <a href="https://status.packit.dev">Status</a>
+                    </NavItem>
+                    <NavItem key="blog-posts" id="blog-posts">
+                        <a href="https://packit.dev/posts">Blog posts</a>
+                    </NavItem>
+                    <NavItem key="faq-page" id="faq-page">
+                        <a
+                            target="_blank"
+                            href="https://packit.dev/docs/faq"
+                            rel="noreferrer"
+                        >
+                            FAQ
+                        </a>
+                    </NavItem>
+                </NavExpandable>
             </NavList>
         </Nav>
     );

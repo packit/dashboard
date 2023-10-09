@@ -39,10 +39,20 @@ const routes: RouteObject[] = [
                 },
             },
             {
+                element: <Projects />,
+                path: "/projects",
+                handle: {
+                    divider: true,
+                    label: "Projects",
+                    category: "Dashboards",
+                },
+            },
+            {
                 Component: Jobs,
                 id: "jobs",
                 path: "/jobs",
                 handle: {
+                    category: "Dashboards",
                     label: "Jobs",
                 },
                 children: [
@@ -101,14 +111,8 @@ const routes: RouteObject[] = [
                 element: <Pipelines />,
                 path: "/pipelines",
                 handle: {
+                    category: "Dashboards",
                     label: "Pipelines",
-                },
-            },
-            {
-                element: <Projects />,
-                path: "/projects",
-                handle: {
-                    label: "Projects",
                 },
             },
             {
