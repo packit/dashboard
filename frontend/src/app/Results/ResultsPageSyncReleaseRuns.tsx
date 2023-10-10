@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
     PageSection,
     Card,
@@ -10,6 +10,10 @@ import {
     Toolbar,
     ToolbarContent,
     ToolbarItem,
+    Checkbox,
+    Button,
+    ToolbarGroup,
+    Tooltip,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -21,6 +25,7 @@ import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
+import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
 
 interface ResultsPageSyncReleaseRunsProps {
     job: "propose-downstream" | "pull-from-upstream";
@@ -61,10 +66,16 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     useTitle(displayText);
     let { id } = useParams();
 
-    const URL = `${import.meta.env.VITE_API_URL}/${job}/${id}`;
+    const [isTextWrapped, setIsTextWrapped] = useState(true);
+    const [isLineNumbersShown, setIsLineNumbersShown] = useState(false);
+    // TODO(spytec): Not sure what the ref type is supposed to be
+    const logViewerRef = React.useRef<any>(null);
+    const [isFullScreen, setIsFullScreen] = React.useState(false);
+
+    const API_URL = `${import.meta.env.VITE_API_URL}/${job}/${id}`;
     const { data, isError, isInitialLoading } = useQuery<
         SyncReleaseRun | { error: string }
-    >([URL], () => fetchSyncRelease(URL));
+    >([API_URL], () => fetchSyncRelease(API_URL));
 
     // If backend API is down
     if (isError) {
@@ -96,27 +107,116 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
         <>Link will be available after successful downstream PR submission.</>
     );
 
+    const FooterButton = () => {
+        const handleClick = () => {
+            if (logViewerRef.current) logViewerRef.current.scrollToBottom();
+        };
+        return <Button onClick={handleClick}>Jump to the bottom</Button>;
+    };
+
+    const onDownloadClick = () => {
+        if (!data.logs) return;
+        const element = document.createElement("a");
+        const file = new Blob([data.logs], { type: "text/plain" });
+        element.href = URL.createObjectURL(file);
+        element.download = `${data.repo_namespace}-${data.repo_name}-${data.start_time}.txt`;
+        document.body.appendChild(element);
+        element.click();
+        document.body.removeChild(element);
+    };
+
+    const onExpandClick = (_: any) => {
+        const element: any = document.querySelector("#logviewer");
+        if (!isFullScreen && element) {
+            element.requestFullscreen();
+            setIsFullScreen(true);
+        } else {
+            document.exitFullscreen();
+            setIsFullScreen(false);
+        }
+    };
+
+    // TODO(SpyTec): Move to its own component
     const logs = (
         <PageSection>
             <Card>
                 <CardBody>
                     <LogViewer
+                        id="logviewer"
+                        ref={logViewerRef}
+                        isTextWrapped={isTextWrapped}
+                        hasLineNumbers={isLineNumbersShown}
+                        theme="dark"
+                        // height={isFullScreen ? "100%" : 600}
                         data={
                             data.logs ? data.logs : "Log is not available yet."
                         }
                         toolbar={
                             <Toolbar>
                                 <ToolbarContent>
-                                    <ToolbarItem>
-                                        <LogViewerSearch
-                                            placeholder="Search value"
-                                            minSearchChars={3}
-                                        />
-                                    </ToolbarItem>
+                                    <ToolbarGroup>
+                                        <ToolbarItem>
+                                            <LogViewerSearch
+                                                placeholder="Search value"
+                                                minSearchChars={3}
+                                            />
+                                        </ToolbarItem>
+                                        <ToolbarItem>
+                                            <Checkbox
+                                                label="Wrap text"
+                                                aria-label="wrap text checkbox"
+                                                isChecked={isTextWrapped}
+                                                id="wrap-text-checkbox"
+                                                onChange={setIsTextWrapped}
+                                            />
+                                        </ToolbarItem>
+                                        <ToolbarItem>
+                                            <Checkbox
+                                                label="Show line numbers"
+                                                aria-label="show line numbers checkbox"
+                                                isChecked={isLineNumbersShown}
+                                                id="show-lines-checkbox"
+                                                onChange={setIsLineNumbersShown}
+                                            />
+                                        </ToolbarItem>
+                                    </ToolbarGroup>
+                                    <ToolbarGroup
+                                        variant="icon-button-group"
+                                        alignment={{ default: "alignRight" }}
+                                    >
+                                        <ToolbarItem>
+                                            <Tooltip
+                                                position="top"
+                                                content={<div>Download</div>}
+                                            >
+                                                <Button
+                                                    onClick={onDownloadClick}
+                                                    variant="plain"
+                                                    aria-label="Download current logs"
+                                                >
+                                                    <DownloadIcon />
+                                                </Button>
+                                            </Tooltip>
+                                        </ToolbarItem>
+                                        <ToolbarItem>
+                                            <Tooltip
+                                                position="top"
+                                                content={<div>Expand</div>}
+                                            >
+                                                <Button
+                                                    onClick={onExpandClick}
+                                                    variant="plain"
+                                                    aria-label="View log viewer in full screen"
+                                                >
+                                                    <ExpandIcon />
+                                                </Button>
+                                            </Tooltip>
+                                        </ToolbarItem>
+                                    </ToolbarGroup>
                                 </ToolbarContent>
                             </Toolbar>
                         }
-                        hasLineNumbers={false}
+                        footer={<FooterButton />}
                     />
                 </CardBody>
             </Card>
@@ -124,7 +224,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     );
 
     return (
-        <div>
+        <>
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">{displayText}</Text>
@@ -203,7 +303,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                 </Card>
             </PageSection>
             {logs}
-        </div>
+        </>
     );
 };
 
