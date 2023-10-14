@@ -197,7 +197,7 @@ const ResultsPageTestingFarm = () => {
 
     const onCopyHash = () => {
         if (data) {
-            navigator.clipboard.writeText(data.commit_sha.substring(0, 7));
+            navigator.clipboard.writeText(data.commit_sha);
         }
     };
 
@@ -213,6 +213,11 @@ const ResultsPageTestingFarm = () => {
                                 <>
                                     <TriggerLink builds={data} />
                                     <ClipboardCopy
+                                        style={{
+                                            marginLeft:
+                                                "var(--pf-global--spacer--xs)",
+                                        }}
+                                        hoverTip="Copy commit SHA"
                                         variant="inline-compact"
                                         onCopy={onCopyHash}
                                     >
