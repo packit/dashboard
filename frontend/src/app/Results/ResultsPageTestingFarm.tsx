@@ -41,6 +41,7 @@ import {
 } from "./ResultsPageCopr";
 import { Preloader } from "../Preloader/Preloader";
 import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
+import { SHACopy } from "../utils/SHACopy";
 
 export interface TestingFarmOverview {
     pipeline_id: string; // UUID
@@ -195,12 +196,6 @@ const ResultsPageTestingFarm = () => {
         <>{data?.status}</>
     );
 
-    const onCopyHash = () => {
-        if (data) {
-            navigator.clipboard.writeText(data.commit_sha);
-        }
-    };
-
     return (
         <>
             <PageSection variant={PageSectionVariants.light}>
@@ -212,26 +207,10 @@ const ResultsPageTestingFarm = () => {
                             {data ? (
                                 <>
                                     <TriggerLink builds={data} />
-                                    <ClipboardCopy
-                                        style={{
-                                            marginLeft:
-                                                "var(--pf-global--spacer--xs)",
-                                        }}
-                                        hoverTip="Copy commit SHA"
-                                        variant="inline-compact"
-                                        onCopy={onCopyHash}
-                                    >
-                                        <a
-                                            href={getCommitLink(
-                                                data.git_repo,
-                                                data.commit_sha,
-                                            )}
-                                            rel="noreferrer"
-                                            target="_blank"
-                                        >
-                                            {data.commit_sha.substring(0, 7)}
-                                        </a>
-                                    </ClipboardCopy>
+                                    <SHACopy
+                                        git_repo={data.git_repo}
+                                        commit_sha={data.commit_sha}
+                                    />
                                 </>
                             ) : (
                                 <></>

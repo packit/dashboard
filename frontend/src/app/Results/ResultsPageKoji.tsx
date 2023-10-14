@@ -23,6 +23,7 @@ import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
+import { SHACopy } from "../utils/SHACopy";
 
 interface KojiBuild {
     build_id: string;
@@ -91,14 +92,13 @@ const ResultsPageKoji = () => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Koji Build Results</Text>
-                    <StatusLabel
-                        target={data.chroot}
-                        status={data.status}
-                        link={data.web_url}
-                    />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />
+                            <SHACopy
+                                git_repo={data.git_repo}
+                                commit_sha={data.commit_sha}
+                            />
                         </strong>
                         <br />
                     </Text>
@@ -129,13 +129,11 @@ const ResultsPageKoji = () => {
                                     Koji Build
                                 </DescriptionListTerm>
                                 <DescriptionListDescription>
-                                    <a
-                                        href={data.web_url}
-                                        rel="noreferrer"
-                                        target={"_blank"}
-                                    >
-                                        {data.build_id}
-                                    </a>{" "}
+                                    <StatusLabel
+                                        target={data.chroot}
+                                        status={data.status}
+                                        link={data.web_url}
+                                    />{" "}
                                     (
                                     <a
                                         href={data.build_logs_url}
@@ -145,21 +143,6 @@ const ResultsPageKoji = () => {
                                         Logs
                                     </a>
                                     )
-                                </DescriptionListDescription>
-                                <DescriptionListTerm>
-                                    Commit SHA
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <a
-                                        href={getCommitLink(
-                                            data.git_repo,
-                                            data.commit_sha,
-                                        )}
-                                        rel="noreferrer"
-                                        target="_blank"
-                                    >
-                                        {data.commit_sha.substring(0, 7)}
-                                    </a>
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
                             <DescriptionListGroup>

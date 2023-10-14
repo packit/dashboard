@@ -13,6 +13,7 @@ import {
     DescriptionListTerm,
     List,
     ListItem,
+    ClipboardCopy,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -25,6 +26,7 @@ import { useTitle } from "../utils/useTitle";
 import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
+import { SHACopy } from "../utils/SHACopy";
 
 interface BuildPackage {
     arch: string;
@@ -126,16 +128,14 @@ const ResultsPageCopr = () => {
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">Copr Build Results</Text>
-                    <StatusLabel
-                        target={data.chroot}
-                        status={data.status}
-                        link={data.web_url}
-                    />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />
+                            <SHACopy
+                                git_repo={data.git_repo}
+                                commit_sha={data.commit_sha}
+                            />
                         </strong>
-                        <br />
                     </Text>
                 </TextContent>
             </PageSection>

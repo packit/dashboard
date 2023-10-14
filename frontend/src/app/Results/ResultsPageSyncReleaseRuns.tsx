@@ -234,11 +234,6 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
             <PageSection variant={PageSectionVariants.light}>
                 <TextContent>
                     <Text component="h1">{displayText}</Text>
-                    <SyncReleaseTargetStatusLabel
-                        status={data.status}
-                        target={data.branch}
-                        link={data.downstream_pr_url}
-                    />
                     <Text component="p">
                         <strong>
                             <TriggerLink builds={data} />
@@ -262,7 +257,11 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                                     Status
                                 </DescriptionListTerm>
                                 <DescriptionListDescription>
-                                    {data.status}
+                                    <SyncReleaseTargetStatusLabel
+                                        status={data.status}
+                                        target={data.branch}
+                                        link={data.downstream_pr_url}
+                                    />
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
                             <DescriptionListGroup>
@@ -292,14 +291,6 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                                         stamp={data.finished_time}
                                         verbose={true}
                                     />
-                                </DescriptionListDescription>
-                            </DescriptionListGroup>
-                            <DescriptionListGroup>
-                                <DescriptionListTerm>
-                                    Link to downstream PR
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    {linkToDownstreamPR}
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
                         </DescriptionList>
