@@ -12,6 +12,8 @@ import { getCommitLink } from "../utils/forgeUrls";
 import { CoprResult } from "./ResultsPageCopr";
 import React from "react";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
+import { Link, NavLink } from "react-router-dom";
+import { LabelLink } from "../utils/LabelLink";
 
 export interface ResultsPageCoprDetailsProps {
     data: CoprResult;
@@ -30,9 +32,11 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
             <DescriptionListGroup>
                 <DescriptionListTerm>SRPM Build</DescriptionListTerm>
                 <DescriptionListDescription>
-                    <Label href={`/results/srpm-builds/${data.srpm_build_id}`}>
+                    <LabelLink
+                        to={`/results/srpm-builds/${data.srpm_build_id}`}
+                    >
                         Details
-                    </Label>
+                    </LabelLink>
                 </DescriptionListDescription>
                 <DescriptionListTerm>Copr build</DescriptionListTerm>
                 <DescriptionListDescription>
