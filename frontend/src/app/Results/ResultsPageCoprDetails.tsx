@@ -11,6 +11,7 @@ import { Timestamp } from "../utils/Timestamp";
 import { getCommitLink } from "../utils/forgeUrls";
 import { CoprResult } from "./ResultsPageCopr";
 import React from "react";
+import { StatusLabel } from "../StatusLabel/StatusLabel";
 
 export interface ResultsPageCoprDetailsProps {
     data: CoprResult;
@@ -35,9 +36,11 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
                 </DescriptionListDescription>
                 <DescriptionListTerm>Copr build</DescriptionListTerm>
                 <DescriptionListDescription>
-                    <a href={data.web_url} rel="noreferrer" target={"_blank"}>
-                        {data.build_id}
-                    </a>{" "}
+                    <StatusLabel
+                        target={data.chroot}
+                        status={data.status}
+                        link={data.web_url}
+                    />
                     (
                     <a
                         href={data.build_logs_url}
@@ -47,16 +50,6 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
                         Logs
                     </a>
                     )
-                </DescriptionListDescription>
-                <DescriptionListTerm>Commit SHA</DescriptionListTerm>
-                <DescriptionListDescription>
-                    <a
-                        href={getCommitLink(data.git_repo, data.commit_sha)}
-                        rel="noreferrer"
-                        target="_blank"
-                    >
-                        {data.commit_sha.substring(0, 7)}
-                    </a>
                 </DescriptionListDescription>
             </DescriptionListGroup>
             <DescriptionListGroup>

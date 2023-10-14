@@ -166,36 +166,16 @@ const ResultsPageSRPM = () => {
                         >
                             <DescriptionListGroup>
                                 <DescriptionListTerm>
-                                    Status
+                                    Copr build
                                 </DescriptionListTerm>
                                 <DescriptionListDescription>
                                     <StatusLabel
                                         status={data.status}
                                         link={data.copr_web_url}
-                                    />
-                                </DescriptionListDescription>
-                                {data.url ? (
-                                    <>
-                                        <DescriptionListTerm>
-                                            Copr
-                                        </DescriptionListTerm>
-                                        <DescriptionListDescription>
-                                            <a
-                                                href={data.url}
-                                                rel="noreferrer"
-                                                target={"_blank"}
-                                            >
-                                                Results
-                                            </a>
-                                        </DescriptionListDescription>
-                                        <DescriptionListDescription>
-                                            <a
-                                                href={data.copr_web_url}
-                                                rel="noreferrer"
-                                                target={"_blank"}
-                                            >
-                                                Build
-                                            </a>{" "}
+                                    />{" "}
+                                    {data.url ? (
+                                        <>
+                                            {" "}
                                             (
                                             <a
                                                 href={data.logs_url}
@@ -204,12 +184,20 @@ const ResultsPageSRPM = () => {
                                             >
                                                 Logs
                                             </a>
+                                            ) (
+                                            <a
+                                                href={data.url}
+                                                rel="noreferrer"
+                                                target={"_blank"}
+                                            >
+                                                Results
+                                            </a>
                                             )
-                                        </DescriptionListDescription>
-                                    </>
-                                ) : (
-                                    <></>
-                                )}
+                                        </>
+                                    ) : (
+                                        <></>
+                                    )}
+                                </DescriptionListDescription>
                             </DescriptionListGroup>
                             <DescriptionListGroup>
                                 <DescriptionListTerm>
