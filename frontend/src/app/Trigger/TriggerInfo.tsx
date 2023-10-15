@@ -233,8 +233,11 @@ interface WebUrlIconProps {
 }
 
 const WebUrlIcon: React.FC<WebUrlIconProps> = (props) => {
-    const handleClick = () => window.open(props.link, "_blank");
-    return <ExternalLinkAltIcon onClick={handleClick} />;
+    return (
+        <a href={props.link} rel="noreferrer" target="_blank">
+            <ExternalLinkAltIcon />
+        </a>
+    );
 };
 
 export { TriggerInfo };
