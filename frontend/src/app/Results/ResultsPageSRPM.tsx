@@ -15,7 +15,6 @@ import {
     DescriptionListTerm,
     DescriptionListDescription,
     Divider,
-    Label,
 } from "@patternfly/react-core";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
@@ -27,7 +26,6 @@ import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
-import { TableComposable, Td, Th, Tr } from "@patternfly/react-table";
 
 interface SRPMBuild {
     status: string;

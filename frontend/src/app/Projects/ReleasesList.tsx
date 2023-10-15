@@ -4,16 +4,7 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { getReleaseLink, getCommitLink } from "../utils/forgeUrls";
-import {
-    Table,
-    TableComposable,
-    TableHeader,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-} from "@patternfly/react-table";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 
 // Fetch data from dashboard backend (or if we want, directly from the API)
 async function fetchData(URL: string): Promise<ProjectRelease[]> {
@@ -54,7 +45,7 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
     }
 
     return (
-        <TableComposable variant="compact">
+        <Table variant="compact">
             <Thead>
                 <Tr>
                     <Th>Tag</Th>
@@ -91,7 +82,7 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
                     </Tr>
                 ))}
             </Tbody>
-        </TableComposable>
+        </Table>
     );
 };
 

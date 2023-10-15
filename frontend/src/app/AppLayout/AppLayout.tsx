@@ -26,6 +26,7 @@ import {
     ToolbarContent,
     ToolbarItem,
     NavExpandable,
+    PageSidebarBody,
 } from "@patternfly/react-core";
 import { routes } from "../routes";
 import packitLogo from "../../static/logo.png";
@@ -72,7 +73,7 @@ const AppLayout = () => {
     const headerToolbar = (
         <Toolbar id="header-toolbar">
             <ToolbarContent>
-                <ToolbarItem alignment={{ default: "alignRight" }}>
+                <ToolbarItem align={{ default: "alignRight" }}>
                     <Popover
                         headerContent={"About open source"}
                         flipBehavior={["bottom-end"]}
@@ -117,15 +118,17 @@ const AppLayout = () => {
                 <PageToggleButton
                     variant="plain"
                     aria-label="Global navigation"
-                    isNavOpen={isNavOpen}
-                    onNavToggle={isMobileView ? onNavToggleMobile : onNavToggle}
+                    isSidebarOpen={isNavOpen}
+                    onSidebarToggle={
+                        isMobileView ? onNavToggleMobile : onNavToggle
+                    }
                     id="vertical-nav-toggle"
                 >
                     <BarsIcon />
                 </PageToggleButton>
             </MastheadToggle>
             <MastheadMain>
-                <MastheadBrand href="/">
+                <MastheadBrand component="a" href="/">
                     <img
                         src={packitLogo}
                         style={{ height: "60px" }}
@@ -224,9 +227,10 @@ const AppLayout = () => {
     const Sidebar = (
         <PageSidebar
             theme="dark"
-            nav={Navigation}
-            isNavOpen={isMobileView ? isNavOpenMobile : isNavOpen}
-        />
+            isSidebarOpen={isMobileView ? isNavOpenMobile : isNavOpen}
+        >
+            <PageSidebarBody>{Navigation}</PageSidebarBody>
+        </PageSidebar>
     );
     const PageSkipToContent = (
         <SkipToContent href="#primary-app-container">
@@ -238,7 +242,7 @@ const AppLayout = () => {
             mainContainerId="primary-app-container"
             header={Header}
             sidebar={Sidebar}
-            onPageResize={onPageResize}
+            onPageResize={(_event, props: any) => onPageResize(props)}
             skipToContent={PageSkipToContent}
         >
             <Outlet />

@@ -7,8 +7,9 @@ import {
     EmptyState,
     EmptyStateBody,
     EmptyStateIcon,
-    EmptyStateSecondaryActions,
-    Title,
+    EmptyStateActions,
+    EmptyStateHeader,
+    EmptyStateFooter,
 } from "@patternfly/react-core";
 import React from "react";
 
@@ -50,36 +51,44 @@ const ErrorApp = () => {
 
     return (
         <EmptyState isFullHeight>
-            <EmptyStateIcon icon={ExclamationCircleIcon} color="#C9190B" />
-            <Title headingLevel="h1" size="lg">
-                Exception occured that caused the website to crash
-            </Title>
+            <EmptyStateHeader
+                titleText="Exception occured that caused the website to crash"
+                icon={
+                    <EmptyStateIcon
+                        icon={ExclamationCircleIcon}
+                        color="#C9190B"
+                    />
+                }
+                headingLevel="h1"
+            />
             <EmptyStateBody>
                 If possible, take this callstack and report it upstream so it
                 can be fixed. When reporting, specify the reproducer on how the
                 bug happened.
             </EmptyStateBody>
-            <Button
-                variant="primary"
-                component="a"
-                href="https://github.com/packit/dashboard/issues/new?title=Dashboard+crashed"
-                target="_blank"
-                rel="noreferrer"
-            >
-                Report the issue
-            </Button>
-            <EmptyStateSecondaryActions>
-                <Button variant="link" component="a" href="/">
-                    Go back to Packit website
+            <EmptyStateFooter>
+                <Button
+                    variant="primary"
+                    component="a"
+                    href="https://github.com/packit/dashboard/issues/new?title=Dashboard+crashed"
+                    target="_blank"
+                    rel="noreferrer"
+                >
+                    Report the issue
                 </Button>
-            </EmptyStateSecondaryActions>
-            <EmptyStateBody>
-                <CodeBlock actions={actions}>
-                    <CodeBlockCode id="code-content">
-                        {error?.toString() ?? "Unknown error"}
-                    </CodeBlockCode>
-                </CodeBlock>
-            </EmptyStateBody>
+                <EmptyStateActions>
+                    <Button variant="link" component="a" href="/">
+                        Go back to Packit website
+                    </Button>
+                </EmptyStateActions>
+                <EmptyStateBody>
+                    <CodeBlock actions={actions}>
+                        <CodeBlockCode id="code-content">
+                            {error?.toString() ?? "Unknown error"}
+                        </CodeBlockCode>
+                    </CodeBlock>
+                </EmptyStateBody>
+            </EmptyStateFooter>
         </EmptyState>
     );
 };

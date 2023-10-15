@@ -6,14 +6,8 @@ import {
     TextContent,
     Text,
     Title,
-    Label,
-    DescriptionList,
-    DescriptionListDescription,
-    DescriptionListGroup,
-    DescriptionListTerm,
     List,
     ListItem,
-    ClipboardCopy,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";

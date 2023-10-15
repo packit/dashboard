@@ -3,20 +3,18 @@ import {
     EmptyStateIcon,
     EmptyStateVariant,
     EmptyStateBody,
-    Title,
     Icon,
+    EmptyStateHeader,
 } from "@patternfly/react-core";
 
 import { ExclamationTriangleIcon } from "@patternfly/react-icons";
 
 const ErrorConnection = () => (
-    <EmptyState variant={EmptyStateVariant.small}>
+    <EmptyState variant={EmptyStateVariant.sm}>
         <Icon>
             <EmptyStateIcon icon={ExclamationTriangleIcon} color="#f0ab00" />
         </Icon>
-        <Title headingLevel="h2" size="lg">
-            Unable to connect
-        </Title>
+        <EmptyStateHeader titleText="Unable to connect" headingLevel="h2" />
         <EmptyStateBody>There was an error retrieving data.</EmptyStateBody>
     </EmptyState>
 );

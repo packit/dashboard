@@ -55,7 +55,7 @@ export const BaseStatusLabel: React.FC<BaseStatusLabelProps> = (props) => {
                     }}
                 >
                     {props.label}
-                    <span className="pf-u-screen-reader">
+                    <span className="pf-v5-u-screen-reader">
                         {props.tooltipText}
                     </span>
                 </Label>

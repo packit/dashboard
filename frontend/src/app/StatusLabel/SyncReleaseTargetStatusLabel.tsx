@@ -24,7 +24,7 @@ export const SyncReleaseTargetStatusLabel: React.FC<StatusLabelProps> = (
         switch (props.status) {
             case "running":
                 setColor("blue");
-                setIcon(<Spinner isSVG diameter="15px" />);
+                setIcon(<Spinner diameter="15px" />);
                 break;
             case "error":
                 setColor("red");

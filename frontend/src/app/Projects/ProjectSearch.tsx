@@ -1,18 +1,14 @@
 import React, { useState } from "react";
 import {
     Alert,
-    Card,
-    CardBody,
-    Bullseye,
     Form,
-    Grid,
-    GridItem,
     Button,
     TextInput,
     Panel,
     InputGroup,
     PanelMain,
     PanelMainBody,
+    InputGroupItem,
 } from "@patternfly/react-core";
 
 import { SearchIcon } from "@patternfly/react-icons";
@@ -77,43 +73,51 @@ const ProjectSearch = () => {
                 <PanelMainBody>
                     <Form>
                         <InputGroup>
-                            <TextInput
-                                isRequired
-                                type="text"
-                                name="forge"
-                                aria-describedby="forge"
-                                id="project-search-forge"
-                                value={forge}
-                                placeholder="Git forge (e.g. github.com) or paste repo URL (e.g. github.com/packit/packit)"
-                                onChange={(e) => handleForgeChange(e)}
-                            />
-                            <TextInput
-                                isRequired
-                                type="text"
-                                name="namespace"
-                                aria-describedby="namespace"
-                                id="project-search-namespace"
-                                value={namespace}
-                                placeholder="Git repo namespace (optional)"
-                                onChange={(e) => setNamespace(e)}
-                            />
-                            <TextInput
-                                isRequired
-                                type="text"
-                                name="repo-name"
-                                aria-describedby="repo-name"
-                                id="project-search-repo-name"
-                                value={repoName}
-                                placeholder="Git repo name (optional)"
-                                onChange={(e) => setRepoName(e)}
-                            />
-                            <Button
-                                variant="plain"
-                                aria-label="Search"
-                                onClick={goToProjectDetails}
-                            >
-                                <SearchIcon />
-                            </Button>
+                            <InputGroupItem isFill>
+                                <TextInput
+                                    isRequired
+                                    type="text"
+                                    name="forge"
+                                    aria-describedby="forge"
+                                    id="project-search-forge"
+                                    value={forge}
+                                    placeholder="Git forge (e.g. github.com) or paste repo URL (e.g. github.com/packit/packit)"
+                                    onChange={(e) => handleForgeChange(e)}
+                                />
+                            </InputGroupItem>
+                            <InputGroupItem isFill>
+                                <TextInput
+                                    isRequired
+                                    type="text"
+                                    name="namespace"
+                                    aria-describedby="namespace"
+                                    id="project-search-namespace"
+                                    value={namespace}
+                                    placeholder="Git repo namespace (optional)"
+                                    onChange={(e) => setNamespace(e)}
+                                />
+                            </InputGroupItem>
+                            <InputGroupItem isFill>
+                                <TextInput
+                                    isRequired
+                                    type="text"
+                                    name="repo-name"
+                                    aria-describedby="repo-name"
+                                    id="project-search-repo-name"
+                                    value={repoName}
+                                    placeholder="Git repo name (optional)"
+                                    onChange={(e) => setRepoName(e)}
+                                />
+                            </InputGroupItem>
+                            <InputGroupItem>
+                                <Button
+                                    variant="plain"
+                                    aria-label="Search"
+                                    onClick={goToProjectDetails}
+                                >
+                                    <SearchIcon />
+                                </Button>
+                            </InputGroupItem>
                         </InputGroup>
                         {invalidFormWarning}
                     </Form>

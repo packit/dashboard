@@ -173,7 +173,9 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                                                 aria-label="wrap text checkbox"
                                                 isChecked={isTextWrapped}
                                                 id="wrap-text-checkbox"
-                                                onChange={setIsTextWrapped}
+                                                onChange={(_event, val) =>
+                                                    setIsTextWrapped(val)
+                                                }
                                             />
                                         </ToolbarItem>
                                         <ToolbarItem>
@@ -182,13 +184,15 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                                                 aria-label="show line numbers checkbox"
                                                 isChecked={isLineNumbersShown}
                                                 id="show-lines-checkbox"
-                                                onChange={setIsLineNumbersShown}
+                                                onChange={(_event, val) =>
+                                                    setIsLineNumbersShown(val)
+                                                }
                                             />
                                         </ToolbarItem>
                                     </ToolbarGroup>
                                     <ToolbarGroup
                                         variant="icon-button-group"
-                                        alignment={{ default: "alignRight" }}
+                                        align={{ default: "alignRight" }}
                                     >
                                         <ToolbarItem>
                                             <Tooltip

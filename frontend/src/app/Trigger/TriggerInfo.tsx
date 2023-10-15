@@ -1,21 +1,14 @@
 import React, { useState } from "react";
 
+import { Label } from "@patternfly/react-core";
 import {
     Dropdown,
     DropdownToggle,
     DropdownItem,
-    Label,
-} from "@patternfly/react-core";
+} from "@patternfly/react-core/deprecated";
 
 import { CaretDownIcon, ExternalLinkAltIcon } from "@patternfly/react-icons";
-import {
-    TableComposable,
-    Tbody,
-    Td,
-    Th,
-    Thead,
-    Tr,
-} from "@patternfly/react-table";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 
 interface TriggerInfoProps {
     trigger: {
@@ -63,7 +56,7 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
     let activeViewContent;
     if (activeView === "Builds") {
         activeViewContent = (
-            <TableComposable variant="compact" aria-label="Builds Table">
+            <Table variant="compact" aria-label="Builds Table">
                 <Thead>
                     <Tr>
                         <Th>Build ID</Th>
@@ -86,12 +79,12 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
                         </Tr>
                     ))}
                 </Tbody>
-            </TableComposable>
+            </Table>
         );
     }
     if (activeView === "SRPM Builds") {
         activeViewContent = (
-            <TableComposable variant="compact" aria-label="SRPM Builds Table">
+            <Table variant="compact" aria-label="SRPM Builds Table">
                 <Thead>
                     <Tr>
                         <Th>SRPM Build ID</Th>
@@ -112,15 +105,12 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
                         </Tr>
                     ))}
                 </Tbody>
-            </TableComposable>
+            </Table>
         );
     }
     if (activeView === "Test Runs") {
         activeViewContent = (
-            <TableComposable
-                variant="compact"
-                aria-label="Testing Farm Results Table"
-            >
+            <Table variant="compact" aria-label="Testing Farm Results Table">
                 <Thead>
                     <Tr>
                         <Th>Pipeline ID</Th>
@@ -143,7 +133,7 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
                         </Tr>
                     ))}
                 </Tbody>
-            </TableComposable>
+            </Table>
         );
     }
 

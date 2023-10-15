@@ -1,6 +1,4 @@
 import {
-    Card,
-    CardBody,
     Label,
     DescriptionList,
     DescriptionListDescription,

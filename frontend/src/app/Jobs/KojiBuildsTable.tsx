@@ -1,13 +1,11 @@
 import React, { useMemo } from "react";
 
+import { TableVariant, cellWidth, IRow } from "@patternfly/react-table";
 import {
     Table,
     TableHeader,
     TableBody,
-    TableVariant,
-    cellWidth,
-    IRow,
-} from "@patternfly/react-table";
+} from "@patternfly/react-table/deprecated";
 
 import { Button } from "@patternfly/react-core";
 import { TriggerLink } from "../Trigger/TriggerLink";
@@ -40,7 +38,7 @@ const KojiBuildsTable = () => {
     // Headings
     const columns = [
         {
-            title: <span className="pf-u-screen-reader">Forge</span>,
+            title: <span className="pf-v5-u-screen-reader">Forge</span>,
         }, // space for forge icon
         { title: "Trigger", transforms: [cellWidth(35)] },
         { title: "Target", transforms: [cellWidth(20)] },
