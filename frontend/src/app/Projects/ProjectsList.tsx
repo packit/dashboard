@@ -61,6 +61,8 @@ interface ProjectsListProps {
 const columnNames = {
     name: "Repositories",
     branches: "Branches",
+    issues: "Issues",
+    releases: "Releases",
     prs: "Pull requests",
     workspaces: "Workspaces",
     lastCommit: "Last commit",
@@ -144,34 +146,46 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                                     dataLabel={columnNames.branches}
                                     // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
                                 >
-                                    <CodeBranchIcon key="icon" />{" "}
-                                    {project.branches_handled}
+                                    <span>
+                                        <CodeBranchIcon key="icon" />
+                                        &nbsp;
+                                        {project.branches_handled}
+                                    </span>
                                 </Td>
                                 <Td
                                     width={10}
-                                    dataLabel={columnNames.branches}
+                                    dataLabel={columnNames.issues}
                                     // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
                                 >
-                                    <SecurityIcon key="icon" />{" "}
-                                    {project.issues_handled}
+                                    <span>
+                                        <SecurityIcon key="icon" />
+                                        &nbsp;
+                                        {project.issues_handled}
+                                    </span>
                                 </Td>
                                 <Td
                                     width={10}
-                                    dataLabel={columnNames.branches}
+                                    dataLabel={columnNames.releases}
                                     // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
                                 >
-                                    <BuildIcon key="icon" />{" "}
-                                    {project.releases_handled}
+                                    <span>
+                                        <BuildIcon key="icon" />
+                                        &nbsp;
+                                        {project.releases_handled}
+                                    </span>
                                 </Td>
                                 <Td
                                     width={15}
-                                    dataLabel={columnNames.branches}
+                                    dataLabel={columnNames.prs}
                                     // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
                                 >
-                                    <BlueprintIcon key="icon" />{" "}
-                                    {project.prs_handled}
+                                    <span>
+                                        <BlueprintIcon key="icon" />
+                                        &nbsp;
+                                        {project.prs_handled}
+                                    </span>
                                 </Td>
-                                <Td dataLabel={columnNames.branches}>
+                                <Td dataLabel="External">
                                     <a
                                         href={project.project_url}
                                         target="_blank"
