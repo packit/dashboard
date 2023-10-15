@@ -1,25 +1,11 @@
 import React, { useMemo } from "react";
-import {
-    Button,
-    Tooltip,
-    TooltipPosition,
-    Flex,
-    FlexItem,
-    Card,
-    CardTitle,
-    Gallery,
-    GalleryItem,
-    CardBody,
-    CardFooter,
-    CardHeader,
-} from "@patternfly/react-core";
+import { Button } from "@patternfly/react-core";
 
 import {
     CodeBranchIcon,
     SecurityIcon,
     BuildIcon,
     BlueprintIcon,
-    ExternalLinkAltIcon,
 } from "@patternfly/react-icons";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -27,7 +13,7 @@ import { Preloader } from "../Preloader/Preloader";
 import { Link } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import {
-    TableComposable,
+    Table /* data-codemods */,
     Tbody,
     Td,
     Th,
@@ -110,7 +96,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
 
     return (
         <>
-            <TableComposable aria-label="Projects">
+            <Table aria-label="Projects">
                 <Thead>
                     <Tr>
                         <Th>Repositories</Th>
@@ -199,7 +185,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
                         </Tbody>
                     );
                 })}
-            </TableComposable>
+            </Table>
             <center>
                 <br />
                 <Button variant="control" onClick={() => fetchNextPage()}>
