@@ -4,6 +4,16 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { getReleaseLink, getCommitLink } from "../utils/forgeUrls";
+import {
+    Table,
+    TableComposable,
+    TableHeader,
+    Tbody,
+    Td,
+    Th,
+    Thead,
+    Tr,
+} from "@patternfly/react-table";
 
 // Fetch data from dashboard backend (or if we want, directly from the API)
 async function fetchData(URL: string): Promise<ProjectRelease[]> {
@@ -44,25 +54,17 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
     }
 
     return (
-        <table
-            className="pf-c-table pf-m-compact pf-m-grid-md"
-            role="grid"
-            aria-label="Testing Farm Results Table"
-        >
-            <thead>
-                <tr role="row">
-                    <th role="columnheader" scope="col">
-                        Tag
-                    </th>
-                    <th role="columnheader" scope="col">
-                        Commit Hash
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
+        <TableComposable variant="compact">
+            <Thead>
+                <Tr>
+                    <Th>Tag</Th>
+                    <Th>Commit Hash</Th>
+                </Tr>
+            </Thead>
+            <Tbody>
                 {data?.map((release, index) => (
-                    <tr role="row" key={index}>
-                        <td role="cell" data-label="Tag">
+                    <Tr key={index}>
+                        <Td role="cell" data-label="Tag">
                             <a
                                 href={getReleaseLink(
                                     `https://${forge}/${namespace}/${repoName}`,
@@ -73,8 +75,8 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
                             >
                                 {release.tag_name}
                             </a>
-                        </td>
-                        <td role="cell" data-label="Commit Hash">
+                        </Td>
+                        <Td role="cell" data-label="Commit Hash">
                             <a
                                 href={getCommitLink(
                                     `https://${forge}/${namespace}/${repoName}`,
@@ -85,11 +87,11 @@ const ReleasesList: React.FC<ReleasesListProps> = ({
                             >
                                 {release.commit_hash}
                             </a>
-                        </td>
-                    </tr>
+                        </Td>
+                    </Tr>
                 ))}
-            </tbody>
-        </table>
+            </Tbody>
+        </TableComposable>
     );
 };
 
