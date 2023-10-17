@@ -15,7 +15,7 @@ concurrency: preview-${{ github.ref }}
 
 jobs:
   deploy-preview:
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-latest
     env:
       DOMAIN: packit-dashboard-pr-${{ github.event.inputs.pr_id || github.event.number }}.surge.sh
       GH_PR_NUM: ${{ github.event.inputs.pr_id || github.event.number }}
