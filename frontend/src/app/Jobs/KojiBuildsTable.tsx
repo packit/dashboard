@@ -59,7 +59,6 @@ const KojiBuildsTable = () => {
     const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
         useInfiniteQuery(["koji"], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
-            keepPreviousData: true,
         });
 
     // Convert fetched json into row format that the table can read

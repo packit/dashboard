@@ -90,7 +90,6 @@ const SyncReleaseTable: React.FC<SyncReleaseTableProps> = ({ job }) => {
     const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
         useInfiniteQuery([job], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
-            keepPreviousData: true,
         });
 
     // Convert fetched json into row format that the table can read

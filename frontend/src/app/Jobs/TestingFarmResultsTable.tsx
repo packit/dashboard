@@ -53,7 +53,6 @@ const TestingFarmResultsTable = () => {
     const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
         useInfiniteQuery(["copr"], fetchData, {
             getNextPageParam: (_, allPages) => allPages.length + 1,
-            keepPreviousData: true,
         });
 
     function jsonToRow(test_results: TestingFarmResult[]) {
