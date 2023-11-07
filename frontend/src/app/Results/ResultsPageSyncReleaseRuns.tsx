@@ -153,7 +153,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                         isTextWrapped={isTextWrapped}
                         hasLineNumbers={isLineNumbersShown}
                         theme="dark"
-                        // height={isFullScreen ? "100%" : 600}
+                        height={isFullScreen ? "100%" : 600}
                         data={
                             data.logs ? data.logs : "Log is not available yet."
                         }
