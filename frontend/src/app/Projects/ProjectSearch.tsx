@@ -82,7 +82,9 @@ const ProjectSearch = () => {
                                     id="project-search-forge"
                                     value={forge}
                                     placeholder="Git forge (e.g. github.com) or paste repo URL (e.g. github.com/packit/packit)"
-                                    onChange={(e) => handleForgeChange(e)}
+                                    onChange={(_event, val) =>
+                                        handleForgeChange(val)
+                                    }
                                 />
                             </InputGroupItem>
                             <InputGroupItem isFill>
@@ -94,7 +96,9 @@ const ProjectSearch = () => {
                                     id="project-search-namespace"
                                     value={namespace}
                                     placeholder="Git repo namespace (optional)"
-                                    onChange={(e) => setNamespace(e)}
+                                    onChange={(_event, val) =>
+                                        setNamespace(val)
+                                    }
                                 />
                             </InputGroupItem>
                             <InputGroupItem isFill>
@@ -106,7 +110,7 @@ const ProjectSearch = () => {
                                     id="project-search-repo-name"
                                     value={repoName}
                                     placeholder="Git repo name (optional)"
-                                    onChange={(e) => setRepoName(e)}
+                                    onChange={(_event, val) => setRepoName(val)}
                                 />
                             </InputGroupItem>
                             <InputGroupItem>
