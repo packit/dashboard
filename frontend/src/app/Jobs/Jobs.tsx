@@ -95,6 +95,16 @@ const Jobs = () => {
                                     Pull From Upstreams
                                 </NavLink>
                             </NavItem>
+                            <NavItem
+                                isActive={
+                                    currentMatch?.id ===
+                                    "downstream-koji-builds"
+                                }
+                            >
+                                <NavLink to={"downstream-koji-builds"}>
+                                    Downstream Koji Builds
+                                </NavLink>
+                            </NavItem>
                         </NavList>
                     </Nav>
                 </PageNavigation>

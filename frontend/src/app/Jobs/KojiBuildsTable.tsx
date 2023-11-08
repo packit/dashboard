@@ -18,12 +18,12 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface KojiBuild {
     packit_id: number;
-    build_id: string;
+    task_id: string;
     status: string; // TODO(SpyTec): Probably an enum right? Change to be one if so
     build_submitted_time: number;
     chroot: string;
     web_url: string;
-    build_logs_url: string;
+    build_logs_urls: string;
     // TODO(SpyTec): change interface depending on status of pr_id or branch_item.
     // They seem to be mutually exclusive so can be sure one is null and other is string
     pr_id: number | null;
@@ -33,8 +33,10 @@ export interface KojiBuild {
     repo_namespace: string;
     repo_name: string;
 }
-
-const KojiBuildsTable = () => {
+interface KojiBuildTableProps {
+    scratch: "true" | "false";
+}
+const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
     // Headings
     const columns = [
         {
@@ -51,7 +53,7 @@ const KojiBuildsTable = () => {
         fetch(
             `${
                 import.meta.env.VITE_API_URL
-            }/koji-builds?page=${pageParam}&per_page=20`,
+            }/koji-builds?scratch=${scratch}&page=${pageParam}&per_page=20`,
         )
             .then((response) => response.json())
             .then((data) => jsonToRow(data));
@@ -102,7 +104,7 @@ const KojiBuildsTable = () => {
                                     target="_blank"
                                     rel="noreferrer"
                                 >
-                                    {koji_build.build_id}
+                                    {koji_build.task_id}
                                 </a>
                             </strong>
                         ),
