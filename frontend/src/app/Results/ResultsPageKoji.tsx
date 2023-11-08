@@ -13,7 +13,8 @@ import {
     DescriptionListGroup,
     DescriptionListTerm,
 } from "@patternfly/react-core";
-
+import { TableHeader, TableBody } from "@patternfly/react-table/deprecated";
+import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink } from "../Trigger/TriggerLink";
@@ -26,7 +27,8 @@ import { useQuery } from "@tanstack/react-query";
 import { SHACopy } from "../utils/SHACopy";
 
 interface KojiBuild {
-    build_id: string;
+    scratch: boolean;
+    task_id: string;
     status: string;
     chroot: string;
     build_start_time: number;
@@ -34,7 +36,7 @@ interface KojiBuild {
     build_submitted_time: number;
     commit_sha: string;
     web_url: string;
-    build_logs_url: string;
+    build_logs_urls: string;
     srpm_build_id: number;
     run_ids: number[];
     repo_namespace: string;
@@ -115,16 +117,20 @@ const ResultsPageKoji = () => {
                             }}
                         >
                             <DescriptionListGroup>
-                                <DescriptionListTerm>
-                                    SRPM Build
-                                </DescriptionListTerm>
-                                <DescriptionListDescription>
-                                    <Label
-                                        href={`/results/srpm-builds/${data.srpm_build_id}`}
-                                    >
-                                        Details
-                                    </Label>
-                                </DescriptionListDescription>
+                                {data.srpm_build_id ? (
+                                    <>
+                                        <DescriptionListTerm>
+                                            SRPM Build
+                                        </DescriptionListTerm>
+                                        <DescriptionListDescription>
+                                            <Label
+                                                href={`/results/srpm-builds/${data.srpm_build_id}`}
+                                            >
+                                                Details
+                                            </Label>
+                                        </DescriptionListDescription>
+                                    </>
+                                ) : null}
                                 <DescriptionListTerm>
                                     Koji Build
                                 </DescriptionListTerm>
@@ -134,15 +140,38 @@ const ResultsPageKoji = () => {
                                         status={data.status}
                                         link={data.web_url}
                                     />{" "}
-                                    (
-                                    <a
-                                        href={data.build_logs_url}
-                                        rel="noreferrer"
-                                        target={"_blank"}
-                                    >
-                                        Logs
-                                    </a>
-                                    )
+                                    ({data.scratch ? "scratch" : "production"})
+                                </DescriptionListDescription>
+                                <DescriptionListTerm>
+                                    Build logs
+                                </DescriptionListTerm>
+                                <DescriptionListDescription>
+                                    {data.build_logs_urls !== null &&
+                                    Object.keys(data.build_logs_urls).length !==
+                                        0 ? (
+                                        <Table variant="compact">
+                                            <Tbody>
+                                                {data.build_logs_urls
+                                                    ? Object.entries(
+                                                          data.build_logs_urls,
+                                                      ).map(([arch, url]) => (
+                                                          <Tr key={arch}>
+                                                              <Td
+                                                                  role="cell"
+                                                                  data-label="Build log"
+                                                              >
+                                                                  <a href={url}>
+                                                                      {arch}
+                                                                  </a>
+                                                              </Td>
+                                                          </Tr>
+                                                      ))
+                                                    : null}
+                                            </Tbody>
+                                        </Table>
+                                    ) : (
+                                        <span>not provided</span>
+                                    )}
                                 </DescriptionListDescription>
                             </DescriptionListGroup>
                             <DescriptionListGroup>

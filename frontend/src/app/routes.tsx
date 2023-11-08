@@ -66,7 +66,7 @@ const routes: RouteObject[] = [
                         },
                     },
                     {
-                        element: <KojiBuildsTable />,
+                        element: <KojiBuildsTable scratch="true" />,
                         id: "koji-builds",
                         path: "koji-builds",
                         handle: {
@@ -103,6 +103,14 @@ const routes: RouteObject[] = [
                         path: "pull-from-upstreams",
                         handle: {
                             label: "Pull From Upstreams",
+                        },
+                    },
+                    {
+                        element: <KojiBuildsTable scratch="false" />,
+                        id: "downstream-koji-builds",
+                        path: "downstream-koji-builds",
+                        handle: {
+                            label: "Downstream (production) Koji builds",
                         },
                     },
                 ],
