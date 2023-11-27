@@ -34,6 +34,10 @@ CORS(api)
 _CACHE_MAXSIZE = 100
 
 
+__now = datetime.now()
+_DATE_IN_THE_PAST = __now.replace(year=__now.year - 100)
+
+
 @api.route("/api/copr-builds/")
 def copr_builds():
     page = escape(request.args.get("page"))
@@ -141,8 +145,7 @@ def usage_past_year():
 @api.route("/api/usage/total")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(days=1).seconds)
 def usage_total():
-    now = datetime.now()
-    past_date = now.replace(year=now.year - 100).strftime("%Y-%m-%d")
+    past_date = _DATE_IN_THE_PAST.strftime("%Y-%m-%d")
     return _get_usage_data_from_packit_api(usage_from=past_date)
 
 
@@ -171,8 +174,23 @@ def _get_usage_interval_data(
 
     result_jobs: dict[str, CHART_DATA_TYPE] = {}
     result_jobs_project_count: dict[str, CHART_DATA_TYPE] = {}
+    result_jobs_project_cumulative_count: dict[str, CHART_DATA_TYPE] = {}
     result_events: dict[str, CHART_DATA_TYPE] = {}
     result_active_projects: CHART_DATA_TYPE = []
+    result_active_projects_cumulative: CHART_DATA_TYPE = []
+
+    past_data = _get_usage_data_from_packit_api(
+        usage_from=_DATE_IN_THE_PAST, usage_to=days_legend[-1], top=100000
+    ).json
+    cumulative_projects_past = set(
+        past_data["active_projects"]["top_projects_by_events_handled"].keys()
+    )
+    cumulative_projects = cumulative_projects_past.copy()
+    cumulative_projects_for_jobs_past = {
+        job: set(data["top_projects_by_job_runs"].keys())
+        for job, data in past_data["jobs"].items()
+    }
+    cumulative_projects_for_jobs = cumulative_projects_for_jobs_past.copy()
 
     for day in reversed(days_legend):
         day_from = (day - delta).isoformat()
@@ -191,6 +209,12 @@ def _get_usage_interval_data(
                 {"x": legend, "y": len(data["top_projects_by_job_runs"])}
             )
 
+            cumulative_projects_for_jobs[job] |= data["top_projects_by_job_runs"].keys()
+            result_jobs_project_cumulative_count.setdefault(job, [])
+            result_jobs_project_cumulative_count[job].append(
+                {"x": legend, "y": len(cumulative_projects_for_jobs[job])}
+            )
+
         for event, data in interval_result["events"].items():
             result_events.setdefault(event, [])
             result_events[event].append({"x": legend, "y": data["events_handled"]})
@@ -198,14 +222,30 @@ def _get_usage_interval_data(
         result_active_projects.append(
             {"x": legend, "y": interval_result["active_projects"].get("project_count")}
         )
+        cumulative_projects |= interval_result["active_projects"][
+            "top_projects_by_events_handled"
+        ].keys()
+        result_active_projects_cumulative.append(
+            {"x": legend, "y": len(cumulative_projects)}
+        )
+
+    onboarded_projects_per_job = dict()
+    for job, data in past_data["jobs"].items():
+        onboarded_projects_per_job[job] = list(
+            cumulative_projects_for_jobs[job] - cumulative_projects_for_jobs_past[job]
+        )
 
     return {
         "jobs": result_jobs,
         "jobs_project_count": result_jobs_project_count,
+        "jobs_project_cumulative_count": result_jobs_project_cumulative_count,
         "events": result_events,
         "from": days_legend[0].isoformat(),
         "to": days_legend[-1].isoformat(),
         "active_projects": result_active_projects,
+        "active_projects_cumulative": result_active_projects_cumulative,
+        "onboarded_projects": list(cumulative_projects - cumulative_projects_past),
+        "onboarded_projects_per_job": onboarded_projects_per_job,
     }
 
 
