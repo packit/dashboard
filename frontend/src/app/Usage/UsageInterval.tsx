@@ -23,6 +23,7 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
+import { ForgeIcon } from "../Forge/ForgeIcon";
 
 const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
     fetch(
@@ -151,6 +152,33 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
         );
     }
 
+    function getListOfNewProjects(projects, categoryName, color) {
+        return (
+            <LabelGroup categoryName={getReadableName(categoryName) + ":"}>
+                {projects.map((project) => (
+                    <Label
+                        variant="outline"
+                        color="blue"
+                        href={project}
+                        icon={<ForgeIcon url={project} />}
+                    >
+                        {project.replace("https://", "")}
+                    </Label>
+                ))}
+            </LabelGroup>
+        );
+    }
+
+    function getListOfNewProjectsForJobs(projectsForJobs) {
+        return (
+            <>
+                {Object.keys(projectsForJobs).map((job) => (
+                    <>{getListOfNewProjects(projectsForJobs[job], job)}</>
+                ))}
+            </>
+        );
+    }
+
     return (
         <>
             <Card>
@@ -222,6 +250,20 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
                             data,
                             "Active projects",
                         )}
+                        <FlexItem>
+                            <Card>
+                                <CardTitle>New projects:</CardTitle>
+                                <CardBody>
+                                    {getListOfNewProjects(
+                                        data.onboarded_projects,
+                                        "New setup",
+                                    )}
+                                    {getListOfNewProjectsForJobs(
+                                        data.onboarded_projects_per_job,
+                                    )}
+                                </CardBody>
+                            </Card>
+                        </FlexItem>
                     </Flex>
                 </CardBody>
             </Card>
