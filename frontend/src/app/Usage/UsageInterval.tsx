@@ -2,9 +2,12 @@ import {
     PageSection,
     Card,
     CardBody,
+    CardTitle,
     Title,
     Flex,
     FlexItem,
+    LabelGroup,
+    Label,
 } from "@patternfly/react-core";
 import {
     Chart,
@@ -151,6 +154,24 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
     return (
         <>
             <Card>
+                <CardTitle>Project activity</CardTitle>
+                <CardBody>
+                    <Flex>
+                        {getLineChart(
+                            ["active_projects"],
+                            data,
+                            "Number of active projects",
+                        )}
+                        {getLineChart(
+                            Object.keys(data.events),
+                            data.events,
+                            "Number of processed events",
+                        )}
+                    </Flex>
+                </CardBody>
+            </Card>
+            <Card>
+                <CardTitle>Processed jobs</CardTitle>
                 <CardBody>
                     <Flex>
                         {getLineChart(
@@ -161,6 +182,18 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
                             "Number of processed jobs",
                         )}
                         {getLineChart(
+                            ["sync_release_runs"],
+                            data.jobs,
+                            "Number of synced releases",
+                        )}
+                    </Flex>
+                </CardBody>
+            </Card>
+            <Card>
+                <CardTitle>Active projects</CardTitle>
+                <CardBody>
+                    <Flex>
+                        {getLineChart(
                             Object.keys(data.jobs_project_count).filter(
                                 (obj) => obj !== "sync_release_runs",
                             ),
@@ -169,23 +202,25 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
                         )}
                         {getLineChart(
                             ["sync_release_runs"],
-                            data.jobs,
-                            "Number of synced releases",
-                        )}
-                        {getLineChart(
-                            ["sync_release_runs"],
                             data.jobs_project_count,
                             "Number of projects with synced releases",
                         )}
+                    </Flex>
+                </CardBody>
+            </Card>
+            <Card>
+                <CardTitle>Onboarded projects</CardTitle>
+                <CardBody>
+                    <Flex>
                         {getLineChart(
-                            ["active_projects"],
-                            data,
-                            "Number of active projects",
+                            Object.keys(data.jobs_project_cumulative_count),
+                            data.jobs_project_cumulative_count,
+                            "Cumulative number of projects with at least a single job run",
                         )}
                         {getLineChart(
-                            Object.keys(data.events),
-                            data.events,
-                            "Number of processed events",
+                            ["active_projects_cumulative"],
+                            data,
+                            "Active projects",
                         )}
                     </Flex>
                 </CardBody>
