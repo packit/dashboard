@@ -93,20 +93,21 @@ const UsageList: React.FC<UsageListProps> = (props) => {
     function getInstanceChartData(instances: {
         [key: string]: number;
     }): InstanceChartData {
-        const instances_to_chart_data = Object.keys(instances)
-            .filter((inst) => !inst.includes("fedoraproject.org"))
-            .map((key, i) => ({
+        const instances_to_chart_data = Object.keys(instances).map(
+            (key, i) => ({
                 x: `${key}`,
                 y: instances[key],
-            }));
-        const instances_to_chart_legend = Object.keys(instances)
-            .filter((inst) => !inst.includes("fedoraproject.org"))
-            .map((key, i) => ({
+            }),
+        );
+        const instances_to_chart_legend = Object.keys(instances).map(
+            (key, i) => ({
                 name: `${key}: ${instances[key]}`,
-            }));
-        const instances_to_chart_count = Object.keys(instances)
-            .filter((inst) => !inst.includes("fedoraproject.org"))
-            .reduce((a, v) => (a = a + instances[v]), 0);
+            }),
+        );
+        const instances_to_chart_count = Object.keys(instances).reduce(
+            (a, v) => (a = a + instances[v]),
+            0,
+        );
         return [
             instances_to_chart_data,
             instances_to_chart_legend,
