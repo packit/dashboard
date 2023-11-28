@@ -197,8 +197,8 @@ const UsageList: React.FC<UsageListProps> = (props) => {
                 <Card>
                     <CardBody>
                         <ChartDonut
-                            ariaDesc="Number of project on each instance"
-                            ariaTitle="Number of project on each instance"
+                            ariaDesc="Number of projects on each instance"
+                            ariaTitle="Number of projects on each instance"
                             constrainToVisibleArea={true}
                             data={data_and_labels_total_number[0]}
                             labels={({ datum }) => `${datum.x}: ${datum.y}`}
