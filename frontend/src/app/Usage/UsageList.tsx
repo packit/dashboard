@@ -2,6 +2,7 @@ import {
     PageSection,
     Card,
     CardBody,
+    CardTitle,
     Title,
     Flex,
     FlexItem,
@@ -119,38 +120,69 @@ const UsageList: React.FC<UsageListProps> = (props) => {
         data_and_labels: ChartData,
         job_name: string,
         total_number: number,
+        active_project_number: number,
     ) {
         return (
             <FlexItem>
                 <Card>
+                    <CardTitle>{job_name}</CardTitle>
                     <CardBody>
-                        <ChartDonut
-                            ariaDesc={
-                                "Number of " +
-                                `${job_name}` +
-                                " triggered for top projects"
-                            }
-                            ariaTitle={
-                                "Number of " +
-                                `${job_name}` +
-                                " triggered for top projects"
-                            }
-                            constrainToVisibleArea={true}
-                            data={data_and_labels[0]}
-                            labels={({ datum }) => `${datum.x}: ${datum.y}`}
-                            legendData={data_and_labels[1]}
-                            legendOrientation="vertical"
-                            legendPosition="right"
-                            padding={{
-                                bottom: 20,
-                                left: 0,
-                                right: 350, // Adjusted to accommodate legend
-                                top: 20,
-                            }}
-                            subTitle={job_name}
-                            title={total_number.toString()}
-                            width={500}
-                        />
+                        <Flex>
+                            <FlexItem>
+                                <ChartDonut
+                                    ariaDesc={
+                                        "Number of " +
+                                        `${job_name}` +
+                                        " triggered for top projects"
+                                    }
+                                    ariaTitle={
+                                        "Number of " +
+                                        `${job_name}` +
+                                        " triggered for top projects"
+                                    }
+                                    constrainToVisibleArea
+                                    data={data_and_labels[0]}
+                                    labels={({ datum }) =>
+                                        `${datum.x}: ${datum.y}`
+                                    }
+                                    subTitle={job_name}
+                                    title={total_number.toString()}
+                                    width={200}
+                                    padding={{
+                                        bottom: 20,
+                                        left: 20,
+                                        right: 20,
+                                        top: 20,
+                                    }}
+                                />
+                            </FlexItem>
+                            <FlexItem>
+                                <ChartDonut
+                                    ariaDesc="Chart showing number of active projects"
+                                    ariaTitle="Chart showing number of active projects"
+                                    constrainToVisibleArea
+                                    data={[
+                                        {
+                                            x: "Active projects",
+                                            y:
+                                                active_project_number > 0
+                                                    ? 100
+                                                    : 0,
+                                        },
+                                    ]}
+                                    labels={({ datum }) => `${datum.x}`}
+                                    subTitle="Active projects"
+                                    title={active_project_number.toString()}
+                                    width={200}
+                                    padding={{
+                                        bottom: 20,
+                                        left: 20,
+                                        right: 20,
+                                        top: 20,
+                                    }}
+                                />
+                            </FlexItem>
+                        </Flex>
                     </CardBody>
                 </Card>
             </FlexItem>
@@ -175,13 +207,13 @@ const UsageList: React.FC<UsageListProps> = (props) => {
                             legendPosition="right"
                             padding={{
                                 bottom: 20,
-                                left: 0,
-                                right: 350, // Adjusted to accommodate legend
+                                left: 20,
+                                right: 250, // Adjusted to accommodate legend
                                 top: 20,
                             }}
                             subTitle={job_name}
                             title={data_and_labels_total_number[2].toString()}
-                            width={500}
+                            width={424}
                         />
                     </CardBody>
                 </Card>
@@ -219,6 +251,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
                 .replace("Tft", "TFT")
                 .replace("Srpm", "SRPM"),
             data.jobs[key].job_runs,
+            data.jobs[key].active_projects,
         ),
     );
 

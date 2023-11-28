@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: MIT
 
 import os
+from collections import OrderedDict
 from datetime import datetime, timedelta
 from logging import getLogger
 from pathlib import Path
@@ -109,18 +110,40 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
     return make_response(url)
 
 
+def _get_past_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
+    top_all = 100000  # we will filter later,
+    # but we need to get all to have a number of active projects
+
+    raw_result = _get_usage_data_from_packit_api(
+        usage_from=usage_from, usage_to=usage_to, top=top_all
+    ).json
+    return {
+        "active_projects": raw_result["active_projects"],
+        "jobs": {
+            job: {
+                "job_runs": data["job_runs"],
+                "top_projects_by_job_runs": dict(
+                    list(OrderedDict(data["top_projects_by_job_runs"]).items())[:top]
+                ),
+                "active_projects": len(data["top_projects_by_job_runs"]),
+            }
+            for job, data in raw_result["jobs"].items()
+        },
+    }
+
+
 @api.route("/api/usage/past-day")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
 def usage_past_day():
     yesterday_date = (datetime.now() - timedelta(days=1)).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=yesterday_date)
+    return _get_past_usage_data_from_packit_api(usage_from=yesterday_date)
 
 
 @api.route("/api/usage/past-week")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(hours=1).seconds)
 def usage_past_week():
     past_week_date = (datetime.now() - timedelta(days=7)).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=past_week_date)
+    return _get_past_usage_data_from_packit_api(usage_from=past_week_date)
 
 
 @api.route("/api/usage/past-month")
@@ -131,7 +154,7 @@ def usage_past_month():
     past_month_date = now.replace(
         year=past_month_past_day.year, month=past_month_past_day.month
     ).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=past_month_date)
+    return _get_past_usage_data_from_packit_api(usage_from=past_month_date)
 
 
 @api.route("/api/usage/past-year")
@@ -139,14 +162,14 @@ def usage_past_month():
 def usage_past_year():
     now = datetime.now()
     past_year_date = now.replace(year=now.year - 1).strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=past_year_date)
+    return _get_past_usage_data_from_packit_api(usage_from=past_year_date)
 
 
 @api.route("/api/usage/total")
 @ttl_cache(maxsize=_CACHE_MAXSIZE, ttl=timedelta(days=1).seconds)
 def usage_total():
     past_date = _DATE_IN_THE_PAST.strftime("%Y-%m-%d")
-    return _get_usage_data_from_packit_api(usage_from=past_date)
+    return _get_past_usage_data_from_packit_api(usage_from=past_date)
 
 
 # format the chart needs is a list of {"x": "datetimelegend", "y": value}
