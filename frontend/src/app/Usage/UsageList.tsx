@@ -7,7 +7,7 @@ import {
     Flex,
     FlexItem,
 } from "@patternfly/react-core";
-import { ChartDonut } from "@patternfly/react-charts";
+import { ChartDonut, ChartBullet } from "@patternfly/react-charts";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
@@ -221,6 +221,60 @@ const UsageList: React.FC<UsageListProps> = (props) => {
         );
     }
 
+    function getGoalProgress() {
+        if (props.what != "total") {
+            return <></>;
+        }
+        const goalDescription =
+            data.jobs.sync_release_runs.active_projects.toString() +
+            " projects (" +
+            (
+                (data.jobs.sync_release_runs.active_projects / 200) *
+                100
+            ).toString() +
+            "%)";
+        return (
+            <Card>
+                <CardTitle>Packit goal for Q4/2023</CardTitle>
+                <CardBody>
+                    <Flex>
+                        <Card>
+                            <CardTitle>
+                                Sync release used by 200 projects by the end of
+                                2023.
+                            </CardTitle>
+                            <CardBody>
+                                <ChartBullet
+                                    ariaDesc="Chart describing onboarding for release syncing"
+                                    ariaTitle="Chart describing onboarding for release syncing"
+                                    constrainToVisibleArea
+                                    labels={({ datum }) =>
+                                        `${datum.name}: ${datum.y}`
+                                    }
+                                    maxDomain={{ y: 200 }}
+                                    name="Chart describing onboarding for release syncing"
+                                    primarySegmentedMeasureData={[
+                                        {
+                                            name: "Onboarded projects",
+                                            y: data.jobs.sync_release_runs
+                                                .active_projects,
+                                        },
+                                    ]}
+                                    qualitativeRangeData={[
+                                        { name: "Q3 state", y: 124 },
+                                        { name: "Q4 goal", y: 200 },
+                                    ]}
+                                    height={150}
+                                    width={424}
+                                />
+                            </CardBody>
+                        </Card>
+                    </Flex>
+                </CardBody>
+            </Card>
+        );
+    }
+
     function getReadableJobName(job_name: string) {
         return job_name
             .toLowerCase()
@@ -263,6 +317,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
                     <Flex>{job_charts}</Flex>
                 </CardBody>
             </Card>
+            {getGoalProgress()}
         </>
     );
 };
