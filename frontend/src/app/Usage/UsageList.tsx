@@ -229,10 +229,6 @@ const UsageList: React.FC<UsageListProps> = (props) => {
             .join(" ");
     }
 
-    const all_projects_instance_chart = getInstanceChart(
-        getInstanceChartData(data.all_projects.instances),
-        "All projects",
-    );
     const active_projects_instance_chart = getInstanceChart(
         getInstanceChartData(data.active_projects.instances),
         "Active projects",
@@ -259,10 +255,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
         <>
             <Card>
                 <CardBody>
-                    <Flex>
-                        {all_projects_instance_chart}
-                        {active_projects_instance_chart}
-                    </Flex>
+                    <Flex>{active_projects_instance_chart}</Flex>
                 </CardBody>
             </Card>
             <Card>
