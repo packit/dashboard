@@ -111,11 +111,16 @@ def _get_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
 
 
 def _get_past_usage_data_from_packit_api(usage_from=None, usage_to=None, top=5):
-    top_all = 100000  # we will filter later,
-    # but we need to get all to have a number of active projects
+    # Even though frontend expects only the first N (=5) to be present
+    # in the project lists, we need to get all to calculate the number
+    # of active projects.
+    # (This info will be added to the payload for frontend.)
+    # The original `top` argument will be used later
+    # to get the expected number of projects in the response.
+    top_all_project = 100000
 
     raw_result = _get_usage_data_from_packit_api(
-        usage_from=usage_from, usage_to=usage_to, top=top_all
+        usage_from=usage_from, usage_to=usage_to, top=top_all_project
     ).json
     return {
         "active_projects": raw_result["active_projects"],
