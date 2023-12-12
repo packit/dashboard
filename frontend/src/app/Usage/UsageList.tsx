@@ -15,7 +15,9 @@ import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageListProps["what"]) =>
-    fetch(`/api/usage/${granularity}`).then((response) => response.json());
+    fetch(`${import.meta.env.VITE_API_URL}/usage/${granularity}`).then(
+        (response) => response.json(),
+    );
 
 interface UsageListProps {
     what: "past-day" | "past-week" | "past-month" | "past-year" | "total";

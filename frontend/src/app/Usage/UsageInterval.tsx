@@ -27,7 +27,9 @@ import { ForgeIcon } from "../Forge/ForgeIcon";
 
 const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
     fetch(
-        `/api/usage/intervals?days=${granularity.days}&hours=${granularity.hours}&count=${granularity.count}`,
+        `${import.meta.env.VITE_API_URL}/usage/intervals?days=${
+            granularity.days
+        }&hours=${granularity.hours}&count=${granularity.count}`,
     ).then((response) => response.json());
 
 interface UsageIntervalProps {
