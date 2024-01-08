@@ -1,10 +1,10 @@
 import React from "react";
 import {
-    PageSection,
-    PageSectionVariants,
-    TextContent,
-    Text,
-    Label,
+  PageSection,
+  PageSectionVariants,
+  TextContent,
+  Text,
+  Label,
 } from "@patternfly/react-core";
 
 import { ForgeIcon } from "../Forge/ForgeIcon";
@@ -13,30 +13,27 @@ import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 
 const Namespace = () => {
-    useTitle("Project Namespace");
+  useTitle("Project Namespace");
 
-    let { forge, namespace } = useParams();
+  let { forge, namespace } = useParams();
 
-    return (
-        <>
-            <PageSection variant={PageSectionVariants.light}>
-                <TextContent>
-                    <Text component="h1">{namespace}</Text>
-                    <Text component="p">
-                        <Label
-                            color="blue"
-                            icon={<ForgeIcon url={`https://${forge}`} />}
-                        >
-                            {forge}
-                        </Label>
-                    </Text>
-                </TextContent>
-            </PageSection>
-            <PageSection>
-                <ProjectsList forge={forge} namespace={namespace} />
-            </PageSection>
-        </>
-    );
+  return (
+    <>
+      <PageSection variant={PageSectionVariants.light}>
+        <TextContent>
+          <Text component="h1">{namespace}</Text>
+          <Text component="p">
+            <Label color="blue" icon={<ForgeIcon url={`https://${forge}`} />}>
+              {forge}
+            </Label>
+          </Text>
+        </TextContent>
+      </PageSection>
+      <PageSection>
+        <ProjectsList forge={forge} namespace={namespace} />
+      </PageSection>
+    </>
+  );
 };
 
 export { Namespace };

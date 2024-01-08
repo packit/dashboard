@@ -5,10 +5,10 @@ import "@patternfly/react-core/dist/styles/base.css";
 initialize();
 
 const preview = {
-    parameters: {
-        actions: { argTypesRegex: "^on[A-Z].*" },
-    },
-    loaders: [mswLoader],
+  parameters: {
+    actions: { argTypesRegex: "^on[A-Z].*" },
+  },
+  loaders: [mswLoader],
 };
 // Provide the MSW addon decorator globally so it works for every Storybook
 export default preview;

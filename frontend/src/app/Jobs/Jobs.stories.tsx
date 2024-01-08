@@ -6,23 +6,23 @@ import { Jobs } from "./Jobs";
 import { CoprBuildsTable } from "./CoprBuildsTable";
 
 const meta: Meta<typeof Jobs> = {
-    title: "Jobs",
-    component: Jobs,
-    decorators: [withRouter, withQueryClient],
+  title: "Jobs",
+  component: Jobs,
+  decorators: [withRouter, withQueryClient],
 };
 
 export default meta;
 type Story = StoryObj<typeof Jobs>;
 
 export const ResultsFound: Story = {
-    parameters: {
-        reactRouter: {
-            routePath: "/jobs/copr-builds",
-            outlet: {
-                element: <CoprBuildsTable />,
-                handle: "Copr Builds",
-                path: "copr-builds",
-            },
-        },
+  parameters: {
+    reactRouter: {
+      routePath: "/jobs/copr-builds",
+      outlet: {
+        element: <CoprBuildsTable />,
+        handle: "Copr Builds",
+        path: "copr-builds",
+      },
     },
+  },
 };

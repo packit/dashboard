@@ -6,18 +6,18 @@ import { CoprBuildData } from "./.fixtures/CoprBuildsData.fixture";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof CoprBuildsTable> = {
-    title: "Jobs/CoprBuildsTable",
-    component: CoprBuildsTable,
-    decorators: [withRouter, withQueryClient],
-    parameters: {
-        msw: {
-            handlers: {
-                common: rest.get("*/copr-builds", (req, res, ctx) => {
-                    return res(ctx.json(CoprBuildData));
-                }),
-            },
-        },
+  title: "Jobs/CoprBuildsTable",
+  component: CoprBuildsTable,
+  decorators: [withRouter, withQueryClient],
+  parameters: {
+    msw: {
+      handlers: {
+        common: rest.get("*/copr-builds", (req, res, ctx) => {
+          return res(ctx.json(CoprBuildData));
+        }),
+      },
     },
+  },
 };
 
 export default meta;
@@ -26,13 +26,13 @@ type Story = StoryObj<typeof CoprBuildsTable>;
 export const ResultsFound: Story = {};
 
 export const ServerFails: Story = {
-    parameters: {
-        msw: {
-            handlers: {
-                common: rest.get("*/copr-builds", (req, res, ctx) => {
-                    return res(ctx.delay(800), ctx.status(503));
-                }),
-            },
-        },
+  parameters: {
+    msw: {
+      handlers: {
+        common: rest.get("*/copr-builds", (req, res, ctx) => {
+          return res(ctx.delay(800), ctx.status(503));
+        }),
+      },
     },
+  },
 };
