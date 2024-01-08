@@ -25,157 +25,153 @@ import { ErrorApp } from "./Errors/ErrorApp";
 // App routes
 // Those with labels indicate they should be in sidebar
 const routes: RouteObject[] = [
-    {
-        Component: AppLayout,
+  {
+    Component: AppLayout,
+    path: "/",
+    errorElement: <ErrorApp />,
+    children: [
+      {
+        Component: Dashboard,
+        index: true,
         path: "/",
-        errorElement: <ErrorApp />,
+        handle: {
+          label: "Home",
+        },
+      },
+      {
+        element: <Projects />,
+        path: "/projects",
+        handle: {
+          divider: true,
+          label: "Projects",
+          category: "Dashboards",
+        },
+      },
+      {
+        Component: Jobs,
+        id: "jobs",
+        path: "/jobs",
+        handle: {
+          category: "Dashboards",
+          label: "Jobs",
+        },
         children: [
-            {
-                Component: Dashboard,
-                index: true,
-                path: "/",
-                handle: {
-                    label: "Home",
-                },
+          {
+            element: <CoprBuildsTable />,
+            index: true,
+            id: "copr-builds",
+            path: "copr-builds",
+            handle: {
+              label: "Copr Builds",
             },
-            {
-                element: <Projects />,
-                path: "/projects",
-                handle: {
-                    divider: true,
-                    label: "Projects",
-                    category: "Dashboards",
-                },
+          },
+          {
+            element: <KojiBuildsTable scratch="true" />,
+            id: "koji-builds",
+            path: "koji-builds",
+            handle: {
+              label: "Upstream Koji Builds",
             },
-            {
-                Component: Jobs,
-                id: "jobs",
-                path: "/jobs",
-                handle: {
-                    category: "Dashboards",
-                    label: "Jobs",
-                },
-                children: [
-                    {
-                        element: <CoprBuildsTable />,
-                        index: true,
-                        id: "copr-builds",
-                        path: "copr-builds",
-                        handle: {
-                            label: "Copr Builds",
-                        },
-                    },
-                    {
-                        element: <KojiBuildsTable scratch="true" />,
-                        id: "koji-builds",
-                        path: "koji-builds",
-                        handle: {
-                            label: "Upstream Koji Builds",
-                        },
-                    },
-                    {
-                        element: <SRPMBuildsTable />,
-                        id: "srpm-builds",
-                        path: "srpm-builds",
-                        handle: {
-                            label: "SRPM Builds",
-                        },
-                    },
-                    {
-                        element: <TestingFarmResultsTable />,
-                        id: "testing-farm-runs",
-                        path: "testing-farm-runs",
-                        handle: {
-                            label: "Testing Farm Runs",
-                        },
-                    },
-                    {
-                        element: <SyncReleaseTable job="propose-downstream" />,
-                        id: "propose-downstreams",
-                        path: "propose-downstreams",
-                        handle: {
-                            label: "Propose Downstreams",
-                        },
-                    },
-                    {
-                        element: <SyncReleaseTable job="pull-from-upstream" />,
-                        id: "pull-from-upstreams",
-                        path: "pull-from-upstreams",
-                        handle: {
-                            label: "Pull From Upstreams",
-                        },
-                    },
-                    {
-                        element: <KojiBuildsTable scratch="false" />,
-                        id: "downstream-koji-builds",
-                        path: "downstream-koji-builds",
-                        handle: {
-                            label: "Downstream (production) Koji builds",
-                        },
-                    },
-                ],
+          },
+          {
+            element: <SRPMBuildsTable />,
+            id: "srpm-builds",
+            path: "srpm-builds",
+            handle: {
+              label: "SRPM Builds",
             },
-            {
-                element: <Pipelines />,
-                path: "/pipelines",
-                handle: {
-                    category: "Dashboards",
-                    label: "Pipelines",
-                },
+          },
+          {
+            element: <TestingFarmResultsTable />,
+            id: "testing-farm-runs",
+            path: "testing-farm-runs",
+            handle: {
+              label: "Testing Farm Runs",
             },
-            {
-                path: "/projects/:forge",
-                element: <Forge />,
+          },
+          {
+            element: <SyncReleaseTable job="propose-downstream" />,
+            id: "propose-downstreams",
+            path: "propose-downstreams",
+            handle: {
+              label: "Propose Downstreams",
             },
-            {
-                path: "/projects/:forge/:namespace",
-                element: <Namespace />,
+          },
+          {
+            element: <SyncReleaseTable job="pull-from-upstream" />,
+            id: "pull-from-upstreams",
+            path: "pull-from-upstreams",
+            handle: {
+              label: "Pull From Upstreams",
             },
-            {
-                path: "/projects/:forge/:namespace/:repoName",
-                element: <ProjectInfo />,
+          },
+          {
+            element: <KojiBuildsTable scratch="false" />,
+            id: "downstream-koji-builds",
+            path: "downstream-koji-builds",
+            handle: {
+              label: "Downstream (production) Koji builds",
             },
-            {
-                path: "/results/srpm-builds/:id",
-                element: <ResultsPageSRPM />,
-            },
-            {
-                path: "/results/copr-builds/:id",
-                element: <ResultsPageCopr />,
-            },
-            {
-                path: "/results/koji-builds/:id",
-                element: <ResultsPageKoji />,
-            },
-            {
-                path: "/results/testing-farm/:id",
-                element: <ResultsPageTestingFarm />,
-            },
-            {
-                path: "/results/propose-downstream/:id",
-                element: (
-                    <ResultsPageSyncReleaseRuns job="propose-downstream" />
-                ),
-            },
-            {
-                path: "/results/pull-from-upstream/:id",
-                element: (
-                    <ResultsPageSyncReleaseRuns job="pull-from-upstream" />
-                ),
-            },
-            {
-                element: <Usage />,
-                path: "/usage",
-                handle: {
-                    label: "Usage",
-                },
-            },
-            {
-                element: <NotFound />,
-                path: "*",
-            },
+          },
         ],
-    },
+      },
+      {
+        element: <Pipelines />,
+        path: "/pipelines",
+        handle: {
+          category: "Dashboards",
+          label: "Pipelines",
+        },
+      },
+      {
+        path: "/projects/:forge",
+        element: <Forge />,
+      },
+      {
+        path: "/projects/:forge/:namespace",
+        element: <Namespace />,
+      },
+      {
+        path: "/projects/:forge/:namespace/:repoName",
+        element: <ProjectInfo />,
+      },
+      {
+        path: "/results/srpm-builds/:id",
+        element: <ResultsPageSRPM />,
+      },
+      {
+        path: "/results/copr-builds/:id",
+        element: <ResultsPageCopr />,
+      },
+      {
+        path: "/results/koji-builds/:id",
+        element: <ResultsPageKoji />,
+      },
+      {
+        path: "/results/testing-farm/:id",
+        element: <ResultsPageTestingFarm />,
+      },
+      {
+        path: "/results/propose-downstream/:id",
+        element: <ResultsPageSyncReleaseRuns job="propose-downstream" />,
+      },
+      {
+        path: "/results/pull-from-upstream/:id",
+        element: <ResultsPageSyncReleaseRuns job="pull-from-upstream" />,
+      },
+      {
+        element: <Usage />,
+        path: "/usage",
+        handle: {
+          label: "Usage",
+        },
+      },
+      {
+        element: <NotFound />,
+        path: "*",
+      },
+    ],
+  },
 ];
 
 export { routes };

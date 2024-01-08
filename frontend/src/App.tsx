@@ -9,10 +9,10 @@ const queryClient = new QueryClient();
 const router = createBrowserRouter(routes);
 
 const App = () => {
-    return (
-        <QueryClientProvider client={queryClient}>
-            <RouterProvider router={router} />
-        </QueryClientProvider>
-    );
+  return (
+    <QueryClientProvider client={queryClient}>
+      <RouterProvider router={router} />
+    </QueryClientProvider>
+  );
 };
 export { App };

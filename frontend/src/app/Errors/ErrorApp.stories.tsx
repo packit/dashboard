@@ -3,9 +3,9 @@ import type { Meta, StoryObj } from "@storybook/react";
 import { ErrorApp } from "./ErrorApp";
 
 const meta: Meta<typeof ErrorApp> = {
-    title: "Error/App",
-    component: ErrorApp,
-    decorators: [withRouter],
+  title: "Error/App",
+  component: ErrorApp,
+  decorators: [withRouter],
 };
 
 export default meta;
