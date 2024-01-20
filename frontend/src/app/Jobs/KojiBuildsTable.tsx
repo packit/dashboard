@@ -8,7 +8,7 @@ import {
 } from "@patternfly/react-table/deprecated";
 
 import { Button } from "@patternfly/react-core";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerSuffix } from "../Trigger/TriggerLink";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
@@ -76,7 +76,9 @@ const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
           {
             title: (
               <strong>
-                <TriggerLink builds={koji_build} />
+                <TriggerLink build={koji_build}>
+                  <TriggerSuffix trigger={koji_build} />
+                </TriggerLink>
               </strong>
             ),
           },

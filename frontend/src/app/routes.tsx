@@ -21,6 +21,7 @@ import { SRPMBuildsTable } from "./Jobs/SRPMBuildsTable";
 import { TestingFarmResultsTable } from "./Jobs/TestingFarmResultsTable";
 import { Usage } from "./Usage/Usage";
 import { ErrorApp } from "./Errors/ErrorApp";
+import { PipelineDetail } from "./Pipelines/PipelineDetail";
 
 // App routes
 // Those with labels indicate they should be in sidebar
@@ -122,6 +123,10 @@ const routes: RouteObject[] = [
           category: "Dashboards",
           label: "Pipelines",
         },
+      },
+      {
+        element: <PipelineDetail />,
+        path: "/pipelines/:id",
       },
       {
         path: "/projects/:forge",

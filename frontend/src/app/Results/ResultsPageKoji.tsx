@@ -17,7 +17,7 @@ import { TableHeader, TableBody } from "@patternfly/react-table/deprecated";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
@@ -96,7 +96,9 @@ const ResultsPageKoji = () => {
           <Text component="h1">Koji Build Results</Text>
           <Text component="p">
             <strong>
-              <TriggerLink builds={data} />
+              <TriggerLink build={data}>
+                <TriggerSuffix trigger={data} />
+              </TriggerLink>
               <SHACopy git_repo={data.git_repo} commit_sha={data.commit_sha} />
             </strong>
             <br />

@@ -17,8 +17,8 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { Link } from "react-router-dom";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
+import { useParams } from "react-router";
 
 interface StatusItem {
   packit_id: number;
@@ -115,7 +115,8 @@ function getBuilderLabel(run: PipelineRun) {
   );
 }
 
-const PipelinesTable = () => {
+const PipelineDetail = () => {
+  let { id } = useParams();
   // Headings
   const columns = [
     { title: "" }, // space for forge icon
@@ -126,84 +127,87 @@ const PipelinesTable = () => {
 
   // Fetch data from dashboard backend (or if we want, directly from the API)
   const fetchData = ({ pageParam = 1 }) =>
-    fetch(`${import.meta.env.VITE_API_URL}/runs?page=${pageParam}&per_page=20`)
-      .then((response) => response.json())
-      .then((data: PipelineRun[]) => jsonToRow(data));
+    fetch(`${import.meta.env.VITE_API_URL}/runs/merged/${id}`).then(
+      (response) => response.json(),
+    );
+  // .then((data: PipelineRun[]) => jsonToRow(data));
 
-  const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
-    useInfiniteQuery(["pipelines"], fetchData, {
-      getNextPageParam: (_, allPages) => allPages.length + 1,
-      keepPreviousData: true,
-    });
+  const { isInitialLoading, isError, data, isFetching } = useQuery(
+    ["pipeline", id],
+    fetchData,
+  );
+  if (isFetching) return <></>;
+
+  return <pre>{data.merged_run_id}</pre>;
 
   // Convert fetched json into row format that the table can read
-  function jsonToRow(res: PipelineRun[]) {
-    const rowsList: (IRow | string[])[] = [];
+  // function jsonToRow(res: PipelineRun[]) {
+  //   const rowsList: (IRow | string[])[] = [];
 
-    res.forEach((run) => {
-      let singleRow = {
-        cells: [
-          {
-            title: <ForgeIcon url={run.trigger.git_repo} />,
-          },
-          {
-            title: (
-              <strong>
-                <Link to={`/pipelines/${run.merged_run_id}`}>
-                  <TriggerSuffix trigger={run.trigger} />
-                </Link>
-              </strong>
-            ),
-          },
-          { title: <Timestamp stamp={run.time_submitted} /> },
-          {
-            title: (
-              <>
-                <Statuses
-                  name={"SRPM"}
-                  route={"srpm-builds"}
-                  statusClass={StatusLabel}
-                  entries={run.srpm ? [run.srpm] : []}
-                />
-                <Statuses
-                  name={getBuilderLabel(run)}
-                  route={"copr-builds"}
-                  statusClass={StatusLabel}
-                  entries={run.copr}
-                />
-                <Statuses
-                  name={getBuilderLabel(run)}
-                  route={"koji-builds"}
-                  statusClass={StatusLabel}
-                  entries={run.koji}
-                />
-                <Statuses
-                  name={"Testing Farm"}
-                  route={"testing-farm"}
-                  statusClass={StatusLabel}
-                  entries={run.test_run}
-                />
-                <Statuses
-                  name={"Propose Downstream"}
-                  route={"propose-downstream"}
-                  statusClass={SyncReleaseTargetStatusLabel}
-                  entries={run.propose_downstream}
-                />
-                <Statuses
-                  name={"Pull From Upstream"}
-                  route={"pull-from-upstream"}
-                  statusClass={SyncReleaseTargetStatusLabel}
-                  entries={run.pull_from_upstream}
-                />
-              </>
-            ),
-          },
-        ],
-      };
-      rowsList.push(singleRow);
-    });
-    return rowsList;
-  }
+  //   res.forEach((run) => {
+  //     let singleRow = {
+  //       cells: [
+  //         {
+  //           title: <ForgeIcon url={run.trigger.git_repo} />,
+  //         },
+  //         {
+  //           title: (
+  //             <strong>
+  //               <a href={`pipelines/${run.merged_run_id}`}>
+  //                 <TriggerSuffix trigger={run.trigger} />
+  //               </a>
+  //             </strong>
+  //           ),
+  //         },
+  //         { title: <Timestamp stamp={run.time_submitted} /> },
+  //         {
+  //           title: (
+  //             <>
+  //               <Statuses
+  //                 name={"SRPM"}
+  //                 route={"srpm-builds"}
+  //                 statusClass={StatusLabel}
+  //                 entries={run.srpm ? [run.srpm] : []}
+  //               />
+  //               <Statuses
+  //                 name={getBuilderLabel(run)}
+  //                 route={"copr-builds"}
+  //                 statusClass={StatusLabel}
+  //                 entries={run.copr}
+  //               />
+  //               <Statuses
+  //                 name={getBuilderLabel(run)}
+  //                 route={"koji-builds"}
+  //                 statusClass={StatusLabel}
+  //                 entries={run.koji}
+  //               />
+  //               <Statuses
+  //                 name={"Testing Farm"}
+  //                 route={"testing-farm"}
+  //                 statusClass={StatusLabel}
+  //                 entries={run.test_run}
+  //               />
+  //               <Statuses
+  //                 name={"Propose Downstream"}
+  //                 route={"propose-downstream"}
+  //                 statusClass={SyncReleaseTargetStatusLabel}
+  //                 entries={run.propose_downstream}
+  //               />
+  //               <Statuses
+  //                 name={"Pull From Upstream"}
+  //                 route={"pull-from-upstream"}
+  //                 statusClass={SyncReleaseTargetStatusLabel}
+  //                 entries={run.pull_from_upstream}
+  //               />
+  //             </>
+  //           ),
+  //         },
+  //       ],
+  //     };
+  //     rowsList.push(singleRow);
+  //   });
+  //   return rowsList;
+  // }
 
   // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
   const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
@@ -244,4 +248,4 @@ const PipelinesTable = () => {
   );
 };
 
-export { PipelinesTable };
+export { PipelineDetail };
