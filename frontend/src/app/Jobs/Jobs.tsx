@@ -69,6 +69,9 @@ const Jobs = () => {
                 Downstream Koji Builds
               </NavLink>
             </NavItem>
+            <NavItem isActive={currentMatch?.id === "bodhi-updates"}>
+              <NavLink to={"bodhi-updates"}>Bodhi Updates</NavLink>
+            </NavItem>
           </NavList>
         </Nav>
       </PageNavigation>

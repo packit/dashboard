@@ -192,6 +192,12 @@ const PipelinesTable = () => {
                   statusClass={SyncReleaseTargetStatusLabel}
                   entries={run.pull_from_upstream}
                 />
+                <Statuses
+                  name={"Bodhi Updates"}
+                  route={"bodhi-updates"}
+                  statusClass={StatusLabel}
+                  entries={run.bodhi_update}
+                />
               </>
             ),
           },
