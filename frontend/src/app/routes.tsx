@@ -14,11 +14,13 @@ import { ResultsPageKoji } from "./Results/ResultsPageKoji";
 import { ResultsPageSyncReleaseRuns } from "./Results/ResultsPageSyncReleaseRuns";
 import { ResultsPageSRPM } from "./Results/ResultsPageSRPM";
 import { ResultsPageTestingFarm } from "./Results/ResultsPageTestingFarm";
+import { ResultsPageBodhiUpdate } from "./Results/ResultsPageBodhiUpdate";
 import { CoprBuildsTable } from "./Jobs/CoprBuildsTable";
 import { KojiBuildsTable } from "./Jobs/KojiBuildsTable";
 import { SyncReleaseTable } from "./Jobs/SyncReleaseStatuses";
 import { SRPMBuildsTable } from "./Jobs/SRPMBuildsTable";
 import { TestingFarmResultsTable } from "./Jobs/TestingFarmResultsTable";
+import { BodhiUpdatesTable } from "./Jobs/BodhiUpdatesTable";
 import { Usage } from "./Usage/Usage";
 import { ErrorApp } from "./Errors/ErrorApp";
 
@@ -113,6 +115,14 @@ const routes: RouteObject[] = [
               label: "Downstream (production) Koji builds",
             },
           },
+          {
+            element: <BodhiUpdatesTable />,
+            id: "bodhi-updates",
+            path: "bodhi-updates",
+            handle: {
+              label: "Bodhi Updates",
+            },
+          },
         ],
       },
       {
@@ -158,6 +168,10 @@ const routes: RouteObject[] = [
       {
         path: "/results/pull-from-upstream/:id",
         element: <ResultsPageSyncReleaseRuns job="pull-from-upstream" />,
+      },
+      {
+        path: "/results/bodhi-updates/:id",
+        element: <ResultsPageBodhiUpdate />,
       },
       {
         element: <Usage />,
