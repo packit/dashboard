@@ -254,6 +254,45 @@ const UsageList: React.FC<UsageListProps> = (props) => {
     );
   }
 
+  function getGoalProgress2024Q1() {
+    if (props.what != "total") {
+      return <></>;
+    }
+    return (
+      <Card>
+        <CardTitle>Packit goal for Q1/2024</CardTitle>
+        <CardBody>
+          <Flex>
+            <Card>
+              <CardTitle>
+                415 onboarded projects by the end of 2024 Q1.
+              </CardTitle>
+              <CardBody>
+                <ChartBullet
+                  ariaDesc="Chart describing downstream onboarding."
+                  ariaTitle="Chart describing downstream onboarding."
+                  constrainToVisibleArea
+                  labels={({ datum }) => `${datum.name}: ${datum.y}`}
+                  maxDomain={{ y: 500 }}
+                  name="Chart describing downstream onboarding."
+                  primarySegmentedMeasureData={[
+                    {
+                      name: "Onboarded projects",
+                      y: data.onboarded_projects_q1_2024,
+                    },
+                  ]}
+                  qualitativeRangeData={[{ name: "Q4 2023 state", y: 222 }]}
+                  height={150}
+                  width={424}
+                />
+              </CardBody>
+            </Card>
+          </Flex>
+        </CardBody>
+      </Card>
+    );
+  }
+
   function getReadableJobName(job_name: string) {
     return job_name
       .toLowerCase()
@@ -297,6 +336,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
         </CardBody>
       </Card>
       {getGoalProgress()}
+      {getGoalProgress2024Q1()}
     </>
   );
 };
