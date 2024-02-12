@@ -335,7 +335,6 @@ const UsageList: React.FC<UsageListProps> = (props) => {
           <Flex>{job_charts}</Flex>
         </CardBody>
       </Card>
-      {getGoalProgress()}
       {getGoalProgress2024Q1()}
     </>
   );
