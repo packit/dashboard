@@ -30,7 +30,12 @@ const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
     `${import.meta.env.VITE_API_URL}/usage/intervals?days=${
       granularity.days
     }&hours=${granularity.hours}&count=${granularity.count}`,
-  ).then((response) => response.json());
+  ).then((response) => {
+    if (!response.ok) {
+      throw Promise.reject(response);
+    }
+    return response.json();
+  });
 
 interface UsageIntervalProps {
   days: number;
