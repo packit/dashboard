@@ -16,7 +16,12 @@ import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageListProps["what"]) =>
   fetch(`${import.meta.env.VITE_API_URL}/usage/${granularity}`).then(
-    (response) => response.json(),
+    (response) => {
+      if (!response.ok) {
+        throw Promise.reject(response);
+      }
+      return response.json();
+    },
   );
 
 interface UsageListProps {
