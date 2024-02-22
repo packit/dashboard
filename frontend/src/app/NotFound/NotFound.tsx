@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import * as React from "react";
 import { Alert, PageSection } from "@patternfly/react-core";
 

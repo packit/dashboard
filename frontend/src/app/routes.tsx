@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import { RouteObject } from "react-router-dom";
 
 import { AppLayout } from "./AppLayout/AppLayout";

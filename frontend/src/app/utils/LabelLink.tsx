@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import { Label } from "@patternfly/react-core";
 import React from "react";
 import { Link } from "react-router-dom";

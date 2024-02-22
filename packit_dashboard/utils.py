@@ -1,3 +1,6 @@
+# Copyright Contributors to the Packit project.
+# SPDX-License-Identifier: MIT
+
 from flask import jsonify, Response as FlaskResponse
 from requests import request, Response as RequestsResponse
 

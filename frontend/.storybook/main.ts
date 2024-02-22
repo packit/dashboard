@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import type { StorybookConfig } from "@storybook/react-vite";
 
 const config: StorybookConfig = {

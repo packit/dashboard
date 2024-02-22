@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import React, { useMemo } from "react";
 
 import { TableVariant, cellWidth, IRow } from "@patternfly/react-table";

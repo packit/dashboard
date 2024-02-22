@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import React, { useEffect, useState } from "react";
 import { Spinner } from "@patternfly/react-core";
 import {

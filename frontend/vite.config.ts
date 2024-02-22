@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 

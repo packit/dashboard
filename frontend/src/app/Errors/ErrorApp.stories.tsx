@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import { withRouter } from "storybook-addon-react-router-v6";
 import type { Meta, StoryObj } from "@storybook/react";
 import { ErrorApp } from "./ErrorApp";
