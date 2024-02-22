@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import React, { useMemo, useState } from "react";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";

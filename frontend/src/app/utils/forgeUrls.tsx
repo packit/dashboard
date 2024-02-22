@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 // getHostName - returns the hostname if possible, otherwise an empty string
 function getHostName(url: string | URL) {
   let hostname = "";

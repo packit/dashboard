@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 export const CoprBuildData = [
   {
     packit_id: 25732,

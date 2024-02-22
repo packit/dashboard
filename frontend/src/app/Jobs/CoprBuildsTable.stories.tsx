@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import { CoprBuildsTable } from "./CoprBuildsTable";
 import { rest } from "msw";
 import { withQueryClient } from "../utils/storybook/withQueryClient";

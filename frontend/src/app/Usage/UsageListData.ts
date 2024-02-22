@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 type TopProjectJobRuns = {
   job_runs: number;
   top_projects_by_job_runs: {

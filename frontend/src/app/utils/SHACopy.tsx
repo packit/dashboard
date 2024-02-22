@@ -1,3 +1,6 @@
+// Copyright Contributors to the Packit project.
+// SPDX-License-Identifier: MIT
+
 import { ClipboardCopy } from "@patternfly/react-core";
 import React from "react";
 import { getCommitLink } from "./forgeUrls";
