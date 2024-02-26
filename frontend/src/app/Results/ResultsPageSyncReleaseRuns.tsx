@@ -53,6 +53,7 @@ interface SyncReleaseRun {
   issue_id: number | null;
   branch_name: string | null;
   release: string | null;
+  downstream_pr_project: string | null;
 }
 
 const fetchSyncRelease = (url: string) =>
@@ -115,6 +116,23 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
   ) : (
     <>Link will be available after successful downstream PR submission.</>
   );
+
+  const getLinkToPackage = () => {
+    if (!data.downstream_pr_project) return <>Link not available.</>;
+
+    const lastSlashIndex = data.downstream_pr_project.lastIndexOf("/");
+    const packageName =
+      lastSlashIndex !== -1
+        ? data.downstream_pr_project.substring(lastSlashIndex + 1)
+        : "";
+    return packageName ? (
+      <a href={data.downstream_pr_project} rel="noreferrer" target="_blank">
+        {packageName}
+      </a>
+    ) : (
+      <>Link not available.</>
+    );
+  };
 
   const FooterButton = () => {
     const handleClick = () => {
@@ -255,6 +273,10 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                     target={data.branch}
                     link={data.downstream_pr_url}
                   />
+                </DescriptionListDescription>
+                <DescriptionListTerm>Package</DescriptionListTerm>
+                <DescriptionListDescription>
+                  {getLinkToPackage()}
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
