@@ -266,7 +266,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
               }}
             >
               <DescriptionListGroup>
-                <DescriptionListTerm>Status</DescriptionListTerm>
+                <DescriptionListTerm>Sync status</DescriptionListTerm>
                 <DescriptionListDescription>
                   <SyncReleaseTargetStatusLabel
                     status={data.status}
