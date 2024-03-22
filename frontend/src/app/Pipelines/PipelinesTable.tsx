@@ -21,6 +21,7 @@ import { Timestamp } from "../utils/Timestamp";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 interface StatusItem {
   packit_id: number;
@@ -151,9 +152,9 @@ const PipelinesTable = () => {
           {
             title: (
               <strong>
-                <TriggerLink trigger={run.trigger}>
+                <Link to={`/pipelines/${run.merged_run_id}`}>
                   <TriggerSuffix trigger={run.trigger} />
-                </TriggerLink>
+                </Link>
               </strong>
             ),
           },
