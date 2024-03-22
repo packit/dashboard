@@ -14,7 +14,7 @@ import { Button } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
@@ -69,7 +69,9 @@ const TestingFarmResultsTable = () => {
           {
             title: (
               <strong>
-                <TriggerLink builds={test_result} />
+                <TriggerLink trigger={test_result}>
+                  <TriggerSuffix trigger={test_result} />
+                </TriggerLink>
               </strong>
             ),
           },
