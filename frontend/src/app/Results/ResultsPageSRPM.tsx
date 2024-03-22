@@ -174,7 +174,11 @@ const ResultsPageSRPM = () => {
                       {" "}
                       (
                       <a
-                        href={data.logs_url}
+                        href={
+                          data.logs_url
+                            ? data.logs_url
+                            : `${URL}/builder-live.log`
+                        }
                         rel="noreferrer"
                         target={"_blank"}
                       >
