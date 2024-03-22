@@ -26,6 +26,7 @@ import { TestingFarmResultsTable } from "./Jobs/TestingFarmResultsTable";
 import { BodhiUpdatesTable } from "./Jobs/BodhiUpdatesTable";
 import { Usage } from "./Usage/Usage";
 import { ErrorApp } from "./Errors/ErrorApp";
+import { PipelineDetail } from "./Pipelines/PipelineDetail";
 
 // App routes
 // Those with labels indicate they should be in sidebar
@@ -135,6 +136,22 @@ const routes: RouteObject[] = [
           category: "Dashboards",
           label: "Pipelines",
         },
+      },
+      {
+        element: <PipelineDetail />,
+        path: "/pipelines/:id",
+        id: "pipeline-id",
+        // TODO (spytec): Future enhancement would be to take all the different pipeline information and spew out more data in a child component, similar to how we do it in Jobs. That way we can link to specific tables
+        // children: [
+        //   {
+        //     element: <CoprBuildsTable />,
+        //     index: true,
+        //     path: "copr-builds",
+        //     handle: {
+        //       label: "Copr Builds",
+        //     },
+        //   },
+        // ],
       },
       {
         path: "/projects/:forge",
