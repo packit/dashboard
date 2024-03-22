@@ -15,7 +15,7 @@ import {
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
@@ -127,7 +127,9 @@ const ResultsPageCopr = () => {
           <Text component="h1">Copr Build Results</Text>
           <Text component="p">
             <strong>
-              <TriggerLink builds={data} />
+              <TriggerLink trigger={data}>
+                <TriggerSuffix trigger={data} />
+              </TriggerLink>
               <SHACopy git_repo={data.git_repo} commit_sha={data.commit_sha} />
             </strong>
           </Text>

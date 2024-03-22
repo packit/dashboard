@@ -23,7 +23,7 @@ import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
@@ -150,7 +150,9 @@ const ResultsPageSRPM = () => {
 
           <Text component="p">
             <strong>
-              <TriggerLink builds={data} />
+              <TriggerLink trigger={data}>
+                <TriggerSuffix trigger={data} />
+              </TriggerLink>
             </strong>
           </Text>
         </TextContent>

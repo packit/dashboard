@@ -13,7 +13,7 @@ import {
 import { Button } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
@@ -73,7 +73,9 @@ const SRPMBuildsTable = () => {
           {
             title: (
               <strong>
-                <TriggerLink builds={srpm_build} />
+                <TriggerLink trigger={srpm_build}>
+                  <TriggerSuffix trigger={srpm_build} />
+                </TriggerLink>
               </strong>
             ),
           },
