@@ -25,7 +25,7 @@ import {
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
@@ -202,7 +202,9 @@ const ResultsPageTestingFarm = () => {
             <strong>
               {data ? (
                 <>
-                  <TriggerLink builds={data} />
+                  <TriggerLink trigger={data}>
+                    <TriggerSuffix trigger={data} />
+                  </TriggerLink>
                   <SHACopy
                     git_repo={data.git_repo}
                     commit_sha={data.commit_sha}

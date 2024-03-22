@@ -25,7 +25,7 @@ import {
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
@@ -249,7 +249,9 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
           <Text component="h1">{displayText}</Text>
           <Text component="p">
             <strong>
-              <TriggerLink builds={data} />
+              <TriggerLink trigger={data}>
+                <TriggerSuffix trigger={data} />
+              </TriggerLink>
             </strong>
             <br />
           </Text>

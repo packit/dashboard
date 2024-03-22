@@ -11,7 +11,7 @@ import {
 } from "@patternfly/react-table/deprecated";
 
 import { Button } from "@patternfly/react-core";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
@@ -74,7 +74,9 @@ const BodhiUpdatesTable = () => {
           {
             title: (
               <strong>
-                <TriggerLink builds={bodhi_update} />
+                <TriggerLink trigger={bodhi_update}>
+                  <TriggerSuffix trigger={bodhi_update} />
+                </TriggerLink>
               </strong>
             ),
           },
