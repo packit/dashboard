@@ -11,7 +11,7 @@ import {
 } from "@patternfly/react-table/deprecated";
 
 import { Button, LabelGroup } from "@patternfly/react-core";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
@@ -21,6 +21,7 @@ import { Timestamp } from "../utils/Timestamp";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { Link } from "react-router-dom";
 
 interface StatusItem {
   packit_id: number;
@@ -80,7 +81,7 @@ interface PipelineRun {
   propose_downstream: PipelineItem[];
   pull_from_upstream: PipelineItem[];
   time_submitted: number;
-  trigger: {
+  trigger?: {
     repo_namespace: string;
     repo_name: string;
     git_repo: string;
@@ -143,6 +144,7 @@ const PipelinesTable = () => {
     const rowsList: (IRow | string[])[] = [];
 
     res.forEach((run) => {
+      if (!run.trigger) return;
       let singleRow = {
         cells: [
           {
@@ -151,7 +153,9 @@ const PipelinesTable = () => {
           {
             title: (
               <strong>
-                <TriggerLink builds={run.trigger} />
+                <Link to={`/pipelines/${run.merged_run_id}`}>
+                  <TriggerSuffix trigger={run.trigger} />
+                </Link>
               </strong>
             ),
           },
