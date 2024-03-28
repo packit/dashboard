@@ -3,14 +3,40 @@
 
 import React, { useMemo } from "react";
 
-import { TableVariant, cellWidth, IRow } from "@patternfly/react-table";
+import {
+  TableVariant,
+  cellWidth,
+  IRow,
+  Tbody,
+  Td,
+  Tr,
+} from "@patternfly/react-table";
 import {
   Table,
   TableHeader,
   TableBody,
 } from "@patternfly/react-table/deprecated";
 
-import { Button, LabelGroup } from "@patternfly/react-core";
+import {
+  Badge,
+  Button,
+  Card,
+  CardBody,
+  DescriptionList,
+  DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
+  Label,
+  LabelGroup,
+  PageNavigation,
+  PageSection,
+  PageSectionVariants,
+  Tab,
+  TabTitleText,
+  Tabs,
+  Text,
+  TextContent,
+} from "@patternfly/react-core";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
@@ -22,6 +48,7 @@ import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
+import { SHACopy } from "../utils/SHACopy";
 
 interface StatusItem {
   packit_id: number;
@@ -81,7 +108,7 @@ interface PipelineRun {
   propose_downstream: PipelineItem[];
   pull_from_upstream: PipelineItem[];
   time_submitted: number;
-  trigger: {
+  trigger?: {
     repo_namespace: string;
     repo_name: string;
     git_repo: string;
@@ -139,9 +166,105 @@ const PipelineDetail = () => {
     ["pipeline", id],
     fetchData,
   );
-  if (isFetching) return <></>;
 
-  return <pre>{data.merged_run_id}</pre>;
+  // Show preloader if waiting for API data
+  if (isInitialLoading || data === undefined) {
+    return <Preloader />;
+  }
+
+  // TODO: Redirect to /copr-builds, same as jobs.tsx
+  return (
+    <>
+      <PageSection variant={PageSectionVariants.light}>
+        <TextContent>
+          <Text component="h1">Pipeline details</Text>
+          <Text component="p">
+            <strong>
+              <TriggerLink trigger={data.trigger}>
+                <TriggerSuffix trigger={data.trigger} />
+              </TriggerLink>
+            </strong>
+          </Text>
+        </TextContent>
+      </PageSection>
+      <PageNavigation>
+        {/* TODO: Change this to Nav and Navlinks, the same as Jobs.tsx */}
+        <Tabs>
+          <Tab
+            eventKey={0}
+            title={
+              <TabTitleText>
+                Copr Builds <Badge>{data.copr.length}</Badge>
+              </TabTitleText>
+            }
+            isHidden={!data.copr.length}
+          >
+            Inside
+          </Tab>
+          <Tab
+            eventKey={1}
+            title={
+              <TabTitleText>
+                Koji Builds
+                <Badge>{data.koji.length}</Badge>
+              </TabTitleText>
+            }
+            isHidden={!data.koji.length}
+          >
+            Inside
+          </Tab>
+          <Tab
+            eventKey={2}
+            title={<TabTitleText>SRPM Build</TabTitleText>}
+            isHidden={!data.srpm}
+          >
+            Inside
+          </Tab>
+          <Tab
+            eventKey={3}
+            title={
+              <TabTitleText>
+                Testing Farm Runs <Badge>{data.test_run.length}</Badge>
+              </TabTitleText>
+            }
+            isHidden={!data.test_run.length}
+          >
+            Inside
+          </Tab>
+          <Tab
+            eventKey={4}
+            title={
+              <TabTitleText>
+                Propose Downstreams{" "}
+                <Badge>{data.propose_downstream.length}</Badge>
+              </TabTitleText>
+            }
+            isHidden={!data.propose_downstream.length}
+          >
+            Propose Downstream
+          </Tab>
+          <Tab
+            eventKey={5}
+            title={
+              <TabTitleText>
+                Pull From Upstreams{" "}
+                <Badge>{data.pull_from_upstream.length}</Badge>
+              </TabTitleText>
+            }
+            isHidden={!data.pull_from_upstream.length}
+          >
+            Inside
+          </Tab>
+        </Tabs>
+      </PageNavigation>
+      {/* TODO: Place contents from nav here */}
+      <PageSection>
+        <Card>
+          <CardBody></CardBody>
+        </Card>
+      </PageSection>
+    </>
+  );
 
   // Convert fetched json into row format that the table can read
   // function jsonToRow(res: PipelineRun[]) {

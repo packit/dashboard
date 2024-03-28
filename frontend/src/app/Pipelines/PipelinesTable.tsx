@@ -81,7 +81,7 @@ interface PipelineRun {
   propose_downstream: PipelineItem[];
   pull_from_upstream: PipelineItem[];
   time_submitted: number;
-  trigger: {
+  trigger?: {
     repo_namespace: string;
     repo_name: string;
     git_repo: string;
@@ -144,6 +144,7 @@ const PipelinesTable = () => {
     const rowsList: (IRow | string[])[] = [];
 
     res.forEach((run) => {
+      if (!run.trigger) return;
       let singleRow = {
         cells: [
           {
