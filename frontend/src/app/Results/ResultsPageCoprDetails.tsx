@@ -15,6 +15,7 @@ import React from "react";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Link, NavLink } from "react-router-dom";
 import { LabelLink } from "../utils/LabelLink";
+import { ResultProgressStep } from "./ResultProgressStep";
 
 export interface ResultsPageCoprDetailsProps {
   data: CoprResult;
@@ -52,17 +53,15 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
-        <DescriptionListTerm>Build Submitted Time</DescriptionListTerm>
+        <DescriptionListTerm>
+          <span className="pf-v5-u-screen-reader">Copr build timeline</span>
+        </DescriptionListTerm>
         <DescriptionListDescription>
-          <Timestamp stamp={data.build_submitted_time} verbose={true} />
-        </DescriptionListDescription>
-        <DescriptionListTerm>Build Start Time</DescriptionListTerm>
-        <DescriptionListDescription>
-          <Timestamp stamp={data.build_start_time} verbose={true} />
-        </DescriptionListDescription>
-        <DescriptionListTerm>Build Finish Time</DescriptionListTerm>
-        <DescriptionListDescription>
-          <Timestamp stamp={data.build_finished_time} verbose={true} />
+          <ResultProgressStep
+            submittedTime={data.build_submitted_time}
+            startTime={data.build_start_time}
+            finishedTime={data.build_finished_time}
+          />
         </DescriptionListDescription>
       </DescriptionListGroup>
     </DescriptionList>

@@ -44,7 +44,7 @@ const prettyTimeDifference = (difference: number) => {
   return `${numericPart ? Math.floor(numericPart) : ""}${units}`;
 };
 
-const getPrettyTime = (date: number | Date | null) => {
+export const getPrettyTime = (date: number | Date | null) => {
   if (date === null) {
     return null;
   }
@@ -62,7 +62,7 @@ interface TimestampProps {
   verbose?: boolean;
 }
 
-const Timestamp: React.FC<TimestampProps> = (props) => {
+export const Timestamp: React.FC<TimestampProps> = (props) => {
   if (props.stamp === null) {
     return <span>not provided</span>;
   }
@@ -84,5 +84,3 @@ const Timestamp: React.FC<TimestampProps> = (props) => {
     </Tooltip>
   );
 };
-
-export { Timestamp };

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@imranbarbhuiya/duration": "^5.1.8",
     "@patternfly/patternfly": "^5.1.0",
     "@patternfly/react-charts": "^7.1.1",
     "@patternfly/react-core": "^5.1.1",
