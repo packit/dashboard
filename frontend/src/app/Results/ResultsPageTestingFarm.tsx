@@ -22,6 +22,7 @@ import {
   DataListCell,
   DataListToggle,
   ClipboardCopy,
+  CardHeader,
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
@@ -45,6 +46,7 @@ import {
 import { Preloader } from "../Preloader/Preloader";
 import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
 import { SHACopy } from "../utils/SHACopy";
+import { TestingFarmPoC } from "./TestingFarmPoC";
 
 export interface TestingFarmOverview {
   pipeline_id: string; // UUID
@@ -217,6 +219,24 @@ const ResultsPageTestingFarm = () => {
             <br />
           </Text>
         </TextContent>
+      </PageSection>
+      <PageSection>
+        <Card>
+          <CardBody>
+            <CardHeader>
+              <Title headingLevel={"h1"}>Testing Farm proof of concept</Title>
+            </CardHeader>
+            <CardBody>
+              {!data ? (
+                <Preloader />
+              ) : (
+                <TestingFarmPoC
+                  url={`https://api.testing-farm.io/v0.1/requests/${data.pipeline_id}`}
+                />
+              )}
+            </CardBody>
+          </CardBody>
+        </Card>
       </PageSection>
       <PageSection>
         <Card>
