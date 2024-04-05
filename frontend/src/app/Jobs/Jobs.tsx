@@ -12,7 +12,7 @@ import {
   Text,
   TextContent,
 } from "@patternfly/react-core";
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import {
   NavLink,
   Outlet,
@@ -21,6 +21,7 @@ import {
   useNavigate,
 } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
+import { CoprBuildsTable } from "./CoprBuildsTable";
 
 const Jobs = () => {
   useTitle("Jobs");
@@ -30,13 +31,18 @@ const Jobs = () => {
     (match) => match.pathname === location.pathname,
   );
 
+  const hasRouteSelected = useMemo(
+    () => currentMatch?.id != "jobs",
+    [currentMatch],
+  );
+
   // if we're not inside a specific route, default to copr-builds and redirect
   const navigate = useNavigate();
   useEffect(() => {
     if (matches[matches.length - 1].id === "jobs") {
       navigate("/jobs/copr-builds");
     }
-  }, [navigate]);
+  }, [matches, navigate]);
 
   return (
     <PageGroup>
@@ -49,7 +55,9 @@ const Jobs = () => {
       <PageNavigation>
         <Nav aria-label="Job types" variant="tertiary">
           <NavList>
-            <NavItem isActive={currentMatch?.id === "copr-builds"}>
+            <NavItem
+              isActive={currentMatch?.id === "copr-builds" || !hasRouteSelected}
+            >
               <NavLink to={"copr-builds"}>Copr Builds</NavLink>
             </NavItem>
             <NavItem isActive={currentMatch?.id === "koji-builds"}>
@@ -79,7 +87,7 @@ const Jobs = () => {
         </Nav>
       </PageNavigation>
       <PageSection>
-        <Outlet />
+        {hasRouteSelected ? <Outlet /> : <CoprBuildsTable />}
       </PageSection>
     </PageGroup>
   );
