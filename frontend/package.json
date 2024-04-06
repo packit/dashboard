@@ -40,7 +40,7 @@
     "build": "vite build",
     "build:analyze": "vite-bundle-visualizer --open",
     "preview": "vite preview",
-    "lint": "eslint .",
+    "lint": "eslint src/",
     "prettier": "prettier --write .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
@@ -51,17 +51,44 @@
       "public/*",
       "frontend/*"
     ],
+    "settings": {
+      "react": {
+        "version": "detect"
+      }
+    },
+    "parser": "@typescript-eslint/parser",
+    "parserOptions": {
+      "project": "./tsconfig.json"
+    },
     "extends": [
+      "eslint:recommended",
+      "plugin:@typescript-eslint/recommended-type-checked",
+      "plugin:react/recommended",
+      "plugin:react/jsx-runtime",
       "plugin:storybook/recommended"
     ],
+    "rules": {
+      "import/no-anonymous-default-export": "off",
+      "react/no-unescaped-entities": "off",
+      "react/prop-types": "off",
+      "@typescript-eslint/no-unused-vars": [
+        "error",
+        {
+          "args": "all",
+          "argsIgnorePattern": "^_",
+          "caughtErrors": "all",
+          "caughtErrorsIgnorePattern": "^_",
+          "destructuredArrayIgnorePattern": "^_",
+          "varsIgnorePattern": "^_",
+          "ignoreRestSiblings": true
+        }
+      ]
+    },
     "overrides": [
       {
         "files": [
           "**/*.stories.*"
-        ],
-        "rules": {
-          "import/no-anonymous-default-export": "off"
-        }
+        ]
       }
     ]
   },
@@ -108,11 +135,13 @@
     "@storybook/theming": "^7.4.0",
     "@storybook/types": "^7.4.0",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-storybook": "^0.6.12",
     "msw-storybook-addon": "^1.8.0",
     "prop-types": "^15.8.1",
     "storybook": "^7.0.9",
-    "storybook-addon-react-router-v6": "^1.0.0"
+    "storybook-addon-react-router-v6": "^1.0.0",
+    "typescript-eslint": "^7.5.0"
   },
   "msw": {
     "workerDirectory": "public"
