@@ -122,7 +122,7 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
         </Thead>
         <Tbody>
           {props.trigger.tests.map((test) => (
-            <Tr>
+            <Tr key={test.pipeline_id}>
               <Td data-label="Pipeline ID">{test.pipeline_id}</Td>
               <Td data-label="Chroot">
                 <Label color="blue">{test.chroot}</Label>

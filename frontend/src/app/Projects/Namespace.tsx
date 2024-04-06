@@ -1,7 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
   PageSection,
   PageSectionVariants,
@@ -18,7 +17,7 @@ import { useTitle } from "../utils/useTitle";
 const Namespace = () => {
   useTitle("Project Namespace");
 
-  let { forge, namespace } = useParams();
+  const { forge, namespace } = useParams();
 
   return (
     <>

@@ -65,7 +65,8 @@
       "plugin:@typescript-eslint/recommended-type-checked",
       "plugin:react/recommended",
       "plugin:react/jsx-runtime",
-      "plugin:storybook/recommended"
+      "plugin:storybook/recommended",
+      "prettier"
     ],
     "rules": {
       "import/no-anonymous-default-export": "off",
@@ -99,7 +100,8 @@
           "*.(js|jsx|ts|tsx)"
         ],
         "options": {
-          "tabWidth": 2
+          "tabWidth": 2,
+          "trailingComma": "all"
         }
       }
     ]
@@ -135,6 +137,7 @@
     "@storybook/theming": "^7.4.0",
     "@storybook/types": "^7.4.0",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-storybook": "^0.6.12",
     "msw-storybook-addon": "^1.8.0",

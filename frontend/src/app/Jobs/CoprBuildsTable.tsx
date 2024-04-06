@@ -30,9 +30,9 @@ interface ChrootStatusesProps {
 
 // Add every target to the chroots column and color code according to status
 const ChrootStatuses: React.FC<ChrootStatusesProps> = (props) => {
-  let labels = [];
+  const labels = [];
 
-  for (let chroot in props.ids) {
+  for (const chroot in props.ids) {
     const id = props.ids[chroot];
     const status = props.statuses[chroot];
 
@@ -101,10 +101,10 @@ const CoprBuildsTable = () => {
 
   // Convert fetched json into row format that the table can read
   function jsonToRow(copr_builds: CoprBuild[]) {
-    let rowsList: IRow[] = [];
+    const rowsList: IRow[] = [];
 
     copr_builds.forEach((copr_build) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={copr_build.project_url} />,
@@ -174,7 +174,7 @@ const CoprBuildsTable = () => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

@@ -84,11 +84,11 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
     // We cant just invert the previous state here
     // because its undefined for the first time
     if (expanded[prID]) {
-      let copyExpanded = { ...expanded };
+      const copyExpanded = { ...expanded };
       copyExpanded[prID] = false;
       setExpanded(copyExpanded);
     } else {
-      let copyExpanded = { ...expanded };
+      const copyExpanded = { ...expanded };
       copyExpanded[prID] = true;
       setExpanded(copyExpanded);
     }
@@ -149,7 +149,7 @@ const PullRequestList: React.FC<PullRequestListProps> = ({
       </DataList>
       <center>
         <br />
-        <Button variant="control" onClick={() => fetchNextPage()}>
+        <Button variant="control" onClick={() => void fetchNextPage()}>
           Load More
         </Button>
       </center>

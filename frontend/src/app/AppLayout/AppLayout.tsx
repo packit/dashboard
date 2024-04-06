@@ -69,8 +69,10 @@ const AppLayout = () => {
   const onNavToggle = () => {
     setIsNavOpen(!isNavOpen);
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onPageResize = (props: any) => {
-    setIsMobileView(props.mobileView);
+    // eslint-disable-next-line react/prop-types
+    if (Object.hasOwn(props, "mobileView")) setIsMobileView(props.mobileView);
   };
 
   const headerToolbar = (
@@ -168,6 +170,7 @@ const AppLayout = () => {
               >
                 {categoryRoutes?.map((r, i) => (
                   <NavigationRoute
+                    key={r.id}
                     route={r}
                     index={r.path || index.toString() + i.toString()}
                   />
@@ -224,7 +227,7 @@ const AppLayout = () => {
       mainContainerId="primary-app-container"
       header={Header}
       sidebar={Sidebar}
-      onPageResize={(_event, props: any) => onPageResize(props)}
+      onPageResize={(_event, props: unknown) => onPageResize(props)}
       skipToContent={PageSkipToContent}
     >
       <Outlet />

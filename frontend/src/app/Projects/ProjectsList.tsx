@@ -61,8 +61,7 @@ type ColumnKey = keyof typeof columnNames;
 
 // TODO: Move data fetching to parent components
 const ProjectsList: React.FC<ProjectsListProps> = (props) => {
-  const [expandedCells, setExpandedCells] =
-    React.useState<Record<string, ColumnKey>>();
+  const expandedCells: Record<string, ColumnKey> = {};
   // Fetch data from dashboard backend (or if we want, directly from the API)
   const fetchData = ({ pageParam = 1 }): Promise<Project> =>
     fetch(
@@ -110,7 +109,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
             <Th />
           </Tr>
         </Thead>
-        {flatPages.map((project, index) => {
+        {flatPages.map((project) => {
           const expandedCellKey = expandedCells
             ? expandedCells[project.repo_name]
             : null;
@@ -184,7 +183,7 @@ const ProjectsList: React.FC<ProjectsListProps> = (props) => {
       </Table>
       <center>
         <br />
-        <Button variant="control" onClick={() => fetchNextPage()}>
+        <Button variant="control" onClick={() => void fetchNextPage()}>
           Load More
         </Button>
       </center>

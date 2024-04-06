@@ -30,7 +30,6 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { Timestamp } from "../utils/Timestamp";
-import { getCommitLink } from "../utils/forgeUrls";
 import {
   QueriesOptions,
   UseQueryResult,
@@ -69,10 +68,12 @@ export interface TestingFarmOverview {
  * @returns Expandable Copr list that fetches detail on expansion
  */
 function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
-  let coprBuilds = [];
+  const coprBuilds = [];
 
   const [expandedBuilds, setExpandedBuilds] = useState<number[]>([]);
-  const [coprQueries, setCoprQueries] = useState<[...QueriesOptions<any>]>([]);
+  const [coprQueries, setCoprQueries] = useState<[...QueriesOptions<string[]>]>(
+    [],
+  );
   type QueryResult = UseQueryResult<CoprResult | { error: string }>;
   const results = useQueries<(CoprResult | { error: string })[]>({
     queries: coprQueries,
@@ -106,12 +107,17 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
     if ("error" in result.data) {
       return <>Error {result.data["error"]}</>;
     } else if ("build_id" in result.data) {
-      return <ResultsPageCoprDetails data={result.data} />;
+      return (
+        <ResultsPageCoprDetails
+          key={result.data["build_id"]}
+          data={result.data}
+        />
+      );
     }
   });
   for (let i = 0; i < copr_build_ids.length; i++) {
-    let coprBuildId = copr_build_ids[i];
-    let isExpanded = expandedBuilds.includes(coprBuildId);
+    const coprBuildId = copr_build_ids[i];
+    const isExpanded = expandedBuilds.includes(coprBuildId);
     coprBuilds.push(
       <DataListItem key={coprBuildId} isExpanded={isExpanded}>
         <DataListItemRow key={coprBuildId + "row"}>
@@ -123,7 +129,7 @@ function useCoprBuilds(copr_build_ids: number[]): React.JSX.Element[] {
           />
           <DataListItemCells
             dataListCells={[
-              <DataListCell>
+              <DataListCell key={1}>
                 <NavLink to={`/results/copr-builds/${coprBuildId}`}>
                   {coprBuildId}
                 </NavLink>
@@ -157,7 +163,7 @@ const fetchTestingFarm = (
 
 const ResultsPageTestingFarm = () => {
   useTitle("Testing Farm Results");
-  let { id } = useParams();
+  const { id } = useParams();
 
   const URL = `${import.meta.env.VITE_API_URL}/testing-farm/${id}`;
   const { data, isError, isInitialLoading } = useQuery([URL], () =>
@@ -184,13 +190,13 @@ const ResultsPageTestingFarm = () => {
     return;
   }
 
-  const statusWithLink = data?.web_url ? (
-    <a href={data.web_url} target="_blank" rel="noreferrer">
-      {data.status}
-    </a>
-  ) : (
-    <>{data?.status}</>
-  );
+  // const statusWithLink = data?.web_url ? (
+  //   <a href={data.web_url} target="_blank" rel="noreferrer">
+  //     {data.status}
+  //   </a>
+  // ) : (
+  //   <>{data?.status}</>
+  // );
 
   return (
     <>

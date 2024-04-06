@@ -28,7 +28,7 @@ export const ResultsFound: Story = {
   parameters: {
     msw: {
       handlers: [
-        rest.get("*/projects", (req, res, ctx) => {
+        rest.get("*/projects", (_req, res, ctx) => {
           return res(ctx.status(503));
         }),
       ],

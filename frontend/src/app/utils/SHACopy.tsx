@@ -18,7 +18,7 @@ export const SHACopy: React.FC<SHACopyInterface> = ({
     return <></>;
   }
   const onCopyHash = () => {
-    navigator.clipboard.writeText(commit_sha);
+    void navigator.clipboard.writeText(commit_sha);
   };
 
   return (

@@ -62,10 +62,10 @@ const SRPMBuildsTable = () => {
 
   // Convert fetched json into row format that the table can read
   function jsonToRow(srpm_builds: SRPMBuild[]) {
-    let rowsList: IRow[] = [];
+    const rowsList: IRow[] = [];
 
     srpm_builds.forEach((srpm_build) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={srpm_build.project_url} />,
@@ -126,7 +126,7 @@ const SRPMBuildsTable = () => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

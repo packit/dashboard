@@ -15,7 +15,7 @@ const meta: Meta<typeof CoprBuildsTable> = {
   parameters: {
     msw: {
       handlers: {
-        common: rest.get("*/copr-builds", (req, res, ctx) => {
+        common: rest.get("*/copr-builds", (_req, res, ctx) => {
           return res(ctx.json(CoprBuildData));
         }),
       },
@@ -32,7 +32,7 @@ export const ServerFails: Story = {
   parameters: {
     msw: {
       handlers: {
-        common: rest.get("*/copr-builds", (req, res, ctx) => {
+        common: rest.get("*/copr-builds", (_req, res, ctx) => {
           return res(ctx.delay(800), ctx.status(503));
         }),
       },

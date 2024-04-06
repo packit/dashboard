@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import { TableVariant, cellWidth, IRow } from "@patternfly/react-table";
 import {
@@ -59,9 +59,9 @@ const TestingFarmResultsTable = () => {
     });
 
   function jsonToRow(test_results: TestingFarmResult[]) {
-    let rowsList: IRow[] = [];
+    const rowsList: IRow[] = [];
     test_results.forEach((test_result) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={test_result.project_url} />,
@@ -129,7 +129,7 @@ const TestingFarmResultsTable = () => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

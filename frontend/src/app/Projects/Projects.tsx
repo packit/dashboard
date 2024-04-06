@@ -1,7 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
   PageSection,
   PageSectionVariants,

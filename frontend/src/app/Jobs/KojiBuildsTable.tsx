@@ -68,10 +68,10 @@ const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
 
   // Convert fetched json into row format that the table can read
   function jsonToRow(koji_builds: KojiBuild[]) {
-    let rowsList: IRow[] = [];
+    const rowsList: IRow[] = [];
 
     koji_builds.forEach((koji_build) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={koji_build.project_url} />,
@@ -142,7 +142,7 @@ const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

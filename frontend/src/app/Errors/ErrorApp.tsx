@@ -24,8 +24,8 @@ const ErrorApp = () => {
   console.error(error);
   const [copied, setCopied] = React.useState(false);
 
-  const clipboardCopyFunc = (event: React.MouseEvent, text: string) => {
-    navigator.clipboard.writeText(text);
+  const clipboardCopyFunc = (_event: React.MouseEvent, text: string) => {
+    void navigator.clipboard.writeText(text);
   };
 
   const onClick = (event: React.MouseEvent, error: unknown) => {
