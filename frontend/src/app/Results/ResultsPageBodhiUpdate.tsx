@@ -1,7 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
   PageSection,
   Card,
@@ -10,14 +9,11 @@ import {
   TextContent,
   Text,
   Title,
-  Label,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
 } from "@patternfly/react-core";
-import { TableHeader, TableBody } from "@patternfly/react-table/deprecated";
-import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
@@ -25,7 +21,6 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 import { SHACopy } from "../utils/SHACopy";
 
@@ -55,7 +50,7 @@ const fetchBodhiUpdates = (url: string) =>
 
 const ResultsPageBodhiUpdate = () => {
   useTitle("Bodhi Updates");
-  let { id } = useParams();
+  const { id } = useParams();
 
   const URL = `${import.meta.env.VITE_API_URL}/bodhi-updates/${id}`;
   const { data, isError, isInitialLoading } = useQuery<

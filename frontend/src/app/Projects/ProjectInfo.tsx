@@ -49,7 +49,7 @@ const fetchProjectInfo = async (url: string): Promise<ProjectDetails> => {
 
 export const ProjectInfo = () => {
   useTitle("Project");
-  let { forge, namespace, repoName } = useParams();
+  const { forge, namespace, repoName } = useParams();
 
   // TODO: Change tabs around so we can update URL instead with Outlet
   const [activeTabKey, setActiveTabKey] = React.useState<string | number>(0);

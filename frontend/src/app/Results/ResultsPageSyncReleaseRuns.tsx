@@ -27,7 +27,6 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
-import { Timestamp } from "../utils/Timestamp";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
@@ -73,12 +72,12 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
       ? "Pull from upstream results"
       : "Propose downstream results";
   useTitle(displayText);
-  let { id } = useParams();
+  const { id } = useParams();
 
   const [isTextWrapped, setIsTextWrapped] = useState(true);
   const [isLineNumbersShown, setIsLineNumbersShown] = useState(false);
   // TODO(spytec): Not sure what the ref type is supposed to be
-  const logViewerRef = React.useRef<any>(null);
+  const logViewerRef = React.useRef<{ scrollToBottom: () => void }>(null);
   const [isFullScreen, setIsFullScreen] = React.useState(false);
 
   const API_URL = `${import.meta.env.VITE_API_URL}/${job}/${id}`;
@@ -110,13 +109,13 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     );
   }
 
-  const linkToDownstreamPR = data.downstream_pr_url ? (
-    <a href={data.downstream_pr_url} rel="noreferrer" target="_blank">
-      Click here
-    </a>
-  ) : (
-    <>Link will be available after successful downstream PR submission.</>
-  );
+  // const linkToDownstreamPR = data.downstream_pr_url ? (
+  //   <a href={data.downstream_pr_url} rel="noreferrer" target="_blank">
+  //     Click here
+  //   </a>
+  // ) : (
+  //   <>Link will be available after successful downstream PR submission.</>
+  // );
 
   const getLinkToPackage = () => {
     if (!data.downstream_pr_project) return <>Link not available.</>;
@@ -153,13 +152,13 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     document.body.removeChild(element);
   };
 
-  const onExpandClick = (_: any) => {
-    const element: any = document.querySelector("#logviewer");
+  const onExpandClick = (_: never) => {
+    const element: Element | null = document.querySelector("#logviewer");
     if (!isFullScreen && element) {
-      element.requestFullscreen();
+      void element.requestFullscreen();
       setIsFullScreen(true);
     } else {
-      document.exitFullscreen();
+      void document.exitFullscreen();
       setIsFullScreen(false);
     }
   };

@@ -47,9 +47,9 @@ interface SyncReleaseStatusesProps {
   job: SyncReleaseTableProps["job"];
 }
 const SyncReleaseStatuses: React.FC<SyncReleaseStatusesProps> = (props) => {
-  let labels = [];
+  const labels = [];
 
-  for (let target in props.ids) {
+  for (const target in props.ids) {
     const id = props.ids[target];
     const status = props.statuses[target];
 
@@ -95,10 +95,10 @@ const SyncReleaseTable: React.FC<SyncReleaseTableProps> = ({ job }) => {
 
   // Convert fetched json into row format that the table can read
   function jsonToRow(upstream_downstream_jobs: UpstreamDownstreamJobs[]) {
-    let rowsList: IRow[] = [];
+    const rowsList: IRow[] = [];
 
     upstream_downstream_jobs.forEach((upstream_downstream_job) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={upstream_downstream_job.project_url} />,
@@ -164,7 +164,7 @@ const SyncReleaseTable: React.FC<SyncReleaseTableProps> = ({ job }) => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

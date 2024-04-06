@@ -2,18 +2,14 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  Label,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
 } from "@patternfly/react-core";
-import { Timestamp } from "../utils/Timestamp";
-import { getCommitLink } from "../utils/forgeUrls";
 import { CoprResult } from "./ResultsPageCopr";
 import React from "react";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Link, NavLink } from "react-router-dom";
 import { LabelLink } from "../utils/LabelLink";
 import { ResultProgressStep } from "./ResultProgressStep";
 

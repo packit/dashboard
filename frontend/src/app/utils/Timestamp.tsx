@@ -10,8 +10,8 @@ import React from "react";
  * https://stackoverflow.com/questions/1551382/user-friendly-time-format-in-python
  */
 const prettyTimeDifference = (difference: number) => {
-  let secondDiff = difference;
-  let dayDiff = Math.floor(difference / (60 * 60 * 24));
+  const secondDiff = difference;
+  const dayDiff = Math.floor(difference / (60 * 60 * 24));
 
   // we set this to null further down the code to indicate estimates like "just now" and "a minute ago"
   let numericPart: number | null = dayDiff / 365;
@@ -49,8 +49,8 @@ export const getPrettyTime = (date: number | Date | null) => {
     return null;
   }
 
-  let now = Date.now();
-  let diff = Math.floor(
+  const now = Date.now();
+  const diff = Math.floor(
     (now - (date instanceof Date ? date.getTime() : date)) / 1000,
   );
 

@@ -1,7 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
   PageSection,
   Card,
@@ -25,7 +24,6 @@ import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
@@ -61,7 +59,7 @@ const fetchSRPMBuild = (url: string) =>
 
 const ResultsPageSRPM = () => {
   useTitle("SRPM Results");
-  let { id } = useParams();
+  const { id } = useParams();
 
   const URL = `${import.meta.env.VITE_API_URL}/srpm-builds/${id}`;
   const { data, isError, isInitialLoading } = useQuery<

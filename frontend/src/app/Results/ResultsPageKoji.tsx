@@ -1,7 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
   PageSection,
   Card,
@@ -16,16 +15,13 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
 } from "@patternfly/react-core";
-import { TableHeader, TableBody } from "@patternfly/react-table/deprecated";
-import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
+import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 import { SHACopy } from "../utils/SHACopy";
 import { ResultProgressStep } from "./ResultProgressStep";
@@ -62,7 +58,7 @@ const fetchKojiBuilds = (url: string) =>
 
 const ResultsPageKoji = () => {
   useTitle("Koji Results");
-  let { id } = useParams();
+  const { id } = useParams();
 
   const URL = `${import.meta.env.VITE_API_URL}/koji-builds/${id}`;
   const { data, isError, isInitialLoading } = useQuery<

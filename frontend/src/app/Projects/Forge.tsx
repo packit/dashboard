@@ -15,7 +15,7 @@ import { useTitle } from "../utils/useTitle";
 
 const Forge = () => {
   useTitle("Project Forge");
-  let { forge } = useParams();
+  const { forge } = useParams();
 
   return (
     <>

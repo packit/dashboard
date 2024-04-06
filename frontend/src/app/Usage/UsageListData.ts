@@ -67,4 +67,5 @@ export interface UsageListData {
     vm_image_build_targets: JobBuildGroup;
     [key: string]: JobBuildGroup;
   };
+  [key: string]: unknown;
 }

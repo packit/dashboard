@@ -143,7 +143,7 @@ const PipelinesTable = () => {
     const rowsList: (IRow | string[])[] = [];
 
     res.forEach((run) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={run.trigger.git_repo} />,
@@ -242,7 +242,7 @@ const PipelinesTable = () => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

@@ -101,12 +101,12 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
   }
 
   function getLineChart(keysToShow, dataMapping, description) {
-    var CursorVoronoiContainer = createContainer("voronoi", "cursor");
-    var jobChartLineLegendData = keysToShow.map((key) => ({
+    const CursorVoronoiContainer = createContainer("voronoi", "cursor");
+    const jobChartLineLegendData = keysToShow.map((key) => ({
       childName: getReadableName(key),
       name: getReadableName(key),
     }));
-    var jobChartLines = keysToShow.map((key, i) =>
+    const jobChartLines = keysToShow.map((key, i) =>
       getChartLine(dataMapping[key], key),
     );
 

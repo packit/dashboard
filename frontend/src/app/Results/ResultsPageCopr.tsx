@@ -16,11 +16,8 @@ import {
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { getCommitLink } from "../utils/forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
 import { SHACopy } from "../utils/SHACopy";
@@ -58,9 +55,9 @@ export interface CoprResult {
 }
 
 function getPackagesToInstall(built_packages: BuildPackage[]) {
-  let packagesToInstall = [];
+  const packagesToInstall = [];
 
-  for (let packageDict of built_packages) {
+  for (const packageDict of built_packages) {
     if (packageDict.arch !== "src") {
       const packageString =
         packageDict.name +
@@ -89,7 +86,7 @@ export const API_COPR_BUILDS = `${import.meta.env.VITE_API_URL}/copr-builds/`;
 
 const ResultsPageCopr = () => {
   useTitle("Copr Results");
-  let { id } = useParams();
+  const { id } = useParams();
   const URL = API_COPR_BUILDS + id;
 
   const { data, isError, isInitialLoading } = useQuery<

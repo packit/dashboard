@@ -83,11 +83,11 @@ const BranchList: React.FC<BranchListProps> = (props) => {
     // We cant just invert the previous state here
     // because its undefined for the first time
     if (expanded[branchName]) {
-      let copyExpanded = { ...expanded };
+      const copyExpanded = { ...expanded };
       copyExpanded[branchName] = false;
       setExpanded(copyExpanded);
     } else {
-      let copyExpanded = { ...expanded };
+      const copyExpanded = { ...expanded };
       copyExpanded[branchName] = true;
       setExpanded(copyExpanded);
     }

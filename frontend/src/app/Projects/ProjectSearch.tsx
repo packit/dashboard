@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useState } from "react";
+import { useState } from "react";
 import {
   Alert,
   Form,
@@ -45,7 +45,7 @@ const ProjectSearch = () => {
     url = url.replace("http://", "").replace("https://", "");
 
     // Split to forge - namespace - repo_name and update states
-    var parts = url.split("/");
+    const parts = url.split("/");
     setForge(parts[0]);
     switch (parts.length) {
       case 1:

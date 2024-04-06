@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import { TableVariant, cellWidth, IRow } from "@patternfly/react-table";
 import {
@@ -63,10 +63,10 @@ const BodhiUpdatesTable = () => {
 
   // Convert fetched json into row format that the table can read
   function jsonToRow(bodhi_updates: BodhiUpdate[]) {
-    let rowsList: IRow[] = [];
+    const rowsList: IRow[] = [];
 
     bodhi_updates.forEach((bodhi_update) => {
-      let singleRow = {
+      const singleRow = {
         cells: [
           {
             title: <ForgeIcon url={bodhi_update.project_url} />,
@@ -137,7 +137,7 @@ const BodhiUpdatesTable = () => {
         <br />
         <Button
           variant="control"
-          onClick={() => fetchNextPage()}
+          onClick={() => void fetchNextPage()}
           isAriaDisabled={isFetching}
         >
           {isFetching ? "Fetching data" : "Load more"}

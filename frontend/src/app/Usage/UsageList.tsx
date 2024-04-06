@@ -76,14 +76,14 @@ const UsageList: React.FC<UsageListProps> = (props) => {
       sum_of_all -
       Object.keys(top_projects).reduce((a, v) => (a = a + top_projects[v]), 0);
     const top_projects_data = [
-      ...Object.keys(top_projects).map((key, i) => ({
+      ...Object.keys(top_projects).map((key) => ({
         x: `${key.replace("https://", "")}`,
         y: top_projects[key],
       })),
       { x: "other projects", y: top_projects_rest },
     ];
     const top_projects_legend = [
-      ...Object.keys(top_projects).map((key, i) => ({
+      ...Object.keys(top_projects).map((key) => ({
         name: `${key.replace("https://", "")}: ${
           top_projects[key]
         } (${Math.floor((100 * top_projects[key]) / sum_of_all)}%)`,
@@ -101,11 +101,11 @@ const UsageList: React.FC<UsageListProps> = (props) => {
   function getInstanceChartData(instances: {
     [key: string]: number;
   }): InstanceChartData {
-    const instances_to_chart_data = Object.keys(instances).map((key, i) => ({
+    const instances_to_chart_data = Object.keys(instances).map((key) => ({
       x: `${key}`,
       y: instances[key],
     }));
-    const instances_to_chart_legend = Object.keys(instances).map((key, i) => ({
+    const instances_to_chart_legend = Object.keys(instances).map((key) => ({
       name: `${key}: ${instances[key]}`,
     }));
     const instances_to_chart_count = Object.keys(instances).reduce(
@@ -215,52 +215,52 @@ const UsageList: React.FC<UsageListProps> = (props) => {
     );
   }
 
-  function getGoalProgress() {
-    if (props.what != "total") {
-      return <></>;
-    }
-    const goalDescription =
-      data.jobs.sync_release_runs.active_projects.toString() +
-      " projects (" +
-      ((data.jobs.sync_release_runs.active_projects / 200) * 100).toString() +
-      "%)";
-    return (
-      <Card>
-        <CardTitle>Packit goal for Q4/2023</CardTitle>
-        <CardBody>
-          <Flex>
-            <Card>
-              <CardTitle>
-                Sync release used by 200 projects by the end of 2023.
-              </CardTitle>
-              <CardBody>
-                <ChartBullet
-                  ariaDesc="Chart describing onboarding for release syncing"
-                  ariaTitle="Chart describing onboarding for release syncing"
-                  constrainToVisibleArea
-                  labels={({ datum }) => `${datum.name}: ${datum.y}`}
-                  maxDomain={{ y: 200 }}
-                  name="Chart describing onboarding for release syncing"
-                  primarySegmentedMeasureData={[
-                    {
-                      name: "Onboarded projects",
-                      y: data.jobs.sync_release_runs.active_projects,
-                    },
-                  ]}
-                  qualitativeRangeData={[
-                    { name: "Q3 state", y: 124 },
-                    { name: "Q4 goal", y: 200 },
-                  ]}
-                  height={150}
-                  width={424}
-                />
-              </CardBody>
-            </Card>
-          </Flex>
-        </CardBody>
-      </Card>
-    );
-  }
+  // function getGoalProgress() {
+  //   if (props.what != "total") {
+  //     return <></>;
+  //   }
+  //   const goalDescription =
+  //     data.jobs.sync_release_runs.active_projects.toString() +
+  //     " projects (" +
+  //     ((data.jobs.sync_release_runs.active_projects / 200) * 100).toString() +
+  //     "%)";
+  //   return (
+  //     <Card>
+  //       <CardTitle>Packit goal for Q4/2023</CardTitle>
+  //       <CardBody>
+  //         <Flex>
+  //           <Card>
+  //             <CardTitle>
+  //               Sync release used by 200 projects by the end of 2023.
+  //             </CardTitle>
+  //             <CardBody>
+  //               <ChartBullet
+  //                 ariaDesc="Chart describing onboarding for release syncing"
+  //                 ariaTitle="Chart describing onboarding for release syncing"
+  //                 constrainToVisibleArea
+  //                 labels={({ datum }) => `${datum.name}: ${datum.y}`}
+  //                 maxDomain={{ y: 200 }}
+  //                 name="Chart describing onboarding for release syncing"
+  //                 primarySegmentedMeasureData={[
+  //                   {
+  //                     name: "Onboarded projects",
+  //                     y: data.jobs.sync_release_runs.active_projects,
+  //                   },
+  //                 ]}
+  //                 qualitativeRangeData={[
+  //                   { name: "Q3 state", y: 124 },
+  //                   { name: "Q4 goal", y: 200 },
+  //                 ]}
+  //                 height={150}
+  //                 width={424}
+  //               />
+  //             </CardBody>
+  //           </Card>
+  //         </Flex>
+  //       </CardBody>
+  //     </Card>
+  //   );
+  // }
 
   function getGoalProgress2024Q1() {
     if (props.what != "total") {
@@ -314,7 +314,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
     "Active projects",
   );
 
-  const job_charts = Object.keys(data.jobs).map((key, i) =>
+  const job_charts = Object.keys(data.jobs).map((key) =>
     getProjectChart(
       getChartData(
         data.jobs[key].top_projects_by_job_runs,
