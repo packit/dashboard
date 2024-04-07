@@ -46,7 +46,7 @@ export const ResultProgressStep: React.FC<ResultProgressStepProps> = ({
         Submitted
       </ProgressStep>
     );
-  }, [startTime]);
+  }, [startTime, submittedTime]);
 
   const startStep = useMemo(() => {
     const isPending = !startTime;
@@ -98,7 +98,7 @@ export const ResultProgressStep: React.FC<ResultProgressStepProps> = ({
         {noun} {isPending ? "Pending" : isCurrent ? "In Progress" : "Done"}
       </ProgressStep>
     );
-  }, [startTime]);
+  }, [startTime, finishedTime, noun]);
 
   return (
     <ProgressStepper aria-label={`Current ${noun.toLowerCase()} status`}>
