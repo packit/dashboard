@@ -29,6 +29,7 @@ import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
+import { ResultProgressStep } from "./ResultProgressStep";
 
 interface SRPMBuild {
   status: string;
@@ -90,30 +91,6 @@ const ResultsPageSRPM = () => {
       </PageSection>
     );
   }
-
-  const srpmURL = data.url ? (
-    <a href={data.url}>Link to download</a>
-  ) : (
-    "Not available to download"
-  );
-
-  const submittedAt = data.build_submitted_time ? (
-    <Timestamp stamp={data.build_submitted_time} verbose={true} />
-  ) : (
-    "Not available"
-  );
-
-  const startedAt = data.build_start_time ? (
-    <Timestamp stamp={data.build_start_time} verbose={true} />
-  ) : (
-    "Not available"
-  );
-
-  const finishedAt = data.build_finished_time ? (
-    <Timestamp stamp={data.build_finished_time} verbose={true} />
-  ) : (
-    "Not available"
-  );
 
   const logs = data.copr_build_id ? (
     ""
@@ -194,17 +171,17 @@ const ResultsPageSRPM = () => {
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
-                <DescriptionListTerm>Build Submitted Time</DescriptionListTerm>
+                <DescriptionListTerm>
+                  <span className="pf-v5-u-screen-reader">
+                    SRPM build timeline
+                  </span>
+                </DescriptionListTerm>
                 <DescriptionListDescription>
-                  {submittedAt}
-                </DescriptionListDescription>
-                <DescriptionListTerm>Build Start Time</DescriptionListTerm>
-                <DescriptionListDescription>
-                  {startedAt}
-                </DescriptionListDescription>
-                <DescriptionListTerm>Build Finish Time</DescriptionListTerm>
-                <DescriptionListDescription>
-                  {finishedAt}
+                  <ResultProgressStep
+                    submittedTime={data.build_submitted_time}
+                    startTime={data.build_start_time}
+                    finishedTime={data.build_finished_time}
+                  />
                 </DescriptionListDescription>
               </DescriptionListGroup>
             </DescriptionList>
