@@ -33,6 +33,7 @@ import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
+import { ResultProgressStep } from "./ResultProgressStep";
 
 interface ResultsPageSyncReleaseRunsProps {
   job: "propose-downstream" | "pull-from-upstream";
@@ -282,17 +283,18 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
-                <DescriptionListTerm>Submitted Time</DescriptionListTerm>
+                <DescriptionListTerm>
+                  <span className="pf-v5-u-screen-reader">
+                    {displayText} timeline
+                  </span>
+                </DescriptionListTerm>
                 <DescriptionListDescription>
-                  <Timestamp stamp={data.submitted_time} verbose={true} />
-                </DescriptionListDescription>
-                <DescriptionListTerm>Start Time</DescriptionListTerm>
-                <DescriptionListDescription>
-                  <Timestamp stamp={data.start_time} verbose={true} />
-                </DescriptionListDescription>
-                <DescriptionListTerm>Finish Time</DescriptionListTerm>
-                <DescriptionListDescription>
-                  <Timestamp stamp={data.finished_time} verbose={true} />
+                  <ResultProgressStep
+                    noun="Run"
+                    submittedTime={data.submitted_time}
+                    startTime={data.start_time}
+                    finishedTime={data.finished_time}
+                  />
                 </DescriptionListDescription>
               </DescriptionListGroup>
             </DescriptionList>
