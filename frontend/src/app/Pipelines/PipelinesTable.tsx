@@ -11,7 +11,7 @@ import {
 } from "@patternfly/react-table/deprecated";
 
 import { Button, LabelGroup } from "@patternfly/react-core";
-import { TriggerLink } from "../Trigger/TriggerLink";
+import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { ErrorConnection } from "../Errors/ErrorConnection";
 import { Preloader } from "../Preloader/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
@@ -151,7 +151,9 @@ const PipelinesTable = () => {
           {
             title: (
               <strong>
-                <TriggerLink builds={run.trigger} />
+                <TriggerLink trigger={run.trigger}>
+                  <TriggerSuffix trigger={run.trigger} />
+                </TriggerLink>
               </strong>
             ),
           },
