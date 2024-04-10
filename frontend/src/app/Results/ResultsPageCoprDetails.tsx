@@ -24,6 +24,14 @@ export interface ResultsPageCoprDetailsProps {
 export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
   data,
 }) => {
+  const buildLogsLink = data.build_logs_url ? (
+    <a href={data.build_logs_url} rel="noreferrer" target={"_blank"}>
+      Logs
+    </a>
+  ) : (
+    "Logs not available"
+  );
+
   return (
     <DescriptionList
       columnModifier={{
@@ -45,11 +53,7 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
             status={data.status}
             link={data.web_url}
           />
-          (
-          <a href={data.build_logs_url} rel="noreferrer" target={"_blank"}>
-            Logs
-          </a>
-          )
+          ({buildLogsLink})
         </DescriptionListDescription>
       </DescriptionListGroup>
       <DescriptionListGroup>
