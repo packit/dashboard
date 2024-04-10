@@ -8,7 +8,7 @@ GIT_SHA_FETCH := $(shell git rev-parse HEAD)
 export GIT_SHA=$(GIT_SHA_FETCH)
 
 install-dependencies: .install-logos
-	sudo dnf -y install python3-flask python3-flask-cors yarnpkg npm
+	sudo dnf -y install python3-flask python3-flask-cors python3-flask-talisman yarnpkg npm
 	cd frontend && yarn install
 	make transpile-prod
 
