@@ -71,9 +71,7 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
-              {!data
-                ? "Data is loading, try again in few minutes."
-                : "Not Found."}
+              {!data ? "Data is loading, wait a few minutes." : "Not Found."}
             </Title>
           </CardBody>
         </Card>
