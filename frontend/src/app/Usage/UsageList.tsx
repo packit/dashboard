@@ -268,12 +268,12 @@ const UsageList: React.FC<UsageListProps> = (props) => {
     }
     return (
       <Card>
-        <CardTitle>Packit goal for Q1/2024</CardTitle>
+        <CardTitle>Packit onboarded projects with downstream jobs</CardTitle>
         <CardBody>
           <Flex>
             <Card>
               <CardTitle>
-                415 onboarded projects by the end of 2024 Q1.
+                Projects with a merged downstream PR, Koji build or Bodhi update
               </CardTitle>
               <CardBody>
                 <ChartBullet
