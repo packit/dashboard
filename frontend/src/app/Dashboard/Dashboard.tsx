@@ -24,7 +24,7 @@ import { useTitle } from "../utils/useTitle";
 const Dashboard = () => {
   useTitle("Homes");
   return (
-    <Page>
+    <>
       <PageSection>
         <Title headingLevel="h1">Packit Dashboard</Title>
       </PageSection>
@@ -130,7 +130,7 @@ const Dashboard = () => {
           </GridItem>
         </Grid>
       </PageSection>
-    </Page>
+    </>
   );
 };
 
