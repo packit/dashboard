@@ -79,7 +79,7 @@ export const ResultProgressStep: React.FC<ResultProgressStepProps> = ({
               }
             >
               <span>
-                Took {prettyFormat((finishedTime - startTime) * 6000)}
+                Took {prettyFormat((finishedTime - startTime) * 1000)}
               </span>
             </Tooltip>
           ) : startTime ? (
