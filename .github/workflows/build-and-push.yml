@@ -42,6 +42,11 @@ jobs:
           echo "commit_sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
         id: branch_tag
 
+      - name: Set up secret file needed for the build
+        run: echo "$SENTRY_AUTH_TOKEN" > /tmp/sentry-secret
+        env:
+          SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
+
       - name: Build Image
         id: build-image
         # https://github.com/marketplace/actions/buildah-build
@@ -53,6 +58,8 @@ jobs:
           build-args: |
             VITE_API_URL=${{ steps.branch_tag.outputs.api }}
             VITE_GIT_SHA=${{ steps.branch_tag.outputs.commit_sha }}
+          extra-args: |
+            --secret id=sentry_auth_token,src=/tmp/sentry-secret
           oci: true
 
       - name: Push To Quay

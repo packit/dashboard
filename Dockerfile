@@ -19,7 +19,8 @@ COPY packit_dashboard/  packit_dashboard/
 COPY frontend/ frontend/
 
 COPY files/ files/
-RUN ansible-playbook -vv -c local -i localhost, files/ansible/recipe.yaml
+RUN --mount=type=secret,id=sentry_auth_token export SENTRY_AUTH_TOKEN=$(cat /run/secrets/sentry_auth_token); \
+ansible-playbook -vv -c local -i localhost, files/ansible/recipe.yaml
 
 EXPOSE 8443
 
