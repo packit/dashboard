@@ -13,7 +13,7 @@
           - python3-cachetools
           - python3-requests
           - yarnpkg
-          - @nodejs:20
+          - "@nodejs:20"
           - python3-mod_wsgi
           - mod_ssl
         state: present
