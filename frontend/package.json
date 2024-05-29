@@ -144,7 +144,7 @@
     "prop-types": "^15.8.1",
     "storybook": "^7.0.9",
     "storybook-addon-react-router-v6": "^1.0.0",
-    "typescript-eslint": "^7.5.0"
+    "typescript-eslint": "7.2.0"
   },
   "msw": {
     "workerDirectory": "public"
