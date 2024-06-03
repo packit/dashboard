@@ -27,7 +27,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
-import { ResultProgressStep } from "./ResultProgressStep";
+import { AcceptedStatuses, ResultProgressStep } from "./ResultProgressStep";
 
 interface SRPMBuild {
   status: string;
@@ -65,6 +65,26 @@ const ResultsPageSRPM = () => {
   const { data, isError, isInitialLoading } = useQuery<
     SRPMBuild | { error: string }
   >([URL], () => fetchSRPMBuild(URL));
+
+  /**
+   * Map the different statuses of SRPM builds to the visual aspect
+   *
+   * TODO (@Venefilyn): change the statuses to match API
+   *
+   * @param {string} status - list of statuses from SRPM builds
+   * @return {*}  {AcceptedStatuses}
+   */
+  function getSRPMStatus(status: string): AcceptedStatuses {
+    switch (status) {
+      case "error":
+      case "failure":
+        return "fail";
+      case "success":
+        return "success";
+      default:
+        return "unknown";
+    }
+  }
 
   // If backend API is down
   if (isError) {
@@ -179,6 +199,7 @@ const ResultsPageSRPM = () => {
                     submittedTime={data.build_submitted_time}
                     startTime={data.build_start_time}
                     finishedTime={data.build_finished_time}
+                    status={getSRPMStatus(data.status)}
                   />
                 </DescriptionListDescription>
               </DescriptionListGroup>

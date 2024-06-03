@@ -32,7 +32,7 @@ import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
-import { ResultProgressStep } from "./ResultProgressStep";
+import { ResultProgressStep, AcceptedStatuses } from "./ResultProgressStep";
 
 interface ResultsPageSyncReleaseRunsProps {
   job: "propose-downstream" | "pull-from-upstream";
@@ -242,6 +242,27 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
     </PageSection>
   );
 
+  /**
+   * Map the different statuses of sync release runs to the visual aspect
+   *
+   * TODO (@Venefilyn): change the statuses to match API
+   *
+   * @param {string} status - list of statuses from sync release
+   * @return {*}  {AcceptedStatuses}
+   */
+  function getSyncReleaseStatus(status: string): AcceptedStatuses {
+    switch (status) {
+      case "error":
+        return "fail";
+      case "successful":
+        return "success";
+      case "skipped":
+        return "skipped";
+      default:
+        return "unknown";
+    }
+  }
+
   return (
     <>
       <PageSection variant={PageSectionVariants.light}>
@@ -293,6 +314,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
                     submittedTime={data.submitted_time}
                     startTime={data.start_time}
                     finishedTime={data.finished_time}
+                    status={getSyncReleaseStatus(data.status)}
                   />
                 </DescriptionListDescription>
               </DescriptionListGroup>
