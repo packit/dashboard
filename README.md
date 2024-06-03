@@ -47,7 +47,7 @@ For more details, see the [contribution guide](CONTRIBUTING.md).
 
 ### Pre-commit
 
-> **Note**
+> [!NOTE]
 >
 > For more details on `pre-commit` see https://github.com/packit/contributing#pre-commit
 
