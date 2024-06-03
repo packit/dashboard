@@ -11,7 +11,7 @@ import { CoprResult } from "./ResultsPageCopr";
 import React from "react";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { LabelLink } from "../utils/LabelLink";
-import { ResultProgressStep } from "./ResultProgressStep";
+import { AcceptedStatuses, ResultProgressStep } from "./ResultProgressStep";
 
 export interface ResultsPageCoprDetailsProps {
   data: CoprResult;
@@ -27,6 +27,26 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
   ) : (
     "Logs not available"
   );
+
+  /**
+   * Map the different statuses of Copr builds to the visual aspect
+   *
+   * TODO (@Venefilyn): change the statuses to match API
+   *
+   * @param {string} status - list of statuses from Copr builds
+   * @return {*}  {AcceptedStatuses}
+   */
+  function getCoprBuildStatus(status: string): AcceptedStatuses {
+    switch (status) {
+      case "error":
+      case "failure":
+        return "fail";
+      case "success":
+        return "success";
+      default:
+        return "unknown";
+    }
+  }
 
   return (
     <DescriptionList
@@ -61,6 +81,7 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
             submittedTime={data.build_submitted_time}
             startTime={data.build_start_time}
             finishedTime={data.build_finished_time}
+            status={getCoprBuildStatus(data.status)}
           />
         </DescriptionListDescription>
       </DescriptionListGroup>

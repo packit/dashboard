@@ -24,7 +24,7 @@ import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { SHACopy } from "../utils/SHACopy";
-import { ResultProgressStep } from "./ResultProgressStep";
+import { AcceptedStatuses, ResultProgressStep } from "./ResultProgressStep";
 
 interface KojiBuild {
   scratch: boolean;
@@ -64,6 +64,26 @@ const ResultsPageKoji = () => {
   const { data, isError, isInitialLoading } = useQuery<
     KojiBuild | { error: string }
   >([URL], () => fetchKojiBuilds(URL));
+
+  /**
+   * Map the different statuses of Koji builds to the visual aspect
+   *
+   * TODO (@Venefilyn): change the statuses to match API
+   *
+   * @param {string} status - list of statuses from Koji builds
+   * @return {*}  {AcceptedStatuses}
+   */
+  function getKojiBuildStatus(status: string): AcceptedStatuses {
+    switch (status) {
+      case "error":
+      case "failure":
+        return "fail";
+      case "success":
+        return "success";
+      default:
+        return "unknown";
+    }
+  }
 
   // If backend API is down
   if (isError) {
@@ -172,6 +192,7 @@ const ResultsPageKoji = () => {
                     submittedTime={data.build_submitted_time}
                     startTime={data.build_start_time}
                     finishedTime={data.build_finished_time}
+                    status={getKojiBuildStatus(data.status)}
                   />
                 </DescriptionListDescription>
               </DescriptionListGroup>
