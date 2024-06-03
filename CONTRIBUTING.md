@@ -124,7 +124,7 @@ Most of our components need to use some sort of network activity, likely an API 
 
 To use this, we can add some parameters to the named export to tell `msw` on how to intercept the network call. In this example we have a story that successfully recieve data instantly and displays it. The `CoprBuildData` here is from a local data file containing an example output from the API endpoint.
 
-> **Note**
+> [!NOTE]
 >
 > `msw` will output into the browser console if it detects a network call it did not intercept, which is helpful for debugging why it is not working.
 
