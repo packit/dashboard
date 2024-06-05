@@ -178,42 +178,46 @@ const PipelineDetail = () => {
               <DescriptionListGroup>
                 <DescriptionListTerm>SRPM Build</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.srpm ? (
+                  {data?.srpm ? (
                     <Statuses
                       route={"srpm-builds"}
                       statusClass={StatusLabel}
                       entries={[data.srpm]}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
-                    <></>
+                    <Text component={TextVariants.small}>
+                      <i>Not available</i>
+                    </Text>
                   )}
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>Submitted time</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.time_submitted ? (
+                  {data?.time_submitted ? (
                     <Timestamp stamp={data.time_submitted.toString()} />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
-                    <></>
+                    <Text component={TextVariants.small}>
+                      <i>Not available</i>
+                    </Text>
                   )}
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>Copr builds</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.copr.length ? (
+                  {data?.copr.length ? (
                     <Statuses
                       route={"copr-builds"}
                       statusClass={StatusLabel}
                       entries={data.copr}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
                     <Text component={TextVariants.small}>
                       <i>Not available</i>
@@ -224,14 +228,14 @@ const PipelineDetail = () => {
               <DescriptionListGroup>
                 <DescriptionListTerm>Koji builds</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.koji.length ? (
+                  {data?.koji.length ? (
                     <Statuses
                       route={"koji-builds"}
                       statusClass={StatusLabel}
                       entries={data.koji}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
                     <Text component={TextVariants.small}>
                       <i>Not available</i>
@@ -242,14 +246,14 @@ const PipelineDetail = () => {
               <DescriptionListGroup>
                 <DescriptionListTerm>Propose Downstreams</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.propose_downstream.length ? (
+                  {data?.propose_downstream.length ? (
                     <Statuses
                       route={"propose-downstream"}
                       statusClass={StatusLabel}
                       entries={data.propose_downstream}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
                     <Text component={TextVariants.small}>
                       <i>Not available</i>
@@ -260,14 +264,14 @@ const PipelineDetail = () => {
               <DescriptionListGroup>
                 <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.koji.length ? (
+                  {data?.koji.length ? (
                     <Statuses
                       route={"pull_from_upstream"}
                       statusClass={StatusLabel}
                       entries={data.pull_from_upstream}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
                     <Text component={TextVariants.small}>
                       <i>Not available</i>
@@ -278,14 +282,14 @@ const PipelineDetail = () => {
               <DescriptionListGroup>
                 <DescriptionListTerm>Testing Farm runs</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.test_run.length ? (
+                  {data?.test_run.length ? (
                     <Statuses
                       route={"testing-farm"}
                       statusClass={StatusLabel}
                       entries={data.test_run}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
                     <Text component={TextVariants.small}>
                       <i>Not available</i>
@@ -296,14 +300,14 @@ const PipelineDetail = () => {
               <DescriptionListGroup>
                 <DescriptionListTerm>Bodhi updates</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : data?.bodhi_update.length ? (
+                  {data?.bodhi_update.length ? (
                     <Statuses
                       route={"bodhi-updates"}
                       statusClass={StatusLabel}
                       entries={data.bodhi_update}
                     />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
                   ) : (
                     <Text component={TextVariants.small}>
                       <i>Not available</i>
