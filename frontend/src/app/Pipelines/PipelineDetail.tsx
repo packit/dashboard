@@ -13,8 +13,6 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
   LabelGroup,
-  List,
-  ListItem,
   PageSection,
   PageSectionVariants,
   Skeleton,
@@ -28,6 +26,7 @@ import kojiLogo from "../../static/koji.ico";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import { Timestamp } from "../utils/Timestamp";
 
 interface StatusItem {
   packit_id: number;
@@ -191,6 +190,20 @@ const PipelineDetail = () => {
                     <></>
                   )}
                 </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
+                <DescriptionListTerm>Submitted time</DescriptionListTerm>
+                <DescriptionListDescription>
+                  {isLoading ? (
+                    <Skeleton width="150px" />
+                  ) : data?.time_submitted ? (
+                    <Timestamp stamp={data.time_submitted.toString()} />
+                  ) : (
+                    <></>
+                  )}
+                </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Copr builds</DescriptionListTerm>
                 <DescriptionListDescription>
                   {isLoading ? (
@@ -207,6 +220,8 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Koji builds</DescriptionListTerm>
                 <DescriptionListDescription>
                   {isLoading ? (
@@ -223,6 +238,8 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Propose Downstreams</DescriptionListTerm>
                 <DescriptionListDescription>
                   {isLoading ? (
@@ -239,6 +256,8 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
                 <DescriptionListDescription>
                   {isLoading ? (
@@ -255,6 +274,8 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Testing Farm runs</DescriptionListTerm>
                 <DescriptionListDescription>
                   {isLoading ? (
@@ -271,6 +292,8 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
+              </DescriptionListGroup>
+              <DescriptionListGroup>
                 <DescriptionListTerm>Bodhi updates</DescriptionListTerm>
                 <DescriptionListDescription>
                   {isLoading ? (
