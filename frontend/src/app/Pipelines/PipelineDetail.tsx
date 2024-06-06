@@ -125,14 +125,6 @@ function getBuilderLabel(run: PipelineRun) {
 const PipelineDetail = () => {
   let { id } = useParams();
 
-  // Headings
-  const columns = [
-    { title: "" }, // space for forge icon
-    { title: "Trigger", transforms: [cellWidth(15)] },
-    { title: "Time Submitted", transforms: [cellWidth(10)] },
-    { title: "Jobs", transforms: [cellWidth(70)] },
-  ];
-
   const fetchData = () =>
     fetch(`${import.meta.env.VITE_API_URL}/runs/merged/${id}`).then(
       (response) => response.json(),
@@ -319,7 +311,6 @@ const PipelineDetail = () => {
           </CardBody>
         </Card>
       </PageSection>
-      <pre>{isLoading ? "{}" : JSON.stringify(data, null, 2)}</pre>
     </>
   );
 };

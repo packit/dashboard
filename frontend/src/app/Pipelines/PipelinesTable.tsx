@@ -20,7 +20,7 @@ import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
 
 interface StatusItem {
@@ -119,6 +119,8 @@ function getBuilderLabel(run: PipelineRun) {
 }
 
 const PipelinesTable = () => {
+  const queryClient = useQueryClient();
+
   // Headings
   const columns = [
     { title: "" }, // space for forge icon
@@ -131,7 +133,15 @@ const PipelinesTable = () => {
   const fetchData = ({ pageParam = 1 }) =>
     fetch(`${import.meta.env.VITE_API_URL}/runs?page=${pageParam}&per_page=20`)
       .then((response) => response.json())
-      .then((data: PipelineRun[]) => jsonToRow(data));
+      .then((data: PipelineRun[]) => {
+        data.forEach((run) =>
+          queryClient.setQueryData(["pipeline", run.merged_run_id.toString()], {
+            ...run,
+          }),
+        );
+
+        return jsonToRow(data);
+      });
 
   const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
     useInfiniteQuery(["pipelines"], fetchData, {
