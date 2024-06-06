@@ -15,6 +15,7 @@ import {
 import { routes } from "./app/routes";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 Sentry.init({
   // packit-service
@@ -60,6 +61,7 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <ReactQueryDevtools />
     </QueryClientProvider>
   );
 };

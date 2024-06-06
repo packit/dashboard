@@ -138,6 +138,7 @@
     "@storybook/testing-library": "^0.1.0",
     "@storybook/theming": "^7.4.0",
     "@storybook/types": "^7.4.0",
+    "@tanstack/react-query-devtools": "^5.40.1",
     "babel-plugin-named-exports-order": "^0.0.2",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.1",
