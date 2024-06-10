@@ -22,6 +22,7 @@ import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";
 import { Link } from "react-router-dom";
+import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 
 interface StatusItem {
   packit_id: number;
@@ -123,10 +124,10 @@ const PipelinesTable = () => {
 
   // Headings
   const columns = [
-    { title: "" }, // space for forge icon
-    { title: "Trigger", transforms: [cellWidth(15)] },
+    { title: "Trigger", transforms: [cellWidth(20)] },
     { title: "Time Submitted", transforms: [cellWidth(10)] },
-    { title: "Jobs", transforms: [cellWidth(70)] },
+    { title: "Jobs", transforms: [cellWidth(60)] },
+    { title: "External" },
   ];
 
   // Fetch data from dashboard backend (or if we want, directly from the API)
@@ -157,11 +158,9 @@ const PipelinesTable = () => {
       const singleRow = {
         cells: [
           {
-            title: <ForgeIcon url={run.trigger.git_repo} />,
-          },
-          {
             title: (
               <strong>
+                <ForgeIcon url={run.trigger.git_repo} />{" "}
                 <Link to={`/pipelines/${run.merged_run_id}`}>
                   <TriggerSuffix trigger={run.trigger} />
                 </Link>
@@ -215,6 +214,13 @@ const PipelinesTable = () => {
                   entries={run.bodhi_update}
                 />
               </>
+            ),
+          },
+          {
+            title: (
+              <TriggerLink trigger={run.trigger}>
+                <ExternalLinkAltIcon />
+              </TriggerLink>
             ),
           },
         ],
