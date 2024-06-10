@@ -25,7 +25,6 @@
     "@vitejs/plugin-react": "^4.0.1",
     "eslint": "^8.43.0",
     "msw": "^1.2.1",
-    "prettier": "^2.8.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router": "^6.14.0",
@@ -43,7 +42,6 @@
     "build:analyze": "vite-bundle-visualizer --open",
     "preview": "vite preview",
     "lint": "eslint src/",
-    "prettier": "prettier --write .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -67,8 +65,7 @@
       "plugin:@typescript-eslint/recommended-type-checked",
       "plugin:react/recommended",
       "plugin:react/jsx-runtime",
-      "plugin:storybook/recommended",
-      "prettier"
+      "plugin:storybook/recommended"
     ],
     "rules": {
       "import/no-anonymous-default-export": "off",
@@ -92,19 +89,6 @@
         "files": [
           "**/*.stories.*"
         ]
-      }
-    ]
-  },
-  "prettier": {
-    "overrides": [
-      {
-        "files": [
-          "*.(js|jsx|ts|tsx)"
-        ],
-        "options": {
-          "tabWidth": 2,
-          "trailingComma": "all"
-        }
       }
     ]
   },
@@ -139,7 +123,7 @@
     "@storybook/theming": "^7.4.0",
     "@storybook/types": "^7.4.0",
     "babel-plugin-named-exports-order": "^0.0.2",
-    "eslint-config-prettier": "^9.1.0",
+    "dprint": "^0.46.2",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-storybook": "^0.6.12",
     "msw-storybook-addon": "^1.8.0",
