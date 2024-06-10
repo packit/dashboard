@@ -71,7 +71,6 @@ const AppLayout = () => {
   };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const onPageResize = (props: any) => {
-    // eslint-disable-next-line react/prop-types
     if (Object.hasOwn(props, "mobileView")) setIsMobileView(props.mobileView);
   };
 

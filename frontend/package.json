@@ -23,7 +23,6 @@
     "@types/react": "^18.0.29",
     "@types/react-dom": "^18.0.11",
     "@vitejs/plugin-react": "^4.0.1",
-    "eslint": "^8.43.0",
     "msw": "^1.2.1",
     "prettier": "^2.8.3",
     "react": "^18.2.0",
@@ -49,54 +48,6 @@
     "prettier": "prettier --write .",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
-  },
-  "eslintConfig": {
-    "ignorePatterns": [
-      "dist/*",
-      "public/*",
-      "frontend/*"
-    ],
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    },
-    "parser": "@typescript-eslint/parser",
-    "parserOptions": {
-      "project": "./tsconfig.json"
-    },
-    "extends": [
-      "eslint:recommended",
-      "plugin:@typescript-eslint/recommended-type-checked",
-      "plugin:react/recommended",
-      "plugin:react/jsx-runtime",
-      "plugin:storybook/recommended",
-      "prettier"
-    ],
-    "rules": {
-      "import/no-anonymous-default-export": "off",
-      "react/no-unescaped-entities": "off",
-      "react/prop-types": "off",
-      "@typescript-eslint/no-unused-vars": [
-        "error",
-        {
-          "args": "all",
-          "argsIgnorePattern": "^_",
-          "caughtErrors": "all",
-          "caughtErrorsIgnorePattern": "^_",
-          "destructuredArrayIgnorePattern": "^_",
-          "varsIgnorePattern": "^_",
-          "ignoreRestSiblings": true
-        }
-      ]
-    },
-    "overrides": [
-      {
-        "files": [
-          "**/*.stories.*"
-        ]
-      }
-    ]
   },
   "prettier": {
     "overrides": [
@@ -142,6 +93,7 @@
     "@storybook/theming": "^7.4.0",
     "@storybook/types": "^7.4.0",
     "babel-plugin-named-exports-order": "^0.0.2",
+    "eslint": "^8.57.0",
     "eslint-config-prettier": "^9.1.0",
     "eslint-plugin-react": "^7.34.1",
     "eslint-plugin-storybook": "^0.6.12",
