@@ -1,7 +1,7 @@
-- name: Copy packit_dashboard.wsgi file
+- name: Copy ASGI packit_dashboard.py file
   copy:
-    src: /src/packit_dashboard/packit_dashboard.wsgi
-    dest: /usr/share/packit_dashboard/packit_dashboard.wsgi
+    src: /src/packit_dashboard/packit_dashboard.py
+    dest: /usr/share/packit_dashboard/packit_dashboard.py
     mode: 0664
 
 - name: Copy run_httpd.sh

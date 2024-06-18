@@ -14,12 +14,13 @@
           - python3-requests
           - yarnpkg
           - "@nodejs:20"
-          - python3-mod_wsgi
           - mod_ssl
         state: present
 
     - name: Install pip deps
       pip:
         name:
+          - asyncio
+          - hypercorn
           - flask-cors # RPM not in c9s (RHBZ#2100076)
         executable: pip3

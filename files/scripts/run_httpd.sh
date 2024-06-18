@@ -15,13 +15,10 @@ fi
 # https://modwsgi.readthedocs.io/en/master/configuration.html
 # For the HSTS policy see
 # https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html
-exec mod_wsgi-express-3 start-server \
-    --access-log \
-    --log-to-terminal \
-    --https-port 8443 \
-    --ssl-certificate-file /secrets/fullchain.pem \
-    --ssl-certificate-key-file /secrets/privkey.pem \
+exec hypercorn \
+    --access-logfile - \
+    --ca-certs /secrets/fullchain.pem \
+    --certfile /secrets/privkey.pem \
     --server-name ${SERVER_NAME} \
-    --processes 2 \
-    --locale "C.UTF-8" \
-    /usr/share/packit_dashboard/packit_dashboard.wsgi
+    -w 2 \
+    /usr/share/packit_dashboard/packit_dashboard.py
