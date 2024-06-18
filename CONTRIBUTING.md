@@ -28,7 +28,7 @@ make build-stg
 2. Generate private key
 
 ```
-openssl genrsa -des3 -out secrets/privkey.pem 1024
+openssl genrsa -des3 -out secrets/privkey.pem 2048
 ```
 
 3. Generate Certificate Signing Request
