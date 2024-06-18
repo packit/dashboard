@@ -19,6 +19,8 @@ exec hypercorn \
     --access-logfile - \
     --ca-certs /secrets/fullchain.pem \
     --certfile /secrets/privkey.pem \
+    --bind '0.0.0.0:8443' \
+    --bind '[::]:8443' \
     --server-name ${SERVER_NAME} \
     -w 2 \
-    /usr/share/packit_dashboard/packit_dashboard.py
+    /usr/share/packit_dashboard/packit_dashboard:app
