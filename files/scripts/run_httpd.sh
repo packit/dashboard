@@ -23,4 +23,5 @@ exec hypercorn \
     --bind '[::]:8443' \
     --server-name ${SERVER_NAME} \
     -w 2 \
-    packit_dashboard.py:app
+    --debug \
+    packit_dashboard.app:app
