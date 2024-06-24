@@ -13,11 +13,10 @@ fi
 # See "mod_wsgi-express-3 start-server --help" for details on
 # these options, and the configuration documentation of mod_wsgi:
 # https://modwsgi.readthedocs.io/en/master/configuration.html
-# For the HSTS policy see
-# https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html
 exec mod_wsgi-express-3 start-server \
     --access-log \
     --log-to-terminal \
+    --http2 \
     --https-port 8443 \
     --ssl-certificate-file /secrets/fullchain.pem \
     --ssl-certificate-key-file /secrets/privkey.pem \
