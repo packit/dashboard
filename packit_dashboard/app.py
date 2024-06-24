@@ -18,6 +18,10 @@ app = Flask(
 app.register_blueprint(home)
 
 
+# Enable CSP and HSTS
+#
+# For the HSTS policy see
+# https://cheatsheetseries.owasp.org/cheatsheets/HTTP_Strict_Transport_Security_Cheat_Sheet.html
 csp = {
     "default-src": ["'self'", "*.packit.dev"],
     "object-src": "'none'",

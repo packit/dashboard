@@ -16,6 +16,7 @@
           - "@nodejs:20"
           - python3-mod_wsgi
           - mod_ssl
+          - mod_http2
         state: present
 
     - name: Install pip deps
