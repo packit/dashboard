@@ -23,4 +23,4 @@ exec hypercorn \
     --bind '[::]:8443' \
     --server-name ${SERVER_NAME} \
     -w 2 \
-    /usr/share/packit_dashboard/packit_dashboard:application
+    packit_dashboard.py:app
