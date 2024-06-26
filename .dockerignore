@@ -4,3 +4,4 @@ build
 node_modules
 .env
 yarn.lock
+pnpm-lock.yaml

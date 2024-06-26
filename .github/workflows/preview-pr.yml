@@ -40,20 +40,20 @@ jobs:
       - name: Check out the script from the ‹main› branch
         run: git checkout origin/main .github/notify.py
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@v4
         with:
-          node-version: 18
-          cache: "yarn"
-          cache-dependency-path: frontend/yarn.lock
+          node-version: "lts"
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Install and Build
         run: |
-          (cd frontend && yarn install);
+          (cd frontend && pnpm install);
           make .install-logos
           API_URL="https://prod.packit.dev/api" make transpile-prod
 
       - name: Install deploy dependencies
-        run: yarn global add surge
+        run: pnpm add --global surge
 
       - name: Deploy the dashboard to surge.sh
         run: surge ./frontend/dist $DOMAIN --token ${{ secrets.SURGE_TOKEN }}

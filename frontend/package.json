@@ -154,5 +154,22 @@
   },
   "msw": {
     "workerDirectory": "public"
+  },
+  "pnpm": {
+    "supportedArchitectures": {
+      "os": [
+        "win32",
+        "darwin",
+        "current"
+      ],
+      "cpu": [
+        "x64",
+        "arm64"
+      ]
+    }
+  },
+  "engines": {
+    "node": ">=20",
+    "pnpm": ">=9"
   }
 }
