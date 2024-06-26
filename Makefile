@@ -8,8 +8,9 @@ GIT_SHA_FETCH := $(shell git rev-parse HEAD)
 export GIT_SHA=$(GIT_SHA_FETCH)
 
 install-dependencies: .install-logos
-	sudo dnf -y install python3-flask python3-flask-cors python3-flask-talisman yarnpkg npm
-	cd frontend && yarn install
+	sudo dnf -y install python3-flask python3-flask-cors python3-flask-talisman
+	corepack enable pnpm
+	cd frontend && pnpm install
 	make transpile-prod
 
 .install-logos:
@@ -19,7 +20,7 @@ install-dependencies: .install-logos
 
 # this will transpile tsx into js, minify everything and generate static js for production builds
 transpile-prod:
-	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) yarn run build
+	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) pnpm run build
 
 
 # For Development Mode Only:
@@ -31,13 +32,13 @@ transpile-prod:
 # if you change flask port for dev, also change it in frontend/package.json in the proxy key/value
 
 run-dev-frontend:
-	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) GENERATE_SOURCEMAP=true HTTPS=true yarn start
+	cd frontend && VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) GENERATE_SOURCEMAP=true HTTPS=true pnpm start
 
 run-dev-flask:
 	FLASK_DEBUG=1 FLASK_APP=packit_dashboard.app VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) flask-3 run --host=0.0.0.0
 
 storybook:
-	cd frontend && yarn storybook
+	cd frontend && pnpm storybook
 
 
 run-container-stg: build-stg
