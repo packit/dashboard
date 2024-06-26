@@ -184,22 +184,6 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Submitted time</DescriptionListTerm>
-                <DescriptionListDescription>
-                  {data?.time_submitted ? (
-                    <Timestamp stamp={data.time_submitted.toString()} />
-                  ) : isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : (
-                    <Text component={TextVariants.small}>
-                      <i>Not available</i>
-                    </Text>
-                  )}
-                </DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
                 <DescriptionListTerm>Copr builds</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.copr.length ? (
@@ -216,15 +200,13 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Koji builds</DescriptionListTerm>
+                <DescriptionListTerm>Testing Farm runs</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {data?.koji.length ? (
+                  {data?.test_run.length ? (
                     <Statuses
-                      route={"koji-builds"}
+                      route={"testing-farm"}
                       statusClass={StatusLabel}
-                      entries={data.koji}
+                      entries={data.test_run}
                     />
                   ) : isLoading ? (
                     <Skeleton width="150px" />
@@ -234,8 +216,6 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
                 <DescriptionListTerm>Propose Downstreams</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.propose_downstream.length ? (
@@ -254,6 +234,36 @@ const PipelineDetail = () => {
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
+                <DescriptionListTerm>Submitted time</DescriptionListTerm>
+                <DescriptionListDescription>
+                  {data?.time_submitted ? (
+                    <Text component={TextVariants.small}>
+                      <Timestamp stamp={data.time_submitted.toString()} />
+                    </Text>
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
+                  ) : (
+                    <Text component={TextVariants.small}>
+                      <i>Not available</i>
+                    </Text>
+                  )}
+                </DescriptionListDescription>
+                <DescriptionListTerm>Koji builds</DescriptionListTerm>
+                <DescriptionListDescription>
+                  {data?.koji.length ? (
+                    <Statuses
+                      route={"koji-builds"}
+                      statusClass={StatusLabel}
+                      entries={data.koji}
+                    />
+                  ) : isLoading ? (
+                    <Skeleton width="150px" />
+                  ) : (
+                    <Text component={TextVariants.small}>
+                      <i>Not available</i>
+                    </Text>
+                  )}
+                </DescriptionListDescription>
                 <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.koji.length ? (
@@ -270,26 +280,6 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
-                <DescriptionListTerm>Testing Farm runs</DescriptionListTerm>
-                <DescriptionListDescription>
-                  {data?.test_run.length ? (
-                    <Statuses
-                      route={"testing-farm"}
-                      statusClass={StatusLabel}
-                      entries={data.test_run}
-                    />
-                  ) : isLoading ? (
-                    <Skeleton width="150px" />
-                  ) : (
-                    <Text component={TextVariants.small}>
-                      <i>Not available</i>
-                    </Text>
-                  )}
-                </DescriptionListDescription>
-              </DescriptionListGroup>
-              <DescriptionListGroup>
                 <DescriptionListTerm>Bodhi updates</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.bodhi_update.length ? (
