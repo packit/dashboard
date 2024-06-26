@@ -26,6 +26,7 @@ export default defineConfig(() => ({
           }
         },
       },
+      external: ["sharp"],
     },
     esbuild: {
       loader: "tsx",
