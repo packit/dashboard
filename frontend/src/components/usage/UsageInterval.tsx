@@ -22,11 +22,11 @@ import {
   ChartThemeColor,
 } from "@patternfly/react-charts";
 
-import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { ErrorConnection } from "../../app/Errors/ErrorConnection";
+import { Preloader } from "../../app/Preloader/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
-import { ForgeIcon } from "../Forge/ForgeIcon";
+import { ForgeIcon } from "../../app/Forge/ForgeIcon";
 
 const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
   fetch(

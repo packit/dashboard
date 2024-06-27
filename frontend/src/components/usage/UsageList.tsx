@@ -12,8 +12,8 @@ import {
 } from "@patternfly/react-core";
 import { ChartDonut, ChartBullet } from "@patternfly/react-charts";
 
-import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { ErrorConnection } from "../../app/Errors/ErrorConnection";
+import { Preloader } from "../../app/Preloader/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
 
