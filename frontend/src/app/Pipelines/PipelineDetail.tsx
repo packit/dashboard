@@ -248,13 +248,13 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
-                <DescriptionListTerm>Koji builds</DescriptionListTerm>
+                <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.koji.length ? (
                     <Statuses
-                      route={"koji-builds"}
+                      route={"pull_from_upstream"}
                       statusClass={StatusLabel}
-                      entries={data.koji}
+                      entries={data.pull_from_upstream}
                     />
                   ) : isLoading ? (
                     <Skeleton width="150px" />
@@ -264,13 +264,13 @@ const PipelineDetail = () => {
                     </Text>
                   )}
                 </DescriptionListDescription>
-                <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
+                <DescriptionListTerm>Koji builds</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.koji.length ? (
                     <Statuses
-                      route={"pull_from_upstream"}
+                      route={"koji-builds"}
                       statusClass={StatusLabel}
-                      entries={data.pull_from_upstream}
+                      entries={data.koji}
                     />
                   ) : isLoading ? (
                     <Skeleton width="150px" />
