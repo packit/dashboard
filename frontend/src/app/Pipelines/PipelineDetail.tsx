@@ -21,6 +21,7 @@ import {
   TextVariants,
 } from "@patternfly/react-core";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
+import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useQuery } from "@tanstack/react-query";
@@ -221,7 +222,7 @@ const PipelineDetail = () => {
                   {data?.propose_downstream.length ? (
                     <Statuses
                       route={"propose-downstream"}
-                      statusClass={StatusLabel}
+                      statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.propose_downstream}
                     />
                   ) : isLoading ? (
@@ -252,8 +253,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.koji.length ? (
                     <Statuses
-                      route={"pull_from_upstream"}
-                      statusClass={StatusLabel}
+                      statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.pull_from_upstream}
                     />
                   ) : isLoading ? (
