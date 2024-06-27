@@ -24,7 +24,7 @@ import { SyncReleaseTable } from "./Jobs/SyncReleaseStatuses";
 import { SRPMBuildsTable } from "./Jobs/SRPMBuildsTable";
 import { TestingFarmResultsTable } from "./Jobs/TestingFarmResultsTable";
 import { BodhiUpdatesTable } from "./Jobs/BodhiUpdatesTable";
-import { Usage } from "./Usage/Usage";
+import { Usage } from "../components/usage/Usage";
 import { ErrorApp } from "./Errors/ErrorApp";
 import { PipelineDetail } from "./Pipelines/PipelineDetail";
 

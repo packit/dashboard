@@ -4,31 +4,30 @@
 import "@patternfly/react-core/dist/styles/base.css";
 import "@patternfly/patternfly/patternfly-addons.css";
 import * as Sentry from "@sentry/react";
-import {
-  RouterProvider,
-  createBrowserRouter,
-  createRoutesFromChildren,
-  matchRoutes,
-  useLocation,
-  useNavigationType,
-} from "react-router-dom";
-import { routes } from "./app/routes";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { routeTree } from "./routeTree.gen";
+import { NotFound } from "./app/NotFound/NotFound";
+import { createRoot } from "react-dom/client";
 
+const router = createRouter({ routeTree, defaultNotFoundComponent: NotFound });
+
+// Register things for typesafety
+declare module "@tanstack/react-router" {
+  interface Register {
+    // This infers the type of our router and registers it across your entire project
+    router: typeof router;
+  }
+}
+
+// Setup Sentry logging so we can detect regressions, crashes, etc. ASAP
 Sentry.init({
   // packit-service
   dsn: import.meta.env.VITE_SENTRY_DSN || undefined,
-  integrations: [
-    Sentry.reactRouterV6BrowserTracingIntegration({
-      useEffect: React.useEffect,
-      useLocation,
-      useNavigationType,
-      createRoutesFromChildren,
-      matchRoutes,
-    }),
-  ],
+
+  integrations: [Sentry.tanstackRouterBrowserTracingIntegration(router)],
 
   environment: import.meta.env.PROD
     ? import.meta.env.VITE_API_URL === "https://stg.packit.dev/api"
@@ -51,18 +50,14 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });
-const sentryCreateBrowserRouter =
-  Sentry.wrapCreateBrowserRouter(createBrowserRouter);
-
 const queryClient = new QueryClient();
-const router = sentryCreateBrowserRouter(routes);
 
-const App = () => {
-  return (
+const root = createRoot(document.getElementById("root") as HTMLElement);
+root.render(
+  <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
       <ReactQueryDevtools />
     </QueryClientProvider>
-  );
-};
-export { App };
+  </React.StrictMode>,
+);
