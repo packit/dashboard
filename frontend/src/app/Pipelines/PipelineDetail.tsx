@@ -251,8 +251,9 @@ const PipelineDetail = () => {
                 </DescriptionListDescription>
                 <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
                 <DescriptionListDescription>
-                  {data?.koji.length ? (
+                  {data?.pull_from_upstream.length ? (
                     <Statuses
+                      route={"pull-from-upstream"}
                       statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.pull_from_upstream}
                     />
