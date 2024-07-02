@@ -15,10 +15,10 @@ import {
 
 import { UsageList } from "./UsageList";
 import { UsageInterval } from "./UsageInterval";
-import { useTitle } from "../utils/useTitle";
+// import { useTitle } from "../../app/utils/useTitle";
 
 const Usage = () => {
-  useTitle("Usage");
+  // useTitle("Usage");
   const [activeTabKey, setActiveTabKey] = React.useState<string | number>(0);
   const handleTabClick = (
     _: React.MouseEvent<HTMLElement, MouseEvent>,
