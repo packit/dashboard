@@ -149,11 +149,7 @@ const ResultsPageCopr = () => {
             <br />
             <List>
               <ListItem>
-                <code>sudo yum install -y dnf-plugins-core</code> on RHEL 8 or
-                CentOS Stream
-              </ListItem>
-              <ListItem>
-                <code>sudo dnf install -y dnf-plugins-core</code> on Fedora
+                <code>sudo dnf install -y dnf-plugins-core</code>
               </ListItem>
               <ListItem>
                 <code>
