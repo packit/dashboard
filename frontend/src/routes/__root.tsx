@@ -128,6 +128,15 @@ export const Route = createRootRoute({
           <NavItem isActive={matchRoute({ to: "/" })}>
             <Link to={"/"}>Home</Link>
           </NavItem>
+          <NavExpandable
+            title="Dashboards"
+            groupId="nav-expandable-group-dashboards"
+            isExpanded
+          >
+            <NavItem isActive={matchRoute({ to: "/projects" })}>
+              <Link to={"/projects"}>Projects</Link>
+            </NavItem>
+          </NavExpandable>
           <NavItem isActive={matchRoute({ to: "/usage" })}>
             <Link to={"/usage"}>Usage</Link>
           </NavItem>
