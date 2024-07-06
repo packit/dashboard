@@ -4,12 +4,22 @@
 import { infiniteQueryOptions } from "@tanstack/react-query";
 import { fetchProjects } from "./projects";
 
-export const postQueryOptions = (forge?: string, namespace?: string) =>
+export const projectQueryOptions = (forge?: string, namespace?: string) =>
   infiniteQueryOptions({
-    queryKey: ["posts", forge, namespace],
-    queryFn: ({ pageParam, signal }) =>
-      fetchProjects({ pageParam, signal, forge, namespace }),
+    queryKey: ["projects", { forge, namespace }],
+    queryFn: async ({ pageParam, signal }) =>
+      await fetchProjects({ pageParam, signal, forge, namespace }),
     initialPageParam: 1,
-    getPreviousPageParam: (_, allPages) => allPages.length - 1,
-    getNextPageParam: (_, allPages) => allPages.length + 1,
+    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
+      if (lastPage.length === 0) {
+        return undefined;
+      }
+      return lastPageParam + 1;
+    },
+    getPreviousPageParam: (_firstPage, _allPages, firstPageParam) => {
+      if (firstPageParam <= 1) {
+        return undefined;
+      }
+      return firstPageParam - 1;
+    },
   });

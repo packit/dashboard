@@ -20,7 +20,6 @@ const router = createRouter({
   context: {
     queryClient,
   },
-
   defaultPendingComponent: Preloader,
   defaultNotFoundComponent: NotFound,
   defaultPreload: "intent",
