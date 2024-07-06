@@ -16,11 +16,12 @@ export const fetchProjects = async ({
   signal,
   forge,
   namespace,
-}: fetchProjectsProps): Promise<Project> => {
+}: fetchProjectsProps): Promise<Project[]> => {
   const projects = await fetch(
     `${import.meta.env.VITE_API_URL}/projects${forge ? "/" + forge : ""}${
       namespace ? "/" + namespace : ""
     }?page=${pageParam}`,
+    { signal },
   )
     .then((response) => response.json())
     .catch((err) => {

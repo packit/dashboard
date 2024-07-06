@@ -32,13 +32,10 @@ interface UsageListProps {
 }
 
 const UsageList: React.FC<UsageListProps> = (props) => {
-  const { data, isInitialLoading, isError } = useQuery<UsageListData>(
-    ["usage" + props.what],
-    () => fetchDataByGranularity(props.what),
-    {
-      keepPreviousData: true,
-    },
-  );
+  const { data, isLoading, isError } = useQuery<UsageListData>({
+    queryKey: ["usage", props.what],
+    queryFn: () => fetchDataByGranularity(props.what),
+  });
 
   // If backend API is down
   if (isError) {
@@ -46,7 +43,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading) {
+  if (isLoading) {
     return <Preloader />;
   }
 

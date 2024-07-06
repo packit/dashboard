@@ -47,13 +47,13 @@ interface UsageIntervalProps {
 }
 
 const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
-  const { data, isInitialLoading, isError } = useQuery<UsageListData>(
-    [`usage-intervals-${props.days}-${props.hours}&-${props.count}`],
-    () => fetchDataByGranularity(props),
-    {
-      keepPreviousData: true,
-    },
-  );
+  const { data, isLoading, isError } = useQuery<UsageListData>({
+    queryKey: [
+      "usage-intervals",
+      { days: props.days, hours: props.hours, count: props.count },
+    ],
+    queryFn: () => fetchDataByGranularity(props),
+  });
 
   // If backend API is down
   if (isError) {
@@ -61,7 +61,7 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading) {
+  if (isLoading) {
     return <Preloader />;
   }
 
