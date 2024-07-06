@@ -11,9 +11,6 @@ import {
   BlueprintIcon,
 } from "@patternfly/react-icons";
 
-import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
-import { Link } from "react-router-dom";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   Table /* data-codemods */,
@@ -23,16 +20,6 @@ import {
   Thead,
   Tr,
 } from "@patternfly/react-table";
-
-interface Project {
-  namespace: string;
-  repo_name: string;
-  project_url: string;
-  prs_handled: number;
-  branches_handled: number;
-  releases_handled: number;
-  issues_handled: number;
-}
 
 function getProjectInfoURL(project: Project) {
   const urlArray = project.project_url?.split("/");
@@ -59,42 +46,8 @@ const columnNames = {
 
 type ColumnKey = keyof typeof columnNames;
 
-// TODO: Move data fetching to parent components
 const ProjectsList: React.FC<ProjectsListProps> = (props) => {
   const expandedCells: Record<string, ColumnKey> = {};
-  // Fetch data from dashboard backend (or if we want, directly from the API)
-  const fetchData = ({ pageParam = 1 }): Promise<Project> =>
-    fetch(
-      `${import.meta.env.VITE_API_URL}/projects${
-        props.forge ? "/" + props.forge : ""
-      }${props.namespace ? "/" + props.namespace : ""}?page=${pageParam}`,
-    ).then((response) => response.json());
-
-  const { isInitialLoading, isError, fetchNextPage, data } = useInfiniteQuery(
-    ["ProjectsList"],
-    fetchData,
-    {
-      getNextPageParam: (_, allPages) => allPages.length + 1,
-      keepPreviousData: true,
-    },
-  );
-
-  const flatPages = useMemo(() => data?.pages.flat() ?? [], [data?.pages]);
-
-  // // Hide the Load More Button if we're displaying projects of one namespace only
-  // if (props.forge && props.namespace) {
-  //     loadButton = "";
-  // }
-
-  // If backend API is down
-  if (isError) {
-    return <ErrorConnection />;
-  }
-
-  // Show preloader if waiting for API data
-  if (isInitialLoading) {
-    return <Preloader />;
-  }
 
   return (
     <>

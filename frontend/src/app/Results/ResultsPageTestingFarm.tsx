@@ -41,7 +41,7 @@ import {
   CoprResult,
   fetchSyncRelease,
 } from "./ResultsPageCopr";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
 import { SHACopy } from "../utils/SHACopy";
 
