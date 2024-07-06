@@ -4,7 +4,7 @@
 import React from "react";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { getReleaseLink, getCommitLink } from "../utils/forgeUrls";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";

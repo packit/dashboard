@@ -15,7 +15,7 @@ import {
   DescriptionListTerm,
 } from "@patternfly/react-core";
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";

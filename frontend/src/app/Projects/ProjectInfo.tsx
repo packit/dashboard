@@ -21,7 +21,7 @@ import { BranchList } from "./BranchList";
 import { IssuesList } from "./IssuesList";
 import { ReleasesList } from "./ReleasesList";
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";

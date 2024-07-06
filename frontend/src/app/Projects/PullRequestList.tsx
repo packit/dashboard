@@ -4,7 +4,7 @@
 import React, { useMemo, useState } from "react";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { TriggerInfo } from "../Trigger/TriggerInfo";
 
 import {

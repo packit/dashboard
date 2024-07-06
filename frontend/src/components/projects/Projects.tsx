@@ -11,10 +11,8 @@ import {
 
 import { ProjectSearch } from "./ProjectSearch";
 import { ProjectsList } from "./ProjectsList";
-import { useTitle } from "../utils/useTitle";
 
 const Projects = () => {
-  useTitle("Projects");
   return (
     <>
       <PageSection variant={PageSectionVariants.light}>

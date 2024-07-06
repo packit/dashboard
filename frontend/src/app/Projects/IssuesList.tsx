@@ -4,7 +4,7 @@
 import React from "react";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { getIssueLink } from "../utils/forgeUrls";
 import { List, ListItem } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";

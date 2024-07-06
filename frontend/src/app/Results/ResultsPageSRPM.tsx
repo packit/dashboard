@@ -21,7 +21,7 @@ import {
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
 import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../Preloader/Preloader";
+import { Preloader } from "../../components/Preloader";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { useParams } from "react-router-dom";

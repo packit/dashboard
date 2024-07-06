@@ -11,8 +11,23 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { routeTree } from "./routeTree.gen";
 import { NotFound } from "./app/NotFound/NotFound";
 import { createRoot } from "react-dom/client";
+import { Preloader } from "./components/Preloader";
 
-const router = createRouter({ routeTree, defaultNotFoundComponent: NotFound });
+const queryClient = new QueryClient();
+
+const router = createRouter({
+  routeTree,
+  context: {
+    queryClient,
+  },
+
+  defaultPendingComponent: Preloader,
+  defaultNotFoundComponent: NotFound,
+  defaultPreload: "intent",
+  // Since we're using React Query, we don't want loader calls to ever be stale
+  // This will ensure that the loader is always called when the route is preloaded or visited
+  defaultPreloadStaleTime: 0,
+});
 
 // Register things for typesafety
 declare module "@tanstack/react-router" {
@@ -50,7 +65,6 @@ Sentry.init({
   replaysSessionSampleRate: 0.1,
   replaysOnErrorSampleRate: 1.0,
 });
-const queryClient = new QueryClient();
 
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
