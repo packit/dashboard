@@ -16,36 +16,17 @@ import {
   Label,
 } from "@patternfly/react-core";
 
-import { PullRequestList } from "./PullRequestList";
-import { BranchList } from "./BranchList";
-import { IssuesList } from "./IssuesList";
-import { ReleasesList } from "./ReleasesList";
-import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import { ForgeIcon } from "../Forge/ForgeIcon";
+import { PullRequestList } from "../../app/Projects/PullRequestList";
+import { BranchList } from "../../app/Projects/BranchList";
+import { IssuesList } from "../../app/Projects/IssuesList";
+import { ReleasesList } from "../../app/Projects/ReleasesList";
+import { ErrorConnection } from "../../app/Errors/ErrorConnection";
+import { Preloader } from "../Preloader";
+import { ForgeIcon } from "../../app/Forge/ForgeIcon";
 
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
+import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
-
-interface ProjectDetails {
-  namespace: string;
-  repo_name: string;
-  project_url: string;
-  prs_handled: number;
-  branches_handled: number;
-  releases_handled: number;
-  issues_handled: number;
-}
-
-const fetchProjectInfo = async (url: string): Promise<ProjectDetails> => {
-  const response = await fetch(url);
-  if (!response.ok && response.status !== 404) {
-    throw Promise.reject(response);
-  }
-  return await response.json();
-};
 
 export const ProjectInfo = () => {
   useTitle("Project");
@@ -63,15 +44,6 @@ export const ProjectInfo = () => {
   const URL = `${
     import.meta.env.VITE_API_URL
   }/projects/${forge}/${namespace}/${repoName}`;
-
-  const { data, isError, isInitialLoading } = useQuery(
-    [forge, namespace, repoName],
-    () => fetchProjectInfo(URL),
-  );
-
-  if (isError || (data === undefined && !isInitialLoading)) {
-    return <ErrorConnection />;
-  }
 
   let content = <Preloader />;
   if (data && "error" in data) {

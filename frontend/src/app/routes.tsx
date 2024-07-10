@@ -11,7 +11,7 @@ import { Namespace } from "./Projects/Namespace";
 import { NotFound } from "./NotFound/NotFound";
 import { Pipelines } from "./Pipelines/Pipelines";
 import { Projects } from "./Projects/Projects";
-import { ProjectInfo } from "./Projects/ProjectInfo";
+import { ProjectInfo } from "../components/projects/ProjectDetail";
 import { ResultsPageCopr } from "./Results/ResultsPageCopr";
 import { ResultsPageKoji } from "./Results/ResultsPageKoji";
 import { ResultsPageSyncReleaseRuns } from "./Results/ResultsPageSyncReleaseRuns";
