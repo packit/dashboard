@@ -125,7 +125,7 @@ export const Route = createRootRoute({
     const Navigation = (
       <Nav id="nav-primary-simple" theme="dark">
         <NavList id="nav-list-simple">
-          <NavItem isActive={matchRoute({ to: "/" })}>
+          <NavItem isActive={!!matchRoute({ to: "/" })}>
             <Link to={"/"}>Home</Link>
           </NavItem>
           <NavExpandable
@@ -133,11 +133,17 @@ export const Route = createRootRoute({
             groupId="nav-expandable-group-dashboards"
             isExpanded
           >
-            <NavItem isActive={matchRoute({ to: "/projects" })}>
+            <NavItem isActive={!!matchRoute({ to: "/projects" })}>
               <Link to={"/projects"}>Projects</Link>
             </NavItem>
+            <NavItem isActive={!!matchRoute({ to: "/jobs" })}>
+              <Link to={"/jobs"}>Jobs</Link>
+            </NavItem>
+            <NavItem isActive={!!matchRoute({ to: "/pipelines" })}>
+              <Link to={"/pipelines"}>Pipelines</Link>
+            </NavItem>
           </NavExpandable>
-          <NavItem isActive={matchRoute({ to: "/usage" })}>
+          <NavItem isActive={!!matchRoute({ to: "/usage" })}>
             <Link to={"/usage"}>Usage</Link>
           </NavItem>
           <NavExpandable

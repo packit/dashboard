@@ -15,3 +15,14 @@ export interface Project {
   releases_handled: number;
   issues_handled: number;
 }
+
+// /api/project/$forge/$namespace/$repo
+export interface ProjectDetails {
+  namespace: string;
+  repo_name: string;
+  project_url: string;
+  prs_handled: number;
+  branches_handled: number;
+  releases_handled: number;
+  issues_handled: number;
+}
