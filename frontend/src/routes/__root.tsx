@@ -34,11 +34,16 @@ import {
 import {
   Link,
   Outlet,
-  createRootRoute,
+  createRootRouteWithContext,
   useMatchRoute,
 } from "@tanstack/react-router";
+import { QueryClient } from "@tanstack/react-query";
 
-export const Route = createRootRoute({
+interface RouterContext {
+  queryClient: QueryClient;
+}
+
+export const Route = createRootRouteWithContext<RouterContext>()({
   component: () => {
     const [isNavOpen, setIsNavOpen] = useState(true);
     const [isMobileView, setIsMobileView] = useState(true);
