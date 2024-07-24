@@ -20,11 +20,9 @@ import {
   useMatches,
   useNavigate,
 } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
-import { CoprBuildsTable } from "./CoprBuildsTable";
+import { CoprBuildsTable } from "../copr/CoprBuildsTable";
 
 const Jobs = () => {
-  useTitle("Jobs");
   const location = useLocation();
   const matches = useMatches();
   const currentMatch = matches.find(

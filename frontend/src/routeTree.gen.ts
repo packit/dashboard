@@ -14,12 +14,15 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as IndexImport } from './routes/index'
-import { Route as ProjectsIndexImport } from './routes/projects/index'
-import { Route as ProjectsForgeNamespaceRepoImport } from './routes/projects/$forge.$namespace.$repo'
+import { Route as JobsIndexImport } from './routes/jobs/index'
 
 // Create Virtual Routes
 
 const UsageLazyImport = createFileRoute('/usage')()
+const ProjectsIndexLazyImport = createFileRoute('/projects/')()
+const ProjectsForgeNamespaceRepoLazyImport = createFileRoute(
+  '/projects/$forge/$namespace/$repo',
+)()
 
 // Create/Update Routes
 
@@ -33,17 +36,27 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProjectsIndexRoute = ProjectsIndexImport.update({
+const ProjectsIndexLazyRoute = ProjectsIndexLazyImport.update({
   path: '/projects/',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/projects/index.lazy').then((d) => d.Route),
+)
+
+const JobsIndexRoute = JobsIndexImport.update({
+  path: '/jobs/',
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProjectsForgeNamespaceRepoRoute = ProjectsForgeNamespaceRepoImport.update(
-  {
+const ProjectsForgeNamespaceRepoLazyRoute =
+  ProjectsForgeNamespaceRepoLazyImport.update({
     path: '/projects/$forge/$namespace/$repo',
     getParentRoute: () => rootRoute,
-  } as any,
-)
+  } as any).lazy(() =>
+    import('./routes/projects/$forge.$namespace.$repo.lazy').then(
+      (d) => d.Route,
+    ),
+  )
 
 // Populate the FileRoutesByPath interface
 
@@ -63,18 +76,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsageLazyImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/': {
+      id: '/jobs/'
+      path: '/jobs'
+      fullPath: '/jobs'
+      preLoaderRoute: typeof JobsIndexImport
+      parentRoute: typeof rootRoute
+    }
     '/projects/': {
       id: '/projects/'
       path: '/projects'
       fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsIndexImport
+      preLoaderRoute: typeof ProjectsIndexLazyImport
       parentRoute: typeof rootRoute
     }
     '/projects/$forge/$namespace/$repo': {
       id: '/projects/$forge/$namespace/$repo'
       path: '/projects/$forge/$namespace/$repo'
       fullPath: '/projects/$forge/$namespace/$repo'
-      preLoaderRoute: typeof ProjectsForgeNamespaceRepoImport
+      preLoaderRoute: typeof ProjectsForgeNamespaceRepoLazyImport
       parentRoute: typeof rootRoute
     }
   }
@@ -85,8 +105,9 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   UsageLazyRoute,
-  ProjectsIndexRoute,
-  ProjectsForgeNamespaceRepoRoute,
+  JobsIndexRoute,
+  ProjectsIndexLazyRoute,
+  ProjectsForgeNamespaceRepoLazyRoute,
 })
 
 /* prettier-ignore-end */
@@ -99,6 +120,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/usage",
+        "/jobs/",
         "/projects/",
         "/projects/$forge/$namespace/$repo"
       ]
@@ -109,11 +131,14 @@ export const routeTree = rootRoute.addChildren({
     "/usage": {
       "filePath": "usage.lazy.tsx"
     },
+    "/jobs/": {
+      "filePath": "jobs/index.tsx"
+    },
     "/projects/": {
-      "filePath": "projects/index.tsx"
+      "filePath": "projects/index.lazy.tsx"
     },
     "/projects/$forge/$namespace/$repo": {
-      "filePath": "projects/$forge.$namespace.$repo.tsx"
+      "filePath": "projects/$forge.$namespace.$repo.lazy.tsx"
     }
   }
 }
