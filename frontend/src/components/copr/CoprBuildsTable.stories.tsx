@@ -3,9 +3,9 @@
 
 import { CoprBuildsTable } from "./CoprBuildsTable";
 import { rest } from "msw";
-import { withQueryClient } from "../utils/storybook/withQueryClient";
+import { withQueryClient } from "../../app/utils/storybook/withQueryClient";
 import { withRouter } from "storybook-addon-react-router-v6";
-import { CoprBuildData } from "./.fixtures/CoprBuildsData.fixture";
+import { CoprBuildData } from "../../app/Jobs/.fixtures/CoprBuildsData.fixture";
 import type { Meta, StoryObj } from "@storybook/react";
 
 const meta: Meta<typeof CoprBuildsTable> = {

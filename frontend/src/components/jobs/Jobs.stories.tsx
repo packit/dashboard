@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { withQueryClient } from "../utils/storybook/withQueryClient";
+import { withQueryClient } from "../../app/utils/storybook/withQueryClient";
 import { withRouter } from "storybook-addon-react-router-v6";
 import type { Meta, StoryObj } from "@storybook/react";
 import { Jobs } from "./Jobs";

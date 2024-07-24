@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import { createFileRoute } from "@tanstack/react-router";
-import { Projects } from "../../components/projects/Projects";
+import { Jobs } from "../../components/jobs/Jobs";
 
-export const Route = createFileRoute("/projects/")({
-  component: Projects,
+export const Route = createFileRoute("/jobs/")({
+  component: Jobs,
 });

@@ -36,6 +36,7 @@ import {
   Outlet,
   createRootRouteWithContext,
   useMatchRoute,
+  useMatches,
 } from "@tanstack/react-router";
 import { QueryClient } from "@tanstack/react-query";
 
@@ -50,6 +51,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
 
     const matchRoute = useMatchRoute();
+    const matches = useMatches();
 
     const onNavToggleMobile = () => {
       setIsNavOpenMobile(!isNavOpenMobile);
@@ -134,6 +136,11 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             <Link to={"/"}>Home</Link>
           </NavItem>
           <NavExpandable
+            isActive={
+              !!matchRoute({ to: "/projects" }) ||
+              !!matchRoute({ to: "/jobs" }) ||
+              !!matchRoute({ to: "/pipelines" })
+            }
             title="Dashboards"
             groupId="nav-expandable-group-dashboards"
             isExpanded
