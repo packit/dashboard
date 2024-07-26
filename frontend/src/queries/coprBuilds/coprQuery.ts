@@ -2,13 +2,13 @@
 // SPDX-License-Identifier: MIT
 
 import { infiniteQueryOptions } from "@tanstack/react-query";
-import { fetchProjects } from "./projects";
+import { fetchCoprBuilds } from "./copr";
 
-export const projectQueryOptions = (forge?: string, namespace?: string) =>
+export const coprBuildsOptions = () =>
   infiniteQueryOptions({
-    queryKey: ["projects", { forge, namespace }],
+    queryKey: ["copr"],
     queryFn: async ({ pageParam, signal }) =>
-      await fetchProjects({ pageParam, signal, forge, namespace }),
+      await fetchCoprBuilds({ pageParam, signal }),
     initialPageParam: 1,
     getNextPageParam: (lastPage, _allPages, lastPageParam) => {
       if (lastPage.length === 0) {

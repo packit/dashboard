@@ -22,7 +22,7 @@ export const fetchProjectDetailProps = async ({
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { Project } from "../apiDefinitions";
+import { Project } from "../../apiDefinitions";
 
 interface fetchProjectsProps {
   pageParam: number;

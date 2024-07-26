@@ -20,7 +20,7 @@ import { PullRequestList } from "../../app/Projects/PullRequestList";
 import { BranchList } from "../../app/Projects/BranchList";
 import { IssuesList } from "../../app/Projects/IssuesList";
 import { ReleasesList } from "../../app/Projects/ReleasesList";
-import { ErrorConnection } from "../../app/Errors/ErrorConnection";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../Preloader";
 import { ForgeIcon } from "../../app/Forge/ForgeIcon";
 

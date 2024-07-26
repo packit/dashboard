@@ -12,35 +12,17 @@ import {
   Text,
   TextContent,
 } from "@patternfly/react-core";
-import { useEffect, useMemo } from "react";
-import {
-  NavLink,
-  Outlet,
-  useLocation,
-  useMatches,
-  useNavigate,
-} from "react-router-dom";
-import { CoprBuildsTable } from "../copr/CoprBuildsTable";
+import { Link, Outlet, useMatchRoute } from "@tanstack/react-router";
 
 const Jobs = () => {
-  const location = useLocation();
-  const matches = useMatches();
-  const currentMatch = matches.find(
-    (match) => match.pathname === location.pathname,
-  );
+  const matchRoute = useMatchRoute();
 
-  const hasRouteSelected = useMemo(
-    () => currentMatch?.id != "jobs",
-    [currentMatch],
-  );
-
-  // if we're not inside a specific route, default to copr-builds and redirect
-  const navigate = useNavigate();
-  useEffect(() => {
-    if (matches[matches.length - 1].id === "jobs") {
-      navigate("/jobs/copr-builds");
-    }
-  }, [matches, navigate]);
+  const jobTypeObject = (jobType: string) => {
+    return {
+      to: "/jobs/$jobType",
+      params: { jobType },
+    };
+  };
 
   return (
     <PageGroup>
@@ -53,39 +35,53 @@ const Jobs = () => {
       <PageNavigation>
         <Nav aria-label="Job types" variant="tertiary">
           <NavList>
+            <NavItem isActive={!!matchRoute(jobTypeObject("copr-builds"))}>
+              <Link {...jobTypeObject("copr-builds")}>Copr Builds</Link>
+            </NavItem>
+            <NavItem isActive={!!matchRoute(jobTypeObject("koji-builds"))}>
+              <Link {...jobTypeObject("koji-builds")}>
+                Upstream Koji Builds
+              </Link>
+            </NavItem>
+            <NavItem isActive={!!matchRoute(jobTypeObject("srpm-builds"))}>
+              <Link {...jobTypeObject("srpm-builds")}>SRPM Builds</Link>
+            </NavItem>
             <NavItem
-              isActive={currentMatch?.id === "copr-builds" || !hasRouteSelected}
+              isActive={!!matchRoute(jobTypeObject("testing-farm-runs"))}
             >
-              <NavLink to={"copr-builds"}>Copr Builds</NavLink>
+              <Link {...jobTypeObject("testing-farm-runs")}>
+                Testing Farm Runs
+              </Link>
             </NavItem>
-            <NavItem isActive={currentMatch?.id === "koji-builds"}>
-              <NavLink to={"koji-builds"}>Upstream Koji Builds</NavLink>
+            <NavItem
+              isActive={!!matchRoute(jobTypeObject("propose-downstreams"))}
+            >
+              <Link {...jobTypeObject("propose-downstreams")}>
+                Propose Downstreams
+              </Link>
             </NavItem>
-            <NavItem isActive={currentMatch?.id === "srpm-builds"}>
-              <NavLink to={"srpm-builds"}>SRPM Builds</NavLink>
+            <NavItem
+              isActive={!!matchRoute(jobTypeObject("pull-from-upstreams"))}
+            >
+              <Link {...jobTypeObject("pull-from-upstreams")}>
+                Pull From Upstreams
+              </Link>
             </NavItem>
-            <NavItem isActive={currentMatch?.id === "testing-farm-runs"}>
-              <NavLink to={"testing-farm-runs"}>Testing Farm Runs</NavLink>
-            </NavItem>
-            <NavItem isActive={currentMatch?.id === "propose-downstreams"}>
-              <NavLink to={"propose-downstreams"}>Propose Downstreams</NavLink>
-            </NavItem>
-            <NavItem isActive={currentMatch?.id === "pull-from-upstreams"}>
-              <NavLink to={"pull-from-upstreams"}>Pull From Upstreams</NavLink>
-            </NavItem>
-            <NavItem isActive={currentMatch?.id === "downstream-koji-builds"}>
-              <NavLink to={"downstream-koji-builds"}>
+            <NavItem
+              isActive={!!matchRoute(jobTypeObject("downstream-koji-builds"))}
+            >
+              <Link {...jobTypeObject("downstream-koji-builds")}>
                 Downstream Koji Builds
-              </NavLink>
+              </Link>
             </NavItem>
-            <NavItem isActive={currentMatch?.id === "bodhi-updates"}>
-              <NavLink to={"bodhi-updates"}>Bodhi Updates</NavLink>
+            <NavItem isActive={!!matchRoute(jobTypeObject("bodhi-updates"))}>
+              <Link {...jobTypeObject("bodhi-updates")}>Bodhi Updates</Link>
             </NavItem>
           </NavList>
         </Nav>
       </PageNavigation>
       <PageSection>
-        {hasRouteSelected ? <Outlet /> : <CoprBuildsTable />}
+        <Outlet />
       </PageSection>
     </PageGroup>
   );

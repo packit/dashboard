@@ -24,7 +24,7 @@ import {
   ClipboardCopy,
 } from "@patternfly/react-core";
 
-import { ErrorConnection } from "../Errors/ErrorConnection";
+import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { NavLink, useParams } from "react-router-dom";
