@@ -3,7 +3,7 @@
 
 import React from "react";
 
-import { ErrorConnection } from "../Errors/ErrorConnection";
+import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
 import { getIssueLink } from "../utils/forgeUrls";
 import { List, ListItem } from "@patternfly/react-core";

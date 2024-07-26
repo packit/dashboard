@@ -3,7 +3,7 @@
 
 import { Project } from "../apiDefinitions";
 
-interface fetchProjectsProps {
+interface fetchCoprBuildsProps {
   pageParam: number;
   signal?: AbortSignal;
   forge?: string;
@@ -11,24 +11,20 @@ interface fetchProjectsProps {
 }
 
 // Fetch data from dashboard backend (or if we want, directly from the API)
-export const fetchProjects = async ({
+export const fetchCoprBuilds = async ({
   pageParam = 1,
   signal,
-  forge,
-  namespace,
-}: fetchProjectsProps): Promise<Project[]> => {
-  const projects = await fetch(
-    `${import.meta.env.VITE_API_URL}/projects${forge ? "/" + forge : ""}${
-      namespace ? "/" + namespace : ""
-    }?page=${pageParam}`,
+}: fetchCoprBuildsProps): Promise<Project[]> => {
+  const data = await fetch(
+    `${import.meta.env.VITE_API_URL}/copr-builds?page=${pageParam}`,
     { signal },
   )
     .then((response) => response.json())
     .catch((err) => {
       if (err.status === 404) {
-        throw new Error(`Projects not found!`);
+        throw new Error(`Copr builds not found!`);
       }
       throw err;
     });
-  return projects;
+  return data;
 };

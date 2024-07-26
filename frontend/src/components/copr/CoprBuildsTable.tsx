@@ -11,13 +11,14 @@ import {
 } from "@patternfly/react-table/deprecated";
 
 import { Button } from "@patternfly/react-core";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
-import { ErrorConnection } from "../Errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import { ForgeIcon } from "../Forge/ForgeIcon";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../utils/Timestamp";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import {
+  useInfiniteQuery,
+  useSuspenseInfiniteQuery,
+} from "@tanstack/react-query";
+import { Preloader } from "../Preloader";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { coprBuildsOptions } from "../../queries/coprBuilds/coprQuery";
 
 interface ChrootStatusesProps {
   statuses: {
@@ -49,30 +50,10 @@ const ChrootStatuses: React.FC<ChrootStatusesProps> = (props) => {
   return <>{labels}</>;
 };
 
-// TODO(SpyTec): If needed elsewhere move out to a new folder for API bindings or something
-export interface CoprBuild {
-  packit_id: number;
-  project: string;
-  build_id: number;
-  status_per_chroot: {
-    [key: string]: string;
-  };
-  packit_id_per_chroot: {
-    [key: string]: number;
-  };
-  build_submitted_time: number;
-  web_url: string;
-  ref: string;
-  // TODO(SpyTec): change interface depending on status of pr_id or branch_item.
-  // They seem to be mutually exclusive so can be sure one is null and other is string
-  pr_id: number | null;
-  branch_name: string | null;
-  repo_namespace: string;
-  repo_name: string;
-  project_url: string;
-}
-
 const CoprBuildsTable = () => {
+  const coprBuildsQuery = useSuspenseInfiniteQuery(coprBuildsOptions());
+  const coprBuildsPages = coprBuildsQuery.data;
+
   // Headings
   const columns = [
     {
@@ -83,21 +64,6 @@ const CoprBuildsTable = () => {
     { title: "Time Submitted", transforms: [cellWidth(10)] },
     { title: "Copr Build", transforms: [cellWidth(10)] },
   ];
-
-  // Fetch data from dashboard backend (or if we want, directly from the API)
-  const fetchData = ({ pageParam = 1 }) =>
-    fetch(
-      `${
-        import.meta.env.VITE_API_URL
-      }/copr-builds?page=${pageParam}&per_page=20`,
-    )
-      .then((response) => response.json())
-      .then((data) => jsonToRow(data));
-
-  const { isInitialLoading, isError, fetchNextPage, data, isFetching } =
-    useInfiniteQuery(["copr"], fetchData, {
-      getNextPageParam: (_, allPages) => allPages.length + 1,
-    });
 
   // Convert fetched json into row format that the table can read
   function jsonToRow(copr_builds: CoprBuild[]) {

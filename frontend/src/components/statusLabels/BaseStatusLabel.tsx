@@ -3,7 +3,7 @@
 
 import React from "react";
 import { Label, Tooltip } from "@patternfly/react-core";
-import { Link } from "react-router-dom";
+import { Link } from "@tanstack/react-router";
 
 export interface BaseStatusLabelProps {
   link?: string;

@@ -36,7 +36,6 @@ import {
   Outlet,
   createRootRouteWithContext,
   useMatchRoute,
-  useMatches,
 } from "@tanstack/react-router";
 import { QueryClient } from "@tanstack/react-query";
 
@@ -51,7 +50,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
 
     const matchRoute = useMatchRoute();
-    const matches = useMatches();
 
     const onNavToggleMobile = () => {
       setIsNavOpenMobile(!isNavOpenMobile);
@@ -137,21 +135,21 @@ export const Route = createRootRouteWithContext<RouterContext>()({
           </NavItem>
           <NavExpandable
             isActive={
-              !!matchRoute({ to: "/projects" }) ||
-              !!matchRoute({ to: "/jobs" }) ||
-              !!matchRoute({ to: "/pipelines" })
+              !!matchRoute({ to: "/projects", fuzzy: true }) ||
+              !!matchRoute({ to: "/jobs", fuzzy: true }) ||
+              !!matchRoute({ to: "/pipelines", fuzzy: true })
             }
             title="Dashboards"
             groupId="nav-expandable-group-dashboards"
             isExpanded
           >
-            <NavItem isActive={!!matchRoute({ to: "/projects" })}>
+            <NavItem isActive={!!matchRoute({ to: "/projects", fuzzy: true })}>
               <Link to={"/projects"}>Projects</Link>
             </NavItem>
-            <NavItem isActive={!!matchRoute({ to: "/jobs" })}>
+            <NavItem isActive={!!matchRoute({ to: "/jobs", fuzzy: true })}>
               <Link to={"/jobs"}>Jobs</Link>
             </NavItem>
-            <NavItem isActive={!!matchRoute({ to: "/pipelines" })}>
+            <NavItem isActive={!!matchRoute({ to: "/pipelines", fuzzy: true })}>
               <Link to={"/pipelines"}>Pipelines</Link>
             </NavItem>
           </NavExpandable>

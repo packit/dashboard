@@ -12,7 +12,7 @@ import {
 } from "@patternfly/react-core";
 import { ChartDonut, ChartBullet } from "@patternfly/react-charts";
 
-import { ErrorConnection } from "../../app/Errors/ErrorConnection";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";

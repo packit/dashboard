@@ -3,7 +3,7 @@
 
 import React, { useState, useId } from "react";
 
-import { ErrorConnection } from "../Errors/ErrorConnection";
+import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
 import { TriggerInfo } from "../Trigger/TriggerInfo";
 
