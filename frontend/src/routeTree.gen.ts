@@ -22,6 +22,9 @@ import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
 
 const UsageLazyImport = createFileRoute('/usage')()
 const ProjectsIndexLazyImport = createFileRoute('/projects/')()
+const ProjectsForgeNamespaceLazyImport = createFileRoute(
+  '/projects/$forge/$namespace',
+)()
 const ProjectsForgeNamespaceRepoLazyImport = createFileRoute(
   '/projects/$forge/$namespace/$repo',
 )()
@@ -59,6 +62,15 @@ const JobsCoprBuildsRoute = JobsCoprBuildsImport.update({
   path: '/copr-builds',
   getParentRoute: () => JobsRouteRoute,
 } as any)
+
+const ProjectsForgeNamespaceLazyRoute = ProjectsForgeNamespaceLazyImport.update(
+  {
+    path: '/projects/$forge/$namespace',
+    getParentRoute: () => rootRoute,
+  } as any,
+).lazy(() =>
+  import('./routes/projects/$forge.$namespace_.lazy').then((d) => d.Route),
+)
 
 const ProjectsForgeNamespaceRepoLazyRoute =
   ProjectsForgeNamespaceRepoLazyImport.update({
@@ -116,6 +128,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/projects/$forge/$namespace': {
+      id: '/projects/$forge/$namespace'
+      path: '/projects/$forge/$namespace'
+      fullPath: '/projects/$forge/$namespace'
+      preLoaderRoute: typeof ProjectsForgeNamespaceLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/projects/$forge/$namespace/$repo': {
       id: '/projects/$forge/$namespace/$repo'
       path: '/projects/$forge/$namespace/$repo'
@@ -136,6 +155,7 @@ export const routeTree = rootRoute.addChildren({
   }),
   UsageLazyRoute,
   ProjectsIndexLazyRoute,
+  ProjectsForgeNamespaceLazyRoute,
   ProjectsForgeNamespaceRepoLazyRoute,
 })
 
@@ -151,6 +171,7 @@ export const routeTree = rootRoute.addChildren({
         "/jobs",
         "/usage",
         "/projects/",
+        "/projects/$forge/$namespace",
         "/projects/$forge/$namespace/$repo"
       ]
     },
@@ -177,6 +198,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/projects/": {
       "filePath": "projects/index.lazy.tsx"
+    },
+    "/projects/$forge/$namespace": {
+      "filePath": "projects/$forge.$namespace_.lazy.tsx"
     },
     "/projects/$forge/$namespace/$repo": {
       "filePath": "projects/$forge.$namespace.$repo.lazy.tsx"

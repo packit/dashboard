@@ -5,7 +5,7 @@ import React from "react";
 
 import { Tooltip } from "@patternfly/react-core";
 
-import { getHostName } from "../utils/forgeUrls";
+import { getHostName } from "../../components/forgeUrls";
 import { GithubIcon, GitlabIcon, GitIcon } from "@patternfly/react-icons";
 
 export interface ForgeIconProps {
@@ -14,7 +14,10 @@ export interface ForgeIconProps {
 
 export const ForgeIcon: React.FC<ForgeIconProps> = ({ url }) => {
   const forge = getHostName(url);
+  return ForgeIconByForge({ forge });
+};
 
+export const ForgeIconByForge: React.FC<{ forge: string }> = ({ forge }) => {
   let forgeIcon;
   switch (forge) {
     case "github.com":

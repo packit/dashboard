@@ -18,7 +18,10 @@ import {
 import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";

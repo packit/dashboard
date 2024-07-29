@@ -25,7 +25,10 @@ import {
 
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useParams } from "react-router-dom";

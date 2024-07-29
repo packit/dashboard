@@ -15,7 +15,10 @@ import {
 
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";

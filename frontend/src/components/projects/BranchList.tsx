@@ -3,10 +3,6 @@
 
 import React, { useState, useId } from "react";
 
-import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import { TriggerInfo } from "../Trigger/TriggerInfo";
-
 import {
   DataList,
   DataListToggle,
@@ -17,48 +13,14 @@ import {
   DataListItemRow,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
-import { getBranchLink } from "../utils/forgeUrls";
-
-interface CoprBuild {
-  build_id: string;
-  chroot: string;
-  status: string;
-  web_url: string;
-}
-interface KojiBuild {
-  build_id: string;
-  status: string;
-  chroot: string;
-  web_url: string;
-}
-interface SRPMBuild {
-  srpm_build_id: number;
-  status: string;
-  log_url: string;
-}
-interface TestingFarmRun {
-  pipeline_id: string;
-  chroot: string;
-  status: string;
-  web_url: string;
-}
-interface ProjectBranchInfo {
-  branch: string;
-  builds: CoprBuild[];
-  koji_builds: KojiBuild[];
-  srpm_builds: SRPMBuild[];
-  tests: TestingFarmRun[];
-}
-
-const fetchBranchList = async (url: string): Promise<ProjectBranchInfo[]> => {
-  const res = await fetch(url);
-  return await res.json();
-};
+import { projectBranchesQueryOptions } from "../../queries/projects/projectBranchesQuery";
+import { getBranchLink } from "../forgeUrls";
+import { TriggerInfo } from "../trigger/TriggerInfo";
 
 interface BranchListProps {
   forge: string;
   namespace: string;
-  repoName: string;
+  repo: string;
 }
 
 const BranchList: React.FC<BranchListProps> = (props) => {
@@ -67,17 +29,7 @@ const BranchList: React.FC<BranchListProps> = (props) => {
 
   const id = useId();
 
-  // Repo Info
-  const forge = props.forge;
-  const namespace = props.namespace;
-  const repoName = props.repoName;
-  const URL = `${
-    import.meta.env.VITE_API_URL
-  }/projects/${forge}/${namespace}/${repoName}/branches`;
-
-  const { data, isError, isInitialLoading } = useQuery([URL], () =>
-    fetchBranchList(URL),
-  );
+  const { data } = useQuery(projectBranchesQueryOptions(props));
 
   function onToggle(branchName: string) {
     // We cant just invert the previous state here
@@ -93,18 +45,8 @@ const BranchList: React.FC<BranchListProps> = (props) => {
     }
   }
 
-  // If backend API is down
-  if (isError) {
-    return <ErrorConnection />;
-  }
-
-  // Show preloader if waiting for API data
-  if (isInitialLoading) {
-    return <Preloader />;
-  }
-
   return (
-    <div>
+    <>
       <DataList aria-label="Branch List" isCompact>
         {data?.map((branch, index) => (
           <DataListItem
@@ -124,7 +66,7 @@ const BranchList: React.FC<BranchListProps> = (props) => {
                   <DataListCell key="Branch Name">
                     <a
                       href={getBranchLink(
-                        `https://${forge}/${namespace}/${repoName}`,
+                        `https://${props.forge}/${props.namespace}/${props.repo}`,
                         branch.branch,
                       )}
                       rel="noreferrer"
@@ -146,7 +88,7 @@ const BranchList: React.FC<BranchListProps> = (props) => {
           </DataListItem>
         ))}
       </DataList>
-    </div>
+    </>
   );
 };
 

@@ -11,7 +11,10 @@ import {
 } from "@patternfly/react-table/deprecated";
 
 import { Button } from "@patternfly/react-core";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";

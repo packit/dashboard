@@ -9,15 +9,12 @@ import {
   Label,
 } from "@patternfly/react-core";
 
-import { ForgeIcon } from "../Forge/ForgeIcon";
+import { ForgeIcon } from "../../app/Forge/ForgeIcon";
 import { ProjectsList } from "./ProjectsList";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
+import { Route as NamespaceRoute } from "../../routes/projects/$forge.$namespace_.lazy";
 
 const Namespace = () => {
-  useTitle("Project Namespace");
-
-  const { forge, namespace } = useParams();
+  const { forge, namespace } = NamespaceRoute.useParams();
 
   return (
     <>
