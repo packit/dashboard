@@ -13,10 +13,12 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as ResultsImport } from './routes/results'
 import { Route as JobsRouteImport } from './routes/jobs/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
+import { Route as JobsCoprImport } from './routes/jobs/copr'
 
 // Create Virtual Routes
 
@@ -35,6 +37,11 @@ const UsageLazyRoute = UsageLazyImport.update({
   path: '/usage',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/usage.lazy').then((d) => d.Route))
+
+const ResultsRoute = ResultsImport.update({
+  path: '/results',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const JobsRouteRoute = JobsRouteImport.update({
   path: '/jobs',
@@ -60,6 +67,11 @@ const JobsIndexRoute = JobsIndexImport.update({
 
 const JobsCoprBuildsRoute = JobsCoprBuildsImport.update({
   path: '/copr-builds',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
+const JobsCoprRoute = JobsCoprImport.update({
+  path: '/copr',
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
@@ -100,12 +112,26 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsRouteImport
       parentRoute: typeof rootRoute
     }
+    '/results': {
+      id: '/results'
+      path: '/results'
+      fullPath: '/results'
+      preLoaderRoute: typeof ResultsImport
+      parentRoute: typeof rootRoute
+    }
     '/usage': {
       id: '/usage'
       path: '/usage'
       fullPath: '/usage'
       preLoaderRoute: typeof UsageLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/jobs/copr': {
+      id: '/jobs/copr'
+      path: '/copr'
+      fullPath: '/jobs/copr'
+      preLoaderRoute: typeof JobsCoprImport
+      parentRoute: typeof JobsRouteImport
     }
     '/jobs/copr-builds': {
       id: '/jobs/copr-builds'
@@ -150,9 +176,11 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   JobsRouteRoute: JobsRouteRoute.addChildren({
+    JobsCoprRoute,
     JobsCoprBuildsRoute,
     JobsIndexRoute,
   }),
+  ResultsRoute,
   UsageLazyRoute,
   ProjectsIndexLazyRoute,
   ProjectsForgeNamespaceLazyRoute,
@@ -169,6 +197,7 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/jobs",
+        "/results",
         "/usage",
         "/projects/",
         "/projects/$forge/$namespace",
@@ -181,12 +210,20 @@ export const routeTree = rootRoute.addChildren({
     "/jobs": {
       "filePath": "jobs/route.tsx",
       "children": [
+        "/jobs/copr",
         "/jobs/copr-builds",
         "/jobs/"
       ]
     },
+    "/results": {
+      "filePath": "results.tsx"
+    },
     "/usage": {
       "filePath": "usage.lazy.tsx"
+    },
+    "/jobs/copr": {
+      "filePath": "jobs/copr.tsx",
+      "parent": "/jobs"
     },
     "/jobs/copr-builds": {
       "filePath": "jobs/copr-builds.tsx",

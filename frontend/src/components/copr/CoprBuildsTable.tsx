@@ -47,7 +47,7 @@ const ChrootStatuses: React.FC<ChrootStatusesProps> = (props) => {
         key={chroot}
         status={status}
         target={chroot}
-        link={`/results/copr-builds/${id}`}
+        link={`/jobs/copr/${id}`}
       />,
     );
   }

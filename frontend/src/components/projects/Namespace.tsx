@@ -9,9 +9,9 @@ import {
   Label,
 } from "@patternfly/react-core";
 
-import { ForgeIcon } from "../../app/Forge/ForgeIcon";
 import { ProjectsList } from "./ProjectsList";
 import { Route as NamespaceRoute } from "../../routes/projects/$forge.$namespace_.lazy";
+import { ForgeIcon } from "../icons/ForgeIcon";
 
 const Namespace = () => {
   const { forge, namespace } = NamespaceRoute.useParams();
