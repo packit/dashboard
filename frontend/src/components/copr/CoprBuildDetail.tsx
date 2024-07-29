@@ -7,7 +7,7 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
 } from "@patternfly/react-core";
-import { CoprResult } from "./ResultsPageCopr";
+import { CoprResult } from "./CoprBuild";
 import React from "react";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { LabelLink } from "../utils/LabelLink";

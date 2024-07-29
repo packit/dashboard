@@ -3,9 +3,9 @@
 
 import { Label } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
-import { ForgeIconByForge } from "../../app/Forge/ForgeIcon";
 import { projectQueryOptions } from "../../queries/projects/projectQuery";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
+import { ForgeIconByForge } from "../icons/ForgeIcon";
 
 export const ProjectForgeLink: React.FC<{
   forge: string;

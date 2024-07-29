@@ -13,16 +13,13 @@ import {
   ListItem,
 } from "@patternfly/react-core";
 
-import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import {
-  TriggerLink,
-  TriggerSuffix,
-} from "../../components/trigger/TriggerLink";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../Preloader";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
-import { ResultsPageCoprDetails } from "./ResultsPageCoprDetails";
+import { ResultsPageCoprDetails } from "./CoprBuildDetail";
 import { SHACopy } from "../utils/SHACopy";
 
 interface BuildPackage {

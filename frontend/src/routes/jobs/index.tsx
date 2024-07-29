@@ -6,7 +6,7 @@ import { createFileRoute, redirect } from "@tanstack/react-router";
 export const Route = createFileRoute("/jobs/")({
   loader: () => {
     throw redirect({
-      to: "/jobs/copr-builds",
+      to: "/jobs/copr",
       replace: true,
     });
   },
