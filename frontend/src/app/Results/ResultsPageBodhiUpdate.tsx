@@ -29,6 +29,7 @@ interface BodhiUpdate {
   status: string;
   alias: string | null;
   web_url: string | null;
+  koji_nvrs: string;
   branch: string;
   submitted_time: number;
   update_creation_time: number | null;
@@ -121,10 +122,10 @@ const ResultsPageBodhiUpdate = () => {
                   {" "}
                   {data.alias !== null ? data.alias : <span>not provided</span>}
                 </DescriptionListDescription>
-                <DescriptionListTerm>Koji NVR</DescriptionListTerm>
+                <DescriptionListTerm>Koji NVRs</DescriptionListTerm>
                 <DescriptionListDescription>
                   {" "}
-                  {data.koji_nvr}
+                  {data.koji_nvrs}
                 </DescriptionListDescription>
               </DescriptionListGroup>
               <DescriptionListGroup>
