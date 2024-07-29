@@ -16,7 +16,10 @@ import {
 } from "@patternfly/react-core";
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { Timestamp } from "../utils/Timestamp";
 import { useParams } from "react-router-dom";

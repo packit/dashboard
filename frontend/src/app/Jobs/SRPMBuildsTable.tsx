@@ -13,7 +13,10 @@ import {
 import { Button } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { Preloader } from "../../components/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { StatusLabel } from "../StatusLabel/StatusLabel";

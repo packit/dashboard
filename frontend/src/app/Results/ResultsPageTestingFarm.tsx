@@ -25,7 +25,10 @@ import {
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";

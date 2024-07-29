@@ -20,7 +20,7 @@ import {
   Thead,
   Tr,
 } from "@patternfly/react-table";
-import { projectQueryOptions } from "../../queries/projectsQuery";
+import { projectsQueryOptions } from "../../queries/projects/projectsQuery";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
 
@@ -50,15 +50,9 @@ const columnNames = {
 type ColumnKey = keyof typeof columnNames;
 
 const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
-  const projectsQuery = useSuspenseInfiniteQuery(
-    projectQueryOptions(forge, namespace),
-  );
-  const projectsPages = projectsQuery.data;
+  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useSuspenseInfiniteQuery(projectsQueryOptions(forge, namespace));
   const expandedCells: Record<string, ColumnKey> = {};
-
-  function fetchNextPage() {
-    throw new Error("Function not implemented.");
-  }
 
   return (
     <>
@@ -73,8 +67,8 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
             <Th />
           </Tr>
         </Thead>
-        {projectsPages?.pages ? (
-          [...projectsPages.pages].map((projects) =>
+        {data.pages ? (
+          [...data.pages].map((projects) =>
             [...projects].map((project) => {
               const expandedCellKey = expandedCells
                 ? expandedCells[project.repo_name]
@@ -153,8 +147,16 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
       </Table>
       <center>
         <br />
-        <Button variant="control" onClick={() => void fetchNextPage()}>
-          Load More
+        <Button
+          variant="control"
+          onClick={() => void fetchNextPage()}
+          isDisabled={!hasNextPage || isFetchingNextPage}
+        >
+          {isFetchingNextPage
+            ? "Loading more..."
+            : hasNextPage
+              ? "Load More"
+              : "Nothing more to load"}
         </Button>
       </center>
     </>

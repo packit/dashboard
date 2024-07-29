@@ -7,7 +7,7 @@ import {
   getBranchLink,
   getIssueLink,
   getReleaseLink,
-} from "../utils/forgeUrls";
+} from "../forgeUrls";
 
 interface TriggerLinkProps {
   trigger: {

@@ -26,7 +26,10 @@ import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router";
-import { TriggerLink, TriggerSuffix } from "../Trigger/TriggerLink";
+import {
+  TriggerLink,
+  TriggerSuffix,
+} from "../../components/trigger/TriggerLink";
 import { Timestamp } from "../utils/Timestamp";
 
 interface StatusItem {

@@ -7,11 +7,11 @@ import { AppLayout } from "./AppLayout/AppLayout";
 import { Dashboard } from "./Dashboard/Dashboard";
 import { Forge } from "./Projects/Forge";
 import { Jobs } from "./Jobs/Jobs";
-import { Namespace } from "./Projects/Namespace";
+import { Namespace } from "../components/projects/Namespace";
 import { NotFound } from "./NotFound/NotFound";
 import { Pipelines } from "./Pipelines/Pipelines";
 import { Projects } from "./Projects/Projects";
-import { ProjectInfo } from "../components/projects/ProjectDetail";
+import { Project } from "../components/projects/Project";
 import { ResultsPageCopr } from "./Results/ResultsPageCopr";
 import { ResultsPageKoji } from "./Results/ResultsPageKoji";
 import { ResultsPageSyncReleaseRuns } from "./Results/ResultsPageSyncReleaseRuns";
@@ -151,7 +151,7 @@ const routes: RouteObject[] = [
       },
       {
         path: "/projects/:forge/:namespace/:repoName",
-        element: <ProjectInfo />,
+        element: <Project />,
       },
       {
         path: "/results/srpm-builds/:id",
