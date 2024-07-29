@@ -23,6 +23,7 @@ import {
 import { projectsQueryOptions } from "../../queries/projects/projectsQuery";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
+import { LoadMore } from "../LoadMore";
 
 function getProjectInfoURL(project: Project) {
   const urlArray = project.project_url?.split("/");
@@ -145,20 +146,11 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
           <>No pages</>
         )}
       </Table>
-      <center>
-        <br />
-        <Button
-          variant="control"
-          onClick={() => void fetchNextPage()}
-          isDisabled={!hasNextPage || isFetchingNextPage}
-        >
-          {isFetchingNextPage
-            ? "Loading more..."
-            : hasNextPage
-              ? "Load More"
-              : "Nothing more to load"}
-        </Button>
-      </center>
+      <LoadMore
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        fetchNextPage={() => void fetchNextPage()}
+      />
     </>
   );
 };
