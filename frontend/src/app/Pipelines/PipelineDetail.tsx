@@ -30,7 +30,7 @@ import {
   TriggerLink,
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
-import { Timestamp } from "../utils/Timestamp";
+import { Timestamp } from "../../components/Timestamp";
 
 interface StatusItem {
   packit_id: number;

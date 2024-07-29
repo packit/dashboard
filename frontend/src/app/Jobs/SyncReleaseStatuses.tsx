@@ -19,7 +19,7 @@ import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Preloader } from "../../components/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
-import { Timestamp } from "../utils/Timestamp";
+import { Timestamp } from "../../components/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface UpstreamDownstreamJobs {

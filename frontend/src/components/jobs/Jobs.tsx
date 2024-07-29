@@ -19,8 +19,7 @@ const Jobs = () => {
 
   const jobTypeObject = (jobType: string) => {
     return {
-      to: "/jobs/$jobType",
-      params: { jobType },
+      to: `/jobs/${jobType}`,
     };
   };
 

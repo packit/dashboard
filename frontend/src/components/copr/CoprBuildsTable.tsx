@@ -19,6 +19,11 @@ import { Preloader } from "../Preloader";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { coprBuildsOptions } from "../../queries/coprBuilds/coprQuery";
+import { CoprBuild } from "../../apiDefinitions";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
+import { ForgeIcon } from "../icons/ForgeIcon";
+import { Timestamp } from "../Timestamp";
+import { LoadMore } from "../LoadMore";
 
 interface ChrootStatusesProps {
   statuses: {
@@ -51,8 +56,8 @@ const ChrootStatuses: React.FC<ChrootStatusesProps> = (props) => {
 };
 
 const CoprBuildsTable = () => {
-  const coprBuildsQuery = useSuspenseInfiniteQuery(coprBuildsOptions());
-  const coprBuildsPages = coprBuildsQuery.data;
+  const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
+    useInfiniteQuery(coprBuildsOptions());
 
   // Headings
   const columns = [
@@ -66,67 +71,53 @@ const CoprBuildsTable = () => {
   ];
 
   // Convert fetched json into row format that the table can read
-  function jsonToRow(copr_builds: CoprBuild[]) {
-    const rowsList: IRow[] = [];
-
-    copr_builds.forEach((copr_build) => {
-      const singleRow = {
-        cells: [
-          {
-            title: <ForgeIcon url={copr_build.project_url} />,
-          },
-          {
-            title: (
-              <strong>
-                <TriggerLink trigger={copr_build}>
-                  <TriggerSuffix trigger={copr_build} />
-                </TriggerLink>
-              </strong>
-            ),
-          },
-          {
-            title: (
-              <ChrootStatuses
-                statuses={copr_build.status_per_chroot}
-                ids={copr_build.packit_id_per_chroot}
-              />
-            ),
-          },
-          {
-            title: <Timestamp stamp={copr_build.build_submitted_time} />,
-          },
-          {
-            title: (
-              <strong>
-                <a href={copr_build.web_url} target="_blank" rel="noreferrer">
-                  {copr_build.build_id}
-                </a>
-              </strong>
-            ),
-          },
-        ],
-      };
-      rowsList.push(singleRow);
-    });
-    return rowsList;
+  function jsonToRow(copr_build: CoprBuild) {
+    return {
+      cells: [
+        {
+          title: <ForgeIcon url={copr_build.project_url} />,
+        },
+        {
+          title: (
+            <strong>
+              <TriggerLink trigger={copr_build}>
+                <TriggerSuffix trigger={copr_build} />
+              </TriggerLink>
+            </strong>
+          ),
+        },
+        {
+          title: (
+            <ChrootStatuses
+              statuses={copr_build.status_per_chroot}
+              ids={copr_build.packit_id_per_chroot}
+            />
+          ),
+        },
+        {
+          title: <Timestamp stamp={copr_build.build_submitted_time} />,
+        },
+        {
+          title: (
+            <strong>
+              <a href={copr_build.web_url} target="_blank" rel="noreferrer">
+                {copr_build.build_id}
+              </a>
+            </strong>
+          ),
+        },
+      ],
+    };
   }
 
   // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
-  const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
-
-  // If backend API is down
-  if (isError) {
-    return <ErrorConnection />;
-  }
-
-  // Show preloader if waiting for API data
-  // TODO(SpyTec): Replace with skeleton loader, we know the data will look like
-  if (isInitialLoading) {
-    return <Preloader />;
-  }
+  const rows = useMemo(
+    () => (data ? data.pages.flat().map(jsonToRow) : []),
+    [data],
+  );
 
   return (
-    <div>
+    <>
       <Table
         aria-label="Copr builds"
         variant={TableVariant.compact}
@@ -136,17 +127,12 @@ const CoprBuildsTable = () => {
         <TableHeader />
         <TableBody />
       </Table>
-      <center>
-        <br />
-        <Button
-          variant="control"
-          onClick={() => void fetchNextPage()}
-          isAriaDisabled={isFetching}
-        >
-          {isFetching ? "Fetching data" : "Load more"}
-        </Button>
-      </center>
-    </div>
+      <LoadMore
+        isFetchingNextPage={isFetchingNextPage}
+        hasNextPage={hasNextPage}
+        fetchNextPage={() => void fetchNextPage()}
+      />
+    </>
   );
 };
 

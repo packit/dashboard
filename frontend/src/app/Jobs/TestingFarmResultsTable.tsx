@@ -20,7 +20,7 @@ import {
 } from "../../components/trigger/TriggerLink";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../utils/Timestamp";
+import { Timestamp } from "../../components/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface TestingFarmResult {

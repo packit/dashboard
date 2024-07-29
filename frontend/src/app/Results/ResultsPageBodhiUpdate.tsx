@@ -21,7 +21,7 @@ import {
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../utils/Timestamp";
+import { Timestamp } from "../../components/Timestamp";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";

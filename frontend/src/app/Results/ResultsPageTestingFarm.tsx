@@ -32,7 +32,7 @@ import {
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { NavLink, useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";
-import { Timestamp } from "../utils/Timestamp";
+import { Timestamp } from "../../components/Timestamp";
 import {
   QueriesOptions,
   UseQueryResult,
