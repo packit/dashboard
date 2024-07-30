@@ -34,8 +34,8 @@ const Jobs = () => {
       <PageNavigation>
         <Nav aria-label="Job types" variant="tertiary">
           <NavList>
-            <NavItem isActive={!!matchRoute(jobTypeObject("copr-builds"))}>
-              <Link {...jobTypeObject("copr-builds")}>Copr Builds</Link>
+            <NavItem isActive={!!matchRoute(jobTypeObject("copr"))}>
+              <Link {...jobTypeObject("copr")}>Copr Builds</Link>
             </NavItem>
             <NavItem isActive={!!matchRoute(jobTypeObject("koji-builds"))}>
               <Link {...jobTypeObject("koji-builds")}>

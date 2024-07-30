@@ -23,19 +23,19 @@ import {
   DescriptionListTerm,
 } from "@patternfly/react-core";
 
-import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import {
-  TriggerLink,
-  TriggerSuffix,
-} from "../../components/trigger/TriggerLink";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../Preloader";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useParams } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
+import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
-import { ResultProgressStep, AcceptedStatuses } from "./ResultProgressStep";
+import {
+  ResultProgressStep,
+  AcceptedStatuses,
+} from "../../components/shared/ResultProgressStep";
 
 interface ResultsPageSyncReleaseRunsProps {
   job: "propose-downstream" | "pull-from-upstream";

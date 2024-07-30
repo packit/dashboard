@@ -8,7 +8,7 @@ import {
   Tooltip,
   ProgressStepProps,
 } from "@patternfly/react-core";
-import { Timestamp } from "../../components/Timestamp";
+import { Timestamp } from "./Timestamp";
 import { prettyFormat } from "@imranbarbhuiya/duration";
 import {
   AngleDoubleRightIcon,

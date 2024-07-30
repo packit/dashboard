@@ -17,10 +17,10 @@ import {
   TriggerLink,
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
-import { Preloader } from "../../components/Preloader";
+import { Preloader } from "../../components/shared/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../../components/Timestamp";
+import { Timestamp } from "../../components/shared/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface SRPMBuild {

@@ -11,7 +11,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { routeTree } from "./routeTree.gen";
 import { NotFound } from "./app/NotFound/NotFound";
 import { createRoot } from "react-dom/client";
-import { Preloader } from "./components/Preloader";
+import { Preloader } from "./components/shared/Preloader";
 
 const queryClient = new QueryClient();
 

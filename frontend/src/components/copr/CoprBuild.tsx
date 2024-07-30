@@ -14,7 +14,7 @@ import {
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../Preloader";
+import { Preloader } from "../shared/Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useParams } from "react-router-dom";
 import { useTitle } from "../utils/useTitle";

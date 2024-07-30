@@ -14,16 +14,13 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
 } from "@patternfly/react-core";
-import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import {
-  TriggerLink,
-  TriggerSuffix,
-} from "../../components/trigger/TriggerLink";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../Preloader";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../../components/Timestamp";
+import { Timestamp } from "../Timestamp";
 import { useParams } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
+import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { SHACopy } from "../utils/SHACopy";
 

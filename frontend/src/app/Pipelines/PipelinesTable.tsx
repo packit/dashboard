@@ -16,11 +16,11 @@ import {
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
+import { Preloader } from "../../components/shared/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../../components/Timestamp";
+import { Timestamp } from "../../components/shared/Timestamp";
 import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { useInfiniteQuery, useQueryClient } from "@tanstack/react-query";

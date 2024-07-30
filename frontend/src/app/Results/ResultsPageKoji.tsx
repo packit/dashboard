@@ -16,18 +16,18 @@ import {
   DescriptionListTerm,
 } from "@patternfly/react-core";
 import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
-import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
-import {
-  TriggerLink,
-  TriggerSuffix,
-} from "../../components/trigger/TriggerLink";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../Preloader";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { StatusLabel } from "../StatusLabel/StatusLabel";
 import { useParams } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
+import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { SHACopy } from "../utils/SHACopy";
-import { AcceptedStatuses, ResultProgressStep } from "./ResultProgressStep";
+import {
+  AcceptedStatuses,
+  ResultProgressStep,
+} from "../../components/shared/ResultProgressStep";
 
 interface KojiBuild {
   scratch: boolean;
