@@ -23,7 +23,7 @@ import {
 } from "@patternfly/react-charts";
 
 import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../Preloader";
+import { Preloader } from "../shared/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
 import { ForgeIcon } from "../../app/Forge/ForgeIcon";

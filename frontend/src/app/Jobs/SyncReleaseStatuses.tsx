@@ -16,10 +16,10 @@ import {
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Preloader } from "../../components/Preloader";
+import { Preloader } from "../../components/shared/Preloader";
 import { ForgeIcon } from "../Forge/ForgeIcon";
 import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
-import { Timestamp } from "../../components/Timestamp";
+import { Timestamp } from "../../components/shared/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
 
 export interface UpstreamDownstreamJobs {

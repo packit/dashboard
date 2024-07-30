@@ -23,7 +23,7 @@ import {
 import { projectsQueryOptions } from "../../queries/projects/projectsQuery";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
-import { LoadMore } from "../LoadMore";
+import { LoadMore } from "../shared/LoadMore";
 
 function getProjectInfoURL(project: Project) {
   const urlArray = project.project_url?.split("/");

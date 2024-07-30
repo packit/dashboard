@@ -3,7 +3,7 @@
 
 import { ClipboardCopy } from "@patternfly/react-core";
 import React from "react";
-import { getCommitLink } from "./forgeUrls";
+import { getCommitLink } from "../forgeUrls";
 
 export interface SHACopyInterface {
   git_repo: string;

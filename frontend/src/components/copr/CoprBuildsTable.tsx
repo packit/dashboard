@@ -15,15 +15,15 @@ import {
   useInfiniteQuery,
   useSuspenseInfiniteQuery,
 } from "@tanstack/react-query";
-import { Preloader } from "../Preloader";
+import { Preloader } from "../shared/Preloader";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { coprBuildsOptions } from "../../queries/coprBuilds/coprQuery";
 import { CoprBuild } from "../../apiDefinitions";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { ForgeIcon } from "../icons/ForgeIcon";
-import { Timestamp } from "../Timestamp";
-import { LoadMore } from "../LoadMore";
+import { Timestamp } from "../shared/Timestamp";
+import { LoadMore } from "../shared/LoadMore";
 
 interface ChrootStatusesProps {
   statuses: {

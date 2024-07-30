@@ -9,9 +9,12 @@ import {
 } from "@patternfly/react-core";
 import { CoprResult } from "./CoprBuild";
 import React from "react";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { LabelLink } from "../utils/LabelLink";
-import { AcceptedStatuses, ResultProgressStep } from "./ResultProgressStep";
+import {
+  AcceptedStatuses,
+  ResultProgressStep,
+} from "../shared/ResultProgressStep";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { LabelLink } from "../shared/LabelLink";
 
 export interface ResultsPageCoprDetailsProps {
   data: CoprResult;
@@ -33,8 +36,8 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
    *
    * TODO (@Venefilyn): change the statuses to match API
    *
-   * @param {string} status - list of statuses from Copr builds
-   * @return {*}  {AcceptedStatuses}
+   * @param {string} status - List of statuses from Copr builds
+   * @return {AcceptedStatuses} - Consolidated status to select few
    */
   function getCoprBuildStatus(status: string): AcceptedStatuses {
     switch (status) {
