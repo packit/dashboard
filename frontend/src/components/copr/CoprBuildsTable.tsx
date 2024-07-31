@@ -3,27 +3,24 @@
 
 import React, { useMemo } from "react";
 
-import { TableVariant, cellWidth, IRow } from "@patternfly/react-table";
 import {
+  TableVariant,
   Table,
-  TableHeader,
-  TableBody,
-} from "@patternfly/react-table/deprecated";
+  Tbody,
+  Th,
+  Thead,
+  Tr,
+  Td,
+} from "@patternfly/react-table";
 
-import { Button } from "@patternfly/react-core";
-import {
-  useInfiniteQuery,
-  useSuspenseInfiniteQuery,
-} from "@tanstack/react-query";
-import { Preloader } from "../shared/Preloader";
-import { ErrorConnection } from "../errors/ErrorConnection";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { coprBuildsOptions } from "../../queries/coprBuilds/coprQuery";
-import { CoprBuild } from "../../apiDefinitions";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { Timestamp } from "../shared/Timestamp";
 import { LoadMore } from "../shared/LoadMore";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 
 interface ChrootStatusesProps {
   statuses: {
@@ -56,76 +53,79 @@ const ChrootStatuses: React.FC<ChrootStatusesProps> = (props) => {
 };
 
 const CoprBuildsTable = () => {
-  const { data, isFetchingNextPage, fetchNextPage, hasNextPage } =
+  const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
     useInfiniteQuery(coprBuildsOptions());
 
   // Headings
-  const columns = [
-    {
-      title: <span className="pf-v5-u-screen-reader">Forge</span>,
-    }, // space for forge icon
-    { title: "Trigger", transforms: [cellWidth(15)] },
-    { title: "Chroots", transforms: [cellWidth(60)] },
-    { title: "Time Submitted", transforms: [cellWidth(10)] },
-    { title: "Copr Build", transforms: [cellWidth(10)] },
-  ];
-
-  // Convert fetched json into row format that the table can read
-  function jsonToRow(copr_build: CoprBuild) {
-    return {
-      cells: [
-        {
-          title: <ForgeIcon url={copr_build.project_url} />,
-        },
-        {
-          title: (
-            <strong>
-              <TriggerLink trigger={copr_build}>
-                <TriggerSuffix trigger={copr_build} />
-              </TriggerLink>
-            </strong>
-          ),
-        },
-        {
-          title: (
-            <ChrootStatuses
-              statuses={copr_build.status_per_chroot}
-              ids={copr_build.packit_id_per_chroot}
-            />
-          ),
-        },
-        {
-          title: <Timestamp stamp={copr_build.build_submitted_time} />,
-        },
-        {
-          title: (
-            <strong>
-              <a href={copr_build.web_url} target="_blank" rel="noreferrer">
-                {copr_build.build_id}
-              </a>
-            </strong>
-          ),
-        },
-      ],
-    };
-  }
+  const columnNames = {
+    forge: "Forge",
+    trigger: "Trigger",
+    chroots: "Chroots",
+    timeSubmitted: "Time Submitted",
+    coprBuild: "Copr Build",
+  };
 
   // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
-  const rows = useMemo(
-    () => (data ? data.pages.flat().map(jsonToRow) : []),
-    [data],
-  );
+  const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
+
+  const TableHeads = [
+    <Th>
+      <span className="pf-v5-u-screen-reader">{columnNames.forge}</span>
+    </Th>,
+    <Th width={15}>{columnNames.trigger}</Th>,
+    <Th width={60}>{columnNames.chroots}</Th>,
+    <Th width={10}>{columnNames.timeSubmitted}</Th>,
+    <Th width={10}>{columnNames.coprBuild}</Th>,
+  ];
+
+  if (isLoading) {
+    return (
+      <SkeletonTable
+        variant={TableVariant.compact}
+        rows={10}
+        columns={TableHeads}
+      />
+    );
+  }
 
   return (
     <>
-      <Table
-        aria-label="Copr builds"
-        variant={TableVariant.compact}
-        cells={columns}
-        rows={rows}
-      >
-        <TableHeader />
-        <TableBody />
+      <Table aria-label="Copr builds" variant={TableVariant.compact}>
+        <Thead>
+          <Tr>{TableHeads}</Tr>
+        </Thead>
+        <Tbody>
+          {rows.map((copr_build) => (
+            <Tr key={copr_build.build_id}>
+              <Td dataLabel={columnNames.forge}>
+                <ForgeIcon url={copr_build.project_url} />
+              </Td>
+              <Td dataLabel={columnNames.trigger}>
+                <strong>
+                  <TriggerLink trigger={copr_build}>
+                    <TriggerSuffix trigger={copr_build} />
+                  </TriggerLink>
+                </strong>
+              </Td>
+              <Td dataLabel={columnNames.chroots}>
+                <ChrootStatuses
+                  statuses={copr_build.status_per_chroot}
+                  ids={copr_build.packit_id_per_chroot}
+                />
+              </Td>
+              <Td dataLabel={columnNames.timeSubmitted}>
+                <Timestamp stamp={copr_build.build_submitted_time} />
+              </Td>
+              <Td dataLabel={columnNames.coprBuild}>
+                <strong>
+                  <a href={copr_build.web_url} target="_blank" rel="noreferrer">
+                    {copr_build.build_id}
+                  </a>
+                </strong>
+              </Td>
+            </Tr>
+          ))}
+        </Tbody>
       </Table>
       <LoadMore
         isFetchingNextPage={isFetchingNextPage}
