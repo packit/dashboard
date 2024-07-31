@@ -19,70 +19,9 @@ import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
 import { ResultsPageCoprDetails } from "./CoprBuildDetail";
 import { coprBuildQueryOptions } from "../../queries/copr/coprQuery";
-import { Route as CoprRoute } from "../../routes/jobs_/copr/$id";
+import { Route as CoprRoute } from "../../routes/jobs_/copr.$id";
 import { SHACopy } from "../shared/SHACopy";
-
-interface BuildPackage {
-  arch: string;
-  epoch: number;
-  name: string;
-  release: string;
-  version: string;
-}
-
-export interface CoprResult {
-  build_id: string;
-  status: string;
-  chroot: string;
-  build_submitted_time: number;
-  build_start_time: number;
-  build_finished_time: number;
-  commit_sha: string;
-  web_url: string;
-  build_logs_url: string;
-  copr_project: string;
-  copr_owner: string;
-  srpm_build_id: number;
-  run_ids: number[];
-  built_packages: BuildPackage[];
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
-  issue_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-}
-
-function getPackagesToInstall(built_packages: BuildPackage[]) {
-  const packagesToInstall = [];
-
-  for (const packageDict of built_packages) {
-    if (packageDict.arch !== "src") {
-      const packageString =
-        packageDict.name +
-        "-" +
-        (packageDict.epoch ? packageDict.epoch + ":" : "") +
-        packageDict.version +
-        "-" +
-        packageDict.release +
-        "." +
-        packageDict.arch;
-      packagesToInstall.push(packageString);
-    }
-  }
-  return packagesToInstall;
-}
-
-export const fetchSyncRelease = (url: string) =>
-  fetch(url).then((response) => {
-    if (!response.ok && response.status !== 404) {
-      throw Promise.reject(response);
-    }
-    return response.json();
-  });
-
-export const API_COPR_BUILDS = `${import.meta.env.VITE_API_URL}/copr-builds/`;
+import { CoprBuildPackage } from "../../apiDefinitions";
 
 export const CoprBuild = () => {
   const { id } = CoprRoute.useParams();
@@ -174,3 +113,23 @@ export const CoprBuild = () => {
     </>
   );
 };
+
+function getPackagesToInstall(built_packages: CoprBuildPackage[]) {
+  const packagesToInstall = [];
+
+  for (const packageDict of built_packages) {
+    if (packageDict.arch !== "src") {
+      const packageString =
+        packageDict.name +
+        "-" +
+        (packageDict.epoch ? packageDict.epoch + ":" : "") +
+        packageDict.version +
+        "-" +
+        packageDict.release +
+        "." +
+        packageDict.arch;
+      packagesToInstall.push(packageString);
+    }
+  }
+  return packagesToInstall;
+}
