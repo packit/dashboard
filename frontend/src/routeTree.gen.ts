@@ -18,8 +18,8 @@ import { Route as JobsRouteImport } from './routes/jobs/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
-import { Route as JobsCoprIndexImport } from './routes/jobs_/copr_/index'
-import { Route as JobsCoprIdImport } from './routes/jobs_/copr_/$id'
+import { Route as JobsCoprIndexImport } from './routes/jobs/copr/index'
+import { Route as JobsCoprIdImport } from './routes/jobs_/copr/$id'
 
 // Create Virtual Routes
 
@@ -72,8 +72,8 @@ const JobsCoprBuildsRoute = JobsCoprBuildsImport.update({
 } as any)
 
 const JobsCoprIndexRoute = JobsCoprIndexImport.update({
-  path: '/jobs/copr/',
-  getParentRoute: () => rootRoute,
+  path: '/copr/',
+  getParentRoute: () => JobsRouteRoute,
 } as any)
 
 const ProjectsForgeNamespaceLazyRoute = ProjectsForgeNamespaceLazyImport.update(
@@ -169,10 +169,10 @@ declare module '@tanstack/react-router' {
     }
     '/jobs/copr/': {
       id: '/jobs/copr/'
-      path: '/jobs/copr'
+      path: '/copr'
       fullPath: '/jobs/copr'
       preLoaderRoute: typeof JobsCoprIndexImport
-      parentRoute: typeof rootRoute
+      parentRoute: typeof JobsRouteImport
     }
     '/projects/$forge/$namespace/$repo': {
       id: '/projects/$forge/$namespace/$repo'
@@ -191,13 +191,13 @@ export const routeTree = rootRoute.addChildren({
   JobsRouteRoute: JobsRouteRoute.addChildren({
     JobsCoprBuildsRoute,
     JobsIndexRoute,
+    JobsCoprIndexRoute,
   }),
   ResultsRoute,
   UsageLazyRoute,
   ProjectsIndexLazyRoute,
   JobsCoprIdRoute,
   ProjectsForgeNamespaceLazyRoute,
-  JobsCoprIndexRoute,
   ProjectsForgeNamespaceRepoLazyRoute,
 })
 
@@ -216,7 +216,6 @@ export const routeTree = rootRoute.addChildren({
         "/projects/",
         "/jobs/copr/$id",
         "/projects/$forge/$namespace",
-        "/jobs/copr/",
         "/projects/$forge/$namespace/$repo"
       ]
     },
@@ -227,7 +226,8 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "jobs/route.tsx",
       "children": [
         "/jobs/copr-builds",
-        "/jobs/"
+        "/jobs/",
+        "/jobs/copr/"
       ]
     },
     "/results": {
@@ -248,13 +248,14 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "projects/index.lazy.tsx"
     },
     "/jobs/copr/$id": {
-      "filePath": "jobs_/copr_/$id.tsx"
+      "filePath": "jobs_/copr/$id.tsx"
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"
     },
     "/jobs/copr/": {
-      "filePath": "jobs_/copr_/index.tsx"
+      "filePath": "jobs/copr/index.tsx",
+      "parent": "/jobs"
     },
     "/projects/$forge/$namespace/$repo": {
       "filePath": "projects/$forge.$namespace.$repo.lazy.tsx"
