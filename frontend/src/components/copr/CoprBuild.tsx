@@ -16,11 +16,11 @@ import {
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { ResultsPageCoprDetails } from "./CoprBuildDetail";
-import { SHACopy } from "../utils/SHACopy";
+import { coprBuildQueryOptions } from "../../queries/copr/coprQuery";
+import { Route as CoprRoute } from "../../routes/jobs_/copr_/$id";
+import { SHACopy } from "../shared/SHACopy";
 
 interface BuildPackage {
   arch: string;
@@ -84,14 +84,10 @@ export const fetchSyncRelease = (url: string) =>
 
 export const API_COPR_BUILDS = `${import.meta.env.VITE_API_URL}/copr-builds/`;
 
-const ResultsPageCopr = () => {
-  useTitle("Copr Results");
-  const { id } = useParams();
-  const URL = API_COPR_BUILDS + id;
+export const CoprBuild = () => {
+  const { id } = CoprRoute.useParams();
 
-  const { data, isError, isInitialLoading } = useQuery<
-    CoprResult | { error: string }
-  >([URL], () => fetchSyncRelease(URL));
+  const { data, isError, isLoading } = useQuery(coprBuildQueryOptions({ id }));
 
   // If backend API is down
   if (isError) {
@@ -99,7 +95,7 @@ const ResultsPageCopr = () => {
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading || data === undefined) {
+  if (isLoading || data === undefined) {
     return <Preloader />;
   }
 
@@ -178,5 +174,3 @@ const ResultsPageCopr = () => {
     </>
   );
 };
-
-export { ResultsPageCopr };

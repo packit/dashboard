@@ -26,7 +26,7 @@ import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
 import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
-import { ForgeIcon } from "../../app/Forge/ForgeIcon";
+import { ForgeIcon } from "../icons/ForgeIcon";
 
 const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
   fetch(
