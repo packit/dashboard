@@ -15,7 +15,7 @@ import {
 
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { StatusLabel } from "../statusLabels/StatusLabel";
-import { coprBuildsOptions } from "../../queries/coprBuilds/coprQuery";
+import { coprBuildsQueryOptions } from "../../queries/copr/coprBuildsQuery";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { Timestamp } from "../shared/Timestamp";
@@ -54,7 +54,7 @@ const ChrootStatuses: React.FC<ChrootStatusesProps> = (props) => {
 
 const CoprBuildsTable = () => {
   const { data, isLoading, isFetchingNextPage, fetchNextPage, hasNextPage } =
-    useInfiniteQuery(coprBuildsOptions());
+    useInfiniteQuery(coprBuildsQueryOptions());
 
   // Headings
   const columnNames = {

@@ -2,9 +2,9 @@
 // SPDX-License-Identifier: MIT
 
 import { infiniteQueryOptions } from "@tanstack/react-query";
-import { fetchCoprBuilds } from "./copr";
+import { fetchCoprBuilds } from "./coprBuilds";
 
-export const coprBuildsOptions = () =>
+export const coprBuildsQueryOptions = () =>
   infiniteQueryOptions({
     queryKey: ["copr"],
     queryFn: async ({ pageParam, signal }) =>
