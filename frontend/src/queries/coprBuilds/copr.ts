@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { Project } from "../apiDefinitions";
+import { CoprBuild } from "../../apiDefinitions";
 
 interface fetchCoprBuildsProps {
   pageParam: number;
@@ -14,7 +14,7 @@ interface fetchCoprBuildsProps {
 export const fetchCoprBuilds = async ({
   pageParam = 1,
   signal,
-}: fetchCoprBuildsProps): Promise<Project[]> => {
+}: fetchCoprBuildsProps): Promise<CoprBuild[]> => {
   const data = await fetch(
     `${import.meta.env.VITE_API_URL}/copr-builds?page=${pageParam}`,
     { signal },
