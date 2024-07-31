@@ -17,9 +17,10 @@ import { Route as ResultsImport } from './routes/results'
 import { Route as JobsRouteImport } from './routes/jobs/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
+import { Route as JobsKojiImport } from './routes/jobs/koji'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
-import { Route as JobsCoprIndexImport } from './routes/jobs/copr/index'
-import { Route as JobsCoprIdImport } from './routes/jobs_/copr/$id'
+import { Route as JobsCoprImport } from './routes/jobs/copr'
+import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 
 // Create Virtual Routes
 
@@ -66,13 +67,18 @@ const JobsIndexRoute = JobsIndexImport.update({
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
+const JobsKojiRoute = JobsKojiImport.update({
+  path: '/koji',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
 const JobsCoprBuildsRoute = JobsCoprBuildsImport.update({
   path: '/copr-builds',
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
-const JobsCoprIndexRoute = JobsCoprIndexImport.update({
-  path: '/copr/',
+const JobsCoprRoute = JobsCoprImport.update({
+  path: '/copr',
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
@@ -132,11 +138,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsageLazyImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/copr': {
+      id: '/jobs/copr'
+      path: '/copr'
+      fullPath: '/jobs/copr'
+      preLoaderRoute: typeof JobsCoprImport
+      parentRoute: typeof JobsRouteImport
+    }
     '/jobs/copr-builds': {
       id: '/jobs/copr-builds'
       path: '/copr-builds'
       fullPath: '/jobs/copr-builds'
       preLoaderRoute: typeof JobsCoprBuildsImport
+      parentRoute: typeof JobsRouteImport
+    }
+    '/jobs/koji': {
+      id: '/jobs/koji'
+      path: '/koji'
+      fullPath: '/jobs/koji'
+      preLoaderRoute: typeof JobsKojiImport
       parentRoute: typeof JobsRouteImport
     }
     '/jobs/': {
@@ -167,13 +187,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsForgeNamespaceLazyImport
       parentRoute: typeof rootRoute
     }
-    '/jobs/copr/': {
-      id: '/jobs/copr/'
-      path: '/copr'
-      fullPath: '/jobs/copr'
-      preLoaderRoute: typeof JobsCoprIndexImport
-      parentRoute: typeof JobsRouteImport
-    }
     '/projects/$forge/$namespace/$repo': {
       id: '/projects/$forge/$namespace/$repo'
       path: '/projects/$forge/$namespace/$repo'
@@ -189,9 +202,10 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   JobsRouteRoute: JobsRouteRoute.addChildren({
+    JobsCoprRoute,
     JobsCoprBuildsRoute,
+    JobsKojiRoute,
     JobsIndexRoute,
-    JobsCoprIndexRoute,
   }),
   ResultsRoute,
   UsageLazyRoute,
@@ -225,9 +239,10 @@ export const routeTree = rootRoute.addChildren({
     "/jobs": {
       "filePath": "jobs/route.tsx",
       "children": [
+        "/jobs/copr",
         "/jobs/copr-builds",
-        "/jobs/",
-        "/jobs/copr/"
+        "/jobs/koji",
+        "/jobs/"
       ]
     },
     "/results": {
@@ -236,8 +251,16 @@ export const routeTree = rootRoute.addChildren({
     "/usage": {
       "filePath": "usage.lazy.tsx"
     },
+    "/jobs/copr": {
+      "filePath": "jobs/copr.tsx",
+      "parent": "/jobs"
+    },
     "/jobs/copr-builds": {
       "filePath": "jobs/copr-builds.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/koji": {
+      "filePath": "jobs/koji.tsx",
       "parent": "/jobs"
     },
     "/jobs/": {
@@ -248,14 +271,10 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "projects/index.lazy.tsx"
     },
     "/jobs/copr/$id": {
-      "filePath": "jobs_/copr/$id.tsx"
+      "filePath": "jobs_/copr.$id.tsx"
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"
-    },
-    "/jobs/copr/": {
-      "filePath": "jobs/copr/index.tsx",
-      "parent": "/jobs"
     },
     "/projects/$forge/$namespace/$repo": {
       "filePath": "projects/$forge.$namespace.$repo.lazy.tsx"

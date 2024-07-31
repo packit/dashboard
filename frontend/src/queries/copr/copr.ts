@@ -12,7 +12,7 @@ export interface fetchCoprBuildProps {
 export const fetchCoprBuild = async ({
   id,
   signal,
-}: fetchCoprBuildProps): Promise<CoprBuild[]> => {
+}: fetchCoprBuildProps): Promise<CoprBuild> => {
   const data = await fetch(
     `${import.meta.env.VITE_API_URL}/copr-builds/${id}`,
     { signal },

@@ -1,26 +1,30 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { CoprBuildGroup } from "../../apiDefinitions";
+import { KojiBuild } from "../../apiDefinitions";
 
-interface fetchCoprBuildsProps {
+export interface fetchKojiBuildsProps {
   pageParam: number;
+  scratch?: boolean;
   signal?: AbortSignal;
 }
 
 // Fetch data from dashboard backend (or if we want, directly from the API)
-export const fetchCoprBuilds = async ({
+export const fetchKojiBuilds = async ({
   pageParam = 1,
+  scratch = false,
   signal,
-}: fetchCoprBuildsProps): Promise<CoprBuildGroup[]> => {
+}: fetchKojiBuildsProps): Promise<KojiBuild[]> => {
   const data = await fetch(
-    `${import.meta.env.VITE_API_URL}/copr-builds?page=${pageParam}`,
+    `${
+      import.meta.env.VITE_API_URL
+    }/koji-builds?page=${pageParam}&scratch=${scratch.toString()}`,
     { signal },
   )
     .then((response) => response.json())
     .catch((err) => {
       if (err.status === 404) {
-        throw new Error(`Copr builds not found!`);
+        throw new Error(`Koji builds not found!`);
       }
       throw err;
     });

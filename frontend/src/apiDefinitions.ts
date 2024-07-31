@@ -69,7 +69,7 @@ export interface ProjectPRs {
 }
 
 // /api/copr-builds
-export interface CoprBuild {
+export interface CoprBuildGroup {
   packit_id: number;
   project: string;
   build_id: number;
@@ -89,4 +89,56 @@ export interface CoprBuild {
   repo_namespace: string;
   repo_name: string;
   project_url: string;
+}
+
+export interface CoprBuildPackage {
+  arch: string;
+  epoch: number;
+  name: string;
+  release: string;
+  version: string;
+}
+
+// /api/copr-builds
+export interface CoprBuild {
+  build_id: string;
+  status: string;
+  chroot: string;
+  build_submitted_time: number;
+  build_start_time: number;
+  build_finished_time: number;
+  commit_sha: string;
+  web_url: string;
+  build_logs_url: string;
+  copr_project: string;
+  copr_owner: string;
+  srpm_build_id: number;
+  run_ids: number[];
+  built_packages: CoprBuildPackage[];
+  repo_namespace: string;
+  repo_name: string;
+  git_repo: string;
+  pr_id: number | null;
+  issue_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+}
+
+// /api/koji-builds
+export interface KojiBuild {
+  packit_id: number;
+  task_id: string;
+  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
+  build_submitted_time: number;
+  chroot: string;
+  web_url: string;
+  build_logs_urls: string;
+  // TODO: @Venefilyn: change interface depending on status of pr_id or branch_item.
+  // They seem to be mutually exclusive so can be sure one is null and other is string
+  pr_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+  project_url: string;
+  repo_namespace: string;
+  repo_name: string;
 }
