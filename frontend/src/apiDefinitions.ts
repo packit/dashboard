@@ -74,7 +74,7 @@ export interface CoprBuildGroup {
   project: string;
   build_id: number;
   status_per_chroot: {
-    [key: string]: string;
+    [key: string]: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
   };
   packit_id_per_chroot: {
     [key: string]: number;
@@ -99,10 +99,10 @@ export interface CoprBuildPackage {
   version: string;
 }
 
-// /api/copr-builds
+// /api/copr-builds/$id
 export interface CoprBuild {
   build_id: string;
-  status: string;
+  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
   chroot: string;
   build_submitted_time: number;
   build_start_time: number;
@@ -125,7 +125,7 @@ export interface CoprBuild {
 }
 
 // /api/koji-builds
-export interface KojiBuild {
+export interface KojiBuildGroup {
   packit_id: number;
   task_id: string;
   status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
@@ -141,4 +141,29 @@ export interface KojiBuild {
   project_url: string;
   repo_namespace: string;
   repo_name: string;
+}
+
+// /api/koji-builds/$id
+export interface KojiBuild {
+  scratch: boolean;
+  task_id: string;
+  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
+  chroot: string;
+  build_start_time: number;
+  build_finished_time: number;
+  build_submitted_time: number;
+  commit_sha: string;
+  web_url: string;
+  build_logs_urls: string;
+  srpm_build_id: number;
+  run_ids: number[];
+  repo_namespace: string;
+  repo_name: string;
+  git_repo: string;
+  // TODO: @Venefilyn: change interface depending on status of pr_id or branch_item.
+  // They seem to be mutually exclusive so can be sure one is null and other is string
+  pr_id: number | null;
+  issue_id: number | null;
+  branch_name: string | null;
+  release: string | null;
 }

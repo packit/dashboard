@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { KojiBuild } from "../../apiDefinitions";
+import { KojiBuildGroup } from "../../apiDefinitions";
 
 export interface fetchKojiBuildsProps {
   pageParam: number;
@@ -14,7 +14,7 @@ export const fetchKojiBuilds = async ({
   pageParam = 1,
   scratch = false,
   signal,
-}: fetchKojiBuildsProps): Promise<KojiBuild[]> => {
+}: fetchKojiBuildsProps): Promise<KojiBuildGroup[]> => {
   const data = await fetch(
     `${
       import.meta.env.VITE_API_URL

@@ -69,13 +69,21 @@ const CoprBuildsTable = () => {
   const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
   const TableHeads = [
-    <Th>
+    <Th key={columnNames.forge}>
       <span className="pf-v5-u-screen-reader">{columnNames.forge}</span>
     </Th>,
-    <Th width={15}>{columnNames.trigger}</Th>,
-    <Th width={60}>{columnNames.chroots}</Th>,
-    <Th width={10}>{columnNames.timeSubmitted}</Th>,
-    <Th width={10}>{columnNames.coprBuild}</Th>,
+    <Th key={columnNames.trigger} width={15}>
+      {columnNames.trigger}
+    </Th>,
+    <Th key={columnNames.chroots} width={60}>
+      {columnNames.chroots}
+    </Th>,
+    <Th key={columnNames.timeSubmitted} width={10}>
+      {columnNames.timeSubmitted}
+    </Th>,
+    <Th key={columnNames.coprBuild} width={10}>
+      {columnNames.coprBuild}
+    </Th>,
   ];
 
   if (isLoading) {

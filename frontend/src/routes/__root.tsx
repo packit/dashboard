@@ -146,7 +146,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             <NavItem isActive={!!matchRoute({ to: "/projects", fuzzy: true })}>
               <Link to={"/projects"}>Projects</Link>
             </NavItem>
-            <NavItem isActive={!!matchRoute({ to: "/jobs", fuzzy: true })}>
+            <NavItem isActive={!!matchRoute({ to: "/jobs/copr", fuzzy: true })}>
               <Link to={"/jobs"}>Jobs</Link>
             </NavItem>
             <NavItem isActive={!!matchRoute({ to: "/pipelines", fuzzy: true })}>
