@@ -18,7 +18,7 @@ import { Preloader } from "../shared/Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
 import { ResultsPageCoprDetails } from "./CoprBuildDetail";
-import { coprBuildQueryOptions } from "../../queries/copr/coprQuery";
+import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 import { Route as CoprRoute } from "../../routes/jobs_/copr.$id";
 import { SHACopy } from "../shared/SHACopy";
 import { CoprBuildPackage } from "../../apiDefinitions";

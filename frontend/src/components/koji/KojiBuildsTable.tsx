@@ -45,13 +45,21 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
   const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
   const TableHeads = [
-    <Th>
+    <Th key={columnNames.forge}>
       <span className="pf-v5-u-screen-reader">{columnNames.forge}</span>
     </Th>,
-    <Th width={35}>{columnNames.trigger}</Th>,
-    <Th width={20}>{columnNames.target}</Th>,
-    <Th width={20}>{columnNames.timeSubmitted}</Th>,
-    <Th width={20}>{columnNames.kojiBuildTask}</Th>,
+    <Th key={columnNames.trigger} width={35}>
+      {columnNames.trigger}
+    </Th>,
+    <Th key={columnNames.target} width={20}>
+      {columnNames.target}
+    </Th>,
+    <Th key={columnNames.timeSubmitted} width={20}>
+      {columnNames.timeSubmitted}
+    </Th>,
+    <Th key={columnNames.kojiBuildTask} width={20}>
+      {columnNames.kojiBuildTask}
+    </Th>,
   ];
 
   if (isLoading) {
@@ -87,7 +95,7 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
                 <StatusLabel
                   target={koji_build.chroot}
                   status={koji_build.status}
-                  link={`/results/koji-builds/${koji_build.packit_id}`}
+                  link={`/jobs/koji/${koji_build.packit_id}`}
                 />
               </Td>
               <Td dataLabel={columnNames.timeSubmitted}>

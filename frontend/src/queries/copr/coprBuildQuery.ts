@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import { queryOptions } from "@tanstack/react-query";
-import { fetchCoprBuild, fetchCoprBuildProps } from "./copr";
+import { fetchCoprBuild, fetchCoprBuildProps } from "./coprBuild";
 
 type QueryParameters = Omit<fetchCoprBuildProps, "signal">;
 

@@ -3,10 +3,10 @@
 
 import { createFileRoute, redirect } from "@tanstack/react-router";
 
-export const Route = createFileRoute("/jobs/copr-builds")({
+export const Route = createFileRoute("/jobs/koji-builds")({
   loader: ({ location }) => {
     throw redirect({
-      to: location.pathname.replace("/copr-builds", "/copr"),
+      to: location.pathname.replace("/koji-builds", "/koji"),
     });
   },
 });

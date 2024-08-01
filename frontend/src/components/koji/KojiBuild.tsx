@@ -16,77 +16,22 @@ import {
   DescriptionListTerm,
 } from "@patternfly/react-core";
 import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
-import { SHACopy } from "../utils/SHACopy";
 import {
   AcceptedStatuses,
   ResultProgressStep,
-} from "../../components/shared/ResultProgressStep";
+} from "../shared/ResultProgressStep";
+import { Route as KojiRoute } from "../../routes/jobs_/koji.$id";
+import { kojiBuildQueryOptions } from "../../queries/koji/kojiBuildQuery";
+import { Preloader } from "../shared/Preloader";
+import { SHACopy } from "../shared/SHACopy";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { ErrorConnection } from "../errors/ErrorConnection";
 
-interface KojiBuild {
-  scratch: boolean;
-  task_id: string;
-  status: string;
-  chroot: string;
-  build_start_time: number;
-  build_finished_time: number;
-  build_submitted_time: number;
-  commit_sha: string;
-  web_url: string;
-  build_logs_urls: string;
-  srpm_build_id: number;
-  run_ids: number[];
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
-  issue_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-}
-
-const fetchKojiBuilds = (url: string) =>
-  fetch(url).then((response) => {
-    if (!response.ok && response.status !== 404) {
-      throw Promise.reject(response);
-    }
-    return response.json();
-  });
-
-const ResultsPageKoji = () => {
-  useTitle("Koji Results");
-  const { id } = useParams();
-
-  const URL = `${import.meta.env.VITE_API_URL}/koji-builds/${id}`;
-  const { data, isError, isInitialLoading } = useQuery<
-    KojiBuild | { error: string }
-  >([URL], () => fetchKojiBuilds(URL));
-
-  /**
-   * Map the different statuses of Koji builds to the visual aspect
-   *
-   * TODO (@Venefilyn): change the statuses to match API
-   *
-   * @param {string} status - list of statuses from Koji builds
-   * @return {*}  {AcceptedStatuses}
-   */
-  function getKojiBuildStatus(status: string): AcceptedStatuses {
-    switch (status) {
-      case "error":
-      case "failure":
-        return "fail";
-      case "success":
-        return "success";
-      default:
-        return "unknown";
-    }
-  }
+export const KojiBuild = () => {
+  const { id } = KojiRoute.useParams();
+  const { data, isLoading, isError } = useQuery(kojiBuildQueryOptions({ id }));
 
   // If backend API is down
   if (isError) {
@@ -94,7 +39,7 @@ const ResultsPageKoji = () => {
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading || data === undefined) {
+  if (isLoading || data === undefined) {
     return <Preloader />;
   }
 
@@ -111,7 +56,6 @@ const ResultsPageKoji = () => {
       </PageSection>
     );
   }
-
   return (
     <>
       <PageSection variant={PageSectionVariants.light}>
@@ -207,4 +151,22 @@ const ResultsPageKoji = () => {
   );
 };
 
-export { ResultsPageKoji };
+/**
+ * Map the different statuses of Koji builds to the visual aspect
+ *
+ * TODO (@Venefilyn): change the statuses to match API
+ *
+ * @param {string} status - list of statuses from Koji builds
+ * @return {*}  {AcceptedStatuses}
+ */
+function getKojiBuildStatus(status: string): AcceptedStatuses {
+  switch (status) {
+    case "error":
+    case "failure":
+      return "fail";
+    case "success":
+      return "success";
+    default:
+      return "unknown";
+  }
+}

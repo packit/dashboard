@@ -3,7 +3,7 @@
 
 import { createFileRoute } from "@tanstack/react-router";
 import { CoprBuild } from "../../components/copr/CoprBuild";
-import { coprBuildQueryOptions } from "../../queries/copr/coprQuery";
+import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 
 export const Route = createFileRoute("/jobs/copr/$id")({
   loader: ({ context: { queryClient }, params: { id } }) =>
