@@ -21,6 +21,7 @@ import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
 import { Route as JobsCoprImport } from './routes/jobs/copr'
+import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 
@@ -28,6 +29,7 @@ import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 
 const UsageLazyImport = createFileRoute('/usage')()
 const ProjectsIndexLazyImport = createFileRoute('/projects/')()
+const ProjectsForgeLazyImport = createFileRoute('/projects/$forge')()
 const ProjectsForgeNamespaceLazyImport = createFileRoute(
   '/projects/$forge/$namespace',
 )()
@@ -69,6 +71,13 @@ const JobsIndexRoute = JobsIndexImport.update({
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
+const ProjectsForgeLazyRoute = ProjectsForgeLazyImport.update({
+  path: '/projects/$forge',
+  getParentRoute: () => rootRoute,
+} as any).lazy(() =>
+  import('./routes/projects/$forge_.lazy').then((d) => d.Route),
+)
+
 const JobsKojiBuildsRoute = JobsKojiBuildsImport.update({
   path: '/koji-builds',
   getParentRoute: () => JobsRouteRoute,
@@ -97,6 +106,11 @@ const ProjectsForgeNamespaceLazyRoute = ProjectsForgeNamespaceLazyImport.update(
 ).lazy(() =>
   import('./routes/projects/$forge.$namespace_.lazy').then((d) => d.Route),
 )
+
+const JobsSrpmIdRoute = JobsSrpmIdImport.update({
+  path: '/jobs/srpm/$id',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const JobsKojiIdRoute = JobsKojiIdImport.update({
   path: '/jobs/koji/$id',
@@ -178,6 +192,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiBuildsImport
       parentRoute: typeof JobsRouteImport
     }
+    '/projects/$forge': {
+      id: '/projects/$forge'
+      path: '/projects/$forge'
+      fullPath: '/projects/$forge'
+      preLoaderRoute: typeof ProjectsForgeLazyImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/': {
       id: '/jobs/'
       path: '/'
@@ -204,6 +225,13 @@ declare module '@tanstack/react-router' {
       path: '/jobs/koji/$id'
       fullPath: '/jobs/koji/$id'
       preLoaderRoute: typeof JobsKojiIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/jobs/srpm/$id': {
+      id: '/jobs/srpm/$id'
+      path: '/jobs/srpm/$id'
+      fullPath: '/jobs/srpm/$id'
+      preLoaderRoute: typeof JobsSrpmIdImport
       parentRoute: typeof rootRoute
     }
     '/projects/$forge/$namespace': {
@@ -236,9 +264,11 @@ export const routeTree = rootRoute.addChildren({
   }),
   ResultsRoute,
   UsageLazyRoute,
+  ProjectsForgeLazyRoute,
   ProjectsIndexLazyRoute,
   JobsCoprIdRoute,
   JobsKojiIdRoute,
+  JobsSrpmIdRoute,
   ProjectsForgeNamespaceLazyRoute,
   ProjectsForgeNamespaceRepoLazyRoute,
 })
@@ -255,9 +285,11 @@ export const routeTree = rootRoute.addChildren({
         "/jobs",
         "/results",
         "/usage",
+        "/projects/$forge",
         "/projects/",
         "/jobs/copr/$id",
         "/jobs/koji/$id",
+        "/jobs/srpm/$id",
         "/projects/$forge/$namespace",
         "/projects/$forge/$namespace/$repo"
       ]
@@ -297,6 +329,9 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "jobs/koji-builds.tsx",
       "parent": "/jobs"
     },
+    "/projects/$forge": {
+      "filePath": "projects/$forge_.lazy.tsx"
+    },
     "/jobs/": {
       "filePath": "jobs/index.tsx",
       "parent": "/jobs"
@@ -309,6 +344,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/jobs/koji/$id": {
       "filePath": "jobs_/koji.$id.tsx"
+    },
+    "/jobs/srpm/$id": {
+      "filePath": "jobs_/srpm.$id.tsx"
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"
