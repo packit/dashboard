@@ -168,6 +168,21 @@ export interface KojiBuild {
   release: string | null;
 }
 
+// /api/srpm-builds
+export interface SRPMBuildGroup {
+  srpm_build_id: number;
+  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
+  log_url: string;
+  build_submitted_time: number;
+  repo_namespace: string;
+  repo_name: string;
+  project_url: string;
+  // TODO: @Venefilyn: change interface depending on status of pr_id or branch_item.
+  // They seem to be mutually exclusive so can be sure one is null and other is string
+  pr_id: number | null;
+  branch_name: string | null;
+}
+
 // /api/srpm-builds/$id
 export interface SRPMBuild {
   status: string;
