@@ -71,8 +71,8 @@ const Jobs = () => {
                 Downstream Koji Builds
               </Link>
             </NavItem>
-            <NavItem isActive={!!matchRoute(jobTypeObject("bodhi-updates"))}>
-              <Link {...jobTypeObject("bodhi-updates")}>Bodhi Updates</Link>
+            <NavItem isActive={!!matchRoute(jobTypeObject("bodhi"))}>
+              <Link {...jobTypeObject("bodhi")}>Bodhi Updates</Link>
             </NavItem>
           </NavList>
         </Nav>

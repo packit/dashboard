@@ -15,48 +15,20 @@ import {
   DescriptionListTerm,
 } from "@patternfly/react-core";
 import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { Timestamp } from "../Timestamp";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
-import { SHACopy } from "../utils/SHACopy";
+import { Route as BodhiRoute } from "../../routes/jobs_/bodhi.$id";
+import { bodhiUpdateQueryOptions } from "../../queries/bodhi/bodhiUpdateQuery";
+import { Preloader } from "../shared/Preloader";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { Timestamp } from "../shared/Timestamp";
 
-interface BodhiUpdate {
-  packit_id: number;
-  status: string;
-  alias: string | null;
-  web_url: string | null;
-  koji_nvrs: string;
-  branch: string;
-  submitted_time: number;
-  update_creation_time: number | null;
-  pr_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-  project_url: string;
-  repo_namespace: string;
-  repo_name: string;
-}
+export const BodhiUpdate = () => {
+  const { id } = BodhiRoute.useParams();
 
-const fetchBodhiUpdates = (url: string) =>
-  fetch(url).then((response) => {
-    if (!response.ok && response.status !== 404) {
-      throw Promise.reject(response);
-    }
-    return response.json();
-  });
-
-const ResultsPageBodhiUpdate = () => {
-  useTitle("Bodhi Updates");
-  const { id } = useParams();
-
-  const URL = `${import.meta.env.VITE_API_URL}/bodhi-updates/${id}`;
-  const { data, isError, isInitialLoading } = useQuery<
-    BodhiUpdate | { error: string }
-  >([URL], () => fetchBodhiUpdates(URL));
+  const { data, isError, isLoading } = useQuery(
+    bodhiUpdateQueryOptions({ id }),
+  );
 
   // If backend API is down
   if (isError) {
@@ -64,7 +36,7 @@ const ResultsPageBodhiUpdate = () => {
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading || data === undefined) {
+  if (isLoading || data === undefined) {
     return <Preloader />;
   }
 
@@ -92,7 +64,7 @@ const ResultsPageBodhiUpdate = () => {
               <TriggerLink trigger={data}>
                 <TriggerSuffix trigger={data} />
               </TriggerLink>
-              <SHACopy git_repo={data.git_repo} commit_sha={data.commit_sha} />
+              {/* <SHACopy git_repo={data.git_repo} commit_sha={data.commit_sha} /> */}
             </strong>
             <br />
           </Text>
@@ -114,7 +86,7 @@ const ResultsPageBodhiUpdate = () => {
                   <StatusLabel
                     target={data.branch}
                     status={data.status}
-                    link={data.web_url}
+                    link={data.web_url || undefined}
                   />{" "}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Alias</DescriptionListTerm>
@@ -147,5 +119,3 @@ const ResultsPageBodhiUpdate = () => {
     </>
   );
 };
-
-export { ResultsPageBodhiUpdate };
