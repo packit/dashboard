@@ -23,9 +23,12 @@ import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
 import { Route as JobsCoprImport } from './routes/jobs/copr'
+import { Route as JobsBodhiUpdatesImport } from './routes/jobs/bodhi-updates'
+import { Route as JobsBodhiImport } from './routes/jobs/bodhi'
 import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
+import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
 
 // Create Virtual Routes
 
@@ -110,6 +113,16 @@ const JobsCoprRoute = JobsCoprImport.update({
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
+const JobsBodhiUpdatesRoute = JobsBodhiUpdatesImport.update({
+  path: '/bodhi-updates',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
+const JobsBodhiRoute = JobsBodhiImport.update({
+  path: '/bodhi',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
 const ProjectsForgeNamespaceLazyRoute = ProjectsForgeNamespaceLazyImport.update(
   {
     path: '/projects/$forge/$namespace',
@@ -131,6 +144,11 @@ const JobsKojiIdRoute = JobsKojiIdImport.update({
 
 const JobsCoprIdRoute = JobsCoprIdImport.update({
   path: '/jobs/copr/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JobsBodhiIdRoute = JobsBodhiIdImport.update({
+  path: '/jobs/bodhi/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -175,6 +193,20 @@ declare module '@tanstack/react-router' {
       fullPath: '/usage'
       preLoaderRoute: typeof UsageLazyImport
       parentRoute: typeof rootRoute
+    }
+    '/jobs/bodhi': {
+      id: '/jobs/bodhi'
+      path: '/bodhi'
+      fullPath: '/jobs/bodhi'
+      preLoaderRoute: typeof JobsBodhiImport
+      parentRoute: typeof JobsRouteImport
+    }
+    '/jobs/bodhi-updates': {
+      id: '/jobs/bodhi-updates'
+      path: '/bodhi-updates'
+      fullPath: '/jobs/bodhi-updates'
+      preLoaderRoute: typeof JobsBodhiUpdatesImport
+      parentRoute: typeof JobsRouteImport
     }
     '/jobs/copr': {
       id: '/jobs/copr'
@@ -239,6 +271,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexLazyImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/bodhi/$id': {
+      id: '/jobs/bodhi/$id'
+      path: '/jobs/bodhi/$id'
+      fullPath: '/jobs/bodhi/$id'
+      preLoaderRoute: typeof JobsBodhiIdImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/copr/$id': {
       id: '/jobs/copr/$id'
       path: '/jobs/copr/$id'
@@ -282,6 +321,8 @@ declare module '@tanstack/react-router' {
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
   JobsRouteRoute: JobsRouteRoute.addChildren({
+    JobsBodhiRoute,
+    JobsBodhiUpdatesRoute,
     JobsCoprRoute,
     JobsCoprBuildsRoute,
     JobsKojiRoute,
@@ -294,6 +335,7 @@ export const routeTree = rootRoute.addChildren({
   UsageLazyRoute,
   ProjectsForgeLazyRoute,
   ProjectsIndexLazyRoute,
+  JobsBodhiIdRoute,
   JobsCoprIdRoute,
   JobsKojiIdRoute,
   JobsSrpmIdRoute,
@@ -315,6 +357,7 @@ export const routeTree = rootRoute.addChildren({
         "/usage",
         "/projects/$forge",
         "/projects/",
+        "/jobs/bodhi/$id",
         "/jobs/copr/$id",
         "/jobs/koji/$id",
         "/jobs/srpm/$id",
@@ -328,6 +371,8 @@ export const routeTree = rootRoute.addChildren({
     "/jobs": {
       "filePath": "jobs/route.tsx",
       "children": [
+        "/jobs/bodhi",
+        "/jobs/bodhi-updates",
         "/jobs/copr",
         "/jobs/copr-builds",
         "/jobs/koji",
@@ -342,6 +387,14 @@ export const routeTree = rootRoute.addChildren({
     },
     "/usage": {
       "filePath": "usage.lazy.tsx"
+    },
+    "/jobs/bodhi": {
+      "filePath": "jobs/bodhi.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/bodhi-updates": {
+      "filePath": "jobs/bodhi-updates.tsx",
+      "parent": "/jobs"
     },
     "/jobs/copr": {
       "filePath": "jobs/copr.tsx",
@@ -376,6 +429,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/projects/": {
       "filePath": "projects/index.lazy.tsx"
+    },
+    "/jobs/bodhi/$id": {
+      "filePath": "jobs_/bodhi.$id.tsx"
     },
     "/jobs/copr/$id": {
       "filePath": "jobs_/copr.$id.tsx"

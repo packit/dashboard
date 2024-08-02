@@ -203,3 +203,38 @@ export interface SRPMBuild {
   branch_name: string | null;
   release: string | null;
 }
+
+// /api/bodhi-updates
+export interface BodhiUpdateGroup {
+  packit_id: number;
+  status: string;
+  alias: string | null;
+  web_url: string | null;
+  branch: string;
+  submitted_time: number;
+  update_creation_time: number | null;
+  pr_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+  project_url: string;
+  repo_namespace: string;
+  repo_name: string;
+}
+
+// /api/bodhi-updates/$id
+export interface BodhiUpdate {
+  packit_id: number;
+  status: string;
+  alias: string | null;
+  web_url: string | null;
+  koji_nvrs: string;
+  branch: string;
+  submitted_time: number;
+  update_creation_time: number | null;
+  pr_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+  project_url: string;
+  repo_namespace: string;
+  repo_name: string;
+}

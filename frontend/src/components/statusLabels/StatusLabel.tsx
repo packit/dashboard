@@ -11,9 +11,9 @@ import {
 import { BaseStatusLabel, BaseStatusLabelProps } from "./BaseStatusLabel";
 
 export interface StatusLabelProps {
-  link: string;
-  target?: string;
   status: string;
+  link?: string;
+  target?: string;
 }
 
 /**

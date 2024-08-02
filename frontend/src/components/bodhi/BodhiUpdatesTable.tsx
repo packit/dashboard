@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useMemo } from "react";
+import { useMemo } from "react";
 
 import {
   Table,
@@ -17,29 +17,33 @@ import {
   TriggerLink,
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
+import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Timestamp } from "../../components/shared/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { kojiBuildsQueryOptions } from "../../queries/koji/kojiBuildsQuery";
-import { StatusLabel } from "../statusLabels/StatusLabel";
+import { bodhiUpdatesQueryOptions } from "../../queries/bodhi/bodhiUpdatesQuery";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
-import { SkeletonTable } from "@patternfly/react-component-groups";
+import { StatusLabel } from "../statusLabels/StatusLabel";
 
-interface KojiBuildTableProps {
-  scratch: boolean;
-}
-export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
-  const { data, isLoading, isFetchingNextPage, hasNextPage, fetchNextPage } =
-    useInfiniteQuery(kojiBuildsQueryOptions({ scratch }));
-
+const BodhiUpdatesTable = () => {
   // Headings
   const columnNames = {
     forge: "Forge",
     trigger: "Trigger",
-    target: "Target",
-    timeSubmitted: "Time Submitted",
-    kojiBuildTask: "Koji Build Task",
+    branch: "Branch",
+    timeProcessed: "Time Processed",
+    bodhiUpdate: "Bodhi Update",
   };
+
+  const {
+    isLoading,
+    isError,
+    fetchNextPage,
+    data,
+    isFetchingNextPage,
+    hasNextPage,
+  } = useInfiniteQuery(bodhiUpdatesQueryOptions());
 
   // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
   const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
@@ -51,16 +55,21 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
     <Th key={columnNames.trigger} width={35}>
       {columnNames.trigger}
     </Th>,
-    <Th key={columnNames.target} width={20}>
-      {columnNames.target}
+    <Th key={columnNames.branch} width={20}>
+      {columnNames.branch}
     </Th>,
-    <Th key={columnNames.timeSubmitted} width={20}>
-      {columnNames.timeSubmitted}
+    <Th key={columnNames.timeProcessed} width={20}>
+      {columnNames.timeProcessed}
     </Th>,
-    <Th key={columnNames.kojiBuildTask} width={20}>
-      {columnNames.kojiBuildTask}
+    <Th key={columnNames.bodhiUpdate} width={20}>
+      {columnNames.bodhiUpdate}
     </Th>,
   ];
+
+  // If backend API is down
+  if (isError) {
+    return <ErrorConnection />;
+  }
 
   if (isLoading) {
     return (
@@ -74,37 +83,41 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
 
   return (
     <>
-      <Table aria-label="Koji builds" variant={TableVariant.compact}>
+      <Table aria-label="Bodhi updates" variant={TableVariant.compact}>
         <Thead>
           <Tr>{TableHeads}</Tr>
         </Thead>
         <Tbody>
-          {rows.map((koji_build) => (
-            <Tr key={koji_build.task_id}>
+          {rows.map((bodhi_update) => (
+            <Tr key={bodhi_update.packit_id}>
               <Td dataLabel={columnNames.forge}>
-                <ForgeIcon url={koji_build.project_url} />
+                <ForgeIcon url={bodhi_update.project_url} />
               </Td>
               <Td dataLabel={columnNames.trigger}>
                 <strong>
-                  <TriggerLink trigger={koji_build}>
-                    <TriggerSuffix trigger={koji_build} />
+                  <TriggerLink trigger={bodhi_update}>
+                    <TriggerSuffix trigger={bodhi_update} />
                   </TriggerLink>
                 </strong>
               </Td>
-              <Td dataLabel={columnNames.target}>
+              <Td dataLabel={columnNames.branch}>
                 <StatusLabel
-                  target={koji_build.chroot}
-                  status={koji_build.status}
-                  link={`/jobs/koji/${koji_build.packit_id}`}
+                  target={bodhi_update.branch}
+                  status={bodhi_update.status}
+                  link={`/jobs/bodhi/${bodhi_update.packit_id}`}
                 />
               </Td>
-              <Td dataLabel={columnNames.timeSubmitted}>
-                <Timestamp stamp={koji_build.build_submitted_time} />
+              <Td dataLabel={columnNames.timeProcessed}>
+                <Timestamp stamp={bodhi_update.submitted_time} />
               </Td>
-              <Td dataLabel={columnNames.kojiBuildTask}>
+              <Td dataLabel={columnNames.bodhiUpdate}>
                 <strong>
-                  <a href={koji_build.web_url} target="_blank" rel="noreferrer">
-                    {koji_build.task_id}
+                  <a
+                    href={bodhi_update.web_url ?? ""}
+                    target="_blank"
+                    rel="noreferrer"
+                  >
+                    {bodhi_update.alias}
                   </a>
                 </strong>
               </Td>
@@ -120,3 +133,5 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
     </>
   );
 };
+
+export { BodhiUpdatesTable };
