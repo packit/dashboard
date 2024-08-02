@@ -167,3 +167,24 @@ export interface KojiBuild {
   branch_name: string | null;
   release: string | null;
 }
+
+// /api/srpm-builds/$id
+export interface SRPMBuild {
+  status: string;
+  build_start_time: number;
+  build_finished_time: number;
+  build_submitted_time: number;
+  url: string;
+  logs: string | null;
+  logs_url: string;
+  copr_build_id: string;
+  copr_web_url: string;
+  run_ids: number[];
+  repo_namespace: string;
+  repo_name: string;
+  git_repo: string;
+  pr_id: number | null;
+  issue_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+}

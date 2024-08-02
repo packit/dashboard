@@ -7,15 +7,12 @@ import {
   Text,
   TextContent,
 } from "@patternfly/react-core";
-
-import { useParams } from "react-router-dom";
-import { ForgeIcon } from "../Forge/ForgeIcon";
-import { ProjectsList } from "../Projects/ProjectsList";
-import { useTitle } from "../utils/useTitle";
+import { ForgeIcon } from "../icons/ForgeIcon";
+import { ProjectsList } from "./ProjectsList";
+import { Route as ForgeRoute } from "../../routes/projects/$forge_.lazy";
 
 const Forge = () => {
-  useTitle("Project Forge");
-  const { forge } = useParams();
+  const { forge } = ForgeRoute.useParams();
 
   return (
     <>

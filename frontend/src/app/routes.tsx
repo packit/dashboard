@@ -5,7 +5,7 @@ import { RouteObject } from "react-router-dom";
 
 import { AppLayout } from "./AppLayout/AppLayout";
 import { Dashboard } from "./Dashboard/Dashboard";
-import { Forge } from "./Projects/Forge";
+import { Forge } from "../components/projects/Forge";
 import { Jobs } from "./Jobs/Jobs";
 import { Namespace } from "../components/projects/Namespace";
 import { NotFound } from "./NotFound/NotFound";

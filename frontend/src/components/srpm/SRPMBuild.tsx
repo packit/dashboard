@@ -21,73 +21,20 @@ import {
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
 import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import {
   AcceptedStatuses,
   ResultProgressStep,
-} from "../../components/shared/ResultProgressStep";
+} from "../shared/ResultProgressStep";
+import { Route as SRPMRoute } from "../../routes/jobs_/srpm.$id";
+import { srpmBuildQueryOptions } from "../../queries/srpm/srpmBuildQuery";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { Preloader } from "../shared/Preloader";
 
-interface SRPMBuild {
-  status: string;
-  build_start_time: number;
-  build_finished_time: number;
-  build_submitted_time: number;
-  url: string;
-  logs: string | null;
-  logs_url: string;
-  copr_build_id: string;
-  copr_web_url: string;
-  run_ids: number[];
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
-  issue_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-}
-
-const fetchSRPMBuild = (url: string) =>
-  fetch(url).then((response) => {
-    if (!response.ok && response.status !== 404) {
-      throw Promise.reject(response);
-    }
-    return response.json();
-  });
-
-const ResultsPageSRPM = () => {
-  useTitle("SRPM Results");
-  const { id } = useParams();
-
-  const URL = `${import.meta.env.VITE_API_URL}/srpm-builds/${id}`;
-  const { data, isError, isInitialLoading } = useQuery<
-    SRPMBuild | { error: string }
-  >([URL], () => fetchSRPMBuild(URL));
-
-  /**
-   * Map the different statuses of SRPM builds to the visual aspect
-   *
-   * TODO (@Venefilyn): change the statuses to match API
-   *
-   * @param {string} status - list of statuses from SRPM builds
-   * @return {*}  {AcceptedStatuses}
-   */
-  function getSRPMStatus(status: string): AcceptedStatuses {
-    switch (status) {
-      case "error":
-      case "failure":
-        return "fail";
-      case "success":
-        return "success";
-      default:
-        return "unknown";
-    }
-  }
+export const SRPMBuild = () => {
+  const { id } = SRPMRoute.useParams();
+  const { data, isError, isLoading } = useQuery(srpmBuildQueryOptions({ id }));
 
   // If backend API is down
   if (isError) {
@@ -95,7 +42,7 @@ const ResultsPageSRPM = () => {
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading || data === undefined) {
+  if (isLoading || data === undefined) {
     return <Preloader />;
   }
 
@@ -215,4 +162,22 @@ const ResultsPageSRPM = () => {
   );
 };
 
-export { ResultsPageSRPM };
+/**
+ * Map the different statuses of SRPM builds to the visual aspect
+ *
+ * TODO (@Venefilyn): change the statuses to match API
+ *
+ * @param {string} status - list of statuses from SRPM builds
+ * @return {*}  {AcceptedStatuses}
+ */
+function getSRPMStatus(status: string): AcceptedStatuses {
+  switch (status) {
+    case "error":
+    case "failure":
+      return "fail";
+    case "success":
+      return "success";
+    default:
+      return "unknown";
+  }
+}
