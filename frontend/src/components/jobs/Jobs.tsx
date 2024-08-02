@@ -40,8 +40,8 @@ const Jobs = () => {
             <NavItem isActive={!!matchRoute(jobTypeObject("koji"))}>
               <Link {...jobTypeObject("koji")}>Upstream Koji Builds</Link>
             </NavItem>
-            <NavItem isActive={!!matchRoute(jobTypeObject("srpm-builds"))}>
-              <Link {...jobTypeObject("srpm-builds")}>SRPM Builds</Link>
+            <NavItem isActive={!!matchRoute(jobTypeObject("srpm"))}>
+              <Link {...jobTypeObject("srpm")}>SRPM Builds</Link>
             </NavItem>
             <NavItem
               isActive={!!matchRoute(jobTypeObject("testing-farm-runs"))}

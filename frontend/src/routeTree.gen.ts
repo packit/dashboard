@@ -17,6 +17,8 @@ import { Route as ResultsImport } from './routes/results'
 import { Route as JobsRouteImport } from './routes/jobs/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
+import { Route as JobsSrpmBuildsImport } from './routes/jobs/srpm-builds'
+import { Route as JobsSrpmImport } from './routes/jobs/srpm'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
@@ -77,6 +79,16 @@ const ProjectsForgeLazyRoute = ProjectsForgeLazyImport.update({
 } as any).lazy(() =>
   import('./routes/projects/$forge_.lazy').then((d) => d.Route),
 )
+
+const JobsSrpmBuildsRoute = JobsSrpmBuildsImport.update({
+  path: '/srpm-builds',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
+const JobsSrpmRoute = JobsSrpmImport.update({
+  path: '/srpm',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
 
 const JobsKojiBuildsRoute = JobsKojiBuildsImport.update({
   path: '/koji-builds',
@@ -192,6 +204,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiBuildsImport
       parentRoute: typeof JobsRouteImport
     }
+    '/jobs/srpm': {
+      id: '/jobs/srpm'
+      path: '/srpm'
+      fullPath: '/jobs/srpm'
+      preLoaderRoute: typeof JobsSrpmImport
+      parentRoute: typeof JobsRouteImport
+    }
+    '/jobs/srpm-builds': {
+      id: '/jobs/srpm-builds'
+      path: '/srpm-builds'
+      fullPath: '/jobs/srpm-builds'
+      preLoaderRoute: typeof JobsSrpmBuildsImport
+      parentRoute: typeof JobsRouteImport
+    }
     '/projects/$forge': {
       id: '/projects/$forge'
       path: '/projects/$forge'
@@ -260,6 +286,8 @@ export const routeTree = rootRoute.addChildren({
     JobsCoprBuildsRoute,
     JobsKojiRoute,
     JobsKojiBuildsRoute,
+    JobsSrpmRoute,
+    JobsSrpmBuildsRoute,
     JobsIndexRoute,
   }),
   ResultsRoute,
@@ -304,6 +332,8 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/copr-builds",
         "/jobs/koji",
         "/jobs/koji-builds",
+        "/jobs/srpm",
+        "/jobs/srpm-builds",
         "/jobs/"
       ]
     },
@@ -327,6 +357,14 @@ export const routeTree = rootRoute.addChildren({
     },
     "/jobs/koji-builds": {
       "filePath": "jobs/koji-builds.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/srpm": {
+      "filePath": "jobs/srpm.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/srpm-builds": {
+      "filePath": "jobs/srpm-builds.tsx",
       "parent": "/jobs"
     },
     "/projects/$forge": {

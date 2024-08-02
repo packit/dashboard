@@ -21,7 +21,7 @@ import { ResultsPageBodhiUpdate } from "../components/Results/ResultsPageBodhiUp
 import { CoprBuildsTable } from "./Jobs/CoprBuildsTable";
 import { KojiBuildsTable } from "./Jobs/KojiBuildsTable";
 import { SyncReleaseTable } from "./Jobs/SyncReleaseStatuses";
-import { SRPMBuildsTable } from "./Jobs/SRPMBuildsTable";
+import { SRPMBuildsTable } from "../components/srpm/SRPMBuildsTable";
 import { TestingFarmResultsTable } from "./Jobs/TestingFarmResultsTable";
 import { BodhiUpdatesTable } from "./Jobs/BodhiUpdatesTable";
 import { Usage } from "../components/usage/Usage";
