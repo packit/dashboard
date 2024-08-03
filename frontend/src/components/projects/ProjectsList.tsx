@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
+import React, { useMemo } from "react";
 
 import {
   CodeBranchIcon,
@@ -10,9 +10,10 @@ import {
   BlueprintIcon,
 } from "@patternfly/react-icons";
 
-import { useSuspenseInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   Table /* data-codemods */,
+  TableVariant,
   Tbody,
   Td,
   Th,
@@ -23,6 +24,7 @@ import { projectsQueryOptions } from "../../queries/projects/projectsQuery";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
 import { LoadMore } from "../shared/LoadMore";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 
 function getProjectInfoURL(project: Project) {
   const urlArray = project.project_url?.split("/");
@@ -50,100 +52,131 @@ const columnNames = {
 type ColumnKey = keyof typeof columnNames;
 
 const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
-  const { data, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useSuspenseInfiniteQuery(projectsQueryOptions(forge, namespace));
+  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
+    useInfiniteQuery(projectsQueryOptions(forge, namespace));
   const expandedCells: Record<string, ColumnKey> = {};
+
+  // Headings
+  const columnNames = {
+    repositories: "Repositories",
+    branchesHandled: "Branches Handled",
+    issuesHandled: "Issues Handled",
+    releasesHandled: "Releases Handled",
+    prsHandled: "Pull Requests Handled",
+    externalProjectLink: "External Project Link",
+  };
+
+  // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
+  const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
+
+  const TableHeads = [
+    <Th width={25} key={columnNames.repositories}>
+      {columnNames.repositories}
+    </Th>,
+    <Th width={10} key={columnNames.branchesHandled}>
+      {columnNames.branchesHandled}
+    </Th>,
+    <Th width={10} key={columnNames.issuesHandled}>
+      {columnNames.issuesHandled}
+    </Th>,
+    <Th width={10} key={columnNames.releasesHandled}>
+      {columnNames.releasesHandled}
+    </Th>,
+    <Th width={15} key={columnNames.prsHandled}>
+      {columnNames.prsHandled}
+    </Th>,
+    <Th width={10} key={columnNames.externalProjectLink}>
+      <span className="pf-v5-u-screen-reader">
+        {columnNames.externalProjectLink}
+      </span>
+    </Th>,
+  ];
+
+  if (isLoading) {
+    return <SkeletonTable rows={10} columns={TableHeads} />;
+  }
 
   return (
     <>
       <Table aria-label="Projects">
         <Thead>
-          <Tr>
-            <Th>Repositories</Th>
-            <Th>Branches Handled</Th>
-            <Th>Issues Handled</Th>
-            <Th>Releases Handled</Th>
-            <Th>Pull Requests Handled</Th>
-            <Th />
-          </Tr>
+          <Tr>{TableHeads}</Tr>
         </Thead>
-        {data.pages ? (
-          [...data.pages].map((projects) =>
-            [...projects].map((project) => {
-              const expandedCellKey = expandedCells
-                ? expandedCells[project.repo_name]
-                : null;
-              const isRowExpanded = !!expandedCellKey;
-              return (
-                <Tbody key={project.repo_name} isExpanded={isRowExpanded}>
-                  <Tr>
-                    <Td width={25} dataLabel={columnNames.name} component="th">
-                      <Link to={getProjectInfoURL(project)}>
-                        {`${project.namespace}/${project.repo_name}`}
-                      </Link>
-                    </Td>
-                    <Td
-                      width={10}
-                      dataLabel={columnNames.branches}
-                      // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
-                    >
-                      <span>
-                        <CodeBranchIcon key="icon" />
-                        &nbsp;
-                        {project.branches_handled}
-                      </span>
-                    </Td>
-                    <Td
-                      width={10}
-                      dataLabel={columnNames.issues}
-                      // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
-                    >
-                      <span>
-                        <SecurityIcon key="icon" />
-                        &nbsp;
-                        {project.issues_handled}
-                      </span>
-                    </Td>
-                    <Td
-                      width={10}
-                      dataLabel={columnNames.releases}
-                      // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
-                    >
-                      <span>
-                        <BuildIcon key="icon" />
-                        &nbsp;
-                        {project.releases_handled}
-                      </span>
-                    </Td>
-                    <Td
-                      width={15}
-                      dataLabel={columnNames.prs}
-                      // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
-                    >
-                      <span>
-                        <BlueprintIcon key="icon" />
-                        &nbsp;
-                        {project.prs_handled}
-                      </span>
-                    </Td>
-                    <Td dataLabel="External">
-                      <a
-                        href={project.project_url}
-                        target="_blank"
-                        rel="noreferrer"
-                        aria-label="External link to project"
-                      >
-                        Open external link
-                      </a>
-                    </Td>
-                  </Tr>
-                </Tbody>
-              );
-            }),
-          )
-        ) : (
-          <>No pages</>
-        )}
+        {rows.map((project) => {
+          const expandedCellKey = expandedCells
+            ? expandedCells[project.repo_name]
+            : null;
+          const isRowExpanded = !!expandedCellKey;
+          return (
+            <Tbody key={project.repo_name} isExpanded={isRowExpanded}>
+              <Tr>
+                <Td
+                  width={25}
+                  dataLabel={columnNames.repositories}
+                  component="th"
+                >
+                  <Link to={getProjectInfoURL(project)}>
+                    {`${project.namespace}/${project.repo_name}`}
+                  </Link>
+                </Td>
+                <Td
+                  width={10}
+                  dataLabel={columnNames.branchesHandled}
+                  // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                >
+                  <span>
+                    <CodeBranchIcon key="icon" />
+                    &nbsp;
+                    {project.branches_handled}
+                  </span>
+                </Td>
+                <Td
+                  width={10}
+                  dataLabel={columnNames.issuesHandled}
+                  // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                >
+                  <span>
+                    <SecurityIcon key="icon" />
+                    &nbsp;
+                    {project.issues_handled}
+                  </span>
+                </Td>
+                <Td
+                  width={10}
+                  dataLabel={columnNames.releasesHandled}
+                  // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                >
+                  <span>
+                    <BuildIcon key="icon" />
+                    &nbsp;
+                    {project.releases_handled}
+                  </span>
+                </Td>
+                <Td
+                  width={15}
+                  dataLabel={columnNames.prsHandled}
+                  // compoundExpand={compoundExpandParams(repo, 'branches', rowIndex, 1)}
+                >
+                  <span>
+                    <BlueprintIcon key="icon" />
+                    &nbsp;
+                    {project.prs_handled}
+                  </span>
+                </Td>
+                <Td dataLabel={columnNames.externalProjectLink}>
+                  <a
+                    href={project.project_url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={`External link to ${project.namespace}/${project.repo_name}`}
+                  >
+                    Open external link
+                  </a>
+                </Td>
+              </Tr>
+            </Tbody>
+          );
+        })}
       </Table>
       <LoadMore
         isFetchingNextPage={isFetchingNextPage}
