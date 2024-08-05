@@ -17,6 +17,8 @@ import { Route as ResultsImport } from './routes/results'
 import { Route as JobsRouteImport } from './routes/jobs/route'
 import { Route as IndexImport } from './routes/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
+import { Route as JobsTestingFarmRunsImport } from './routes/jobs/testing-farm-runs'
+import { Route as JobsTestingFarmImport } from './routes/jobs/testing-farm'
 import { Route as JobsSrpmBuildsImport } from './routes/jobs/srpm-builds'
 import { Route as JobsSrpmImport } from './routes/jobs/srpm'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
@@ -25,6 +27,7 @@ import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
 import { Route as JobsCoprImport } from './routes/jobs/copr'
 import { Route as JobsBodhiUpdatesImport } from './routes/jobs/bodhi-updates'
 import { Route as JobsBodhiImport } from './routes/jobs/bodhi'
+import { Route as JobsTestingFarmIdImport } from './routes/jobs_/testing-farm.$id'
 import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
@@ -83,6 +86,16 @@ const ProjectsForgeLazyRoute = ProjectsForgeLazyImport.update({
   import('./routes/projects/$forge_.lazy').then((d) => d.Route),
 )
 
+const JobsTestingFarmRunsRoute = JobsTestingFarmRunsImport.update({
+  path: '/testing-farm-runs',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
+const JobsTestingFarmRoute = JobsTestingFarmImport.update({
+  path: '/testing-farm',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
 const JobsSrpmBuildsRoute = JobsSrpmBuildsImport.update({
   path: '/srpm-builds',
   getParentRoute: () => JobsRouteRoute,
@@ -131,6 +144,11 @@ const ProjectsForgeNamespaceLazyRoute = ProjectsForgeNamespaceLazyImport.update(
 ).lazy(() =>
   import('./routes/projects/$forge.$namespace_.lazy').then((d) => d.Route),
 )
+
+const JobsTestingFarmIdRoute = JobsTestingFarmIdImport.update({
+  path: '/jobs/testing-farm/$id',
+  getParentRoute: () => rootRoute,
+} as any)
 
 const JobsSrpmIdRoute = JobsSrpmIdImport.update({
   path: '/jobs/srpm/$id',
@@ -250,6 +268,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsSrpmBuildsImport
       parentRoute: typeof JobsRouteImport
     }
+    '/jobs/testing-farm': {
+      id: '/jobs/testing-farm'
+      path: '/testing-farm'
+      fullPath: '/jobs/testing-farm'
+      preLoaderRoute: typeof JobsTestingFarmImport
+      parentRoute: typeof JobsRouteImport
+    }
+    '/jobs/testing-farm-runs': {
+      id: '/jobs/testing-farm-runs'
+      path: '/testing-farm-runs'
+      fullPath: '/jobs/testing-farm-runs'
+      preLoaderRoute: typeof JobsTestingFarmRunsImport
+      parentRoute: typeof JobsRouteImport
+    }
     '/projects/$forge': {
       id: '/projects/$forge'
       path: '/projects/$forge'
@@ -299,6 +331,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsSrpmIdImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/testing-farm/$id': {
+      id: '/jobs/testing-farm/$id'
+      path: '/jobs/testing-farm/$id'
+      fullPath: '/jobs/testing-farm/$id'
+      preLoaderRoute: typeof JobsTestingFarmIdImport
+      parentRoute: typeof rootRoute
+    }
     '/projects/$forge/$namespace': {
       id: '/projects/$forge/$namespace'
       path: '/projects/$forge/$namespace'
@@ -329,6 +368,8 @@ export const routeTree = rootRoute.addChildren({
     JobsKojiBuildsRoute,
     JobsSrpmRoute,
     JobsSrpmBuildsRoute,
+    JobsTestingFarmRoute,
+    JobsTestingFarmRunsRoute,
     JobsIndexRoute,
   }),
   ResultsRoute,
@@ -339,6 +380,7 @@ export const routeTree = rootRoute.addChildren({
   JobsCoprIdRoute,
   JobsKojiIdRoute,
   JobsSrpmIdRoute,
+  JobsTestingFarmIdRoute,
   ProjectsForgeNamespaceLazyRoute,
   ProjectsForgeNamespaceRepoLazyRoute,
 })
@@ -361,6 +403,7 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/copr/$id",
         "/jobs/koji/$id",
         "/jobs/srpm/$id",
+        "/jobs/testing-farm/$id",
         "/projects/$forge/$namespace",
         "/projects/$forge/$namespace/$repo"
       ]
@@ -379,6 +422,8 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/koji-builds",
         "/jobs/srpm",
         "/jobs/srpm-builds",
+        "/jobs/testing-farm",
+        "/jobs/testing-farm-runs",
         "/jobs/"
       ]
     },
@@ -420,6 +465,14 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "jobs/srpm-builds.tsx",
       "parent": "/jobs"
     },
+    "/jobs/testing-farm": {
+      "filePath": "jobs/testing-farm.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/testing-farm-runs": {
+      "filePath": "jobs/testing-farm-runs.tsx",
+      "parent": "/jobs"
+    },
     "/projects/$forge": {
       "filePath": "projects/$forge_.lazy.tsx"
     },
@@ -441,6 +494,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/jobs/srpm/$id": {
       "filePath": "jobs_/srpm.$id.tsx"
+    },
+    "/jobs/testing-farm/$id": {
+      "filePath": "jobs_/testing-farm.$id.tsx"
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"

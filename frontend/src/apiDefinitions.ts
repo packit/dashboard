@@ -238,3 +238,37 @@ export interface BodhiUpdate {
   repo_namespace: string;
   repo_name: string;
 }
+
+// /api/testing-farm/results
+export interface TestingFarmRunGroup {
+  packit_id: number;
+  pipeline_id: string;
+  ref: string;
+  status: string;
+  target: string;
+  web_url: string;
+  pr_id: number;
+  submitted_time: number;
+  repo_namespace: string;
+  repo_name: string;
+  project_url: string;
+}
+
+// /api/testing-farm/$id
+export interface TestingFarmRun {
+  pipeline_id: string; // UUID
+  status: string;
+  chroot: string;
+  commit_sha: string;
+  web_url: string;
+  copr_build_ids: number[];
+  run_ids: number[];
+  submitted_time: number;
+  repo_namespace: string;
+  repo_name: string;
+  git_repo: string;
+  pr_id: number | null;
+  issue_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+}

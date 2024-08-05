@@ -7,7 +7,6 @@ import {
   DescriptionListGroup,
   DescriptionListTerm,
 } from "@patternfly/react-core";
-import { CoprResult } from "./CoprBuild";
 import React from "react";
 import {
   AcceptedStatuses,
@@ -15,14 +14,13 @@ import {
 } from "../shared/ResultProgressStep";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { LabelLink } from "../shared/LabelLink";
+import { CoprBuild } from "../../apiDefinitions";
 
-export interface ResultsPageCoprDetailsProps {
-  data: CoprResult;
+export interface CoprBuildDetailProps {
+  data: CoprBuild;
 }
 
-export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
-  data,
-}) => {
+export const CoprBuildDetail: React.FC<CoprBuildDetailProps> = ({ data }) => {
   const buildLogsLink = data.build_logs_url ? (
     <a href={data.build_logs_url} rel="noreferrer" target={"_blank"}>
       Logs
@@ -61,7 +59,7 @@ export const ResultsPageCoprDetails: React.FC<ResultsPageCoprDetailsProps> = ({
       <DescriptionListGroup>
         <DescriptionListTerm>SRPM Build</DescriptionListTerm>
         <DescriptionListDescription>
-          <LabelLink to={`/results/srpm-builds/${data.srpm_build_id}`}>
+          <LabelLink to={`/jobs/srpm-builds/${data.srpm_build_id}`}>
             Details
           </LabelLink>
         </DescriptionListDescription>
