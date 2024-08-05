@@ -17,7 +17,7 @@ import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
-import { ResultsPageCoprDetails } from "./CoprBuildDetail";
+import { CoprBuildDetail } from "./CoprBuildDetail";
 import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 import { Route as CoprRoute } from "../../routes/jobs_/copr.$id";
 import { SHACopy } from "../shared/SHACopy";
@@ -71,7 +71,7 @@ export const CoprBuild = () => {
       <PageSection>
         <Card>
           <CardBody>
-            <ResultsPageCoprDetails data={data} />
+            <CoprBuildDetail data={data} />
           </CardBody>
         </Card>
         <Card>
