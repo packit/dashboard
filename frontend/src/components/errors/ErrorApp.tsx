@@ -14,22 +14,27 @@ import {
   EmptyStateHeader,
   EmptyStateFooter,
 } from "@patternfly/react-core";
-import React from "react";
+import React, { useEffect } from "react";
 
 import { ExclamationCircleIcon } from "@patternfly/react-icons";
-import { useRouteError } from "react-router-dom";
+import { ErrorComponentProps, useRouter } from "@tanstack/react-router";
 
-const ErrorApp = () => {
-  const error = useRouteError();
-  console.error(error);
+export const ErrorApp: React.FC<ErrorComponentProps> = ({ error, reset }) => {
+  const router = useRouter();
   const [copied, setCopied] = React.useState(false);
 
-  const clipboardCopyFunc = (_event: React.MouseEvent, text: string) => {
+  useEffect(() => {
+    // Reset the query error boundary
+    reset();
+  }, [reset]);
+
+  const clipboardCopyFunc = (text: string) => {
     void navigator.clipboard.writeText(text);
   };
 
-  const onClick = (event: React.MouseEvent, error: unknown) => {
-    clipboardCopyFunc(event, error?.toString() || "Unknown error");
+  const onClick = (_event: React.MouseEvent, errorInst: typeof error) => {
+    const clipboardMessage = `${errorInst.name} - ${errorInst.message}\n${error.stack}`;
+    clipboardCopyFunc(clipboardMessage);
     setCopied(true);
   };
 
@@ -62,24 +67,31 @@ const ErrorApp = () => {
         fixed. When reporting, specify the reproducer on how the bug happened.
       </EmptyStateBody>
       <EmptyStateFooter>
-        <Button
-          variant="primary"
-          component="a"
-          href="https://github.com/packit/dashboard/issues/new?title=Dashboard+crashed"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Report the issue
-        </Button>
         <EmptyStateActions>
-          <Button variant="link" component="a" href="/">
-            Go back to Packit website
+          <Button
+            variant="primary"
+            component="a"
+            href="https://github.com/packit/dashboard/issues/new?title=Dashboard+crashed"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Report the issue
+          </Button>
+          <Button
+            variant="link"
+            onClick={() => {
+              // Invalidate the route to reload the loader, and reset any router error boundaries
+              router.invalidate();
+            }}
+          >
+            Retry
           </Button>
         </EmptyStateActions>
         <EmptyStateBody>
           <CodeBlock actions={actions}>
+            {error.name} - {error.message}
             <CodeBlockCode id="code-content">
-              {error?.toString() ?? "Unknown error"}
+              {error.stack ?? "Unknown error"}
             </CodeBlockCode>
           </CodeBlock>
         </EmptyStateBody>
@@ -87,5 +99,3 @@ const ErrorApp = () => {
     </EmptyState>
   );
 };
-
-export { ErrorApp };

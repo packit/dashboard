@@ -9,9 +9,10 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { routeTree } from "./routeTree.gen";
-import { NotFound } from "./app/NotFound/NotFound";
 import { createRoot } from "react-dom/client";
 import { Preloader } from "./components/shared/Preloader";
+import { NotFoundCard } from "./components/errors/NotFoundCard";
+import { ErrorApp } from "./components/errors/ErrorApp";
 
 const queryClient = new QueryClient();
 
@@ -21,7 +22,8 @@ const router = createRouter({
     queryClient,
   },
   defaultPendingComponent: Preloader,
-  defaultNotFoundComponent: NotFound,
+  defaultNotFoundComponent: NotFoundCard,
+  defaultErrorComponent: ErrorApp,
   defaultPreload: "intent",
   // Since we're using React Query, we don't want loader calls to ever be stale
   // This will ensure that the loader is always called when the route is preloaded or visited

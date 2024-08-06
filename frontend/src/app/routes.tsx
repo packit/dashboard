@@ -25,7 +25,7 @@ import { SRPMBuildsTable } from "../components/srpm/SRPMBuildsTable";
 import { TestingFarmResultsTable } from "./Jobs/TestingFarmResultsTable";
 import { BodhiUpdatesTable } from "./Jobs/BodhiUpdatesTable";
 import { Usage } from "../components/usage/Usage";
-import { ErrorApp } from "./Errors/ErrorApp";
+import { ErrorApp } from "../components/errors/ErrorApp";
 import { PipelineDetail } from "./Pipelines/PipelineDetail";
 
 // App routes
