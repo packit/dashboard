@@ -272,3 +272,43 @@ export interface TestingFarmRun {
   branch_name: string | null;
   release: string | null;
 }
+
+// /api/propose-downstream
+// /api/pull-from-upstream
+export interface SyncReleaseJobGroup {
+  packit_id: number;
+  status: string;
+  submitted_time: number;
+  status_per_downstream_pr: {
+    [key: string]: string;
+  };
+  packit_id_per_downstream_pr: {
+    [key: string]: number;
+  };
+  pr_id: number | null;
+  issue_id: number | null;
+  release: string | null;
+  repo_namespace: string;
+  repo_name: string;
+  project_url: string;
+}
+
+// /api/propose-downstream/$id
+// /api/pull-from-upstream/$id
+export interface SyncReleaseJob {
+  status: string;
+  branch: string;
+  downstream_pr_url: string;
+  submitted_time: number;
+  start_time: number;
+  finished_time: number;
+  logs: string;
+  repo_namespace: string;
+  repo_name: string;
+  git_repo: string;
+  pr_id: number | null;
+  issue_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+  downstream_pr_project: string | null;
+}
