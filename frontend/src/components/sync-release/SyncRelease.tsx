@@ -24,69 +24,42 @@ import {
 } from "@patternfly/react-core";
 
 import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../Preloader";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
-import { useParams } from "react-router-dom";
-import { useTitle } from "../../app/utils/useTitle";
 import { useQuery } from "@tanstack/react-query";
 import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
 import {
   ResultProgressStep,
   AcceptedStatuses,
-} from "../../components/shared/ResultProgressStep";
+} from "../shared/ResultProgressStep";
+import { syncReleaseQueryOptions } from "../../queries/sync-release/syncReleaseQuery";
+import { Preloader } from "../shared/Preloader";
+import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
+import { useParams } from "@tanstack/react-router";
 
-interface ResultsPageSyncReleaseRunsProps {
-  job: "propose-downstream" | "pull-from-upstream";
+interface SyncReleaseProps {
+  job: "upstream" | "downstream";
 }
 
-interface SyncReleaseRun {
-  status: string;
-  branch: string;
-  downstream_pr_url: string;
-  submitted_time: number;
-  start_time: number;
-  finished_time: number;
-  logs: string;
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
-  issue_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-  downstream_pr_project: string | null;
-}
-
-const fetchSyncRelease = (url: string) =>
-  fetch(url).then((response) => {
-    if (!response.ok && response.status !== 404) {
-      throw Promise.reject(response);
-    }
-    return response.json();
-  });
-
-const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
-  job,
-}) => {
+export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
   const displayText =
-    job === "pull-from-upstream"
+    job === "upstream"
       ? "Pull from upstream results"
       : "Propose downstream results";
-  useTitle(displayText);
-  const { id } = useParams();
+  const { id } = useParams({ from: `/jobs/sync-release/${job}/$id` });
 
   const [isTextWrapped, setIsTextWrapped] = useState(true);
   const [isLineNumbersShown, setIsLineNumbersShown] = useState(false);
-  // TODO(spytec): Not sure what the ref type is supposed to be
+  // TODO @Venefilyn: Not sure what the ref type is supposed to be
   const logViewerRef = React.useRef<{ scrollToBottom: () => void }>(null);
   const [isFullScreen, setIsFullScreen] = React.useState(false);
 
-  const API_URL = `${import.meta.env.VITE_API_URL}/${job}/${id}`;
-  const { data, isError, isInitialLoading } = useQuery<
-    SyncReleaseRun | { error: string }
-  >([API_URL], () => fetchSyncRelease(API_URL));
+  const { data, isError, isLoading } = useQuery(
+    syncReleaseQueryOptions({
+      job: job === "downstream" ? "propose-downstream" : "pull-from-upstream",
+      id,
+    }),
+  );
 
   // If backend API is down
   if (isError) {
@@ -94,7 +67,7 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
   }
 
   // Show preloader if waiting for API data
-  if (isInitialLoading || data === undefined) {
+  if (isLoading || data === undefined) {
     return <Preloader />;
   }
 
@@ -330,4 +303,4 @@ const ResultsPageSyncReleaseRuns: React.FC<ResultsPageSyncReleaseRunsProps> = ({
   );
 };
 
-export { ResultsPageSyncReleaseRuns };
+export { SyncRelease as ResultsPageSyncReleaseRuns };
