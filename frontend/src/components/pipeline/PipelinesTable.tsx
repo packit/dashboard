@@ -55,10 +55,10 @@ const Statuses: React.FC<StatusesProps> = (props) => {
     props.entries.forEach((entry, _i) => {
       labelled.push(
         <props.statusClass
-          key={`/results/${props.route}/${entry.packit_id}`}
+          key={`/jobs/${props.route}/${entry.packit_id}`}
           status={entry.status ?? entry.target!}
           target={entry.target}
-          link={`/results/${props.route}/${entry.packit_id}`}
+          link={`/jobs/${props.route}/${entry.packit_id}`}
         />,
       );
     });

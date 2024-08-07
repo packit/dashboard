@@ -28,10 +28,12 @@ import { Preloader } from "../shared/Preloader";
 import { SHACopy } from "../shared/SHACopy";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { ErrorConnection } from "../errors/ErrorConnection";
+import { Link, useNavigate } from "@tanstack/react-router";
 
 export const KojiBuild = () => {
   const { id } = KojiRoute.useParams();
   const { data, isLoading, isError } = useQuery(kojiBuildQueryOptions({ id }));
+  const navigate = useNavigate();
 
   // If backend API is down
   if (isError) {
@@ -88,10 +90,15 @@ export const KojiBuild = () => {
                     <DescriptionListTerm>SRPM Build</DescriptionListTerm>
                     <DescriptionListDescription>
                       <Label
-                        href={`/results/srpm-builds/${data.srpm_build_id}`}
-                      >
-                        Details
-                      </Label>
+                        render={({ className }) => (
+                          <Link
+                            to={`/jobs/srpm/${data.srpm_build_id}`}
+                            className={className}
+                          >
+                            Details
+                          </Link>
+                        )}
+                      ></Label>
                     </DescriptionListDescription>
                   </>
                 ) : null}
