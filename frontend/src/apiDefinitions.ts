@@ -144,14 +144,11 @@ export interface KojiBuildGroup {
 }
 
 // /api/koji-builds/$id
-export interface KojiBuild {
+export interface PipelineRun {
   scratch: boolean;
   task_id: string;
   status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
   chroot: string;
-  build_start_time: number;
-  build_finished_time: number;
-  build_submitted_time: number;
   commit_sha: string;
   web_url: string;
   build_logs_urls: string;
@@ -311,4 +308,38 @@ export interface SyncReleaseJob {
   branch_name: string | null;
   release: string | null;
   downstream_pr_project: string | null;
+}
+
+export interface PipelineItem {
+  packit_id: number;
+  target: string;
+  status: string;
+}
+
+// /api/runs
+// /api/runs/merged/$id
+export interface PipelineRun {
+  merged_run_id: number;
+  srpm: {
+    packit_id: number;
+    status: string;
+  };
+  copr: PipelineItem[];
+  koji: PipelineItem[];
+  test_run: PipelineItem[];
+  propose_downstream: PipelineItem[];
+  pull_from_upstream: PipelineItem[];
+  bodhi_update: PipelineItem[];
+  time_submitted: number;
+  trigger:
+    | {
+        repo_namespace: string;
+        repo_name: string;
+        git_repo: string;
+        pr_id: number | null;
+        issue_id: number | null;
+        branch_name: string | null;
+        release: string | null;
+      }
+    | Record<never, never>;
 }

@@ -6,7 +6,7 @@ import React from "react";
 import { getIssueLink } from "../forgeUrls";
 import { List, ListItem } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
-import { projectIssuesQueryOptions } from "../../queries/projects/projectIssuesQuery";
+import { projectIssuesQueryOptions } from "../../queries/project/projectIssuesQuery";
 
 interface IssuesListProps {
   forge: string;

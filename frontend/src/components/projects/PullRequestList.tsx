@@ -16,7 +16,7 @@ import {
 } from "@patternfly/react-core";
 import { getPRLink } from "../forgeUrls";
 import { useQuery } from "@tanstack/react-query";
-import { projectPRsQueryOptions } from "../../queries/projects/projectPRsQuery";
+import { projectPRsQueryOptions } from "../../queries/project/projectPRsQuery";
 
 interface PullRequestListProps {
   forge: string;

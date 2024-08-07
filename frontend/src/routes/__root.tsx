@@ -59,7 +59,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     };
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const onPageResize = (props: any) => {
-      // eslint-disable-next-line react/prop-types
       if (Object.hasOwn(props, "mobileView")) setIsMobileView(props.mobileView);
     };
 
@@ -137,7 +136,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             isActive={
               !!matchRoute({ to: "/projects", fuzzy: true }) ||
               !!matchRoute({ to: "/jobs", fuzzy: true }) ||
-              !!matchRoute({ to: "/pipelines", fuzzy: true })
+              !!matchRoute({ to: "/pipeline", fuzzy: true })
             }
             title="Dashboards"
             groupId="nav-expandable-group-dashboards"
@@ -149,8 +148,8 @@ export const Route = createRootRouteWithContext<RouterContext>()({
             <NavItem isActive={!!matchRoute({ to: "/jobs", fuzzy: true })}>
               <Link to={"/jobs/copr"}>Jobs</Link>
             </NavItem>
-            <NavItem isActive={!!matchRoute({ to: "/pipelines", fuzzy: true })}>
-              <Link to={"/pipelines"}>Pipelines</Link>
+            <NavItem isActive={!!matchRoute({ to: "/pipeline", fuzzy: true })}>
+              <Link to={"/pipeline"}>Pipelines</Link>
             </NavItem>
           </NavExpandable>
           <NavItem isActive={!!matchRoute({ to: "/usage" })}>

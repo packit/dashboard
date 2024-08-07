@@ -17,7 +17,7 @@ export const ForgeIcon: React.FC<ForgeIconProps> = ({ url }) => {
   return ForgeIconByForge({ forge });
 };
 
-export const ForgeIconByForge: React.FC<{ forge: string }> = ({ forge }) => {
+export const ForgeIconByForge: React.FC<{ forge?: string }> = ({ forge }) => {
   let forgeIcon;
   switch (forge) {
     case "github.com":
