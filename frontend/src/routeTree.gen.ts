@@ -23,8 +23,10 @@ import { Route as JobsSrpmBuildsImport } from './routes/jobs/srpm-builds'
 import { Route as JobsSrpmImport } from './routes/jobs/srpm'
 import { Route as JobsPullFromUpstreamsImport } from './routes/jobs/pull-from-upstreams'
 import { Route as JobsProposeDownstreamsImport } from './routes/jobs/propose-downstreams'
+import { Route as JobsKojiDownstreamImport } from './routes/jobs/koji-downstream'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
+import { Route as JobsDownstreamKojiBuildsImport } from './routes/jobs/downstream-koji-builds'
 import { Route as JobsCoprBuildsImport } from './routes/jobs/copr-builds'
 import { Route as JobsCoprImport } from './routes/jobs/copr'
 import { Route as JobsBodhiUpdatesImport } from './routes/jobs/bodhi-updates'
@@ -32,6 +34,7 @@ import { Route as JobsBodhiImport } from './routes/jobs/bodhi'
 import { Route as JobsTestingFarmIdImport } from './routes/jobs_/testing-farm.$id'
 import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
+import { Route as JobsKojiDownstreamIdImport } from './routes/jobs_/koji-downstream.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
 import { Route as JobsSyncReleaseUpstreamImport } from './routes/jobs/sync-release/upstream'
@@ -122,6 +125,11 @@ const JobsProposeDownstreamsRoute = JobsProposeDownstreamsImport.update({
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
+const JobsKojiDownstreamRoute = JobsKojiDownstreamImport.update({
+  path: '/koji-downstream',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
 const JobsKojiBuildsRoute = JobsKojiBuildsImport.update({
   path: '/koji-builds',
   getParentRoute: () => JobsRouteRoute,
@@ -129,6 +137,11 @@ const JobsKojiBuildsRoute = JobsKojiBuildsImport.update({
 
 const JobsKojiRoute = JobsKojiImport.update({
   path: '/koji',
+  getParentRoute: () => JobsRouteRoute,
+} as any)
+
+const JobsDownstreamKojiBuildsRoute = JobsDownstreamKojiBuildsImport.update({
+  path: '/downstream-koji-builds',
   getParentRoute: () => JobsRouteRoute,
 } as any)
 
@@ -173,6 +186,11 @@ const JobsSrpmIdRoute = JobsSrpmIdImport.update({
 
 const JobsKojiIdRoute = JobsKojiIdImport.update({
   path: '/jobs/koji/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JobsKojiDownstreamIdRoute = JobsKojiDownstreamIdImport.update({
+  path: '/jobs/koji-downstream/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -277,6 +295,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsCoprBuildsImport
       parentRoute: typeof JobsRouteImport
     }
+    '/jobs/downstream-koji-builds': {
+      id: '/jobs/downstream-koji-builds'
+      path: '/downstream-koji-builds'
+      fullPath: '/jobs/downstream-koji-builds'
+      preLoaderRoute: typeof JobsDownstreamKojiBuildsImport
+      parentRoute: typeof JobsRouteImport
+    }
     '/jobs/koji': {
       id: '/jobs/koji'
       path: '/koji'
@@ -289,6 +314,13 @@ declare module '@tanstack/react-router' {
       path: '/koji-builds'
       fullPath: '/jobs/koji-builds'
       preLoaderRoute: typeof JobsKojiBuildsImport
+      parentRoute: typeof JobsRouteImport
+    }
+    '/jobs/koji-downstream': {
+      id: '/jobs/koji-downstream'
+      path: '/koji-downstream'
+      fullPath: '/jobs/koji-downstream'
+      preLoaderRoute: typeof JobsKojiDownstreamImport
       parentRoute: typeof JobsRouteImport
     }
     '/jobs/propose-downstreams': {
@@ -382,6 +414,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsCoprIdImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/koji-downstream/$id': {
+      id: '/jobs/koji-downstream/$id'
+      path: '/jobs/koji-downstream/$id'
+      fullPath: '/jobs/koji-downstream/$id'
+      preLoaderRoute: typeof JobsKojiDownstreamIdImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/koji/$id': {
       id: '/jobs/koji/$id'
       path: '/jobs/koji/$id'
@@ -443,8 +482,10 @@ export const routeTree = rootRoute.addChildren({
     JobsBodhiUpdatesRoute,
     JobsCoprRoute,
     JobsCoprBuildsRoute,
+    JobsDownstreamKojiBuildsRoute,
     JobsKojiRoute,
     JobsKojiBuildsRoute,
+    JobsKojiDownstreamRoute,
     JobsProposeDownstreamsRoute,
     JobsPullFromUpstreamsRoute,
     JobsSrpmRoute,
@@ -461,6 +502,7 @@ export const routeTree = rootRoute.addChildren({
   ProjectsIndexLazyRoute,
   JobsBodhiIdRoute,
   JobsCoprIdRoute,
+  JobsKojiDownstreamIdRoute,
   JobsKojiIdRoute,
   JobsSrpmIdRoute,
   JobsTestingFarmIdRoute,
@@ -486,6 +528,7 @@ export const routeTree = rootRoute.addChildren({
         "/projects/",
         "/jobs/bodhi/$id",
         "/jobs/copr/$id",
+        "/jobs/koji-downstream/$id",
         "/jobs/koji/$id",
         "/jobs/srpm/$id",
         "/jobs/testing-farm/$id",
@@ -505,8 +548,10 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/bodhi-updates",
         "/jobs/copr",
         "/jobs/copr-builds",
+        "/jobs/downstream-koji-builds",
         "/jobs/koji",
         "/jobs/koji-builds",
+        "/jobs/koji-downstream",
         "/jobs/propose-downstreams",
         "/jobs/pull-from-upstreams",
         "/jobs/srpm",
@@ -540,12 +585,20 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "jobs/copr-builds.tsx",
       "parent": "/jobs"
     },
+    "/jobs/downstream-koji-builds": {
+      "filePath": "jobs/downstream-koji-builds.tsx",
+      "parent": "/jobs"
+    },
     "/jobs/koji": {
       "filePath": "jobs/koji.tsx",
       "parent": "/jobs"
     },
     "/jobs/koji-builds": {
       "filePath": "jobs/koji-builds.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/koji-downstream": {
+      "filePath": "jobs/koji-downstream.tsx",
       "parent": "/jobs"
     },
     "/jobs/propose-downstreams": {
@@ -595,6 +648,9 @@ export const routeTree = rootRoute.addChildren({
     },
     "/jobs/copr/$id": {
       "filePath": "jobs_/copr.$id.tsx"
+    },
+    "/jobs/koji-downstream/$id": {
+      "filePath": "jobs_/koji-downstream.$id.tsx"
     },
     "/jobs/koji/$id": {
       "filePath": "jobs_/koji.$id.tsx"

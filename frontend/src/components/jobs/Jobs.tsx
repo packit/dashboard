@@ -60,10 +60,8 @@ const Jobs = () => {
                 Pull From Upstreams
               </Link>
             </NavItem>
-            <NavItem
-              isActive={!!matchRoute(jobTypeObject("downstream-koji-builds"))}
-            >
-              <Link {...jobTypeObject("downstream-koji-builds")}>
+            <NavItem isActive={!!matchRoute(jobTypeObject("koji-downstream"))}>
+              <Link {...jobTypeObject("koji-downstream")}>
                 Downstream Koji Builds
               </Link>
             </NavItem>

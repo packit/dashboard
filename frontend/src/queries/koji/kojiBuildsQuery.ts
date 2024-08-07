@@ -12,7 +12,7 @@ export const kojiBuildsQueryOptions = ({
   scratch,
 }: kojiBuildsQueryOptionsProps) =>
   infiniteQueryOptions({
-    queryKey: ["koji"],
+    queryKey: ["koji", { scratch }],
     queryFn: async ({ pageParam, signal }) =>
       await fetchKojiBuilds({ pageParam, scratch, signal }),
     initialPageParam: 1,
