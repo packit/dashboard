@@ -11,6 +11,9 @@ import {
 import { PipelinesTable } from "../components/pipeline/PipelinesTable";
 
 export const Route = createFileRoute("/pipeline")({
+  staticData: {
+    title: "Pipelines",
+  },
   component: Pipelines,
 });
 

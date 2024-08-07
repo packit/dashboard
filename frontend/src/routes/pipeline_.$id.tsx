@@ -9,4 +9,7 @@ export const Route = createFileRoute("/pipeline/$id")({
   loader: ({ context: { queryClient }, params: { id } }) =>
     queryClient.ensureQueryData(pipelineQueryOptions({ id })),
   component: Pipeline,
+  staticData: {
+    title: "Pipeline",
+  },
 });

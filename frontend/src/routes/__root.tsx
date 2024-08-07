@@ -25,7 +25,7 @@ import {
   PageSidebarBody,
 } from "@patternfly/react-core";
 import packitLogo from "../static/logo.png";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ExternalLinkAltIcon,
   CodeBranchIcon,
@@ -36,20 +36,31 @@ import {
   Outlet,
   createRootRouteWithContext,
   useMatchRoute,
+  useMatches,
+  useRouter,
+  useRouterState,
 } from "@tanstack/react-router";
 import { QueryClient } from "@tanstack/react-query";
+import { useTitle } from "../components/shared/useTitle";
 
 interface RouterContext {
   queryClient: QueryClient;
 }
 
 export const Route = createRootRouteWithContext<RouterContext>()({
+  staticData: {
+    title: "",
+  },
   component: () => {
     const [isNavOpen, setIsNavOpen] = useState(true);
     const [isMobileView, setIsMobileView] = useState(true);
     const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
 
     const matchRoute = useMatchRoute();
+    const matches = useMatches();
+
+    const title = matches.at(-1)?.staticData.title;
+    useTitle(title ? title : "");
 
     const onNavToggleMobile = () => {
       setIsNavOpenMobile(!isNavOpenMobile);

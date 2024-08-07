@@ -6,6 +6,9 @@ import { testingFarmRunQueryOptions } from "../../queries/testingFarm/testingFar
 import { TestingFarmRun } from "../../components/testing-farm/TestingFarmRun";
 
 export const Route = createFileRoute("/jobs/testing-farm/$id")({
+  staticData: {
+    title: "Testing farm run",
+  },
   loader: ({ context: { queryClient }, params: { id } }) =>
     queryClient.ensureQueryData(testingFarmRunQueryOptions({ id })),
   component: TestingFarmRun,

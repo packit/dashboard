@@ -5,5 +5,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SRPMBuildsTable } from "../../components/srpm/SRPMBuildsTable";
 
 export const Route = createFileRoute("/jobs/srpm")({
+  staticData: {
+    title: "SRPM Builds",
+  },
   component: () => SRPMBuildsTable(),
 });

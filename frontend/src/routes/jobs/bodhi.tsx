@@ -5,5 +5,8 @@ import { createFileRoute } from "@tanstack/react-router";
 import { BodhiUpdatesTable } from "../../components/bodhi/BodhiUpdatesTable";
 
 export const Route = createFileRoute("/jobs/bodhi")({
+  staticData: {
+    title: "Bodhi jobs",
+  },
   component: () => BodhiUpdatesTable(),
 });
