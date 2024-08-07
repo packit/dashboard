@@ -3,8 +3,6 @@
 
 import React, { useMemo } from "react";
 
-import { cellWidth } from "@patternfly/react-table";
-
 import {
   Card,
   CardBody,
@@ -20,17 +18,14 @@ import {
   TextContent,
   TextVariants,
 } from "@patternfly/react-core";
-import { StatusLabel } from "../StatusLabel/StatusLabel";
-import { SyncReleaseTargetStatusLabel } from "../StatusLabel/SyncReleaseTargetStatusLabel";
-import coprLogo from "../../static/copr.ico";
-import kojiLogo from "../../static/koji.ico";
 import { useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router";
-import {
-  TriggerLink,
-  TriggerSuffix,
-} from "../../components/trigger/TriggerLink";
-import { Timestamp } from "../../components/shared/Timestamp";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
+import { Timestamp } from "../shared/Timestamp";
+import { pipelineQueryOptions } from "../../queries/pipeline/pipelineQuery";
+import { Route as PipelineRoute } from "../../routes/pipeline_.$id";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
 
 interface StatusItem {
   packit_id: number;
@@ -59,7 +54,7 @@ const Statuses: React.FC<StatusesProps> = (props) => {
           key={i}
           status={entry.status ?? entry.target!}
           target={entry.target}
-          link={`/results/${props.route}/${entry.packit_id}`}
+          link={`/jobs/${props.route}/${entry.packit_id}`}
         />,
       );
     });
@@ -71,76 +66,14 @@ const Statuses: React.FC<StatusesProps> = (props) => {
   return <LabelGroup>{labels}</LabelGroup>;
 };
 
-interface PipelineItem {
-  packit_id: number;
-  target: string;
-  status: string;
-}
+export const Pipeline = () => {
+  const { id } = PipelineRoute.useParams();
 
-interface PipelineRun {
-  merged_run_id: number;
-  srpm: {
-    packit_id: number;
-    status: string;
-  };
-  copr: PipelineItem[];
-  koji: PipelineItem[];
-  test_run: PipelineItem[];
-  propose_downstream: PipelineItem[];
-  pull_from_upstream: PipelineItem[];
-  time_submitted: number;
-  trigger: {
-    repo_namespace: string;
-    repo_name: string;
-    git_repo: string;
-    pr_id: number | null;
-    issue_id: number | null;
-    branch_name: string | null;
-    release: string | null;
-  };
-}
+  const { isError, data, isLoading } = useQuery(pipelineQueryOptions({ id }));
 
-function getBuilderLabel(run: PipelineRun) {
-  const iconStyle = {
-    minWidth: "14px",
-    minHeight: "14px",
-    width: "14px",
-    height: "14px",
-  };
-
-  let text = "none";
-  let icon = undefined;
-
-  if (run.copr.length > 0) {
-    icon = <img style={iconStyle} src={coprLogo} alt="Copr logo" />;
-    text = "Copr";
-  } else if (run.koji.length > 0) {
-    icon = <img style={iconStyle} src={kojiLogo} alt="Koji logo" />;
-    text = "Koji";
-  }
-
-  return (
-    <>
-      {icon}&nbsp;<span>{text}</span>
-    </>
-  );
-}
-
-const PipelineDetail = () => {
-  let { id } = useParams();
-
-  const fetchData = () =>
-    fetch(`${import.meta.env.VITE_API_URL}/runs/merged/${id}`).then(
-      (response) => response.json(),
-    );
-
-  const { isError, data, isLoading } = useQuery({
-    queryKey: ["pipeline", id],
-    queryFn: fetchData,
-  });
-
+  // If backend API is down
   if (isError) {
-    return <>Server seems down</>;
+    return <ErrorConnection />;
   }
 
   return (
@@ -150,7 +83,7 @@ const PipelineDetail = () => {
           <Text component="h1">Pipeline results</Text>
           <Text component="p">
             <strong>
-              {data?.trigger ? (
+              {data && "repo_namespace" in data.trigger ? (
                 <TriggerLink trigger={data.trigger}>
                   <TriggerSuffix trigger={data.trigger} />
                 </TriggerLink>
@@ -176,7 +109,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.srpm ? (
                     <Statuses
-                      route={"srpm-builds"}
+                      route={"srpm"}
                       statusClass={StatusLabel}
                       entries={[data.srpm]}
                     />
@@ -192,7 +125,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.copr.length ? (
                     <Statuses
-                      route={"copr-builds"}
+                      route={"copr"}
                       statusClass={StatusLabel}
                       entries={data.copr}
                     />
@@ -224,7 +157,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.propose_downstream.length ? (
                     <Statuses
-                      route={"propose-downstream"}
+                      route={"sync-release/downstream"}
                       statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.propose_downstream}
                     />
@@ -242,7 +175,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.time_submitted ? (
                     <Text component={TextVariants.small}>
-                      <Timestamp stamp={data.time_submitted.toString()} />
+                      <Timestamp stamp={data.time_submitted} />
                     </Text>
                   ) : isLoading ? (
                     <Skeleton width="150px" />
@@ -256,7 +189,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.pull_from_upstream.length ? (
                     <Statuses
-                      route={"pull-from-upstream"}
+                      route={"sync-release/upstream"}
                       statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.pull_from_upstream}
                     />
@@ -272,7 +205,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.koji.length ? (
                     <Statuses
-                      route={"koji-builds"}
+                      route={"koji"}
                       statusClass={StatusLabel}
                       entries={data.koji}
                     />
@@ -288,7 +221,7 @@ const PipelineDetail = () => {
                 <DescriptionListDescription>
                   {data?.bodhi_update.length ? (
                     <Statuses
-                      route={"bodhi-updates"}
+                      route={"bodhi"}
                       statusClass={StatusLabel}
                       entries={data.bodhi_update}
                     />
@@ -308,5 +241,3 @@ const PipelineDetail = () => {
     </>
   );
 };
-
-export { PipelineDetail };

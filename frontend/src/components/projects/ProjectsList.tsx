@@ -20,7 +20,7 @@ import {
   Thead,
   Tr,
 } from "@patternfly/react-table";
-import { projectsQueryOptions } from "../../queries/projects/projectsQuery";
+import { projectsQueryOptions } from "../../queries/project/projectsQuery";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
 import { LoadMore } from "../shared/LoadMore";

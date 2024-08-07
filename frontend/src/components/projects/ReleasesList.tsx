@@ -6,7 +6,7 @@ import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getReleaseLink, getCommitLink } from "../forgeUrls";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
-import { projectReleasesQueryOptions } from "../../queries/projects/projectReleasesQuery";
+import { projectReleasesQueryOptions } from "../../queries/project/projectReleasesQuery";
 
 interface ReleasesListProps {
   forge: string;

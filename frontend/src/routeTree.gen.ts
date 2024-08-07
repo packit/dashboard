@@ -14,9 +14,12 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRoute } from './routes/__root'
 import { Route as ResultsImport } from './routes/results'
-import { Route as JobsRouteImport } from './routes/jobs/route'
+import { Route as PipelinesImport } from './routes/pipelines'
+import { Route as PipelineImport } from './routes/pipeline'
+import { Route as JobsImport } from './routes/jobs'
 import { Route as IndexImport } from './routes/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
+import { Route as PipelineIdImport } from './routes/pipeline_.$id'
 import { Route as JobsTestingFarmRunsImport } from './routes/jobs/testing-farm-runs'
 import { Route as JobsTestingFarmImport } from './routes/jobs/testing-farm'
 import { Route as JobsSrpmBuildsImport } from './routes/jobs/srpm-builds'
@@ -66,7 +69,17 @@ const ResultsRoute = ResultsImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const JobsRouteRoute = JobsRouteImport.update({
+const PipelinesRoute = PipelinesImport.update({
+  path: '/pipelines',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const PipelineRoute = PipelineImport.update({
+  path: '/pipeline',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JobsRoute = JobsImport.update({
   path: '/jobs',
   getParentRoute: () => rootRoute,
 } as any)
@@ -85,7 +98,7 @@ const ProjectsIndexLazyRoute = ProjectsIndexLazyImport.update({
 
 const JobsIndexRoute = JobsIndexImport.update({
   path: '/',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const ProjectsForgeLazyRoute = ProjectsForgeLazyImport.update({
@@ -95,74 +108,79 @@ const ProjectsForgeLazyRoute = ProjectsForgeLazyImport.update({
   import('./routes/projects/$forge_.lazy').then((d) => d.Route),
 )
 
+const PipelineIdRoute = PipelineIdImport.update({
+  path: '/pipeline/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const JobsTestingFarmRunsRoute = JobsTestingFarmRunsImport.update({
   path: '/testing-farm-runs',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsTestingFarmRoute = JobsTestingFarmImport.update({
   path: '/testing-farm',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsSrpmBuildsRoute = JobsSrpmBuildsImport.update({
   path: '/srpm-builds',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsSrpmRoute = JobsSrpmImport.update({
   path: '/srpm',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsPullFromUpstreamsRoute = JobsPullFromUpstreamsImport.update({
   path: '/pull-from-upstreams',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsProposeDownstreamsRoute = JobsProposeDownstreamsImport.update({
   path: '/propose-downstreams',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsKojiDownstreamRoute = JobsKojiDownstreamImport.update({
   path: '/koji-downstream',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsKojiBuildsRoute = JobsKojiBuildsImport.update({
   path: '/koji-builds',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsKojiRoute = JobsKojiImport.update({
   path: '/koji',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsDownstreamKojiBuildsRoute = JobsDownstreamKojiBuildsImport.update({
   path: '/downstream-koji-builds',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsCoprBuildsRoute = JobsCoprBuildsImport.update({
   path: '/copr-builds',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsCoprRoute = JobsCoprImport.update({
   path: '/copr',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsBodhiUpdatesRoute = JobsBodhiUpdatesImport.update({
   path: '/bodhi-updates',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsBodhiRoute = JobsBodhiImport.update({
   path: '/bodhi',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const ProjectsForgeNamespaceLazyRoute = ProjectsForgeNamespaceLazyImport.update(
@@ -206,12 +224,12 @@ const JobsBodhiIdRoute = JobsBodhiIdImport.update({
 
 const JobsSyncReleaseUpstreamRoute = JobsSyncReleaseUpstreamImport.update({
   path: '/sync-release/upstream',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const JobsSyncReleaseDownstreamRoute = JobsSyncReleaseDownstreamImport.update({
   path: '/sync-release/downstream',
-  getParentRoute: () => JobsRouteRoute,
+  getParentRoute: () => JobsRoute,
 } as any)
 
 const ProjectsForgeNamespaceRepoLazyRoute =
@@ -250,7 +268,21 @@ declare module '@tanstack/react-router' {
       id: '/jobs'
       path: '/jobs'
       fullPath: '/jobs'
-      preLoaderRoute: typeof JobsRouteImport
+      preLoaderRoute: typeof JobsImport
+      parentRoute: typeof rootRoute
+    }
+    '/pipeline': {
+      id: '/pipeline'
+      path: '/pipeline'
+      fullPath: '/pipeline'
+      preLoaderRoute: typeof PipelineImport
+      parentRoute: typeof rootRoute
+    }
+    '/pipelines': {
+      id: '/pipelines'
+      path: '/pipelines'
+      fullPath: '/pipelines'
+      preLoaderRoute: typeof PipelinesImport
       parentRoute: typeof rootRoute
     }
     '/results': {
@@ -272,98 +304,105 @@ declare module '@tanstack/react-router' {
       path: '/bodhi'
       fullPath: '/jobs/bodhi'
       preLoaderRoute: typeof JobsBodhiImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/bodhi-updates': {
       id: '/jobs/bodhi-updates'
       path: '/bodhi-updates'
       fullPath: '/jobs/bodhi-updates'
       preLoaderRoute: typeof JobsBodhiUpdatesImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/copr': {
       id: '/jobs/copr'
       path: '/copr'
       fullPath: '/jobs/copr'
       preLoaderRoute: typeof JobsCoprImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/copr-builds': {
       id: '/jobs/copr-builds'
       path: '/copr-builds'
       fullPath: '/jobs/copr-builds'
       preLoaderRoute: typeof JobsCoprBuildsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/downstream-koji-builds': {
       id: '/jobs/downstream-koji-builds'
       path: '/downstream-koji-builds'
       fullPath: '/jobs/downstream-koji-builds'
       preLoaderRoute: typeof JobsDownstreamKojiBuildsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/koji': {
       id: '/jobs/koji'
       path: '/koji'
       fullPath: '/jobs/koji'
       preLoaderRoute: typeof JobsKojiImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/koji-builds': {
       id: '/jobs/koji-builds'
       path: '/koji-builds'
       fullPath: '/jobs/koji-builds'
       preLoaderRoute: typeof JobsKojiBuildsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/koji-downstream': {
       id: '/jobs/koji-downstream'
       path: '/koji-downstream'
       fullPath: '/jobs/koji-downstream'
       preLoaderRoute: typeof JobsKojiDownstreamImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/propose-downstreams': {
       id: '/jobs/propose-downstreams'
       path: '/propose-downstreams'
       fullPath: '/jobs/propose-downstreams'
       preLoaderRoute: typeof JobsProposeDownstreamsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/pull-from-upstreams': {
       id: '/jobs/pull-from-upstreams'
       path: '/pull-from-upstreams'
       fullPath: '/jobs/pull-from-upstreams'
       preLoaderRoute: typeof JobsPullFromUpstreamsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/srpm': {
       id: '/jobs/srpm'
       path: '/srpm'
       fullPath: '/jobs/srpm'
       preLoaderRoute: typeof JobsSrpmImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/srpm-builds': {
       id: '/jobs/srpm-builds'
       path: '/srpm-builds'
       fullPath: '/jobs/srpm-builds'
       preLoaderRoute: typeof JobsSrpmBuildsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/testing-farm': {
       id: '/jobs/testing-farm'
       path: '/testing-farm'
       fullPath: '/jobs/testing-farm'
       preLoaderRoute: typeof JobsTestingFarmImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/testing-farm-runs': {
       id: '/jobs/testing-farm-runs'
       path: '/testing-farm-runs'
       fullPath: '/jobs/testing-farm-runs'
       preLoaderRoute: typeof JobsTestingFarmRunsImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
+    }
+    '/pipeline/$id': {
+      id: '/pipeline/$id'
+      path: '/pipeline/$id'
+      fullPath: '/pipeline/$id'
+      preLoaderRoute: typeof PipelineIdImport
+      parentRoute: typeof rootRoute
     }
     '/projects/$forge': {
       id: '/projects/$forge'
@@ -377,7 +416,7 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/jobs/'
       preLoaderRoute: typeof JobsIndexImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/projects/': {
       id: '/projects/'
@@ -391,14 +430,14 @@ declare module '@tanstack/react-router' {
       path: '/sync-release/downstream'
       fullPath: '/jobs/sync-release/downstream'
       preLoaderRoute: typeof JobsSyncReleaseDownstreamImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/sync-release/upstream': {
       id: '/jobs/sync-release/upstream'
       path: '/sync-release/upstream'
       fullPath: '/jobs/sync-release/upstream'
       preLoaderRoute: typeof JobsSyncReleaseUpstreamImport
-      parentRoute: typeof JobsRouteImport
+      parentRoute: typeof JobsImport
     }
     '/jobs/bodhi/$id': {
       id: '/jobs/bodhi/$id'
@@ -477,7 +516,7 @@ declare module '@tanstack/react-router' {
 
 export const routeTree = rootRoute.addChildren({
   IndexRoute,
-  JobsRouteRoute: JobsRouteRoute.addChildren({
+  JobsRoute: JobsRoute.addChildren({
     JobsBodhiRoute,
     JobsBodhiUpdatesRoute,
     JobsCoprRoute,
@@ -496,8 +535,11 @@ export const routeTree = rootRoute.addChildren({
     JobsSyncReleaseDownstreamRoute,
     JobsSyncReleaseUpstreamRoute,
   }),
+  PipelineRoute,
+  PipelinesRoute,
   ResultsRoute,
   UsageLazyRoute,
+  PipelineIdRoute,
   ProjectsForgeLazyRoute,
   ProjectsIndexLazyRoute,
   JobsBodhiIdRoute,
@@ -522,8 +564,11 @@ export const routeTree = rootRoute.addChildren({
       "children": [
         "/",
         "/jobs",
+        "/pipeline",
+        "/pipelines",
         "/results",
         "/usage",
+        "/pipeline/$id",
         "/projects/$forge",
         "/projects/",
         "/jobs/bodhi/$id",
@@ -542,7 +587,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "index.tsx"
     },
     "/jobs": {
-      "filePath": "jobs/route.tsx",
+      "filePath": "jobs.tsx",
       "children": [
         "/jobs/bodhi",
         "/jobs/bodhi-updates",
@@ -562,6 +607,12 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/sync-release/downstream",
         "/jobs/sync-release/upstream"
       ]
+    },
+    "/pipeline": {
+      "filePath": "pipeline.tsx"
+    },
+    "/pipelines": {
+      "filePath": "pipelines.tsx"
     },
     "/results": {
       "filePath": "results.tsx"
@@ -624,6 +675,9 @@ export const routeTree = rootRoute.addChildren({
     "/jobs/testing-farm-runs": {
       "filePath": "jobs/testing-farm-runs.tsx",
       "parent": "/jobs"
+    },
+    "/pipeline/$id": {
+      "filePath": "pipeline_.$id.tsx"
     },
     "/projects/$forge": {
       "filePath": "projects/$forge_.lazy.tsx"

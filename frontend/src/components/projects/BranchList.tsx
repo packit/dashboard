@@ -13,7 +13,7 @@ import {
   DataListItemRow,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
-import { projectBranchesQueryOptions } from "../../queries/projects/projectBranchesQuery";
+import { projectBranchesQueryOptions } from "../../queries/project/projectBranchesQuery";
 import { getBranchLink } from "../forgeUrls";
 import { TriggerInfo } from "../trigger/TriggerInfo";
 

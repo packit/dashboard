@@ -3,7 +3,7 @@
 
 import { Label } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
-import { projectQueryOptions } from "../../queries/projects/projectQuery";
+import { projectQueryOptions } from "../../queries/project/projectQuery";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 import { ForgeIconByForge } from "../icons/ForgeIcon";
 
