@@ -13,11 +13,13 @@ import { createFileRoute } from '@tanstack/react-router'
 // Import Routes
 
 import { Route as rootRoute } from './routes/__root'
+import { Route as UsageImport } from './routes/usage'
 import { Route as ResultsImport } from './routes/results'
 import { Route as PipelinesImport } from './routes/pipelines'
 import { Route as PipelineImport } from './routes/pipeline'
 import { Route as JobsImport } from './routes/jobs'
 import { Route as IndexImport } from './routes/index'
+import { Route as ProjectsIndexImport } from './routes/projects/index'
 import { Route as JobsIndexImport } from './routes/jobs/index'
 import { Route as PipelineIdImport } from './routes/pipeline_.$id'
 import { Route as JobsTestingFarmRunsImport } from './routes/jobs/testing-farm-runs'
@@ -42,24 +44,20 @@ import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
 import { Route as JobsSyncReleaseUpstreamImport } from './routes/jobs/sync-release/upstream'
 import { Route as JobsSyncReleaseDownstreamImport } from './routes/jobs/sync-release/downstream'
+import { Route as ProjectsForgeNamespaceRepoImport } from './routes/projects/$forge.$namespace.$repo'
 import { Route as JobsSyncReleaseUpstreamIdImport } from './routes/jobs_/sync-release.upstream.$id'
 import { Route as JobsSyncReleaseDownstreamIdImport } from './routes/jobs_/sync-release.downstream.$id'
 
 // Create Virtual Routes
 
-const UsageLazyImport = createFileRoute('/usage')()
-const ProjectsIndexLazyImport = createFileRoute('/projects/')()
 const ProjectsForgeLazyImport = createFileRoute('/projects/$forge')()
 const ProjectsForgeNamespaceLazyImport = createFileRoute(
   '/projects/$forge/$namespace',
 )()
-const ProjectsForgeNamespaceRepoLazyImport = createFileRoute(
-  '/projects/$forge/$namespace/$repo',
-)()
 
 // Create/Update Routes
 
-const UsageLazyRoute = UsageLazyImport.update({
+const UsageRoute = UsageImport.update({
   path: '/usage',
   getParentRoute: () => rootRoute,
 } as any).lazy(() => import('./routes/usage.lazy').then((d) => d.Route))
@@ -89,7 +87,7 @@ const IndexRoute = IndexImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const ProjectsIndexLazyRoute = ProjectsIndexLazyImport.update({
+const ProjectsIndexRoute = ProjectsIndexImport.update({
   path: '/projects/',
   getParentRoute: () => rootRoute,
 } as any).lazy(() =>
@@ -232,15 +230,14 @@ const JobsSyncReleaseDownstreamRoute = JobsSyncReleaseDownstreamImport.update({
   getParentRoute: () => JobsRoute,
 } as any)
 
-const ProjectsForgeNamespaceRepoLazyRoute =
-  ProjectsForgeNamespaceRepoLazyImport.update({
+const ProjectsForgeNamespaceRepoRoute = ProjectsForgeNamespaceRepoImport.update(
+  {
     path: '/projects/$forge/$namespace/$repo',
     getParentRoute: () => rootRoute,
-  } as any).lazy(() =>
-    import('./routes/projects/$forge.$namespace.$repo.lazy').then(
-      (d) => d.Route,
-    ),
-  )
+  } as any,
+).lazy(() =>
+  import('./routes/projects/$forge.$namespace.$repo.lazy').then((d) => d.Route),
+)
 
 const JobsSyncReleaseUpstreamIdRoute = JobsSyncReleaseUpstreamIdImport.update({
   path: '/jobs/sync-release/upstream/$id',
@@ -296,7 +293,7 @@ declare module '@tanstack/react-router' {
       id: '/usage'
       path: '/usage'
       fullPath: '/usage'
-      preLoaderRoute: typeof UsageLazyImport
+      preLoaderRoute: typeof UsageImport
       parentRoute: typeof rootRoute
     }
     '/jobs/bodhi': {
@@ -422,7 +419,7 @@ declare module '@tanstack/react-router' {
       id: '/projects/'
       path: '/projects'
       fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsIndexLazyImport
+      preLoaderRoute: typeof ProjectsIndexImport
       parentRoute: typeof rootRoute
     }
     '/jobs/sync-release/downstream': {
@@ -506,7 +503,7 @@ declare module '@tanstack/react-router' {
       id: '/projects/$forge/$namespace/$repo'
       path: '/projects/$forge/$namespace/$repo'
       fullPath: '/projects/$forge/$namespace/$repo'
-      preLoaderRoute: typeof ProjectsForgeNamespaceRepoLazyImport
+      preLoaderRoute: typeof ProjectsForgeNamespaceRepoImport
       parentRoute: typeof rootRoute
     }
   }
@@ -538,10 +535,10 @@ export const routeTree = rootRoute.addChildren({
   PipelineRoute,
   PipelinesRoute,
   ResultsRoute,
-  UsageLazyRoute,
+  UsageRoute,
   PipelineIdRoute,
   ProjectsForgeLazyRoute,
-  ProjectsIndexLazyRoute,
+  ProjectsIndexRoute,
   JobsBodhiIdRoute,
   JobsCoprIdRoute,
   JobsKojiDownstreamIdRoute,
@@ -551,7 +548,7 @@ export const routeTree = rootRoute.addChildren({
   ProjectsForgeNamespaceLazyRoute,
   JobsSyncReleaseDownstreamIdRoute,
   JobsSyncReleaseUpstreamIdRoute,
-  ProjectsForgeNamespaceRepoLazyRoute,
+  ProjectsForgeNamespaceRepoRoute,
 })
 
 /* prettier-ignore-end */
@@ -618,7 +615,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "results.tsx"
     },
     "/usage": {
-      "filePath": "usage.lazy.tsx"
+      "filePath": "usage.tsx"
     },
     "/jobs/bodhi": {
       "filePath": "jobs/bodhi.tsx",
@@ -687,7 +684,7 @@ export const routeTree = rootRoute.addChildren({
       "parent": "/jobs"
     },
     "/projects/": {
-      "filePath": "projects/index.lazy.tsx"
+      "filePath": "projects/index.tsx"
     },
     "/jobs/sync-release/downstream": {
       "filePath": "jobs/sync-release/downstream.tsx",
@@ -725,7 +722,7 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "jobs_/sync-release.upstream.$id.tsx"
     },
     "/projects/$forge/$namespace/$repo": {
-      "filePath": "projects/$forge.$namespace.$repo.lazy.tsx"
+      "filePath": "projects/$forge.$namespace.$repo.tsx"
     }
   }
 }

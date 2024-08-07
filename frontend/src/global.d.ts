@@ -11,3 +11,10 @@ interface ImportMetaEnv {
 interface ImportMeta {
   readonly env: ImportMetaEnv;
 }
+
+export * from "@tanstack/react-router";
+declare module "@tanstack/react-router" {
+  interface StaticDataRouteOption {
+    title: string;
+  }
+}
