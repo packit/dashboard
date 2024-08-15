@@ -11,8 +11,7 @@ import {
 
 interface TriggerLinkProps {
   trigger: {
-    project_url?: string | null;
-    git_repo?: string | null;
+    project_url?: string;
     pr_id?: number | null;
     issue_id?: number | null;
     branch_name?: string | null;
@@ -23,13 +22,7 @@ interface TriggerLinkProps {
 
 const TriggerLink: React.FC<TriggerLinkProps> = ({ trigger, children }) => {
   let link = "";
-  // different endpoints use "git_repo" or "project_url" to refer to the same thing
-  let gitRepo = "";
-  if (trigger.project_url) {
-    gitRepo = trigger.project_url;
-  } else if (trigger.git_repo) {
-    gitRepo = trigger.git_repo;
-  }
+  const gitRepo = trigger.project_url ? trigger.project_url : "";
 
   if (trigger.pr_id) {
     link = getPRLink(gitRepo, trigger.pr_id);
@@ -53,12 +46,12 @@ const TriggerLink: React.FC<TriggerLinkProps> = ({ trigger, children }) => {
 
 interface TriggerSuffixProps {
   trigger: {
-    repo_namespace: string;
-    repo_name: string;
-    pr_id?: number | null;
-    issue_id?: number | null;
     branch_name?: string | null;
+    issue_id?: number | null;
+    pr_id?: number | null;
     release?: string | null;
+    repo_name: string;
+    repo_namespace: string;
   };
 }
 

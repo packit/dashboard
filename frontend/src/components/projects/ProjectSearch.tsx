@@ -29,11 +29,11 @@ const ProjectSearch = () => {
 
   function goToProjectDetails() {
     if (forge && namespace && repoName) {
-      navigate(`/projects/${forge}/${namespace}/${repoName}`);
+      navigate({ to: `/projects/${forge}/${namespace}/${repoName}` });
     } else if (forge && namespace) {
-      navigate(`/projects/${forge}/${namespace}`);
+      navigate({ to: `/projects/${forge}/${namespace}` });
     } else if (forge && !namespace && !repoName) {
-      navigate(`/projects/${forge}`);
+      navigate({ to: `/projects/${forge}` });
     } else {
       setWarning(true);
     }

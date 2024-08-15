@@ -6,15 +6,15 @@ import React from "react";
 import { getCommitLink } from "../forgeUrls";
 
 export interface SHACopyInterface {
-  git_repo: string;
+  project_url: string;
   commit_sha: string;
 }
 
 export const SHACopy: React.FC<SHACopyInterface> = ({
-  git_repo,
+  project_url,
   commit_sha,
 }) => {
-  if (!git_repo || !commit_sha) {
+  if (!project_url || !commit_sha) {
     return <></>;
   }
   const onCopyHash = () => {
@@ -31,7 +31,7 @@ export const SHACopy: React.FC<SHACopyInterface> = ({
       onCopy={onCopyHash}
     >
       <a
-        href={getCommitLink(git_repo, commit_sha)}
+        href={getCommitLink(project_url, commit_sha)}
         rel="noreferrer"
         target="_blank"
       >

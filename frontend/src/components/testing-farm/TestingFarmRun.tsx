@@ -64,7 +64,7 @@ export const TestingFarmRun = () => {
                   <TriggerSuffix trigger={data} />
                 </TriggerLink>
                 <SHACopy
-                  git_repo={data.git_repo}
+                  project_url={data.project_url}
                   commit_sha={data.commit_sha}
                 />
               </>

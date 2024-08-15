@@ -13,7 +13,6 @@ import {
 import { useInfiniteQuery } from "@tanstack/react-query";
 import {
   Table /* data-codemods */,
-  TableVariant,
   Tbody,
   Td,
   Th,

@@ -28,12 +28,11 @@ import { Preloader } from "../shared/Preloader";
 import { SHACopy } from "../shared/SHACopy";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { ErrorConnection } from "../errors/ErrorConnection";
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 export const KojiBuild = () => {
   const { id } = KojiRoute.useParams();
   const { data, isLoading, isError } = useQuery(kojiBuildQueryOptions({ id }));
-  const navigate = useNavigate();
 
   // If backend API is down
   if (isError) {
@@ -68,7 +67,10 @@ export const KojiBuild = () => {
               <TriggerLink trigger={data}>
                 <TriggerSuffix trigger={data} />
               </TriggerLink>
-              <SHACopy git_repo={data.git_repo} commit_sha={data.commit_sha} />
+              <SHACopy
+                project_url={data.project_url}
+                commit_sha={data.commit_sha}
+              />
             </strong>
             <br />
           </Text>

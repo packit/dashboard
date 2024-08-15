@@ -5,7 +5,7 @@
  * This is a list of items from the Packit API
  */
 
-// /api/project/$forge/$namespace/$repo
+// /api/projects/$forge/$namespace/$repo
 export interface Project {
   namespace: string;
   repo_name: string;
@@ -16,10 +16,10 @@ export interface Project {
   issues_handled: number;
 }
 
-// /api/project/$forge/$namespace/$repo/issues
+// /api/projects/$forge/$namespace/$repo/issues
 export type ProjectIssue = number;
 
-// /api/project/$forge/$namespace/$repo/releases
+// /api/projects/$forge/$namespace/$repo/releases
 export interface ProjectRelease {
   commit_hash: string;
   tag_name: string;
@@ -70,27 +70,28 @@ export interface ProjectPRs {
 
 // /api/copr-builds
 export interface CoprBuildGroup {
-  packit_id: number;
-  project: string;
+  branch_name: string | null;
   build_id: number;
-  status_per_chroot: {
-    [key: string]: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
-  };
+  build_submitted_time: number;
+  packit_id: number;
   packit_id_per_chroot: {
     [key: string]: number;
   };
-  build_submitted_time: number;
-  web_url: string;
-  ref: string;
-  // TODO - @Venefilyn: change interface depending on status of pr_id or branch_item.
+  // TODO - @Venefilyn - change interface depending on status of pr_id or branch_item.
   // They seem to be mutually exclusive so can be sure one is null and other is string
   pr_id: number | null;
-  branch_name: string | null;
+  project: string;
+  project_url: string;
+  ref: string;
   repo_namespace: string;
   repo_name: string;
-  project_url: string;
+  status_per_chroot: {
+    [key: string]: string; // TODO - @Venefilyn - Probably an enum right? Change to be one if so
+  };
+  web_url: string;
 }
 
+// Used within CoprBuild interface below
 export interface CoprBuildPackage {
   arch: string;
   epoch: number;
@@ -101,245 +102,289 @@ export interface CoprBuildPackage {
 
 // /api/copr-builds/$id
 export interface CoprBuild {
-  build_id: string;
-  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
-  chroot: string;
-  build_submitted_time: number;
-  build_start_time: number;
-  build_finished_time: number;
-  commit_sha: string;
-  web_url: string;
-  build_logs_url: string;
-  copr_project: string;
-  copr_owner: string;
-  srpm_build_id: number;
-  run_ids: number[];
-  built_packages: CoprBuildPackage[];
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
-  issue_id: number | null;
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
   branch_name: string | null;
+  build_finished_time: number;
+  build_id: string;
+  build_logs_url: string;
+  build_start_time: number;
+  build_submitted_time: number;
+  built_packages: CoprBuildPackage[];
+  chroot: string;
+  commit_sha: string;
+  copr_owner: string;
+  copr_project: string;
+  issue_id: number | null;
+  non_git_upstream: boolean;
+  pr_id: number | null;
+  project_url: string;
   release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  run_ids: number[];
+  srpm_build_id: number;
+  status: string; // TODO - @Venefilyn - Probably an enum right? Change to be one if so
+  web_url: string;
 }
 
 // /api/koji-builds
 export interface KojiBuildGroup {
-  packit_id: number;
-  task_id: string;
-  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
+  branch_name: string | null;
+  build_logs_urls: string;
   build_submitted_time: number;
   chroot: string;
-  web_url: string;
-  build_logs_urls: string;
-  // TODO: @Venefilyn: change interface depending on status of pr_id or branch_item.
+  packit_id: number;
+  // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
   // They seem to be mutually exclusive so can be sure one is null and other is string
   pr_id: number | null;
-  branch_name: string | null;
-  release: string | null;
   project_url: string;
-  repo_namespace: string;
+  release: string | null;
   repo_name: string;
+  repo_namespace: string;
+  scratch: boolean;
+  status: string; // TODO - @Venefilyn - Probably an enum right? Change to be one if so
+  task_id: string;
+  web_url: string;
 }
 
 // /api/koji-builds/$id
-export interface PipelineRun {
-  scratch: boolean;
-  task_id: string;
-  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
+export interface KojiBuild {
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
+  branch_name: string | null;
+  build_finished_time: number;
+  build_logs_urls: [string: string];
+  build_start_time: number;
+  build_submitted_time: number;
   chroot: string;
   commit_sha: string;
-  web_url: string;
-  build_logs_urls: string;
-  srpm_build_id: number;
-  run_ids: number[];
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  // TODO: @Venefilyn: change interface depending on status of pr_id or branch_item.
+  issue_id: number | null;
+  non_git_upstream: boolean;
+  // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
   // They seem to be mutually exclusive so can be sure one is null and other is string
   pr_id: number | null;
-  issue_id: number | null;
-  branch_name: string | null;
+  project_url: string;
   release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  run_ids: number[];
+  scratch: boolean;
+  srpm_build_id: number;
+  status: string; // TODO: @Venefilyn - Probably an enum right? Change to be one if so
+  task_id: string;
+  web_url: string;
 }
 
 // /api/srpm-builds
 export interface SRPMBuildGroup {
-  srpm_build_id: number;
-  status: string; // TODO: @Venefilyn: Probably an enum right? Change to be one if so
-  log_url: string;
+  branch_name: string | null;
   build_submitted_time: number;
-  repo_namespace: string;
-  repo_name: string;
-  project_url: string;
-  // TODO: @Venefilyn: change interface depending on status of pr_id or branch_item.
+  log_url: string;
+  // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
   // They seem to be mutually exclusive so can be sure one is null and other is string
   pr_id: number | null;
-  branch_name: string | null;
+  project_url: string;
+  repo_name: string;
+  repo_namespace: string;
+  srpm_build_id: number;
+  status: string; // TODO: @Venefilyn - Probably an enum right? Change to be one if so
 }
 
 // /api/srpm-builds/$id
 export interface SRPMBuild {
-  status: string;
-  build_start_time: number;
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
+  branch_name: string | null;
   build_finished_time: number;
+  build_start_time: number;
   build_submitted_time: number;
-  url: string;
-  logs: string | null;
-  logs_url: string;
   copr_build_id: string;
   copr_web_url: string;
-  run_ids: number[];
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
   issue_id: number | null;
-  branch_name: string | null;
+  logs: string | null;
+  logs_url: string;
+  non_git_upstream: boolean;
+  pr_id: number | null;
+  project_url: string;
   release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  run_ids: number[];
+  status: string;
+  url: string;
 }
 
 // /api/bodhi-updates
 export interface BodhiUpdateGroup {
-  packit_id: number;
-  status: string;
   alias: string | null;
-  web_url: string | null;
   branch: string;
+  branch_name: string | null;
+  koji_nvrs: string;
+  packit_id: number;
+  pr_id: number | null;
+  project_url?: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  status: string;
   submitted_time: number;
   update_creation_time: number | null;
-  pr_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-  project_url: string;
-  repo_namespace: string;
-  repo_name: string;
+  web_url: string | null;
 }
 
 // /api/bodhi-updates/$id
 export interface BodhiUpdate {
-  packit_id: number;
-  status: string;
   alias: string | null;
-  web_url: string | null;
-  koji_nvrs: string;
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
   branch: string;
+  branch_name: string | null;
+  issue_id: number | null;
+  koji_nvrs: string;
+  non_git_upstream: boolean;
+  pr_id: number | null;
+  project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  run_ids: number[];
+  status: string;
   submitted_time: number;
   update_creation_time: number | null;
-  pr_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-  project_url: string;
-  repo_namespace: string;
-  repo_name: string;
+  web_url: string | null;
 }
 
 // /api/testing-farm/results
 export interface TestingFarmRunGroup {
   packit_id: number;
   pipeline_id: string;
+  pr_id: number;
+  project_url: string;
   ref: string;
+  repo_name: string;
+  repo_namespace: string;
   status: string;
+  submitted_time: number;
   target: string;
   web_url: string;
-  pr_id: number;
-  submitted_time: number;
-  repo_namespace: string;
-  repo_name: string;
-  project_url: string;
 }
 
 // /api/testing-farm/$id
 export interface TestingFarmRun {
-  pipeline_id: string; // UUID
-  status: string;
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
+  branch_name: string | null;
   chroot: string;
   commit_sha: string;
-  web_url: string;
   copr_build_ids: number[];
-  run_ids: number[];
-  submitted_time: number;
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
   issue_id: number | null;
-  branch_name: string | null;
+  non_git_upstream: boolean;
+  pipeline_id: string; // UUID
+  pr_id: number | null;
+  project_url: string;
   release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  run_ids: number[];
+  status: string;
+  submitted_time: number;
+  web_url: string;
 }
 
 // /api/propose-downstream
 // /api/pull-from-upstream
 export interface SyncReleaseJobGroup {
-  packit_id: number;
-  status: string;
-  submitted_time: number;
-  status_per_downstream_pr: {
-    [key: string]: string;
-  };
-  packit_id_per_downstream_pr: {
-    [key: string]: number;
-  };
-  pr_id: number | null;
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
   issue_id: number | null;
-  release: string | null;
-  repo_namespace: string;
-  repo_name: string;
+  non_git_upstream: boolean;
+  packit_id: number;
+  packit_id_per_downstream_pr: { [key: string]: number };
+  pr_id: number | null;
   project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  status: string;
+  status_per_downstream_pr: { [key: string]: string }; //TODO - @Venefilyn Can probably be an enum
+  submitted_time: number;
 }
 
 // /api/propose-downstream/$id
 // /api/pull-from-upstream/$id
 export interface SyncReleaseJob {
-  status: string;
+  antiya_package: unknown | null;
+  anitya_project_id: unknown | null;
+  anitya_project_name: unknown | null;
+  anitya_project_version: unknown | null;
   branch: string;
-  downstream_pr_url: string;
-  submitted_time: number;
-  start_time: number;
-  finished_time: number;
-  logs: string;
-  repo_namespace: string;
-  repo_name: string;
-  git_repo: string;
-  pr_id: number | null;
-  issue_id: number | null;
   branch_name: string | null;
-  release: string | null;
+  downstream_pr_id: number | null;
   downstream_pr_project: string | null;
+  downstream_pr_url: string;
+  finished_time: number;
+  issue_id: number | null;
+  logs: string;
+  non_git_upstream: boolean;
+  pr_id: number | null;
+  project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  start_time: number;
+  status: string; //TODO - @Venefilyn Can probably be an enum
+  submitted_time: number;
 }
 
 export interface PipelineItem {
   packit_id: number;
-  target: string;
   status: string;
+  target: string;
 }
 
 // /api/runs
 // /api/runs/merged/$id
 export interface PipelineRun {
+  bodhi_update: PipelineItem[];
+  copr: PipelineItem[];
+  koji: PipelineItem[];
   merged_run_id: number;
+  propose_downstream: PipelineItem[];
+  pull_from_upstream: PipelineItem[];
   srpm: {
     packit_id: number;
     status: string;
   };
-  copr: PipelineItem[];
-  koji: PipelineItem[];
   test_run: PipelineItem[];
-  propose_downstream: PipelineItem[];
-  pull_from_upstream: PipelineItem[];
-  bodhi_update: PipelineItem[];
   time_submitted: number;
   trigger:
     | {
-        repo_namespace: string;
-        repo_name: string;
-        git_repo: string;
-        pr_id: number | null;
-        issue_id: number | null;
+        antiya_package: unknown | null;
+        anitya_project_id: unknown | null;
+        anitya_project_name: unknown | null;
+        anitya_project_version: unknown | null;
         branch_name: string | null;
+        issue_id: number | null;
+        non_git_upstream: boolean;
+        pr_id: number | null;
+        project_url: string;
         release: string | null;
+        repo_name: string;
+        repo_namespace: string;
       }
     | Record<never, never>;
+  vm_image_build: unknown[]; //TODO - @Venefilyn - No clue what it should be
 }
