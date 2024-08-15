@@ -50,7 +50,7 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
 
   const [isTextWrapped, setIsTextWrapped] = useState(true);
   const [isLineNumbersShown, setIsLineNumbersShown] = useState(false);
-  // TODO @Venefilyn: Not sure what the ref type is supposed to be
+  // TODO @Venefilyn - Not sure what the ref type is supposed to be
   const logViewerRef = React.useRef<{ scrollToBottom: () => void }>(null);
   const [isFullScreen, setIsFullScreen] = React.useState(false);
 

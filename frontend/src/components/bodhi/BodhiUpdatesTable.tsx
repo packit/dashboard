@@ -22,7 +22,7 @@ import { Timestamp } from "../../components/shared/Timestamp";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { bodhiUpdatesQueryOptions } from "../../queries/bodhi/bodhiUpdatesQuery";
 import { SkeletonTable } from "@patternfly/react-component-groups";
-import { ForgeIcon } from "../icons/ForgeIcon";
+import { ForgeIcon, ForgeIconByForge } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 
@@ -91,7 +91,11 @@ const BodhiUpdatesTable = () => {
           {rows.map((bodhi_update) => (
             <Tr key={bodhi_update.packit_id}>
               <Td dataLabel={columnNames.forge}>
-                <ForgeIcon url={bodhi_update.project_url} />
+                {bodhi_update.project_url ? (
+                  <ForgeIcon url={bodhi_update.project_url} />
+                ) : (
+                  <ForgeIconByForge />
+                )}
               </Td>
               <Td dataLabel={columnNames.trigger}>
                 <strong>

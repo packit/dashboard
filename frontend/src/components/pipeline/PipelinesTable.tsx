@@ -174,23 +174,17 @@ interface PipelinesTableTrProps {
 const PipelinesTableTr = memo(function PipelinesTableTr({
   run,
 }: PipelinesTableTrProps) {
-  console.log(
-    "PipelinesTableTr",
-    run.merged_run_id,
-    "rendered at",
-    new Date().toLocaleTimeString(),
-  );
   return (
     <Tr key={run.merged_run_id}>
       <Td dataLabel={columnNames.trigger}>
         <strong>
-          {"git_repo" in run.trigger ? (
-            <ForgeIcon url={run.trigger.git_repo} />
+          {"project_url" in run.trigger ? (
+            <ForgeIcon url={run.trigger.project_url} />
           ) : (
             <ForgeIconByForge />
           )}{" "}
           <Link to={`/pipeline/${run.merged_run_id}`}>
-            {"git_repo" in run.trigger ? (
+            {"project_url" in run.trigger ? (
               <>
                 <TriggerSuffix trigger={run.trigger} />
               </>

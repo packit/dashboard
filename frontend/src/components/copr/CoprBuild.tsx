@@ -62,7 +62,10 @@ export const CoprBuild = () => {
               <TriggerLink trigger={data}>
                 <TriggerSuffix trigger={data} />
               </TriggerLink>
-              <SHACopy git_repo={data.git_repo} commit_sha={data.commit_sha} />
+              <SHACopy
+                project_url={data.project_url}
+                commit_sha={data.commit_sha}
+              />
             </strong>
           </Text>
         </TextContent>

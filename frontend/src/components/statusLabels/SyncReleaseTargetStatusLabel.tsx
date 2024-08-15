@@ -42,7 +42,7 @@ export const SyncReleaseTargetStatusLabel: React.FC<StatusLabelProps> = (
         setIcon(<CheckCircleIcon />);
         break;
       case "skipped":
-        setColor("gray");
+        setColor("grey");
         setIcon(<CheckCircleIcon />);
         break;
     }
