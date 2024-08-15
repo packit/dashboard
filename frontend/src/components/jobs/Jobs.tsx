@@ -47,16 +47,16 @@ const Jobs = () => {
               <Link {...jobTypeObject("testing-farm")}>Testing Farm Runs</Link>
             </NavItem>
             <NavItem
-              isActive={!!matchRoute(jobTypeObject("sync-release/downstream"))}
+              isActive={!!matchRoute(jobTypeObject("propose-downstream"))}
             >
-              <Link {...jobTypeObject("sync-release/downstream")}>
+              <Link {...jobTypeObject("propose-downstream")}>
                 Propose Downstreams
               </Link>
             </NavItem>
             <NavItem
-              isActive={!!matchRoute(jobTypeObject("sync-release/upstream"))}
+              isActive={!!matchRoute(jobTypeObject("pull-from-upstream"))}
             >
-              <Link {...jobTypeObject("sync-release/upstream")}>
+              <Link {...jobTypeObject("pull-from-upstream")}>
                 Pull From Upstreams
               </Link>
             </NavItem>

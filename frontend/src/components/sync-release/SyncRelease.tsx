@@ -38,15 +38,15 @@ import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetS
 import { useParams } from "@tanstack/react-router";
 
 interface SyncReleaseProps {
-  job: "upstream" | "downstream";
+  job: "pull-from-upstream" | "propose-downstream";
 }
 
 export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
   const displayText =
-    job === "upstream"
+    job === "pull-from-upstream"
       ? "Pull from upstream results"
       : "Propose downstream results";
-  const { id } = useParams({ from: `/jobs/sync-release/${job}/$id` });
+  const { id } = useParams({ from: `/jobs/${job}/$id` });
 
   const [isTextWrapped, setIsTextWrapped] = useState(true);
   const [isLineNumbersShown, setIsLineNumbersShown] = useState(false);
@@ -56,7 +56,10 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
 
   const { data, isError, isLoading } = useQuery(
     syncReleaseQueryOptions({
-      job: job === "downstream" ? "propose-downstream" : "pull-from-upstream",
+      job:
+        job === "propose-downstream"
+          ? "propose-downstream"
+          : "pull-from-upstream",
       id,
     }),
   );

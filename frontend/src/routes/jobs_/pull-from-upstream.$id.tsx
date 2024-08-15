@@ -5,11 +5,11 @@ import { createFileRoute } from "@tanstack/react-router";
 import { SyncRelease } from "../../components/sync-release/SyncRelease";
 import { syncReleaseUpstreamQueryOptions } from "../../queries/sync-release/syncReleaseUpstreamQuery";
 
-export const Route = createFileRoute("/jobs/sync-release/upstream/$id")({
+export const Route = createFileRoute("/jobs/pull-from-upstream/$id")({
   staticData: {
     title: "Sync release upstream job",
   },
   loader: ({ context: { queryClient }, params: { id } }) =>
     queryClient.ensureQueryData(syncReleaseUpstreamQueryOptions({ id })),
-  component: () => <SyncRelease job="upstream" />,
+  component: () => <SyncRelease job="pull-from-upstream" />,
 });

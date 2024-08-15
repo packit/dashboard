@@ -27,7 +27,9 @@ import { Route as JobsTestingFarmImport } from './routes/jobs/testing-farm'
 import { Route as JobsSrpmBuildsImport } from './routes/jobs/srpm-builds'
 import { Route as JobsSrpmImport } from './routes/jobs/srpm'
 import { Route as JobsPullFromUpstreamsImport } from './routes/jobs/pull-from-upstreams'
+import { Route as JobsPullFromUpstreamImport } from './routes/jobs/pull-from-upstream'
 import { Route as JobsProposeDownstreamsImport } from './routes/jobs/propose-downstreams'
+import { Route as JobsProposeDownstreamImport } from './routes/jobs/propose-downstream'
 import { Route as JobsKojiDownstreamImport } from './routes/jobs/koji-downstream'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
@@ -38,15 +40,13 @@ import { Route as JobsBodhiUpdatesImport } from './routes/jobs/bodhi-updates'
 import { Route as JobsBodhiImport } from './routes/jobs/bodhi'
 import { Route as JobsTestingFarmIdImport } from './routes/jobs_/testing-farm.$id'
 import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
+import { Route as JobsPullFromUpstreamIdImport } from './routes/jobs_/pull-from-upstream.$id'
+import { Route as JobsProposeDownstreamIdImport } from './routes/jobs_/propose-downstream.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
 import { Route as JobsKojiDownstreamIdImport } from './routes/jobs_/koji-downstream.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
-import { Route as JobsSyncReleaseUpstreamImport } from './routes/jobs/sync-release/upstream'
-import { Route as JobsSyncReleaseDownstreamImport } from './routes/jobs/sync-release/downstream'
 import { Route as ProjectsForgeNamespaceRepoImport } from './routes/projects/$forge.$namespace.$repo'
-import { Route as JobsSyncReleaseUpstreamIdImport } from './routes/jobs_/sync-release.upstream.$id'
-import { Route as JobsSyncReleaseDownstreamIdImport } from './routes/jobs_/sync-release.downstream.$id'
 
 // Create Virtual Routes
 
@@ -136,8 +136,18 @@ const JobsPullFromUpstreamsRoute = JobsPullFromUpstreamsImport.update({
   getParentRoute: () => JobsRoute,
 } as any)
 
+const JobsPullFromUpstreamRoute = JobsPullFromUpstreamImport.update({
+  path: '/pull-from-upstream',
+  getParentRoute: () => JobsRoute,
+} as any)
+
 const JobsProposeDownstreamsRoute = JobsProposeDownstreamsImport.update({
   path: '/propose-downstreams',
+  getParentRoute: () => JobsRoute,
+} as any)
+
+const JobsProposeDownstreamRoute = JobsProposeDownstreamImport.update({
+  path: '/propose-downstream',
   getParentRoute: () => JobsRoute,
 } as any)
 
@@ -200,6 +210,16 @@ const JobsSrpmIdRoute = JobsSrpmIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const JobsPullFromUpstreamIdRoute = JobsPullFromUpstreamIdImport.update({
+  path: '/jobs/pull-from-upstream/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JobsProposeDownstreamIdRoute = JobsProposeDownstreamIdImport.update({
+  path: '/jobs/propose-downstream/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const JobsKojiIdRoute = JobsKojiIdImport.update({
   path: '/jobs/koji/$id',
   getParentRoute: () => rootRoute,
@@ -220,16 +240,6 @@ const JobsBodhiIdRoute = JobsBodhiIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
-const JobsSyncReleaseUpstreamRoute = JobsSyncReleaseUpstreamImport.update({
-  path: '/sync-release/upstream',
-  getParentRoute: () => JobsRoute,
-} as any)
-
-const JobsSyncReleaseDownstreamRoute = JobsSyncReleaseDownstreamImport.update({
-  path: '/sync-release/downstream',
-  getParentRoute: () => JobsRoute,
-} as any)
-
 const ProjectsForgeNamespaceRepoRoute = ProjectsForgeNamespaceRepoImport.update(
   {
     path: '/projects/$forge/$namespace/$repo',
@@ -238,17 +248,6 @@ const ProjectsForgeNamespaceRepoRoute = ProjectsForgeNamespaceRepoImport.update(
 ).lazy(() =>
   import('./routes/projects/$forge.$namespace.$repo.lazy').then((d) => d.Route),
 )
-
-const JobsSyncReleaseUpstreamIdRoute = JobsSyncReleaseUpstreamIdImport.update({
-  path: '/jobs/sync-release/upstream/$id',
-  getParentRoute: () => rootRoute,
-} as any)
-
-const JobsSyncReleaseDownstreamIdRoute =
-  JobsSyncReleaseDownstreamIdImport.update({
-    path: '/jobs/sync-release/downstream/$id',
-    getParentRoute: () => rootRoute,
-  } as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -352,11 +351,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiDownstreamImport
       parentRoute: typeof JobsImport
     }
+    '/jobs/propose-downstream': {
+      id: '/jobs/propose-downstream'
+      path: '/propose-downstream'
+      fullPath: '/jobs/propose-downstream'
+      preLoaderRoute: typeof JobsProposeDownstreamImport
+      parentRoute: typeof JobsImport
+    }
     '/jobs/propose-downstreams': {
       id: '/jobs/propose-downstreams'
       path: '/propose-downstreams'
       fullPath: '/jobs/propose-downstreams'
       preLoaderRoute: typeof JobsProposeDownstreamsImport
+      parentRoute: typeof JobsImport
+    }
+    '/jobs/pull-from-upstream': {
+      id: '/jobs/pull-from-upstream'
+      path: '/pull-from-upstream'
+      fullPath: '/jobs/pull-from-upstream'
+      preLoaderRoute: typeof JobsPullFromUpstreamImport
       parentRoute: typeof JobsImport
     }
     '/jobs/pull-from-upstreams': {
@@ -422,20 +435,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsIndexImport
       parentRoute: typeof rootRoute
     }
-    '/jobs/sync-release/downstream': {
-      id: '/jobs/sync-release/downstream'
-      path: '/sync-release/downstream'
-      fullPath: '/jobs/sync-release/downstream'
-      preLoaderRoute: typeof JobsSyncReleaseDownstreamImport
-      parentRoute: typeof JobsImport
-    }
-    '/jobs/sync-release/upstream': {
-      id: '/jobs/sync-release/upstream'
-      path: '/sync-release/upstream'
-      fullPath: '/jobs/sync-release/upstream'
-      preLoaderRoute: typeof JobsSyncReleaseUpstreamImport
-      parentRoute: typeof JobsImport
-    }
     '/jobs/bodhi/$id': {
       id: '/jobs/bodhi/$id'
       path: '/jobs/bodhi/$id'
@@ -464,6 +463,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiIdImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/propose-downstream/$id': {
+      id: '/jobs/propose-downstream/$id'
+      path: '/jobs/propose-downstream/$id'
+      fullPath: '/jobs/propose-downstream/$id'
+      preLoaderRoute: typeof JobsProposeDownstreamIdImport
+      parentRoute: typeof rootRoute
+    }
+    '/jobs/pull-from-upstream/$id': {
+      id: '/jobs/pull-from-upstream/$id'
+      path: '/jobs/pull-from-upstream/$id'
+      fullPath: '/jobs/pull-from-upstream/$id'
+      preLoaderRoute: typeof JobsPullFromUpstreamIdImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/srpm/$id': {
       id: '/jobs/srpm/$id'
       path: '/jobs/srpm/$id'
@@ -483,20 +496,6 @@ declare module '@tanstack/react-router' {
       path: '/projects/$forge/$namespace'
       fullPath: '/projects/$forge/$namespace'
       preLoaderRoute: typeof ProjectsForgeNamespaceLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/jobs/sync-release/downstream/$id': {
-      id: '/jobs/sync-release/downstream/$id'
-      path: '/jobs/sync-release/downstream/$id'
-      fullPath: '/jobs/sync-release/downstream/$id'
-      preLoaderRoute: typeof JobsSyncReleaseDownstreamIdImport
-      parentRoute: typeof rootRoute
-    }
-    '/jobs/sync-release/upstream/$id': {
-      id: '/jobs/sync-release/upstream/$id'
-      path: '/jobs/sync-release/upstream/$id'
-      fullPath: '/jobs/sync-release/upstream/$id'
-      preLoaderRoute: typeof JobsSyncReleaseUpstreamIdImport
       parentRoute: typeof rootRoute
     }
     '/projects/$forge/$namespace/$repo': {
@@ -522,15 +521,15 @@ export const routeTree = rootRoute.addChildren({
     JobsKojiRoute,
     JobsKojiBuildsRoute,
     JobsKojiDownstreamRoute,
+    JobsProposeDownstreamRoute,
     JobsProposeDownstreamsRoute,
+    JobsPullFromUpstreamRoute,
     JobsPullFromUpstreamsRoute,
     JobsSrpmRoute,
     JobsSrpmBuildsRoute,
     JobsTestingFarmRoute,
     JobsTestingFarmRunsRoute,
     JobsIndexRoute,
-    JobsSyncReleaseDownstreamRoute,
-    JobsSyncReleaseUpstreamRoute,
   }),
   PipelineRoute,
   PipelinesRoute,
@@ -543,11 +542,11 @@ export const routeTree = rootRoute.addChildren({
   JobsCoprIdRoute,
   JobsKojiDownstreamIdRoute,
   JobsKojiIdRoute,
+  JobsProposeDownstreamIdRoute,
+  JobsPullFromUpstreamIdRoute,
   JobsSrpmIdRoute,
   JobsTestingFarmIdRoute,
   ProjectsForgeNamespaceLazyRoute,
-  JobsSyncReleaseDownstreamIdRoute,
-  JobsSyncReleaseUpstreamIdRoute,
   ProjectsForgeNamespaceRepoRoute,
 })
 
@@ -572,11 +571,11 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/copr/$id",
         "/jobs/koji-downstream/$id",
         "/jobs/koji/$id",
+        "/jobs/propose-downstream/$id",
+        "/jobs/pull-from-upstream/$id",
         "/jobs/srpm/$id",
         "/jobs/testing-farm/$id",
         "/projects/$forge/$namespace",
-        "/jobs/sync-release/downstream/$id",
-        "/jobs/sync-release/upstream/$id",
         "/projects/$forge/$namespace/$repo"
       ]
     },
@@ -594,15 +593,15 @@ export const routeTree = rootRoute.addChildren({
         "/jobs/koji",
         "/jobs/koji-builds",
         "/jobs/koji-downstream",
+        "/jobs/propose-downstream",
         "/jobs/propose-downstreams",
+        "/jobs/pull-from-upstream",
         "/jobs/pull-from-upstreams",
         "/jobs/srpm",
         "/jobs/srpm-builds",
         "/jobs/testing-farm",
         "/jobs/testing-farm-runs",
-        "/jobs/",
-        "/jobs/sync-release/downstream",
-        "/jobs/sync-release/upstream"
+        "/jobs/"
       ]
     },
     "/pipeline": {
@@ -649,8 +648,16 @@ export const routeTree = rootRoute.addChildren({
       "filePath": "jobs/koji-downstream.tsx",
       "parent": "/jobs"
     },
+    "/jobs/propose-downstream": {
+      "filePath": "jobs/propose-downstream.tsx",
+      "parent": "/jobs"
+    },
     "/jobs/propose-downstreams": {
       "filePath": "jobs/propose-downstreams.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/pull-from-upstream": {
+      "filePath": "jobs/pull-from-upstream.tsx",
       "parent": "/jobs"
     },
     "/jobs/pull-from-upstreams": {
@@ -686,14 +693,6 @@ export const routeTree = rootRoute.addChildren({
     "/projects/": {
       "filePath": "projects/index.tsx"
     },
-    "/jobs/sync-release/downstream": {
-      "filePath": "jobs/sync-release/downstream.tsx",
-      "parent": "/jobs"
-    },
-    "/jobs/sync-release/upstream": {
-      "filePath": "jobs/sync-release/upstream.tsx",
-      "parent": "/jobs"
-    },
     "/jobs/bodhi/$id": {
       "filePath": "jobs_/bodhi.$id.tsx"
     },
@@ -706,6 +705,12 @@ export const routeTree = rootRoute.addChildren({
     "/jobs/koji/$id": {
       "filePath": "jobs_/koji.$id.tsx"
     },
+    "/jobs/propose-downstream/$id": {
+      "filePath": "jobs_/propose-downstream.$id.tsx"
+    },
+    "/jobs/pull-from-upstream/$id": {
+      "filePath": "jobs_/pull-from-upstream.$id.tsx"
+    },
     "/jobs/srpm/$id": {
       "filePath": "jobs_/srpm.$id.tsx"
     },
@@ -714,12 +719,6 @@ export const routeTree = rootRoute.addChildren({
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"
-    },
-    "/jobs/sync-release/downstream/$id": {
-      "filePath": "jobs_/sync-release.downstream.$id.tsx"
-    },
-    "/jobs/sync-release/upstream/$id": {
-      "filePath": "jobs_/sync-release.upstream.$id.tsx"
     },
     "/projects/$forge/$namespace/$repo": {
       "filePath": "projects/$forge.$namespace.$repo.tsx"
