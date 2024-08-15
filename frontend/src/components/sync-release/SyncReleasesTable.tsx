@@ -23,7 +23,7 @@ import { SkeletonTable } from "@patternfly/react-component-groups";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
 interface SyncReleasesTableProps {
-  job: "upstream" | "downstream";
+  job: "pull-from-upstream" | "propose-downstream";
 }
 export const SyncReleasesTable: React.FC<SyncReleasesTableProps> = ({
   job,
@@ -43,11 +43,7 @@ export const SyncReleasesTable: React.FC<SyncReleasesTableProps> = ({
     data,
     isFetchingNextPage,
     hasNextPage,
-  } = useInfiniteQuery(
-    syncReleasesQueryOptions({
-      job: job === "downstream" ? "propose-downstream" : "pull-from-upstream",
-    }),
-  );
+  } = useInfiniteQuery(syncReleasesQueryOptions({ job }));
 
   // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
   const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
@@ -146,7 +142,7 @@ const SyncReleaseStatuses: React.FC<SyncReleaseStatusesProps> = (props) => {
     labels.push(
       <SyncReleaseTargetStatusLabel
         key={id}
-        link={`/jobs/sync-release/${props.job}/${id}`}
+        link={`/jobs/${props.job}/${id}`}
         status={status}
         target={target}
       />,

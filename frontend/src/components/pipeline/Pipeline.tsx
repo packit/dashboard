@@ -157,7 +157,7 @@ export const Pipeline = () => {
                 <DescriptionListDescription>
                   {data?.propose_downstream.length ? (
                     <Statuses
-                      route={"sync-release/downstream"}
+                      route={"propose-downstream"}
                       statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.propose_downstream}
                     />
@@ -189,7 +189,7 @@ export const Pipeline = () => {
                 <DescriptionListDescription>
                   {data?.pull_from_upstream.length ? (
                     <Statuses
-                      route={"sync-release/upstream"}
+                      route={"pull-from-upstream"}
                       statusClass={SyncReleaseTargetStatusLabel}
                       entries={data.pull_from_upstream}
                     />

@@ -8,7 +8,7 @@ export const Route = createFileRoute("/jobs/pull-from-upstreams")({
     throw redirect({
       to: location.pathname.replace(
         "/pull-from-upstreams",
-        "/sync-release/downstream",
+        "/pull-from-upstream",
       ),
     });
   },

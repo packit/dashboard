@@ -8,7 +8,7 @@ export const Route = createFileRoute("/jobs/propose-downstreams")({
     throw redirect({
       to: location.pathname.replace(
         "/propose-downstreams",
-        "/sync-release/downstream",
+        "/propose-downstream",
       ),
     });
   },
