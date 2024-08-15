@@ -80,7 +80,7 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
         </Thead>
         <Tbody>
           {rows.map((koji_build) => (
-            <Tr key={koji_build.task_id}>
+            <Tr key={koji_build.packit_id}>
               <Td dataLabel={columnNames.forge}>
                 <ForgeIcon url={koji_build.project_url} />
               </Td>

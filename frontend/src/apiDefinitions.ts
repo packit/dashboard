@@ -146,7 +146,7 @@ export interface KojiBuildGroup {
   repo_namespace: string;
   scratch: boolean;
   status: string; // TODO - @Venefilyn - Probably an enum right? Change to be one if so
-  task_id: string;
+  task_id: string | null;
   web_url: string;
 }
 

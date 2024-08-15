@@ -153,7 +153,7 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
             Builds
           </DropdownItem>,
           <DropdownItem
-            key="builds"
+            key="srpm-builds"
             onClick={() => setActiveView("SRPM Builds")}
           >
             SRPM Builds

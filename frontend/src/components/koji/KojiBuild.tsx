@@ -62,18 +62,16 @@ export const KojiBuild = () => {
       <PageSection variant={PageSectionVariants.light}>
         <TextContent>
           <Text component="h1">Koji Build Results</Text>
-          <Text component="p">
-            <strong>
-              <TriggerLink trigger={data}>
-                <TriggerSuffix trigger={data} />
-              </TriggerLink>
-              <SHACopy
-                project_url={data.project_url}
-                commit_sha={data.commit_sha}
-              />
-            </strong>
-            <br />
-          </Text>
+          <strong>
+            <TriggerLink trigger={data}>
+              <TriggerSuffix trigger={data} />
+            </TriggerLink>
+            <SHACopy
+              project_url={data.project_url}
+              commit_sha={data.commit_sha}
+            />
+          </strong>
+          <br />
         </TextContent>
       </PageSection>
 
