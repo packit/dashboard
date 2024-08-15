@@ -46,10 +46,10 @@ const PullRequestList: React.FC<PullRequestListProps> = (props) => {
 
   return (
     <DataList aria-label="PR List" isCompact>
-      {data?.map((pr, index) => (
+      {data?.map((pr) => (
         <DataListItem
           aria-labelledby="PR List Item"
-          key={index}
+          key={pr.pr_id}
           isExpanded={expanded[pr.pr_id]}
         >
           <DataListItemRow>
