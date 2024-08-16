@@ -8,7 +8,7 @@ export const Route = createFileRoute("/jobs/downstream-koji-builds")({
     throw redirect({
       to: location.pathname.replace(
         "/downstream-koji-builds",
-        "/koji/downstream",
+        "/koji-downstream",
       ),
     });
   },

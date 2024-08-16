@@ -67,11 +67,22 @@ Sentry.init({
   replaysOnErrorSampleRate: 1.0,
 });
 
+const TanStackRouterDevtools =
+  process.env.NODE_ENV === "production"
+    ? () => null // Render nothing in production
+    : React.lazy(() =>
+        // Lazy load in development
+        import("@tanstack/router-devtools").then((res) => ({
+          default: res.TanStackRouterDevtools,
+        })),
+      );
+
 const root = createRoot(document.getElementById("root") as HTMLElement);
 root.render(
   <React.StrictMode>
     <QueryClientProvider client={queryClient}>
       <RouterProvider router={router} />
+      <TanStackRouterDevtools router={router} />
       <ReactQueryDevtools />
     </QueryClientProvider>
   </React.StrictMode>,
