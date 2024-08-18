@@ -6,7 +6,12 @@ import React from "react";
 import { Tooltip } from "@patternfly/react-core";
 
 import { getHostName } from "../../components/forgeUrls";
-import { GithubIcon, GitlabIcon, GitIcon } from "@patternfly/react-icons";
+import {
+  GithubIcon,
+  GitlabIcon,
+  GitIcon,
+  PackageIcon,
+} from "@patternfly/react-icons";
 
 export interface ForgeIconProps {
   url: string;
@@ -25,6 +30,9 @@ export const ForgeIconByForge: React.FC<{ forge?: string }> = ({ forge }) => {
       break;
     case "gitlab.com":
       forgeIcon = <GitlabIcon />;
+      break;
+    case "release-monitoring.org":
+      forgeIcon = <PackageIcon />;
       break;
     default:
       // patternfly doesn't have an icon for pagure
