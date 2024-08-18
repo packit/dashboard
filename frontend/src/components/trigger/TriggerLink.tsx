@@ -16,22 +16,28 @@ interface TriggerLinkProps {
     issue_id?: number | null;
     branch_name?: string | null;
     release?: string | null;
+    anitya_project_name?: string | null;
+    anitya_version?: string | null;
+    anitya_package?: string | null;
   };
   children?: React.ReactNode;
 }
 
 const TriggerLink: React.FC<TriggerLinkProps> = ({ trigger, children }) => {
   let link = "";
-  const gitRepo = trigger.project_url ? trigger.project_url : "";
+  const projectUrl = trigger.project_url ? trigger.project_url : "";
 
   if (trigger.pr_id) {
-    link = getPRLink(gitRepo, trigger.pr_id);
+    link = getPRLink(projectUrl, trigger.pr_id);
   } else if (trigger.issue_id) {
-    link = getIssueLink(gitRepo, trigger.issue_id);
+    link = getIssueLink(projectUrl, trigger.issue_id);
   } else if (trigger.branch_name) {
-    link = getBranchLink(gitRepo, trigger.branch_name);
+    link = getBranchLink(projectUrl, trigger.branch_name);
   } else if (trigger.release) {
-    link = getReleaseLink(gitRepo, trigger.release);
+    link = getReleaseLink(projectUrl, trigger.release);
+  } else if (trigger.anitya_version) {
+    // there is no link to the particular version, just the whole project
+    link = projectUrl;
   }
 
   if (link) {
@@ -44,22 +50,45 @@ const TriggerLink: React.FC<TriggerLinkProps> = ({ trigger, children }) => {
   return children;
 };
 
-interface TriggerSuffixProps {
-  trigger: {
-    branch_name?: string | null;
-    issue_id?: number | null;
-    pr_id?: number | null;
-    release?: string | null;
-    repo_name: string;
-    repo_namespace: string;
-  };
+interface TriggerSuffixInterface {
+  branch_name?: string | null;
+  issue_id?: number | null;
+  pr_id?: number | null;
+  release?: string | null;
 }
 
+interface TriggerSuffixGitRepo extends TriggerSuffixInterface {
+  repo_name: string;
+  repo_namespace: string;
+  anitya_project_name?: string | null;
+  anitya_version?: string | null;
+  anitya_package?: string | null;
+}
+
+interface TriggerSuffixAnityaProject extends TriggerSuffixInterface {
+  anitya_project_name: string;
+  anitya_version: string;
+  anitya_package: string;
+  repo_name?: string | null;
+  repo_namespace?: string | null;
+}
+
+type TriggerSuffixProps = {
+  trigger: TriggerSuffixGitRepo | TriggerSuffixAnityaProject;
+};
+
 const TriggerSuffix: React.FC<TriggerSuffixProps> = ({ trigger }) => {
-  // set suffix to be either PR ID or Branch Name depending on trigger
   let jobSuffix = "";
 
-  if (trigger.pr_id) {
+  if (isAnityaTrigger(trigger)) {
+    jobSuffix = `#version:${trigger.anitya_version}`;
+    return (
+      <>
+        {trigger.anitya_project_name}
+        {jobSuffix}
+      </>
+    );
+  } else if (trigger.pr_id) {
     jobSuffix = `#${trigger.pr_id}`;
   } else if (trigger.issue_id) {
     jobSuffix = `#${trigger.issue_id}`;
@@ -77,4 +106,12 @@ const TriggerSuffix: React.FC<TriggerSuffixProps> = ({ trigger }) => {
   );
 };
 
+function isAnityaTrigger(
+  trigger: TriggerSuffixProps["trigger"],
+): trigger is TriggerSuffixAnityaProject {
+  return (
+    typeof trigger.anitya_version === "string" &&
+    trigger.anitya_version.length > 0
+  );
+}
 export { TriggerLink, TriggerSuffix };

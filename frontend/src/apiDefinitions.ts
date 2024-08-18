@@ -102,10 +102,10 @@ export interface CoprBuildPackage {
 
 // /api/copr-builds/$id
 export interface CoprBuild {
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   branch_name: string | null;
   build_finished_time: number;
   build_id: string;
@@ -152,10 +152,10 @@ export interface KojiBuildGroup {
 
 // /api/koji-builds/$id
 export interface KojiBuild {
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   branch_name: string | null;
   build_finished_time: number;
   build_logs_urls: [string: string];
@@ -197,10 +197,10 @@ export interface SRPMBuildGroup {
 
 // /api/srpm-builds/$id
 export interface SRPMBuild {
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   branch_name: string | null;
   build_finished_time: number;
   build_start_time: number;
@@ -242,10 +242,10 @@ export interface BodhiUpdateGroup {
 // /api/bodhi-updates/$id
 export interface BodhiUpdate {
   alias: string | null;
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   branch: string;
   branch_name: string | null;
   issue_id: number | null;
@@ -280,10 +280,10 @@ export interface TestingFarmRunGroup {
 
 // /api/testing-farm/$id
 export interface TestingFarmRun {
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   branch_name: string | null;
   chroot: string;
   commit_sha: string;
@@ -305,10 +305,10 @@ export interface TestingFarmRun {
 // /api/propose-downstream
 // /api/pull-from-upstream
 export interface SyncReleaseJobGroup {
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   issue_id: number | null;
   non_git_upstream: boolean;
   packit_id: number;
@@ -326,10 +326,10 @@ export interface SyncReleaseJobGroup {
 // /api/propose-downstream/$id
 // /api/pull-from-upstream/$id
 export interface SyncReleaseJob {
-  antiya_package: unknown | null;
-  anitya_project_id: unknown | null;
-  anitya_project_name: unknown | null;
-  anitya_project_version: unknown | null;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
   branch: string;
   branch_name: string | null;
   downstream_pr_id: number | null;
@@ -372,10 +372,10 @@ export interface PipelineRun {
   time_submitted: number;
   trigger:
     | {
-        antiya_package: unknown | null;
-        anitya_project_id: unknown | null;
-        anitya_project_name: unknown | null;
-        anitya_project_version: unknown | null;
+        anitya_package: string | null;
+        anitya_project_id: number | null;
+        anitya_project_name: string | null;
+        anitya_version: string | null;
         branch_name: string | null;
         issue_id: number | null;
         non_git_upstream: boolean;
