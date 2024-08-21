@@ -117,16 +117,28 @@ export const SRPMBuild = () => {
                 <DescriptionListDescription>
                   <StatusLabel status={data.status} link={data.copr_web_url} />{" "}
                   {data.logs_url ? (
-                    <a href={data.logs_url} rel="noreferrer" target={"_blank"}>
-                      Build logs
-                    </a>
+                    <>
+                      (
+                      <a
+                        href={data.logs_url}
+                        rel="noreferrer"
+                        target={"_blank"}
+                      >
+                        Build logs
+                      </a>
+                      )
+                    </>
                   ) : (
                     <></>
-                  )}
+                  )}{" "}
                   {data.url ? (
-                    <a href={data.url} rel="noreferrer" target={"_blank"}>
-                      Results
-                    </a>
+                    <>
+                      (
+                      <a href={data.url} rel="noreferrer" target={"_blank"}>
+                        Results
+                      </a>
+                      )
+                    </>
                   ) : (
                     <></>
                   )}
