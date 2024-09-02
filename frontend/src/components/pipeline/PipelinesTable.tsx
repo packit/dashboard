@@ -118,7 +118,9 @@ export function PipelinesTable() {
 
   const mappedRows = useMemo(
     () =>
-      rows.map((run) => <PipelinesTableTr key={run.merged_run_id} run={run} />),
+      rows
+        .filter((run) => run.trigger)
+        .map((run) => <PipelinesTableTr key={run.merged_run_id} run={run} />),
     [columnNames, rows],
   );
 

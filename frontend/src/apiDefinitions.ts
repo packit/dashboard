@@ -385,6 +385,7 @@ export interface PipelineRun {
         repo_name: string;
         repo_namespace: string;
       }
-    | Record<never, never>;
+    | Record<never, never>
+    | null;
   vm_image_build: unknown[]; //TODO - @Venefilyn - No clue what it should be
 }
