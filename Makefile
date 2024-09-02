@@ -37,10 +37,6 @@ run-dev-frontend:
 run-dev-flask:
 	FLASK_DEBUG=1 FLASK_APP=packit_dashboard.app VITE_GIT_SHA=$(GIT_SHA) VITE_API_URL=$(API_URL) flask-3 run --host=0.0.0.0
 
-storybook:
-	cd frontend && pnpm storybook
-
-
 run-container-stg: build-stg
 	$(CONTAINER_ENGINE) run -i --rm -u 1234 -p 8443:8443 -v $(CURDIR)/secrets:/secrets:ro,z $(IMAGE)
 
