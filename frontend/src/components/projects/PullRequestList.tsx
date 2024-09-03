@@ -7,16 +7,16 @@ import { TriggerInfo } from "../trigger/TriggerInfo";
 
 import {
   DataList,
-  DataListToggle,
   DataListCell,
-  DataListItem,
   DataListContent,
+  DataListItem,
   DataListItemCells,
   DataListItemRow,
+  DataListToggle,
 } from "@patternfly/react-core";
-import { getPRLink } from "../forgeUrls";
 import { useQuery } from "@tanstack/react-query";
 import { projectPRsQueryOptions } from "../../queries/project/projectPRsQuery";
+import { getPRLink } from "../forgeUrls";
 
 interface PullRequestListProps {
   forge: string;

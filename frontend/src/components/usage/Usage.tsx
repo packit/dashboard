@@ -1,20 +1,20 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
-  PageSection,
-  PageSectionVariants,
-  TextContent,
-  Text,
-  Tabs,
-  Tab,
   Card,
   CardBody,
+  PageSection,
+  PageSectionVariants,
+  Tab,
+  Tabs,
+  Text,
+  TextContent,
 } from "@patternfly/react-core";
+import React from "react";
 
-import { UsageList } from "./UsageList";
 import { UsageInterval } from "./UsageInterval";
+import { UsageList } from "./UsageList";
 // import { useTitle } from "../../app/utils/useTitle";
 
 const Usage = () => {

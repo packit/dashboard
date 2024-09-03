@@ -1,7 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useEffect, useState } from "react";
 import { Spinner } from "@patternfly/react-core";
 import {
   CheckCircleIcon,
@@ -9,6 +8,7 @@ import {
   InfoCircleIcon,
   RedoIcon,
 } from "@patternfly/react-icons";
+import React, { useEffect, useState } from "react";
 import { BaseStatusLabel, BaseStatusLabelProps } from "./BaseStatusLabel";
 import { StatusLabelProps } from "./StatusLabel";
 

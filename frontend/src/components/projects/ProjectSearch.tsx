@@ -1,18 +1,18 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { useState } from "react";
 import {
   Alert,
-  Form,
   Button,
-  TextInput,
-  Panel,
+  Form,
   InputGroup,
+  InputGroupItem,
+  Panel,
   PanelMain,
   PanelMainBody,
-  InputGroupItem,
+  TextInput,
 } from "@patternfly/react-core";
+import { useState } from "react";
 
 import { SearchIcon } from "@patternfly/react-icons";
 import { useNavigate } from "@tanstack/react-router";

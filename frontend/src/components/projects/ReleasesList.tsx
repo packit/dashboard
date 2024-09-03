@@ -3,10 +3,10 @@
 
 import React from "react";
 
-import { useQuery } from "@tanstack/react-query";
-import { getReleaseLink, getCommitLink } from "../forgeUrls";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
+import { useQuery } from "@tanstack/react-query";
 import { projectReleasesQueryOptions } from "../../queries/project/projectReleasesQuery";
+import { getCommitLink, getReleaseLink } from "../forgeUrls";
 
 interface ReleasesListProps {
   forge: string;

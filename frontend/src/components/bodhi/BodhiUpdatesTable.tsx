@@ -13,15 +13,15 @@ import {
   Tr,
 } from "@patternfly/react-table";
 
+import { SkeletonTable } from "@patternfly/react-component-groups";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { ErrorConnection } from "../../components/errors/ErrorConnection";
+import { Timestamp } from "../../components/shared/Timestamp";
 import {
   TriggerLink,
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
-import { ErrorConnection } from "../../components/errors/ErrorConnection";
-import { Timestamp } from "../../components/shared/Timestamp";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { bodhiUpdatesQueryOptions } from "../../queries/bodhi/bodhiUpdatesQuery";
-import { SkeletonTable } from "@patternfly/react-component-groups";
 import { ForgeIcon, ForgeIconByForge } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
 import { StatusLabel } from "../statusLabels/StatusLabel";

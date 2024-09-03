@@ -3,9 +3,9 @@
 
 import React from "react";
 import {
-  getPRLink,
   getBranchLink,
   getIssueLink,
+  getPRLink,
   getReleaseLink,
 } from "../forgeUrls";
 

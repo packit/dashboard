@@ -4,15 +4,15 @@
 import "@patternfly/react-core/dist/styles/base.css";
 import "@patternfly/patternfly/patternfly-addons.css";
 import * as Sentry from "@sentry/react";
-import { RouterProvider, createRouter } from "@tanstack/react-router";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import React from "react";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { routeTree } from "./routeTree.gen";
+import { RouterProvider, createRouter } from "@tanstack/react-router";
+import React from "react";
 import { createRoot } from "react-dom/client";
-import { Preloader } from "./components/shared/Preloader";
-import { NotFoundCard } from "./components/errors/NotFoundCard";
 import { ErrorApp } from "./components/errors/ErrorApp";
+import { NotFoundCard } from "./components/errors/NotFoundCard";
+import { Preloader } from "./components/shared/Preloader";
+import { routeTree } from "./routeTree.gen";
 
 const queryClient = new QueryClient();
 

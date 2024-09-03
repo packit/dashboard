@@ -1,9 +1,9 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import { Label, Tooltip } from "@patternfly/react-core";
 import { Link } from "@tanstack/react-router";
+import React from "react";
 
 export interface BaseStatusLabelProps {
   link?: string;

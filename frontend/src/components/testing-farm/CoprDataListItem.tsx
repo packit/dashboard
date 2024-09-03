@@ -2,18 +2,19 @@
 // SPDX-License-Identifier: MIT
 
 import {
+  DataListCell,
+  DataListContent,
   DataListItem,
+  DataListItemCells,
   DataListItemRow,
   DataListToggle,
-  DataListItemCells,
-  DataListCell,
   Skeleton,
-  DataListContent,
 } from "@patternfly/react-core";
 import { queryOptions, useQuery } from "@tanstack/react-query";
-import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
-import { useState } from "react";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
+import React from "react";
+import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 import { CoprBuildDetail } from "../copr/CoprBuildDetail";
 
 interface CoprDataListItemProps {

@@ -1,32 +1,32 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useEffect, useState } from "react";
 import {
-  PageSection,
   Card,
   CardBody,
-  PageSectionVariants,
-  TextContent,
-  Text,
-  Title,
+  ClipboardCopy,
+  DataList,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
-  DataList,
-  ClipboardCopy,
+  PageSection,
+  PageSectionVariants,
+  Text,
+  TextContent,
+  Title,
 } from "@patternfly/react-core";
+import React, { useEffect, useState } from "react";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
-import { Route as TestingFarmRoute } from "../../routes/jobs_/testing-farm.$id";
 import { testingFarmRunQueryOptions } from "../../queries/testingFarm/testingFarmRunQuery";
-import { SHACopy } from "../shared/SHACopy";
+import { Route as TestingFarmRoute } from "../../routes/jobs_/testing-farm.$id";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
-import { StatusLabel } from "../statusLabels/StatusLabel";
+import { SHACopy } from "../shared/SHACopy";
 import { Timestamp } from "../shared/Timestamp";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { CoprDataListItem } from "./CoprDataListItem";
 
 export const TestingFarmRun = () => {

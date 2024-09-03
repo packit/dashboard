@@ -4,23 +4,23 @@
 import React, { useMemo } from "react";
 
 import {
-  TableVariant,
   Table,
+  TableVariant,
   Tbody,
+  Td,
   Th,
   Thead,
   Tr,
-  Td,
 } from "@patternfly/react-table";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
-import { StatusLabel } from "../statusLabels/StatusLabel";
-import { coprBuildsQueryOptions } from "../../queries/copr/coprBuildsQuery";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { ForgeIcon } from "../icons/ForgeIcon";
-import { Timestamp } from "../shared/Timestamp";
-import { LoadMore } from "../shared/LoadMore";
 import { SkeletonTable } from "@patternfly/react-component-groups";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { coprBuildsQueryOptions } from "../../queries/copr/coprBuildsQuery";
+import { ForgeIcon } from "../icons/ForgeIcon";
+import { LoadMore } from "../shared/LoadMore";
+import { Timestamp } from "../shared/Timestamp";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 interface ChrootStatusesProps {
   statuses: {

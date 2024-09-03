@@ -101,7 +101,7 @@
   },
   "files": {
     "include": ["src/**/*.js", "src/**/*.jsx", "src/**/*.ts", "src/**/*.tsx"],
-    "ignore": ["**/*.gen.ts"]
+    "ignore": ["**/*.gen.ts", "**/*.d.ts", "src/components/usage/*"]
   },
   "overrides": [
     {

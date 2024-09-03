@@ -7,9 +7,9 @@ import {
   Text,
   TextContent,
 } from "@patternfly/react-core";
+import { Route as ForgeRoute } from "../../routes/projects/$forge_.lazy";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { ProjectsList } from "./ProjectsList";
-import { Route as ForgeRoute } from "../../routes/projects/$forge_.lazy";
 
 const Forge = () => {
   const { forge } = ForgeRoute.useParams();

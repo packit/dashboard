@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import { Button } from "@patternfly/react-core";
+import React from "react";
 
 interface LoadMoreProps {
   isFetchingNextPage: boolean;

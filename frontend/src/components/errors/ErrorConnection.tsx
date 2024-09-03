@@ -3,11 +3,11 @@
 
 import {
   EmptyState,
+  EmptyStateBody,
+  EmptyStateHeader,
   EmptyStateIcon,
   EmptyStateVariant,
-  EmptyStateBody,
   Icon,
-  EmptyStateHeader,
 } from "@patternfly/react-core";
 
 import { ExclamationTriangleIcon } from "@patternfly/react-icons";

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import { createFileRoute } from "@tanstack/react-router";
-import { testingFarmRunQueryOptions } from "../../queries/testingFarm/testingFarmRunQuery";
 import { TestingFarmRun } from "../../components/testing-farm/TestingFarmRun";
+import { testingFarmRunQueryOptions } from "../../queries/testingFarm/testingFarmRunQuery";
 
 export const Route = createFileRoute("/jobs/testing-farm/$id")({
   staticData: {

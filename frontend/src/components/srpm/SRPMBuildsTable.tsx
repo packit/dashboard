@@ -4,24 +4,24 @@
 import { useMemo } from "react";
 
 import {
-  TableVariant,
   Table,
+  TableVariant,
   Tbody,
   Td,
+  Th,
   Thead,
   Tr,
-  Th,
 } from "@patternfly/react-table";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { Timestamp } from "../shared/Timestamp";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { srpmBuildsQueryOptions } from "../../queries/srpm/srpmBuildsQuery";
-import { StatusLabel } from "../statusLabels/StatusLabel";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { ForgeIcon } from "../icons/ForgeIcon";
-import { SkeletonTable } from "@patternfly/react-component-groups";
 import { LoadMore } from "../shared/LoadMore";
+import { Timestamp } from "../shared/Timestamp";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 export const SRPMBuildsTable = () => {
   const {

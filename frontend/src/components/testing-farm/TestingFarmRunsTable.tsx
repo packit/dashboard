@@ -4,8 +4,8 @@
 import { useMemo } from "react";
 
 import {
-  TableVariant,
   Table,
+  TableVariant,
   Tbody,
   Td,
   Th,
@@ -13,15 +13,15 @@ import {
   Tr,
 } from "@patternfly/react-table";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { Timestamp } from "../shared/Timestamp";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { testingFarmRunsQueryOptions } from "../../queries/testingFarm/testingFarmRunsQuery";
-import { SkeletonTable } from "@patternfly/react-component-groups";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
+import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 export const TestingFarmRunsTable = () => {
   // Headings

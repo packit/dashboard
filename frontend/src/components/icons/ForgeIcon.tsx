@@ -5,13 +5,13 @@ import React from "react";
 
 import { Tooltip } from "@patternfly/react-core";
 
-import { getHostName } from "../../components/forgeUrls";
 import {
+  GitIcon,
   GithubIcon,
   GitlabIcon,
-  GitIcon,
   PackageIcon,
 } from "@patternfly/react-icons";
+import { getHostName } from "../../components/forgeUrls";
 
 export interface ForgeIconProps {
   url: string;

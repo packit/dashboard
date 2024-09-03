@@ -1,8 +1,8 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { fetchProjectProps } from "./project";
 import { queryOptions } from "@tanstack/react-query";
+import { fetchProjectProps } from "./project";
 import { fetchProjectPRs } from "./projectPRs";
 
 type QueryParameters = Omit<fetchProjectProps, "signal">;

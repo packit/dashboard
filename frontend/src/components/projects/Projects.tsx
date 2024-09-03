@@ -2,11 +2,11 @@
 // SPDX-License-Identifier: MIT
 
 import {
+  PageGroup,
   PageSection,
   PageSectionVariants,
-  TextContent,
   Text,
-  PageGroup,
+  TextContent,
 } from "@patternfly/react-core";
 
 import { ProjectSearch } from "./ProjectSearch";

@@ -8,13 +8,13 @@ import {
   DescriptionListTerm,
 } from "@patternfly/react-core";
 import React from "react";
+import { CoprBuild } from "../../apiDefinitions";
+import { LabelLink } from "../shared/LabelLink";
 import {
   AcceptedStatuses,
   ResultProgressStep,
 } from "../shared/ResultProgressStep";
 import { StatusLabel } from "../statusLabels/StatusLabel";
-import { LabelLink } from "../shared/LabelLink";
-import { CoprBuild } from "../../apiDefinitions";
 
 export interface CoprBuildDetailProps {
   data: CoprBuild;

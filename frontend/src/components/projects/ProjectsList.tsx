@@ -4,13 +4,13 @@
 import React, { useMemo } from "react";
 
 import {
+  BlueprintIcon,
+  BuildIcon,
   CodeBranchIcon,
   SecurityIcon,
-  BuildIcon,
-  BlueprintIcon,
 } from "@patternfly/react-icons";
 
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 import {
   Table /* data-codemods */,
   Tbody,
@@ -19,11 +19,11 @@ import {
   Thead,
   Tr,
 } from "@patternfly/react-table";
-import { projectsQueryOptions } from "../../queries/project/projectsQuery";
+import { useInfiniteQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
+import { projectsQueryOptions } from "../../queries/project/projectsQuery";
 import { LoadMore } from "../shared/LoadMore";
-import { SkeletonTable } from "@patternfly/react-component-groups";
 
 function getProjectInfoURL(project: Project) {
   const urlArray = project.project_url?.split("/");
