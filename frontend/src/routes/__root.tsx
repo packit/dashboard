@@ -2,46 +2,44 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  Nav,
-  NavList,
-  NavItem,
-  Page,
-  PageSidebar,
   Button,
-  SkipToContent,
-  Text,
-  TextContent,
-  Popover,
   Masthead,
   MastheadBrand,
   MastheadContent,
   MastheadMain,
   MastheadToggle,
+  Nav,
+  NavExpandable,
+  NavItem,
+  NavList,
+  Page,
+  PageSidebar,
+  PageSidebarBody,
   PageToggleButton,
+  Popover,
+  SkipToContent,
+  Text,
+  TextContent,
   Toolbar,
   ToolbarContent,
   ToolbarItem,
-  NavExpandable,
-  PageSidebarBody,
 } from "@patternfly/react-core";
-import packitLogo from "../static/logo.png";
-import React, { useEffect, useState } from "react";
 import {
-  ExternalLinkAltIcon,
-  CodeBranchIcon,
   BarsIcon,
+  CodeBranchIcon,
+  ExternalLinkAltIcon,
 } from "@patternfly/react-icons";
+import { QueryClient } from "@tanstack/react-query";
 import {
   Link,
   Outlet,
   createRootRouteWithContext,
   useMatchRoute,
   useMatches,
-  useRouter,
-  useRouterState,
 } from "@tanstack/react-router";
-import { QueryClient } from "@tanstack/react-query";
+import React, { useState } from "react";
 import { useTitle } from "../components/shared/useTitle";
+import packitLogo from "../static/logo.png";
 
 interface RouterContext {
   queryClient: QueryClient;
@@ -68,7 +66,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const onNavToggle = () => {
       setIsNavOpen(!isNavOpen);
     };
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    // biome-ignore lint/suspicious/noExplicitAny: Not checked what it should be
     const onPageResize = (props: any) => {
       if (Object.hasOwn(props, "mobileView")) setIsMobileView(props.mobileView);
     };
