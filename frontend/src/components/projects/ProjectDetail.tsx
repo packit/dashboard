@@ -1,13 +1,13 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
+import { Tab, TabTitleText, Tabs } from "@patternfly/react-core";
 import React from "react";
-import { Tab, Tabs, TabTitleText } from "@patternfly/react-core";
 
+import { BranchList } from "./BranchList";
 import { IssuesList } from "./IssuesList";
 import { PullRequestList } from "./PullRequestList";
 import { ReleasesList } from "./ReleasesList";
-import { BranchList } from "./BranchList";
 
 export const ProjectDetail: React.FC<{
   forge: string;

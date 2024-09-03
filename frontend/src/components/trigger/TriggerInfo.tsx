@@ -6,8 +6,8 @@ import React, { useState } from "react";
 import { Label } from "@patternfly/react-core";
 import {
   Dropdown,
-  DropdownToggle,
   DropdownItem,
+  DropdownToggle,
 } from "@patternfly/react-core/deprecated";
 
 import { CaretDownIcon, ExternalLinkAltIcon } from "@patternfly/react-icons";

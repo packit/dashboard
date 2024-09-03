@@ -19,13 +19,13 @@ import {
   TextVariants,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { Timestamp } from "../shared/Timestamp";
 import { pipelineQueryOptions } from "../../queries/pipeline/pipelineQuery";
 import { Route as PipelineRoute } from "../../routes/pipeline_.$id";
 import { ErrorConnection } from "../errors/ErrorConnection";
+import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 interface StatusItem {
   packit_id: number;

@@ -3,10 +3,10 @@
 
 import React from "react";
 
-import { getIssueLink } from "../forgeUrls";
 import { List, ListItem } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
 import { projectIssuesQueryOptions } from "../../queries/project/projectIssuesQuery";
+import { getIssueLink } from "../forgeUrls";
 
 interface IssuesListProps {
   forge: string;

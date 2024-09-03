@@ -1,41 +1,41 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useState } from "react";
 import {
-  PageSection,
+  Button,
   Card,
   CardBody,
-  PageSectionVariants,
-  TextContent,
-  Text,
-  Title,
-  Toolbar,
-  ToolbarContent,
-  ToolbarItem,
   Checkbox,
-  Button,
-  ToolbarGroup,
-  Tooltip,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
+  PageSection,
+  PageSectionVariants,
+  Text,
+  TextContent,
+  Title,
+  Toolbar,
+  ToolbarContent,
+  ToolbarGroup,
+  ToolbarItem,
+  Tooltip,
 } from "@patternfly/react-core";
+import React, { useState } from "react";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
+import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { useQuery } from "@tanstack/react-query";
-import { DownloadIcon, ExpandIcon } from "@patternfly/react-icons";
-import {
-  ResultProgressStep,
-  AcceptedStatuses,
-} from "../shared/ResultProgressStep";
-import { syncReleaseQueryOptions } from "../../queries/sync-release/syncReleaseQuery";
-import { Preloader } from "../shared/Preloader";
-import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
 import { useParams } from "@tanstack/react-router";
+import { syncReleaseQueryOptions } from "../../queries/sync-release/syncReleaseQuery";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../shared/Preloader";
+import {
+  AcceptedStatuses,
+  ResultProgressStep,
+} from "../shared/ResultProgressStep";
+import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 interface SyncReleaseProps {
   job: "pull-from-upstream" | "propose-downstream";

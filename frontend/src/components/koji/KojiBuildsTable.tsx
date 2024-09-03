@@ -13,17 +13,17 @@ import {
   Tr,
 } from "@patternfly/react-table";
 
+import { SkeletonTable } from "@patternfly/react-component-groups";
+import { useInfiniteQuery } from "@tanstack/react-query";
+import { Timestamp } from "../../components/shared/Timestamp";
 import {
   TriggerLink,
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
-import { Timestamp } from "../../components/shared/Timestamp";
-import { useInfiniteQuery } from "@tanstack/react-query";
 import { kojiBuildsQueryOptions } from "../../queries/koji/kojiBuildsQuery";
-import { StatusLabel } from "../statusLabels/StatusLabel";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
-import { SkeletonTable } from "@patternfly/react-component-groups";
+import { StatusLabel } from "../statusLabels/StatusLabel";
 
 interface KojiBuildTableProps {
   scratch: boolean;

@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import { createFileRoute } from "@tanstack/react-router";
-import { kojiBuildQueryOptions } from "../../queries/koji/kojiBuildQuery";
 import { KojiBuild } from "../../components/koji/KojiBuild";
+import { kojiBuildQueryOptions } from "../../queries/koji/kojiBuildQuery";
 
 export const Route = createFileRoute("/jobs/koji-downstream/$id")({
   staticData: {

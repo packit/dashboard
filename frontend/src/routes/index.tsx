@@ -3,8 +3,8 @@
 
 import {
   Card,
-  CardHeader,
   CardBody,
+  CardHeader,
   Grid,
   GridItem,
   Page,
@@ -12,11 +12,11 @@ import {
   Title,
 } from "@patternfly/react-core";
 import {
-  BugIcon,
-  InfoCircleIcon,
-  CodeIcon,
   BellIcon,
+  BugIcon,
   CatalogIcon,
+  CodeIcon,
+  InfoCircleIcon,
   OutlinedCommentsIcon,
 } from "@patternfly/react-icons";
 // import { useTitle } from "../utils/useTitle";

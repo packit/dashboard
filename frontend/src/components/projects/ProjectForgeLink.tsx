@@ -2,9 +2,10 @@
 // SPDX-License-Identifier: MIT
 
 import { Label } from "@patternfly/react-core";
-import { useQuery } from "@tanstack/react-query";
-import { projectQueryOptions } from "../../queries/project/projectQuery";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
+import { useQuery } from "@tanstack/react-query";
+import React from "react";
+import { projectQueryOptions } from "../../queries/project/projectQuery";
 import { ForgeIconByForge } from "../icons/ForgeIcon";
 
 export const ProjectForgeLink: React.FC<{

@@ -2,33 +2,33 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  PageSection,
   Card,
   CardBody,
-  PageSectionVariants,
-  TextContent,
-  Text,
-  Title,
-  Label,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
+  Label,
+  PageSection,
+  PageSectionVariants,
+  Text,
+  TextContent,
+  Title,
 } from "@patternfly/react-core";
 import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
+import { kojiBuildQueryOptions } from "../../queries/koji/kojiBuildQuery";
+import { Route as KojiRoute } from "../../routes/jobs_/koji.$id";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../shared/Preloader";
 import {
   AcceptedStatuses,
   ResultProgressStep,
 } from "../shared/ResultProgressStep";
-import { Route as KojiRoute } from "../../routes/jobs_/koji.$id";
-import { kojiBuildQueryOptions } from "../../queries/koji/kojiBuildQuery";
-import { Preloader } from "../shared/Preloader";
 import { SHACopy } from "../shared/SHACopy";
 import { StatusLabel } from "../statusLabels/StatusLabel";
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { Link } from "@tanstack/react-router";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 export const KojiBuild = () => {
   const { id } = KojiRoute.useParams();

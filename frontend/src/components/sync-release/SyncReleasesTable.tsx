@@ -13,15 +13,15 @@ import {
   Tr,
 } from "@patternfly/react-table";
 
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { Timestamp } from "../shared/Timestamp";
+import { SkeletonTable } from "@patternfly/react-component-groups";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import { syncReleasesQueryOptions } from "../../queries/sync-release/syncReleasesQuery";
-import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
-import { SkeletonTable } from "@patternfly/react-component-groups";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
+import { Timestamp } from "../shared/Timestamp";
+import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 interface SyncReleasesTableProps {
   job: "pull-from-upstream" | "propose-downstream";
 }

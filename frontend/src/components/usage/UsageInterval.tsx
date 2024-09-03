@@ -2,31 +2,31 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  PageSection,
-  Card,
-  CardBody,
-  CardTitle,
-  Title,
-  Flex,
-  FlexItem,
-  LabelGroup,
-  Label,
-} from "@patternfly/react-core";
-import {
   Chart,
   ChartAxis,
   ChartGroup,
-  ChartLine,
-  createContainer,
   ChartLegendTooltip,
+  ChartLine,
   ChartThemeColor,
+  createContainer,
 } from "@patternfly/react-charts";
+import {
+  Card,
+  CardBody,
+  CardTitle,
+  Flex,
+  FlexItem,
+  Label,
+  LabelGroup,
+  PageSection,
+  Title,
+} from "@patternfly/react-core";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../shared/Preloader";
 import { useQuery } from "@tanstack/react-query";
-import { UsageListData } from "./UsageListData";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { ForgeIcon } from "../icons/ForgeIcon";
+import { Preloader } from "../shared/Preloader";
+import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
   fetch(

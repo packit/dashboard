@@ -2,35 +2,35 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  PageSection,
   Card,
   CardBody,
+  DescriptionList,
+  DescriptionListDescription,
+  DescriptionListGroup,
+  DescriptionListTerm,
+  Divider,
+  PageSection,
   PageSectionVariants,
-  TextContent,
   Text,
+  TextContent,
   Title,
   Toolbar,
   ToolbarContent,
   ToolbarItem,
-  DescriptionList,
-  DescriptionListGroup,
-  DescriptionListTerm,
-  DescriptionListDescription,
-  Divider,
 } from "@patternfly/react-core";
 import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
+import { srpmBuildQueryOptions } from "../../queries/srpm/srpmBuildQuery";
+import { Route as SRPMRoute } from "../../routes/jobs_/srpm.$id";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../shared/Preloader";
 import {
   AcceptedStatuses,
   ResultProgressStep,
 } from "../shared/ResultProgressStep";
-import { Route as SRPMRoute } from "../../routes/jobs_/srpm.$id";
-import { srpmBuildQueryOptions } from "../../queries/srpm/srpmBuildQuery";
 import { StatusLabel } from "../statusLabels/StatusLabel";
-import { Preloader } from "../shared/Preloader";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 export const SRPMBuild = () => {
   const { id } = SRPMRoute.useParams();

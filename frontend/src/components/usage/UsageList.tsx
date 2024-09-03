@@ -1,20 +1,21 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
+import { ChartBullet, ChartDonut } from "@patternfly/react-charts";
 import {
-  PageSection,
   Card,
   CardBody,
   CardTitle,
-  Title,
   Flex,
   FlexItem,
+  PageSection,
+  Title,
 } from "@patternfly/react-core";
-import { ChartDonut, ChartBullet } from "@patternfly/react-charts";
+import React from "react";
 
+import { useQuery } from "@tanstack/react-query";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
-import { useQuery } from "@tanstack/react-query";
 import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageListProps["what"]) =>

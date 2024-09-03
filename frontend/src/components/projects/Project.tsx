@@ -1,15 +1,15 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React from "react";
 import {
+  Card,
+  CardBody,
   PageSection,
   PageSectionVariants,
   Text,
-  Card,
-  CardBody,
   TextContent,
 } from "@patternfly/react-core";
+import React from "react";
 
 import { Route as ProjectRoute } from "../../routes/projects/$forge.$namespace.$repo.lazy";
 import { ProjectDetail } from "./ProjectDetail";

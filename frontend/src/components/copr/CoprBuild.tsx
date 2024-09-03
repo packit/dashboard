@@ -2,26 +2,26 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  PageSection,
   Card,
   CardBody,
-  PageSectionVariants,
-  TextContent,
-  Text,
-  Title,
   List,
   ListItem,
+  PageSection,
+  PageSectionVariants,
+  Text,
+  TextContent,
+  Title,
 } from "@patternfly/react-core";
 
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { Preloader } from "../shared/Preloader";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
-import { CoprBuildDetail } from "./CoprBuildDetail";
+import { CoprBuildPackage } from "../../apiDefinitions";
 import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 import { Route as CoprRoute } from "../../routes/jobs_/copr.$id";
+import { ErrorConnection } from "../errors/ErrorConnection";
+import { Preloader } from "../shared/Preloader";
 import { SHACopy } from "../shared/SHACopy";
-import { CoprBuildPackage } from "../../apiDefinitions";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
+import { CoprBuildDetail } from "./CoprBuildDetail";
 
 export const CoprBuild = () => {
   const { id } = CoprRoute.useParams();

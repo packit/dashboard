@@ -2,16 +2,16 @@
 // SPDX-License-Identifier: MIT
 
 import {
+  Label,
   PageSection,
   PageSectionVariants,
-  TextContent,
   Text,
-  Label,
+  TextContent,
 } from "@patternfly/react-core";
 
-import { ProjectsList } from "./ProjectsList";
 import { Route as NamespaceRoute } from "../../routes/projects/$forge.$namespace_.lazy";
 import { ForgeIcon } from "../icons/ForgeIcon";
+import { ProjectsList } from "./ProjectsList";
 
 const Namespace = () => {
   const { forge, namespace } = NamespaceRoute.useParams();

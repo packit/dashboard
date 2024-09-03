@@ -5,12 +5,12 @@ import React, { useState, useId } from "react";
 
 import {
   DataList,
-  DataListToggle,
   DataListCell,
-  DataListItem,
   DataListContent,
+  DataListItem,
   DataListItemCells,
   DataListItemRow,
+  DataListToggle,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
 import { projectBranchesQueryOptions } from "../../queries/project/projectBranchesQuery";

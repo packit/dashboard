@@ -2,8 +2,8 @@
 // SPDX-License-Identifier: MIT
 
 import { createFileRoute } from "@tanstack/react-router";
-import { syncReleaseDownstreamQueryOptions } from "../../queries/sync-release/syncReleaseDownstreamQuery";
 import { SyncRelease } from "../../components/sync-release/SyncRelease";
+import { syncReleaseDownstreamQueryOptions } from "../../queries/sync-release/syncReleaseDownstreamQuery";
 
 export const Route = createFileRoute("/jobs/propose-downstream/$id")({
   staticData: {

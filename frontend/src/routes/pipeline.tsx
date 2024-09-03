@@ -1,13 +1,13 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { createFileRoute } from "@tanstack/react-router";
 import {
   PageSection,
   PageSectionVariants,
-  TextContent,
   Text,
+  TextContent,
 } from "@patternfly/react-core";
+import { createFileRoute } from "@tanstack/react-router";
 import { PipelinesTable } from "../components/pipeline/PipelinesTable";
 
 export const Route = createFileRoute("/pipeline")({

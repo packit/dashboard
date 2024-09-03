@@ -8,11 +8,11 @@ import {
   CodeBlockAction,
   CodeBlockCode,
   EmptyState,
-  EmptyStateBody,
-  EmptyStateIcon,
   EmptyStateActions,
-  EmptyStateHeader,
+  EmptyStateBody,
   EmptyStateFooter,
+  EmptyStateHeader,
+  EmptyStateIcon,
 } from "@patternfly/react-core";
 import React, { useEffect } from "react";
 

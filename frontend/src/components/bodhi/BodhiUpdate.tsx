@@ -2,26 +2,26 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  PageSection,
   Card,
   CardBody,
-  PageSectionVariants,
-  TextContent,
-  Text,
-  Title,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
+  PageSection,
+  PageSectionVariants,
+  Text,
+  TextContent,
+  Title,
 } from "@patternfly/react-core";
-import { ErrorConnection } from "../errors/ErrorConnection";
-import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { useQuery } from "@tanstack/react-query";
-import { Route as BodhiRoute } from "../../routes/jobs_/bodhi.$id";
 import { bodhiUpdateQueryOptions } from "../../queries/bodhi/bodhiUpdateQuery";
+import { Route as BodhiRoute } from "../../routes/jobs_/bodhi.$id";
+import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
-import { StatusLabel } from "../statusLabels/StatusLabel";
 import { Timestamp } from "../shared/Timestamp";
+import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 export const BodhiUpdate = () => {
   const { id } = BodhiRoute.useParams();

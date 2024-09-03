@@ -1,20 +1,20 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useMemo } from "react";
-import {
-  ProgressStepper,
-  ProgressStep,
-  Tooltip,
-  ProgressStepProps,
-} from "@patternfly/react-core";
-import { Timestamp } from "./Timestamp";
 import { prettyFormat } from "@imranbarbhuiya/duration";
+import {
+  ProgressStep,
+  ProgressStepProps,
+  ProgressStepper,
+  Tooltip,
+} from "@patternfly/react-core";
 import {
   AngleDoubleRightIcon,
   BanIcon,
   QuestionCircleIcon,
 } from "@patternfly/react-icons";
+import React, { useMemo } from "react";
+import { Timestamp } from "./Timestamp";
 
 /**
  * Different statuses that we should map within the component
