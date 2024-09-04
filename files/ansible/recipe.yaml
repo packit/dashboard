@@ -14,7 +14,6 @@
 
     - name: install node modules
       command:
-        chdir: "{{ packit_dashboard_path }}"
         cmd: pnpm install --prod --frozen-lockfile
 
     - name: bundle javascript
