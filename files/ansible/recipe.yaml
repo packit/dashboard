@@ -5,7 +5,8 @@
     home_path: "{{ lookup('env', 'HOME') }}"
     api_url: "{{ lookup('env', 'VITE_API_URL') }}"
     deployment: "{{ 'prod' if api_url == 'https://prod.packit.dev/api' else 'stg' }}"
-    packit_dashboard_path: /src/frontend
+    packit_dashboard_path: /src
+    packit_dashboard_frontend_path: /src/frontend
   tasks:
     - import_tasks: common.yaml
     - import_tasks: httpd.yaml
@@ -14,11 +15,12 @@
 
     - name: install node modules
       command:
+        chdir: "{{ packit_dashboard_path }}"
         cmd: pnpm install --prod --frozen-lockfile
 
     - name: bundle javascript
       command:
-        chdir: "{{ packit_dashboard_path }}"
+        chdir: "{{ packit_dashboard_frontend_path }}"
         cmd: pnpm run build
 
     - name: Clean up Node.js modules
