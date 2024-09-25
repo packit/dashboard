@@ -75,41 +75,44 @@ export const CoprBuild = () => {
             <CoprBuildDetail data={data} />
           </CardBody>
         </Card>
-        <Card>
-          <CardBody>
-            <Text component="p">
-              <strong>
-                You can install the built RPMs by following these steps:
-              </strong>
-            </Text>
-            <br />
-            <List>
-              <ListItem>
-                <code>sudo dnf install -y dnf-plugins-core</code>
-              </ListItem>
-              <ListItem>
-                <code>
-                  sudo dnf copr enable {data.copr_owner}/{data.copr_project}
-                </code>
-              </ListItem>
-              {data.built_packages ? (
-                <ListItem>
-                  <code>
-                    sudo dnf install -y{" "}
-                    {getPackagesToInstall(data.built_packages).join(" ")}
-                  </code>
-                </ListItem>
-              ) : (
-                <></>
-              )}
-            </List>
-            <Text component="p">
-              <br />
-              Please note that the RPMs should be used only in a testing
-              environment.
-            </Text>
-          </CardBody>
-        </Card>
+
+        {data.built_packages ? (
+          <>
+            <Card>
+              <CardBody>
+                <Text component="p">
+                  <strong>
+                    You can install the built RPMs by following these steps:
+                  </strong>
+                </Text>
+                <br />
+                <List>
+                  <ListItem>
+                    <code>sudo dnf install -y dnf-plugins-core</code>
+                  </ListItem>
+                  <ListItem>
+                    <code>
+                      sudo dnf copr enable {data.copr_owner}/{data.copr_project}
+                    </code>
+                  </ListItem>
+                  <ListItem>
+                    <code>
+                      sudo dnf install -y{" "}
+                      {getPackagesToInstall(data.built_packages).join(" ")}
+                    </code>
+                  </ListItem>
+                </List>
+                <Text component="p">
+                  <br />
+                  Please note that the RPMs should be used only in a testing
+                  environment.
+                </Text>
+              </CardBody>
+            </Card>
+          </>
+        ) : (
+          <></>
+        )}
       </PageSection>
     </>
   );
