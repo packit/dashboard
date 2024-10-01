@@ -2,9 +2,12 @@
 // SPDX-License-Identifier: MIT
 
 import {
+  AngleDoubleRightIcon,
   CheckCircleIcon,
   ExclamationCircleIcon,
   ExclamationTriangleIcon,
+  HourglassHalfIcon,
+  InProgressIcon,
   InfoCircleIcon,
 } from "@patternfly/react-icons";
 import React, { useEffect, useState } from "react";
@@ -38,6 +41,18 @@ export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
       case "error":
         setColor("orange");
         setIcon(<ExclamationTriangleIcon />);
+        break;
+      case "pending":
+        setColor("cyan");
+        setIcon(<HourglassHalfIcon />);
+        break;
+      case "running":
+        setColor("blue");
+        setIcon(<InProgressIcon />);
+        break;
+      case "skipped":
+        setColor("grey");
+        setIcon(<AngleDoubleRightIcon />);
         break;
     }
   }, [props.status]);
