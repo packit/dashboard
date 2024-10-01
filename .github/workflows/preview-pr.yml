@@ -9,7 +9,7 @@ on:
       pr_id:
         description: PR ID to be deployed to the surge.sh
         required: true
-        default: 0
+        default: "0"
 
 concurrency: preview-${{ github.ref }}
 
@@ -21,7 +21,18 @@ jobs:
       GH_PR_NUM: ${{ github.event.inputs.pr_id || github.event.number }}
     steps:
       - name: Checkout the repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: frontend/pnpm-lock.yaml
 
       # Yes, we really need to get the PR changes
       - name: Get the PR changes
@@ -39,12 +50,6 @@ jobs:
 
       - name: Check out the script from the ‹main› branch
         run: git checkout origin/main .github/notify.py
-
-      - uses: actions/setup-node@v4
-        with:
-          node-version: "20"
-          cache: "pnpm"
-          cache-dependency-path: frontend/pnpm-lock.yaml
 
       - name: Install and Build
         run: |
