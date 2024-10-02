@@ -19,11 +19,11 @@
     "jsx": "preserve"
   },
   "include": [
-    "src"
+    "frontend/src"
   ],
   "exclude": [
     "node_modules",
-    "vite.config.ts",
-    "eslint.config.js",
+    "frontend/vite.config.ts",
+    "frontend/eslint.config.js",
   ]
 }

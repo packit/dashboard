@@ -1,0 +1,47 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`default label > default label 1`] = `
+<body>
+  <div>
+    <div
+      style="display: contents;"
+    >
+      <span
+        style="padding: 2px;"
+      >
+        <span
+          class="pf-v5-c-label pf-m-blue"
+        >
+          <span
+            class="pf-v5-c-label__icon"
+          >
+            <svg
+              aria-hidden="true"
+              class="pf-v5-svg"
+              fill="currentColor"
+              height="1em"
+              role="img"
+              viewBox="0 0 448 512"
+              width="1em"
+            >
+              <path
+                d="M368 160h-.94a144 144 0 1 0-286.12 0H80a48 48 0 0 0 0 96h288a48 48 0 0 0 0-96zM195.38 493.69a31.52 31.52 0 0 0 57.24 0L352 288H96z"
+              />
+            </svg>
+          </span>
+          <span
+            class="pf-v5-c-label__text"
+          >
+            Label fsdf
+            <span
+              class="pf-v5-u-screen-reader"
+            >
+              tooltipText
+            </span>
+          </span>
+        </span>
+      </span>
+    </div>
+  </div>
+</body>
+`;

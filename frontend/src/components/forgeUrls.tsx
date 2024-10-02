@@ -2,19 +2,18 @@
 // SPDX-License-Identifier: MIT
 
 // getHostName - returns the hostname if possible, otherwise an empty string
-function getHostName(url: string | URL) {
+export function getHostName(url: string | URL) {
   let hostname = "";
   try {
     hostname = new URL(url).hostname;
   } catch (error) {
-    console.log("Invalid URL");
     console.error(error);
   }
   return hostname;
 }
 
 // getPRLink - returns the PR link if possible otherwise an empty string
-function getPRLink(gitRepo: string, prID: number) {
+export function getPRLink(gitRepo: string, prID: number) {
   const forge = getHostName(gitRepo);
   switch (forge) {
     case "github.com":
@@ -28,7 +27,7 @@ function getPRLink(gitRepo: string, prID: number) {
 }
 
 // getBranchLink - returns the branch link if possible otherwise an empty string
-function getBranchLink(gitRepo: string, branchName: string) {
+export function getBranchLink(gitRepo: string, branchName: string) {
   const forge = getHostName(gitRepo);
   switch (forge) {
     case "github.com":
@@ -42,7 +41,7 @@ function getBranchLink(gitRepo: string, branchName: string) {
 }
 
 // getIssueLink - returns the issue link if possible otherwise an empty string
-function getIssueLink(gitRepo: string, issueID: number) {
+export function getIssueLink(gitRepo: string, issueID: number) {
   const forge = getHostName(gitRepo);
   switch (forge) {
     case "github.com":
@@ -56,7 +55,7 @@ function getIssueLink(gitRepo: string, issueID: number) {
 }
 
 // getReleaseLink - returns the link to release if possible otherwise an empty string
-function getReleaseLink(gitRepo: string, release: string) {
+export function getReleaseLink(gitRepo: string, release: string) {
   const forge = getHostName(gitRepo);
   switch (forge) {
     case "github.com":
@@ -69,7 +68,7 @@ function getReleaseLink(gitRepo: string, release: string) {
 }
 
 // getCommitLink - returns a link to the commit
-function getCommitLink(gitRepo: string, commit_hash: string) {
+export function getCommitLink(gitRepo: string, commit_hash: string) {
   const forge = getHostName(gitRepo);
   switch (forge) {
     case "github.com":
@@ -81,12 +80,3 @@ function getCommitLink(gitRepo: string, commit_hash: string) {
       return `${gitRepo}/-/commit/${commit_hash}`;
   }
 }
-
-export {
-  getHostName,
-  getPRLink,
-  getBranchLink,
-  getIssueLink,
-  getReleaseLink,
-  getCommitLink,
-};
