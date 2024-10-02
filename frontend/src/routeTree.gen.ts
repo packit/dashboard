@@ -1,3 +1,7 @@
+/* prettier-ignore-start */
+
+/* eslint-disable */
+
 // @ts-nocheck
 
 // noinspection JSUnusedGlobalSymbols
@@ -506,45 +510,329 @@ declare module '@tanstack/react-router' {
 
 // Create and export the route tree
 
-export const routeTree = rootRoute.addChildren({
-  IndexRoute,
-  JobsRoute: JobsRoute.addChildren({
-    JobsBodhiRoute,
-    JobsBodhiUpdatesRoute,
-    JobsCoprRoute,
-    JobsCoprBuildsRoute,
-    JobsDownstreamKojiBuildsRoute,
-    JobsKojiRoute,
-    JobsKojiBuildsRoute,
-    JobsKojiDownstreamRoute,
-    JobsProposeDownstreamRoute,
-    JobsProposeDownstreamsRoute,
-    JobsPullFromUpstreamRoute,
-    JobsPullFromUpstreamsRoute,
-    JobsSrpmRoute,
-    JobsSrpmBuildsRoute,
-    JobsTestingFarmRoute,
-    JobsTestingFarmRunsRoute,
-    JobsIndexRoute,
-  }),
-  PipelineRoute,
-  PipelinesRoute,
-  ResultsRoute,
-  UsageRoute,
-  PipelineIdRoute,
-  ProjectsForgeLazyRoute,
-  ProjectsIndexRoute,
-  JobsBodhiIdRoute,
-  JobsCoprIdRoute,
-  JobsKojiDownstreamIdRoute,
-  JobsKojiIdRoute,
-  JobsProposeDownstreamIdRoute,
-  JobsPullFromUpstreamIdRoute,
-  JobsSrpmIdRoute,
-  JobsTestingFarmIdRoute,
-  ProjectsForgeNamespaceLazyRoute,
-  ProjectsForgeNamespaceRepoRoute,
-})
+interface JobsRouteChildren {
+  JobsBodhiRoute: typeof JobsBodhiRoute
+  JobsBodhiUpdatesRoute: typeof JobsBodhiUpdatesRoute
+  JobsCoprRoute: typeof JobsCoprRoute
+  JobsCoprBuildsRoute: typeof JobsCoprBuildsRoute
+  JobsDownstreamKojiBuildsRoute: typeof JobsDownstreamKojiBuildsRoute
+  JobsKojiRoute: typeof JobsKojiRoute
+  JobsKojiBuildsRoute: typeof JobsKojiBuildsRoute
+  JobsKojiDownstreamRoute: typeof JobsKojiDownstreamRoute
+  JobsProposeDownstreamRoute: typeof JobsProposeDownstreamRoute
+  JobsProposeDownstreamsRoute: typeof JobsProposeDownstreamsRoute
+  JobsPullFromUpstreamRoute: typeof JobsPullFromUpstreamRoute
+  JobsPullFromUpstreamsRoute: typeof JobsPullFromUpstreamsRoute
+  JobsSrpmRoute: typeof JobsSrpmRoute
+  JobsSrpmBuildsRoute: typeof JobsSrpmBuildsRoute
+  JobsTestingFarmRoute: typeof JobsTestingFarmRoute
+  JobsTestingFarmRunsRoute: typeof JobsTestingFarmRunsRoute
+  JobsIndexRoute: typeof JobsIndexRoute
+}
+
+const JobsRouteChildren: JobsRouteChildren = {
+  JobsBodhiRoute: JobsBodhiRoute,
+  JobsBodhiUpdatesRoute: JobsBodhiUpdatesRoute,
+  JobsCoprRoute: JobsCoprRoute,
+  JobsCoprBuildsRoute: JobsCoprBuildsRoute,
+  JobsDownstreamKojiBuildsRoute: JobsDownstreamKojiBuildsRoute,
+  JobsKojiRoute: JobsKojiRoute,
+  JobsKojiBuildsRoute: JobsKojiBuildsRoute,
+  JobsKojiDownstreamRoute: JobsKojiDownstreamRoute,
+  JobsProposeDownstreamRoute: JobsProposeDownstreamRoute,
+  JobsProposeDownstreamsRoute: JobsProposeDownstreamsRoute,
+  JobsPullFromUpstreamRoute: JobsPullFromUpstreamRoute,
+  JobsPullFromUpstreamsRoute: JobsPullFromUpstreamsRoute,
+  JobsSrpmRoute: JobsSrpmRoute,
+  JobsSrpmBuildsRoute: JobsSrpmBuildsRoute,
+  JobsTestingFarmRoute: JobsTestingFarmRoute,
+  JobsTestingFarmRunsRoute: JobsTestingFarmRunsRoute,
+  JobsIndexRoute: JobsIndexRoute,
+}
+
+const JobsRouteWithChildren = JobsRoute._addFileChildren(JobsRouteChildren)
+
+export interface FileRoutesByFullPath {
+  '/': typeof IndexRoute
+  '/jobs': typeof JobsRouteWithChildren
+  '/pipeline': typeof PipelineRoute
+  '/pipelines': typeof PipelinesRoute
+  '/results': typeof ResultsRoute
+  '/usage': typeof UsageRoute
+  '/jobs/bodhi': typeof JobsBodhiRoute
+  '/jobs/bodhi-updates': typeof JobsBodhiUpdatesRoute
+  '/jobs/copr': typeof JobsCoprRoute
+  '/jobs/copr-builds': typeof JobsCoprBuildsRoute
+  '/jobs/downstream-koji-builds': typeof JobsDownstreamKojiBuildsRoute
+  '/jobs/koji': typeof JobsKojiRoute
+  '/jobs/koji-builds': typeof JobsKojiBuildsRoute
+  '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
+  '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
+  '/jobs/pull-from-upstream': typeof JobsPullFromUpstreamRoute
+  '/jobs/pull-from-upstreams': typeof JobsPullFromUpstreamsRoute
+  '/jobs/srpm': typeof JobsSrpmRoute
+  '/jobs/srpm-builds': typeof JobsSrpmBuildsRoute
+  '/jobs/testing-farm': typeof JobsTestingFarmRoute
+  '/jobs/testing-farm-runs': typeof JobsTestingFarmRunsRoute
+  '/pipeline/$id': typeof PipelineIdRoute
+  '/projects/$forge': typeof ProjectsForgeLazyRoute
+  '/jobs/': typeof JobsIndexRoute
+  '/projects': typeof ProjectsIndexRoute
+  '/jobs/bodhi/$id': typeof JobsBodhiIdRoute
+  '/jobs/copr/$id': typeof JobsCoprIdRoute
+  '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
+  '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
+  '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
+  '/jobs/srpm/$id': typeof JobsSrpmIdRoute
+  '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
+  '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
+  '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
+}
+
+export interface FileRoutesByTo {
+  '/': typeof IndexRoute
+  '/pipeline': typeof PipelineRoute
+  '/pipelines': typeof PipelinesRoute
+  '/results': typeof ResultsRoute
+  '/usage': typeof UsageRoute
+  '/jobs/bodhi': typeof JobsBodhiRoute
+  '/jobs/bodhi-updates': typeof JobsBodhiUpdatesRoute
+  '/jobs/copr': typeof JobsCoprRoute
+  '/jobs/copr-builds': typeof JobsCoprBuildsRoute
+  '/jobs/downstream-koji-builds': typeof JobsDownstreamKojiBuildsRoute
+  '/jobs/koji': typeof JobsKojiRoute
+  '/jobs/koji-builds': typeof JobsKojiBuildsRoute
+  '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
+  '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
+  '/jobs/pull-from-upstream': typeof JobsPullFromUpstreamRoute
+  '/jobs/pull-from-upstreams': typeof JobsPullFromUpstreamsRoute
+  '/jobs/srpm': typeof JobsSrpmRoute
+  '/jobs/srpm-builds': typeof JobsSrpmBuildsRoute
+  '/jobs/testing-farm': typeof JobsTestingFarmRoute
+  '/jobs/testing-farm-runs': typeof JobsTestingFarmRunsRoute
+  '/pipeline/$id': typeof PipelineIdRoute
+  '/projects/$forge': typeof ProjectsForgeLazyRoute
+  '/jobs': typeof JobsIndexRoute
+  '/projects': typeof ProjectsIndexRoute
+  '/jobs/bodhi/$id': typeof JobsBodhiIdRoute
+  '/jobs/copr/$id': typeof JobsCoprIdRoute
+  '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
+  '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
+  '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
+  '/jobs/srpm/$id': typeof JobsSrpmIdRoute
+  '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
+  '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
+  '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
+}
+
+export interface FileRoutesById {
+  __root__: typeof rootRoute
+  '/': typeof IndexRoute
+  '/jobs': typeof JobsRouteWithChildren
+  '/pipeline': typeof PipelineRoute
+  '/pipelines': typeof PipelinesRoute
+  '/results': typeof ResultsRoute
+  '/usage': typeof UsageRoute
+  '/jobs/bodhi': typeof JobsBodhiRoute
+  '/jobs/bodhi-updates': typeof JobsBodhiUpdatesRoute
+  '/jobs/copr': typeof JobsCoprRoute
+  '/jobs/copr-builds': typeof JobsCoprBuildsRoute
+  '/jobs/downstream-koji-builds': typeof JobsDownstreamKojiBuildsRoute
+  '/jobs/koji': typeof JobsKojiRoute
+  '/jobs/koji-builds': typeof JobsKojiBuildsRoute
+  '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
+  '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
+  '/jobs/pull-from-upstream': typeof JobsPullFromUpstreamRoute
+  '/jobs/pull-from-upstreams': typeof JobsPullFromUpstreamsRoute
+  '/jobs/srpm': typeof JobsSrpmRoute
+  '/jobs/srpm-builds': typeof JobsSrpmBuildsRoute
+  '/jobs/testing-farm': typeof JobsTestingFarmRoute
+  '/jobs/testing-farm-runs': typeof JobsTestingFarmRunsRoute
+  '/pipeline/$id': typeof PipelineIdRoute
+  '/projects/$forge': typeof ProjectsForgeLazyRoute
+  '/jobs/': typeof JobsIndexRoute
+  '/projects/': typeof ProjectsIndexRoute
+  '/jobs/bodhi/$id': typeof JobsBodhiIdRoute
+  '/jobs/copr/$id': typeof JobsCoprIdRoute
+  '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
+  '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
+  '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
+  '/jobs/srpm/$id': typeof JobsSrpmIdRoute
+  '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
+  '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
+  '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
+}
+
+export interface FileRouteTypes {
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/jobs'
+    | '/pipeline'
+    | '/pipelines'
+    | '/results'
+    | '/usage'
+    | '/jobs/bodhi'
+    | '/jobs/bodhi-updates'
+    | '/jobs/copr'
+    | '/jobs/copr-builds'
+    | '/jobs/downstream-koji-builds'
+    | '/jobs/koji'
+    | '/jobs/koji-builds'
+    | '/jobs/koji-downstream'
+    | '/jobs/propose-downstream'
+    | '/jobs/propose-downstreams'
+    | '/jobs/pull-from-upstream'
+    | '/jobs/pull-from-upstreams'
+    | '/jobs/srpm'
+    | '/jobs/srpm-builds'
+    | '/jobs/testing-farm'
+    | '/jobs/testing-farm-runs'
+    | '/pipeline/$id'
+    | '/projects/$forge'
+    | '/jobs/'
+    | '/projects'
+    | '/jobs/bodhi/$id'
+    | '/jobs/copr/$id'
+    | '/jobs/koji-downstream/$id'
+    | '/jobs/koji/$id'
+    | '/jobs/propose-downstream/$id'
+    | '/jobs/pull-from-upstream/$id'
+    | '/jobs/srpm/$id'
+    | '/jobs/testing-farm/$id'
+    | '/projects/$forge/$namespace'
+    | '/projects/$forge/$namespace/$repo'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/pipeline'
+    | '/pipelines'
+    | '/results'
+    | '/usage'
+    | '/jobs/bodhi'
+    | '/jobs/bodhi-updates'
+    | '/jobs/copr'
+    | '/jobs/copr-builds'
+    | '/jobs/downstream-koji-builds'
+    | '/jobs/koji'
+    | '/jobs/koji-builds'
+    | '/jobs/koji-downstream'
+    | '/jobs/propose-downstream'
+    | '/jobs/propose-downstreams'
+    | '/jobs/pull-from-upstream'
+    | '/jobs/pull-from-upstreams'
+    | '/jobs/srpm'
+    | '/jobs/srpm-builds'
+    | '/jobs/testing-farm'
+    | '/jobs/testing-farm-runs'
+    | '/pipeline/$id'
+    | '/projects/$forge'
+    | '/jobs'
+    | '/projects'
+    | '/jobs/bodhi/$id'
+    | '/jobs/copr/$id'
+    | '/jobs/koji-downstream/$id'
+    | '/jobs/koji/$id'
+    | '/jobs/propose-downstream/$id'
+    | '/jobs/pull-from-upstream/$id'
+    | '/jobs/srpm/$id'
+    | '/jobs/testing-farm/$id'
+    | '/projects/$forge/$namespace'
+    | '/projects/$forge/$namespace/$repo'
+  id:
+    | '__root__'
+    | '/'
+    | '/jobs'
+    | '/pipeline'
+    | '/pipelines'
+    | '/results'
+    | '/usage'
+    | '/jobs/bodhi'
+    | '/jobs/bodhi-updates'
+    | '/jobs/copr'
+    | '/jobs/copr-builds'
+    | '/jobs/downstream-koji-builds'
+    | '/jobs/koji'
+    | '/jobs/koji-builds'
+    | '/jobs/koji-downstream'
+    | '/jobs/propose-downstream'
+    | '/jobs/propose-downstreams'
+    | '/jobs/pull-from-upstream'
+    | '/jobs/pull-from-upstreams'
+    | '/jobs/srpm'
+    | '/jobs/srpm-builds'
+    | '/jobs/testing-farm'
+    | '/jobs/testing-farm-runs'
+    | '/pipeline/$id'
+    | '/projects/$forge'
+    | '/jobs/'
+    | '/projects/'
+    | '/jobs/bodhi/$id'
+    | '/jobs/copr/$id'
+    | '/jobs/koji-downstream/$id'
+    | '/jobs/koji/$id'
+    | '/jobs/propose-downstream/$id'
+    | '/jobs/pull-from-upstream/$id'
+    | '/jobs/srpm/$id'
+    | '/jobs/testing-farm/$id'
+    | '/projects/$forge/$namespace'
+    | '/projects/$forge/$namespace/$repo'
+  fileRoutesById: FileRoutesById
+}
+
+export interface RootRouteChildren {
+  IndexRoute: typeof IndexRoute
+  JobsRoute: typeof JobsRouteWithChildren
+  PipelineRoute: typeof PipelineRoute
+  PipelinesRoute: typeof PipelinesRoute
+  ResultsRoute: typeof ResultsRoute
+  UsageRoute: typeof UsageRoute
+  PipelineIdRoute: typeof PipelineIdRoute
+  ProjectsForgeLazyRoute: typeof ProjectsForgeLazyRoute
+  ProjectsIndexRoute: typeof ProjectsIndexRoute
+  JobsBodhiIdRoute: typeof JobsBodhiIdRoute
+  JobsCoprIdRoute: typeof JobsCoprIdRoute
+  JobsKojiDownstreamIdRoute: typeof JobsKojiDownstreamIdRoute
+  JobsKojiIdRoute: typeof JobsKojiIdRoute
+  JobsProposeDownstreamIdRoute: typeof JobsProposeDownstreamIdRoute
+  JobsPullFromUpstreamIdRoute: typeof JobsPullFromUpstreamIdRoute
+  JobsSrpmIdRoute: typeof JobsSrpmIdRoute
+  JobsTestingFarmIdRoute: typeof JobsTestingFarmIdRoute
+  ProjectsForgeNamespaceLazyRoute: typeof ProjectsForgeNamespaceLazyRoute
+  ProjectsForgeNamespaceRepoRoute: typeof ProjectsForgeNamespaceRepoRoute
+}
+
+const rootRouteChildren: RootRouteChildren = {
+  IndexRoute: IndexRoute,
+  JobsRoute: JobsRouteWithChildren,
+  PipelineRoute: PipelineRoute,
+  PipelinesRoute: PipelinesRoute,
+  ResultsRoute: ResultsRoute,
+  UsageRoute: UsageRoute,
+  PipelineIdRoute: PipelineIdRoute,
+  ProjectsForgeLazyRoute: ProjectsForgeLazyRoute,
+  ProjectsIndexRoute: ProjectsIndexRoute,
+  JobsBodhiIdRoute: JobsBodhiIdRoute,
+  JobsCoprIdRoute: JobsCoprIdRoute,
+  JobsKojiDownstreamIdRoute: JobsKojiDownstreamIdRoute,
+  JobsKojiIdRoute: JobsKojiIdRoute,
+  JobsProposeDownstreamIdRoute: JobsProposeDownstreamIdRoute,
+  JobsPullFromUpstreamIdRoute: JobsPullFromUpstreamIdRoute,
+  JobsSrpmIdRoute: JobsSrpmIdRoute,
+  JobsTestingFarmIdRoute: JobsTestingFarmIdRoute,
+  ProjectsForgeNamespaceLazyRoute: ProjectsForgeNamespaceLazyRoute,
+  ProjectsForgeNamespaceRepoRoute: ProjectsForgeNamespaceRepoRoute,
+}
+
+export const routeTree = rootRoute
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
 
 /* prettier-ignore-end */
 
