@@ -58,6 +58,9 @@ check:
 test_image: files/ansible/install-deps.yaml files/ansible/recipe-tests.yaml
 	$(CONTAINER_ENGINE) build --rm -t $(TEST_IMAGE) -f Dockerfile.tests .
 
+test_frontend:
+	cd frontend && pnpm run test
+
 check_in_container: test_image
 	$(CONTAINER_ENGINE) run --rm \
 		--security-opt label=disable \

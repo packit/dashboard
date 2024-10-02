@@ -1,6 +1,6 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
-
+/// <reference types="vitest" />
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
@@ -14,11 +14,7 @@ export default defineConfig(() => ({
     rollupOptions: {
       output: {
         manualChunks: function manualChunks(id) {
-          if (
-            id.includes("victory-") ||
-            id.includes("d3") ||
-            id.includes("@patternfly/react-charts")
-          ) {
+          if (id.includes("victory-") || id.includes("d3") || id.includes("@patternfly/react-charts")) {
             return "charts";
           } else if (id.includes("@patternfly")) {
             return "patternfly";
@@ -46,9 +42,13 @@ export default defineConfig(() => ({
       authToken: process.env.SENTRY_AUTH_TOKEN,
       telemetry: false,
       reactComponentAnnotation: { enabled: true },
+      disable: process.env.SENTRY_AUTH_TOKEN === undefined,
     }),
   ],
   server: {
     open: true,
+  },
+  test: {
+    environment: "happy-dom",
   },
 }));

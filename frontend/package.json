@@ -20,10 +20,12 @@
     "@tanstack/react-router": "^1.58.15",
     "@tanstack/router-devtools": "^1.58.15",
     "@tanstack/router-plugin": "^1.58.12",
+    "@testing-library/react": "^16.0.1",
     "@types/node": "^22.7.4",
     "@types/react": "^18.3.10",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.2",
+    "happy-dom": "^15.7.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "sharp": "^0.33.5",
@@ -40,7 +42,8 @@
     "start": "vite",
     "build": "vite build",
     "build:analyze": "vite-bundle-visualizer --open",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "vitest"
   },
   "browserslist": {
     "production": [
@@ -57,7 +60,8 @@
   "devDependencies": {
     "@biomejs/biome": "1.8.3",
     "babel-plugin-named-exports-order": "^0.0.2",
-    "prop-types": "^15.8.1"
+    "prop-types": "^15.8.1",
+    "vitest": "^2.1.2"
   },
   "engines": {
     "node": ">=20",
