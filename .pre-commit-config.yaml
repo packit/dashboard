@@ -52,7 +52,7 @@ repos:
       - id: check-rebase
         args:
           - https://github.com/packit/dashboard.git
-        stages: [manual, Nonepre-pushNone]
+        stages: [manual, pre-push]
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 0.29.3
     hooks:
