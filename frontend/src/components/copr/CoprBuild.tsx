@@ -92,7 +92,8 @@ export const CoprBuild = () => {
                   </ListItem>
                   <ListItem>
                     <code>
-                      sudo dnf copr enable {data.copr_owner}/{data.copr_project}
+                      sudo dnf copr enable {data.copr_owner}/{data.copr_project}{" "}
+                      {data.chroot}
                     </code>
                   </ListItem>
                   <ListItem>
