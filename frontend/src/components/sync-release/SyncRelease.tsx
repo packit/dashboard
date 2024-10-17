@@ -6,14 +6,12 @@ import {
   Card,
   CardBody,
   Checkbox,
+  Content,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
   PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
   Title,
   Toolbar,
   ToolbarContent,
@@ -76,7 +74,7 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
 
   if ("error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
@@ -144,7 +142,7 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
 
   // TODO(SpyTec): Move to its own component
   const logs = (
-    <PageSection>
+    <PageSection hasBodyWrapper={false}>
       <Card>
         <CardBody>
           <LogViewer
@@ -185,29 +183,27 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
                     </ToolbarItem>
                   </ToolbarGroup>
                   <ToolbarGroup
-                    variant="icon-button-group"
-                    align={{ default: "alignRight" }}
+                    variant="action-group-plain"
+                    align={{ default: "alignEnd" }}
                   >
                     <ToolbarItem>
                       <Tooltip position="top" content={<div>Download</div>}>
                         <Button
+                          icon={<DownloadIcon />}
                           onClick={onDownloadClick}
                           variant="plain"
                           aria-label="Download current logs"
-                        >
-                          <DownloadIcon />
-                        </Button>
+                        />
                       </Tooltip>
                     </ToolbarItem>
                     <ToolbarItem>
                       <Tooltip position="top" content={<div>Expand</div>}>
                         <Button
+                          icon={<ExpandIcon />}
                           onClick={onExpandClick}
                           variant="plain"
                           aria-label="View log viewer in full screen"
-                        >
-                          <ExpandIcon />
-                        </Button>
+                        />
                       </Tooltip>
                     </ToolbarItem>
                   </ToolbarGroup>
@@ -244,21 +240,21 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">{displayText}</Text>
-          <Text component="p">
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">{displayText}</Content>
+          <Content component="p">
             <strong>
               <TriggerLink trigger={data}>
                 <TriggerSuffix trigger={data} />
               </TriggerLink>
             </strong>
             <br />
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
 
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <DescriptionList
@@ -283,7 +279,7 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>
-                  <span className="pf-v5-u-screen-reader">
+                  <span className="pf-v6-u-screen-reader">
                     {displayText} timeline
                   </span>
                 </DescriptionListTerm>

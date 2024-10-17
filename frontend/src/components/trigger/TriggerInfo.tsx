@@ -3,14 +3,16 @@
 
 import React, { useState } from "react";
 
-import { Label } from "@patternfly/react-core";
 import {
   Dropdown,
   DropdownItem,
-  DropdownToggle,
-} from "@patternfly/react-core/deprecated";
+  DropdownList,
+  Label,
+  MenuToggle,
+  MenuToggleElement,
+} from "@patternfly/react-core";
 
-import { CaretDownIcon, ExternalLinkAltIcon } from "@patternfly/react-icons";
+import { ExternalLinkAltIcon } from "@patternfly/react-icons";
 import { Table, Tbody, Td, Th, Thead, Tr } from "@patternfly/react-table";
 
 interface TriggerInfoProps {
@@ -43,19 +45,29 @@ interface TriggerInfoProps {
 
 // Trigger here refers to one unique pull request or one unique branch push
 const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
-  const [isOpen, setOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [activeView, setActiveView] = useState("Builds");
 
   // Open/close the dropdown
   // This is called in two cases
   // a) when the toggle button is pressed
   // b) when someone chooses an entry
-  function onToggle() {
-    setOpen((isOpen) => !isOpen);
-  }
+  const onToggle = () => {
+    setIsOpen(!isOpen);
+  };
 
-  // NOTE: Since we did not need any advanced table features,
-  // I used a regular html table instead of Patternfly React's table component
+  const onSelect = (
+    _event: React.MouseEvent<Element, MouseEvent> | undefined,
+    value: string | number | undefined,
+  ) => {
+    console.log("selected", value);
+    setIsOpen(false);
+    if (!value) {
+      return;
+    }
+    setActiveView(value.toString());
+  };
+
   let activeViewContent;
   if (activeView === "Builds") {
     activeViewContent = (
@@ -141,28 +153,20 @@ const TriggerInfo: React.FC<TriggerInfoProps> = (props) => {
   return (
     <>
       <Dropdown
-        onSelect={onToggle}
-        toggle={
-          <DropdownToggle onToggle={onToggle} toggleIndicator={CaretDownIcon}>
+        onSelect={onSelect}
+        toggle={(toggleRef: React.Ref<MenuToggleElement>) => (
+          <MenuToggle ref={toggleRef} onClick={onToggle} isExpanded={isOpen}>
             {activeView}
-          </DropdownToggle>
-        }
+          </MenuToggle>
+        )}
         isOpen={isOpen}
-        dropdownItems={[
-          <DropdownItem key="builds" onClick={() => setActiveView("Builds")}>
-            Builds
-          </DropdownItem>,
-          <DropdownItem
-            key="srpm-builds"
-            onClick={() => setActiveView("SRPM Builds")}
-          >
-            SRPM Builds
-          </DropdownItem>,
-          <DropdownItem key="tests" onClick={() => setActiveView("Test Runs")}>
-            Test Runs
-          </DropdownItem>,
-        ]}
-      />
+      >
+        <DropdownList>
+          <DropdownItem value="Builds">Builds</DropdownItem>
+          <DropdownItem value="SRPM Builds">SRPM Builds</DropdownItem>
+          <DropdownItem value="Test Runs">Test Runs</DropdownItem>
+        </DropdownList>
+      </Dropdown>
       <br />
       <br />
 

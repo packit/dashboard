@@ -1,12 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import {
-  PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
-} from "@patternfly/react-core";
+import { Content, PageSection } from "@patternfly/react-core";
 import { Route as ForgeRoute } from "../../routes/projects/$forge_.lazy";
 import { ForgeIcon } from "../icons/ForgeIcon";
 import { ProjectsList } from "./ProjectsList";
@@ -16,14 +11,14 @@ const Forge = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="p">
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="p">
             <ForgeIcon url={`https://${forge}`} /> {forge}
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <ProjectsList forge={forge} />
       </PageSection>
     </>
