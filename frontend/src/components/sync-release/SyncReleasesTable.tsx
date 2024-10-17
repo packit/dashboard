@@ -50,7 +50,7 @@ export const SyncReleasesTable: React.FC<SyncReleasesTableProps> = ({
 
   const TableHeads = [
     <Th key={columnNames.forge}>
-      <span className="pf-v5-u-screen-reader">{columnNames.forge}</span>
+      <span className="pf-v6-u-screen-reader">{columnNames.forge}</span>
     </Th>,
     <Th key={columnNames.trigger} width={25}>
       {columnNames.trigger}

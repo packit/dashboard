@@ -4,12 +4,10 @@
 import {
   Card,
   CardBody,
+  Content,
   List,
   ListItem,
   PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
   Title,
 } from "@patternfly/react-core";
 
@@ -40,7 +38,7 @@ export const CoprBuild = () => {
 
   if ("error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
@@ -54,9 +52,9 @@ export const CoprBuild = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Copr Build Results</Text>
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">Copr Build Results</Content>
           <strong>
             <TriggerLink trigger={data}>
               <TriggerSuffix trigger={data} />
@@ -66,10 +64,10 @@ export const CoprBuild = () => {
               commit_sha={data.commit_sha}
             />
           </strong>
-        </TextContent>
+        </Content>
       </PageSection>
 
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <CoprBuildDetail data={data} />
@@ -80,11 +78,11 @@ export const CoprBuild = () => {
           <>
             <Card>
               <CardBody>
-                <Text component="p">
+                <Content component="p">
                   <strong>
                     You can install the built RPMs by following these steps:
                   </strong>
-                </Text>
+                </Content>
                 <br />
                 <List>
                   <ListItem>
@@ -103,11 +101,11 @@ export const CoprBuild = () => {
                     </code>
                   </ListItem>
                 </List>
-                <Text component="p">
+                <Content component="p">
                   <br />
                   Please note that the RPMs should be used only in a testing
                   environment.
-                </Text>
+                </Content>
               </CardBody>
             </Card>
           </>

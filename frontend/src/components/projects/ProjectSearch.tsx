@@ -113,12 +113,11 @@ const ProjectSearch = () => {
               </InputGroupItem>
               <InputGroupItem>
                 <Button
+                  icon={<SearchIcon />}
                   variant="plain"
                   aria-label="Search"
                   onClick={goToProjectDetails}
-                >
-                  <SearchIcon />
-                </Button>
+                />
               </InputGroupItem>
             </InputGroup>
             {invalidFormWarning}

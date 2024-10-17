@@ -1,7 +1,10 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { ChartBullet, ChartDonut } from "@patternfly/react-charts";
+import {
+	ChartBullet,
+	ChartDonut
+} from '@patternfly/react-charts/victory';
 import {
   Card,
   CardBody,
@@ -50,7 +53,7 @@ const UsageList: React.FC<UsageListProps> = (props) => {
 
   if (!data || "error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">

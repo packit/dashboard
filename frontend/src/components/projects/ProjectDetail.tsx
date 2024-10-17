@@ -26,12 +26,7 @@ export const ProjectDetail: React.FC<{
   // TODO: Project URL from response?
   return (
     <>
-      <Tabs
-        isFilled
-        activeKey={activeTabKey}
-        onSelect={handleTabClick}
-        isBox={true}
-      >
+      <Tabs activeKey={activeTabKey} onSelect={handleTabClick} isBox={true}>
         <Tab eventKey={0} title={<TabTitleText>PRs Handled</TabTitleText>}>
           <PullRequestList repo={repo} namespace={namespace} forge={forge} />
         </Tab>

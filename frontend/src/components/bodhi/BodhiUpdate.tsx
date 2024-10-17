@@ -4,14 +4,12 @@
 import {
   Card,
   CardBody,
+  Content,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
   PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
   Title,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
@@ -42,7 +40,7 @@ export const BodhiUpdate = () => {
 
   if ("error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
@@ -56,10 +54,10 @@ export const BodhiUpdate = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Bodhi Update Results</Text>
-          <Text component="p">
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">Bodhi Update Results</Content>
+          <Content component="p">
             <strong>
               <TriggerLink trigger={data}>
                 <TriggerSuffix trigger={data} />
@@ -67,11 +65,11 @@ export const BodhiUpdate = () => {
               {/* <SHACopy project_url={data.project_url} commit_sha={data.commit_sha} /> */}
             </strong>
             <br />
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
 
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <DescriptionList

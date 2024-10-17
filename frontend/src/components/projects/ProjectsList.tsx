@@ -85,7 +85,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
       {columnNames.prsHandled}
     </Th>,
     <Th width={10} key={columnNames.externalProjectLink}>
-      <span className="pf-v5-u-screen-reader">
+      <span className="pf-v6-u-screen-reader">
         {columnNames.externalProjectLink}
       </span>
     </Th>,
