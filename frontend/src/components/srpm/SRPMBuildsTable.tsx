@@ -46,7 +46,7 @@ export const SRPMBuildsTable = () => {
 
   const TableHeads = [
     <Th key={columnNames.forge}>
-      <span className="pf-v5-u-screen-reader">{columnNames.forge}</span>
+      <span className="pf-v6-u-screen-reader">{columnNames.forge}</span>
     </Th>,
     <Th key={columnNames.trigger} width={50}>
       {columnNames.trigger}

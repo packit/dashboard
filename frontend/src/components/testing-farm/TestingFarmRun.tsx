@@ -5,15 +5,13 @@ import {
   Card,
   CardBody,
   ClipboardCopy,
+  Content,
   DataList,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
   PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
   Title,
 } from "@patternfly/react-core";
 import React, { useEffect, useState } from "react";
@@ -54,9 +52,9 @@ export const TestingFarmRun = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Testing Farm Results</Text>
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">Testing Farm Results</Content>
           <strong>
             {data ? (
               <>
@@ -73,15 +71,15 @@ export const TestingFarmRun = () => {
             )}
           </strong>
           <br />
-        </TextContent>
+        </Content>
       </PageSection>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           {!data ? (
             isLoading || data === undefined ? (
               <Preloader />
             ) : (
-              <PageSection>
+              <PageSection hasBodyWrapper={false}>
                 <Card>
                   <CardBody>
                     <Title headingLevel="h1" size="lg">

@@ -7,7 +7,6 @@ import {
   CardHeader,
   Grid,
   GridItem,
-  Page,
   PageSection,
   Title,
 } from "@patternfly/react-core";
@@ -32,11 +31,11 @@ export const Route = createFileRoute("/")({
 function Dashboard() {
   return (
     <>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Title headingLevel="h1">Packit Dashboard</Title>
       </PageSection>
 
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Grid hasGutter>
           <GridItem lg={3}>
             <Card isFullHeight>

@@ -11,8 +11,6 @@ import {
   EmptyStateActions,
   EmptyStateBody,
   EmptyStateFooter,
-  EmptyStateHeader,
-  EmptyStateIcon,
 } from "@patternfly/react-core";
 import React, { useEffect } from "react";
 
@@ -56,12 +54,12 @@ export const ErrorApp: React.FC<ErrorComponentProps> = ({ error, reset }) => {
   );
 
   return (
-    <EmptyState isFullHeight>
-      <EmptyStateHeader
-        titleText="Exception occured that caused the website to crash"
-        icon={<EmptyStateIcon icon={ExclamationCircleIcon} color="#C9190B" />}
-        headingLevel="h1"
-      />
+    <EmptyState
+      headingLevel="h1"
+      icon={ExclamationCircleIcon}
+      titleText="Exception occured that caused the website to crash"
+      isFullHeight
+    >
       <EmptyStateBody>
         If possible, take this callstack and report it upstream so it can be
         fixed. When reporting, specify the reproducer on how the bug happened.

@@ -1,13 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import {
-  Label,
-  PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
-} from "@patternfly/react-core";
+import { Content, Label, PageSection } from "@patternfly/react-core";
 
 import { Route as NamespaceRoute } from "../../routes/projects/$forge.$namespace_.lazy";
 import { ForgeIcon } from "../icons/ForgeIcon";
@@ -18,17 +12,17 @@ const Namespace = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">{namespace}</Text>
-          <Text component="p">
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">{namespace}</Content>
+          <Content component="p">
             <Label color="blue" icon={<ForgeIcon url={`https://${forge}`} />}>
               {forge}
             </Label>
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <ProjectsList forge={forge} namespace={namespace} />
       </PageSection>
     </>

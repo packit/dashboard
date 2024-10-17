@@ -4,15 +4,13 @@
 import {
   Card,
   CardBody,
+  Content,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
   Divider,
   PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
   Title,
   Toolbar,
   ToolbarContent,
@@ -48,7 +46,7 @@ export const SRPMBuild = () => {
 
   if ("error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
@@ -63,7 +61,7 @@ export const SRPMBuild = () => {
   const logs = data.copr_build_id ? (
     ""
   ) : (
-    <PageSection>
+    <PageSection hasBodyWrapper={false}>
       <Card>
         <CardBody>
           <LogViewer
@@ -89,21 +87,21 @@ export const SRPMBuild = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">SRPM Build</Text>
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">SRPM Build</Content>
 
-          <Text component="p">
+          <Content component="p">
             <strong>
               <TriggerLink trigger={data}>
                 <TriggerSuffix trigger={data} />
               </TriggerLink>
             </strong>
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
       <Divider></Divider>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <DescriptionList
@@ -146,7 +144,7 @@ export const SRPMBuild = () => {
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>
-                  <span className="pf-v5-u-screen-reader">
+                  <span className="pf-v6-u-screen-reader">
                     SRPM build timeline
                   </span>
                 </DescriptionListTerm>

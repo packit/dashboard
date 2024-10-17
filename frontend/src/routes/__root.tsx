@@ -3,9 +3,11 @@
 
 import {
   Button,
+  Content,
   Masthead,
   MastheadBrand,
   MastheadContent,
+  MastheadLogo,
   MastheadMain,
   MastheadToggle,
   Nav,
@@ -18,8 +20,6 @@ import {
   PageToggleButton,
   Popover,
   SkipToContent,
-  Text,
-  TextContent,
   Toolbar,
   ToolbarContent,
   ToolbarItem,
@@ -74,17 +74,17 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const headerToolbar = (
       <Toolbar id="header-toolbar">
         <ToolbarContent>
-          <ToolbarItem align={{ default: "alignRight" }}>
+          <ToolbarItem align={{ default: "alignEnd" }}>
             <Popover
               headerContent={"About open source"}
               flipBehavior={["bottom-end"]}
               bodyContent={
-                <TextContent>
-                  <Text>
+                <Content>
+                  <Content component="p">
                     This service is open source, so all of its code is
                     inspectable. Explore repositories to view and contribute to
                     the source code.
-                  </Text>
+                  </Content>
                   <Button
                     component="a"
                     target="_blank"
@@ -98,12 +98,14 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   >
                     Source code
                   </Button>
-                </TextContent>
+                </Content>
               }
             >
-              <Button variant="plain" aria-label="About Open Services">
-                <CodeBranchIcon />
-              </Button>
+              <Button
+                icon={<CodeBranchIcon />}
+                variant="plain"
+                aria-label="About Open Services"
+              />
             </Popover>
           </ToolbarItem>
         </ToolbarContent>
@@ -112,31 +114,33 @@ export const Route = createRootRouteWithContext<RouterContext>()({
 
     const Header = (
       <Masthead>
-        <MastheadToggle>
-          <PageToggleButton
-            variant="plain"
-            aria-label="Global navigation"
-            isSidebarOpen={isNavOpen}
-            onSidebarToggle={isMobileView ? onNavToggleMobile : onNavToggle}
-            id="vertical-nav-toggle"
-          >
-            <BarsIcon />
-          </PageToggleButton>
-        </MastheadToggle>
         <MastheadMain>
-          <MastheadBrand component="a" href="/">
-            <img
-              src={packitLogo}
-              style={{ height: "60px" }}
-              alt="Packit Logo"
-            />
+          <MastheadToggle>
+            <PageToggleButton
+              variant="plain"
+              aria-label="Global navigation"
+              isSidebarOpen={isNavOpen}
+              onSidebarToggle={isMobileView ? onNavToggleMobile : onNavToggle}
+              id="vertical-nav-toggle"
+            >
+              <BarsIcon />
+            </PageToggleButton>
+          </MastheadToggle>
+          <MastheadBrand data-codemods>
+            <MastheadLogo data-codemods component="a" href="/">
+              <img
+                src={packitLogo}
+                style={{ height: "60px" }}
+                alt="Packit Logo"
+              />
+            </MastheadLogo>
           </MastheadBrand>
         </MastheadMain>
         <MastheadContent>{headerToolbar}</MastheadContent>
       </Masthead>
     );
     const Navigation = (
-      <Nav id="nav-primary-simple" theme="dark">
+      <Nav id="nav-primary-simple">
         <NavList id="nav-list-simple">
           <NavItem isActive={!!matchRoute({ to: "/" })}>
             <Link to={"/"}>Home</Link>
@@ -189,10 +193,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
       </Nav>
     );
     const Sidebar = (
-      <PageSidebar
-        theme="dark"
-        isSidebarOpen={isMobileView ? isNavOpenMobile : isNavOpen}
-      >
+      <PageSidebar isSidebarOpen={isMobileView ? isNavOpenMobile : isNavOpen}>
         <PageSidebarBody>{Navigation}</PageSidebarBody>
       </PageSidebar>
     );
@@ -204,7 +205,7 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     return (
       <Page
         mainContainerId="primary-app-container"
-        header={Header}
+        masthead={Header}
         sidebar={Sidebar}
         onPageResize={(_event, props: unknown) => onPageResize(props)}
         skipToContent={PageSkipToContent}

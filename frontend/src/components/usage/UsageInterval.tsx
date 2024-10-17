@@ -2,14 +2,14 @@
 // SPDX-License-Identifier: MIT
 
 import {
-  Chart,
-  ChartAxis,
-  ChartGroup,
-  ChartLegendTooltip,
-  ChartLine,
-  ChartThemeColor,
-  createContainer,
-} from "@patternfly/react-charts";
+	Chart,
+	ChartAxis,
+	ChartGroup,
+	ChartLegendTooltip,
+	ChartLine,
+	ChartThemeColor,
+	createContainer
+} from '@patternfly/react-charts/victory';
 import {
   Card,
   CardBody,
@@ -67,7 +67,7 @@ const UsageInterval: React.FC<UsageIntervalProps> = (props) => {
 
   if (!data || "error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
