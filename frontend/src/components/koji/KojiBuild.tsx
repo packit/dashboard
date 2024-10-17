@@ -4,15 +4,13 @@
 import {
   Card,
   CardBody,
+  Content,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
   Label,
   PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
   Title,
 } from "@patternfly/react-core";
 import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
@@ -46,7 +44,7 @@ export const KojiBuild = () => {
 
   if ("error" in data) {
     return (
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Title headingLevel="h1" size="lg">
@@ -59,9 +57,9 @@ export const KojiBuild = () => {
   }
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Koji Build Results</Text>
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">Koji Build Results</Content>
           <strong>
             <TriggerLink trigger={data}>
               <TriggerSuffix trigger={data} />
@@ -72,10 +70,10 @@ export const KojiBuild = () => {
             />
           </strong>
           <br />
-        </TextContent>
+        </Content>
       </PageSection>
 
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <DescriptionList
@@ -137,7 +135,7 @@ export const KojiBuild = () => {
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>
-                  <span className="pf-v5-u-screen-reader">
+                  <span className="pf-v6-u-screen-reader">
                     Koji build timeline
                   </span>
                 </DescriptionListTerm>

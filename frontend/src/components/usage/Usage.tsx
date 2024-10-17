@@ -5,12 +5,10 @@ import {
   Card,
   CardBody,
   PageSection,
-  PageSectionVariants,
   Tab,
   Tabs,
-  Text,
-  TextContent,
-} from "@patternfly/react-core";
+  Content,
+  } from "@patternfly/react-core";
 import React from "react";
 
 import { UsageInterval } from "./UsageInterval";
@@ -29,13 +27,13 @@ const Usage = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Usage</Text>
-          <Text component="p">Usage of Packit Service.</Text>
-        </TextContent>
+      <PageSection hasBodyWrapper={false} >
+        <Content>
+          <Content component="h1">Usage</Content>
+          <Content component="p">Usage of Packit Service.</Content>
+        </Content>
       </PageSection>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <Tabs

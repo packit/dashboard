@@ -24,7 +24,7 @@ export const SHACopy: React.FC<SHACopyInterface> = ({
   return (
     <ClipboardCopy
       style={{
-        marginLeft: "var(--pf-v5-global--spacer--xs)",
+        marginLeft: "var(--pf-t--global--spacer--xs)",
       }}
       hoverTip="Copy commit SHA"
       variant="inline-compact"

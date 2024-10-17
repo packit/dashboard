@@ -6,17 +6,15 @@ import React, { useMemo } from "react";
 import {
   Card,
   CardBody,
+  Content,
+  ContentVariants,
   DescriptionList,
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
   LabelGroup,
   PageSection,
-  PageSectionVariants,
   Skeleton,
-  Text,
-  TextContent,
-  TextVariants,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
 import { pipelineQueryOptions } from "../../queries/pipeline/pipelineQuery";
@@ -78,10 +76,10 @@ export const Pipeline = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">Pipeline results</Text>
-          <Text component="p">
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">Pipeline results</Content>
+          <Content component="p">
             <strong>
               {data && "repo_namespace" in data.trigger ? (
                 <TriggerLink trigger={data.trigger}>
@@ -91,11 +89,11 @@ export const Pipeline = () => {
                 <Skeleton width="230px" />
               )}
             </strong>
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
 
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <DescriptionList
@@ -116,9 +114,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Copr builds</DescriptionListTerm>
@@ -132,9 +130,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Testing Farm runs</DescriptionListTerm>
@@ -148,9 +146,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Propose Downstreams</DescriptionListTerm>
@@ -164,9 +162,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
               </DescriptionListGroup>
@@ -174,15 +172,15 @@ export const Pipeline = () => {
                 <DescriptionListTerm>Submitted time</DescriptionListTerm>
                 <DescriptionListDescription>
                   {data?.time_submitted ? (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <Timestamp stamp={data.time_submitted} />
-                    </Text>
+                    </Content>
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Pull From Upstreams</DescriptionListTerm>
@@ -196,9 +194,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Koji builds</DescriptionListTerm>
@@ -212,9 +210,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Bodhi updates</DescriptionListTerm>
@@ -228,9 +226,9 @@ export const Pipeline = () => {
                   ) : isLoading ? (
                     <Skeleton width="150px" />
                   ) : (
-                    <Text component={TextVariants.small}>
+                    <Content component={ContentVariants.small}>
                       <i>Not available</i>
-                    </Text>
+                    </Content>
                   )}
                 </DescriptionListDescription>
               </DescriptionListGroup>

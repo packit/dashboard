@@ -1,14 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import {
-  Card,
-  CardBody,
-  PageSection,
-  PageSectionVariants,
-  Text,
-  TextContent,
-} from "@patternfly/react-core";
+import { Card, CardBody, Content, PageSection } from "@patternfly/react-core";
 import React from "react";
 
 import { Route as ProjectRoute } from "../../routes/projects/$forge.$namespace.$repo.lazy";
@@ -20,15 +13,15 @@ export const Project = () => {
 
   return (
     <>
-      <PageSection variant={PageSectionVariants.light}>
-        <TextContent>
-          <Text component="h1">{`${params.namespace}/${params.repo}`}</Text>
-          <Text component="p">
+      <PageSection hasBodyWrapper={false}>
+        <Content>
+          <Content component="h1">{`${params.namespace}/${params.repo}`}</Content>
+          <Content component="p">
             <ProjectForgeLink {...params} />
-          </Text>
-        </TextContent>
+          </Content>
+        </Content>
       </PageSection>
-      <PageSection>
+      <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
             <ProjectDetail {...params} />

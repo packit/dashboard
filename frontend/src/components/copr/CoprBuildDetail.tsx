@@ -75,7 +75,7 @@ export const CoprBuildDetail: React.FC<CoprBuildDetailProps> = ({ data }) => {
       </DescriptionListGroup>
       <DescriptionListGroup>
         <DescriptionListTerm>
-          <span className="pf-v5-u-screen-reader">Copr build timeline</span>
+          <span className="pf-v6-u-screen-reader">Copr build timeline</span>
         </DescriptionListTerm>
         <DescriptionListDescription>
           <ResultProgressStep
