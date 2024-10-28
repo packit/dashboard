@@ -20,14 +20,22 @@ import {
   PageToggleButton,
   Popover,
   SkipToContent,
+  ToggleGroup,
+  ToggleGroupItem,
   Toolbar,
   ToolbarContent,
+  ToolbarGroup,
   ToolbarItem,
 } from "@patternfly/react-core";
 import {
   BarsIcon,
   CodeBranchIcon,
+  CopyIcon,
   ExternalLinkAltIcon,
+  MoonIcon,
+  ShareSquareIcon,
+  SunIcon,
+  UndoIcon,
 } from "@patternfly/react-icons";
 import { QueryClient } from "@tanstack/react-query";
 import {
@@ -54,6 +62,17 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const [isMobileView, setIsMobileView] = useState(true);
     const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
 
+    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+
+    const toggleDarkTheme = (_evt, selected: boolean) => {
+      const darkThemeToggleClicked = !selected === isDarkTheme;
+      const htmlRoot = document.querySelector("html");
+      if (htmlRoot) {
+        htmlRoot.classList.toggle("pf-v6-theme-dark", darkThemeToggleClicked);
+        setIsDarkTheme(darkThemeToggleClicked);
+      }
+    };
+
     const matchRoute = useMatchRoute();
     const matches = useMatches();
 
@@ -74,40 +93,58 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const headerToolbar = (
       <Toolbar id="header-toolbar">
         <ToolbarContent>
-          <ToolbarItem align={{ default: "alignEnd" }}>
-            <Popover
-              headerContent={"About open source"}
-              flipBehavior={["bottom-end"]}
-              bodyContent={
-                <Content>
-                  <Content component="p">
-                    This service is open source, so all of its code is
-                    inspectable. Explore repositories to view and contribute to
-                    the source code.
+          <ToolbarGroup align={{ default: "alignEnd" }}>
+            <ToolbarItem>
+              <ToggleGroup aria-label="Dark theme toggle group">
+                <ToggleGroupItem
+                  aria-label="light theme toggle"
+                  icon={<SunIcon />}
+                  isSelected={!isDarkTheme}
+                  onChange={toggleDarkTheme}
+                />
+                <ToggleGroupItem
+                  aria-label="dark theme toggle"
+                  icon={<MoonIcon />}
+                  isSelected={isDarkTheme}
+                  onChange={toggleDarkTheme}
+                />
+              </ToggleGroup>
+            </ToolbarItem>
+            <ToolbarItem>
+              <Popover
+                headerContent={"About open source"}
+                flipBehavior={["bottom-end"]}
+                bodyContent={
+                  <Content>
+                    <Content component="p">
+                      This service is open source, so all of its code is
+                      inspectable. Explore repositories to view and contribute
+                      to the source code.
+                    </Content>
+                    <Button
+                      component="a"
+                      target="_blank"
+                      variant="link"
+                      icon={<ExternalLinkAltIcon />}
+                      iconPosition="right"
+                      isInline
+                      href={`https://github.com/packit/dashboard/commit/${
+                        import.meta.env.VITE_GIT_SHA
+                      }`}
+                    >
+                      Source code
+                    </Button>
                   </Content>
-                  <Button
-                    component="a"
-                    target="_blank"
-                    variant="link"
-                    icon={<ExternalLinkAltIcon />}
-                    iconPosition="right"
-                    isInline
-                    href={`https://github.com/packit/dashboard/commit/${
-                      import.meta.env.VITE_GIT_SHA
-                    }`}
-                  >
-                    Source code
-                  </Button>
-                </Content>
-              }
-            >
-              <Button
-                icon={<CodeBranchIcon />}
-                variant="plain"
-                aria-label="About Open Services"
-              />
-            </Popover>
-          </ToolbarItem>
+                }
+              >
+                <Button
+                  icon={<CodeBranchIcon />}
+                  variant="plain"
+                  aria-label="About Open Services"
+                />
+              </Popover>
+            </ToolbarItem>
+          </ToolbarGroup>
         </ToolbarContent>
       </Toolbar>
     );
