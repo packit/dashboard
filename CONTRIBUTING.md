@@ -11,10 +11,9 @@ Please follow common guidelines for our projects [here](https://github.com/packi
 
 ### Dependencies
 
-`make install-dependencies` automatically installs `nodejs` and `npm` for you,
-and additionally also `corepack` via `npm`. In case the installation fails,
-follow [this](https://docs.npmjs.com/resolving-eacces-permissions-errors-when-installing-packages-globally)
-guide to set up a directory for `npm` in your home directory.
+`make install-dependencies` automatically installs python dependencies and `pnpm`.
+In case the `pnpm` installation fails, follow [this](https://pnpm.io/installation) guide for
+different installation options.
 
 ### Naming Scheme
 
