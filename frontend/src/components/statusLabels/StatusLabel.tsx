@@ -9,6 +9,7 @@ import {
   HourglassHalfIcon,
   InProgressIcon,
   InfoCircleIcon,
+  QuestionCircleIcon,
 } from "@patternfly/react-icons";
 import React, { useEffect, useState } from "react";
 import { BaseStatusLabel, BaseStatusLabelProps } from "./BaseStatusLabel";
@@ -53,6 +54,10 @@ export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
       case "skipped":
         setColor("grey");
         setIcon(<AngleDoubleRightIcon />);
+        break;
+      case "unknown":
+        setColor("grey");
+        setIcon(<QuestionCircleIcon />);
         break;
     }
   }, [props.status]);
