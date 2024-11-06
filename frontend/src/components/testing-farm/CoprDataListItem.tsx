@@ -2,6 +2,7 @@
 // SPDX-License-Identifier: MIT
 
 import {
+  Button,
   DataListCell,
   DataListContent,
   DataListItem,
@@ -10,20 +11,21 @@ import {
   DataListToggle,
   Skeleton,
 } from "@patternfly/react-core";
+import { ExternalLinkSquareAltIcon } from "@patternfly/react-icons";
 import { queryOptions, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { useState } from "react";
 import React from "react";
 import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 import { CoprBuildDetail } from "../copr/CoprBuildDetail";
+import { StatusLabel } from "../statusLabels/StatusLabel";
 
 interface CoprDataListItemProps {
   id: number;
 }
 
 export const CoprDataListItem: React.FC<CoprDataListItemProps> = ({ id }) => {
-  const [isExpanded, setIsExpanded] = useState(false);
-  const { data, isError } = useQuery(
+  const { data, isError, isLoading } = useQuery(
     queryOptions({
       ...coprBuildQueryOptions({ id: id.toString() }),
     }),
@@ -34,30 +36,32 @@ export const CoprDataListItem: React.FC<CoprDataListItemProps> = ({ id }) => {
   }
 
   return (
-    <DataListItem key={`copr-${id}-item`} isExpanded={isExpanded}>
+    <DataListItem key={`copr-${id}-item`}>
       <DataListItemRow key={`copr-${id}-row`}>
-        <DataListToggle
-          isExpanded={isExpanded}
-          id={`copr-build-toggle${id}`}
-          aria-controls={`copr-build-expand${id}`}
-          onClick={() => setIsExpanded(!isExpanded)}
-        />
         <DataListItemCells
           dataListCells={[
             <DataListCell key={1}>
-              <Link to={`/jobs/copr/${id}`}>{id}</Link>
+              <StatusLabel
+                target={data?.chroot}
+                status={data ? data.status : "unknown"}
+                link={`/jobs/copr/${id}`}
+              />
+              <Button
+                component="a"
+                variant="link"
+                isLoading={isLoading}
+                href={data?.build_logs_url}
+                rel="noreferrer"
+                target={"_blank"}
+                icon={<ExternalLinkSquareAltIcon />}
+                iconPosition="end"
+              >
+                Logs
+              </Button>
             </DataListCell>,
           ]}
         ></DataListItemCells>
       </DataListItemRow>
-      <DataListContent
-        key={id + "content"}
-        aria-label="Copr build detail"
-        isHidden={!isExpanded}
-        id={`copr-build-expand-${id}`}
-      >
-        {data ? <CoprBuildDetail data={data} /> : <Skeleton height="5rem" />}
-      </DataListContent>
     </DataListItem>
   );
 };
