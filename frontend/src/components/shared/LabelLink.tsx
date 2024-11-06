@@ -18,6 +18,7 @@ export const LabelLink: React.FC<LabelLinkProps> = ({
 }) => (
   <Label
     className={className}
+    href={"#"}
     render={({ className, content, componentRef }) => (
       <Link to={to} className={className} ref={componentRef}>
         {content}
