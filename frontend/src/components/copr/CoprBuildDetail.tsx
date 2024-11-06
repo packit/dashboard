@@ -59,9 +59,7 @@ export const CoprBuildDetail: React.FC<CoprBuildDetailProps> = ({ data }) => {
       <DescriptionListGroup>
         <DescriptionListTerm>SRPM Build</DescriptionListTerm>
         <DescriptionListDescription>
-          <LabelLink to={`/jobs/srpm-builds/${data.srpm_build_id}`}>
-            Details
-          </LabelLink>
+          <LabelLink to={`/jobs/srpm/${data.srpm_build_id}`}>Details</LabelLink>
         </DescriptionListDescription>
         <DescriptionListTerm>Copr build</DescriptionListTerm>
         <DescriptionListDescription>

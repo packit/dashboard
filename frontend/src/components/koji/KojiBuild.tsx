@@ -19,6 +19,7 @@ import { Link } from "@tanstack/react-router";
 import { kojiBuildQueryOptions } from "../../queries/koji/kojiBuildQuery";
 import { Route as KojiRoute } from "../../routes/jobs_/koji.$id";
 import { ErrorConnection } from "../errors/ErrorConnection";
+import { LabelLink } from "../shared/LabelLink";
 import { Preloader } from "../shared/Preloader";
 import {
   AcceptedStatuses,
@@ -87,16 +88,9 @@ export const KojiBuild = () => {
                   <>
                     <DescriptionListTerm>SRPM Build</DescriptionListTerm>
                     <DescriptionListDescription>
-                      <Label
-                        render={({ className }) => (
-                          <Link
-                            to={`/jobs/srpm/${data.srpm_build_id}`}
-                            className={className}
-                          >
-                            Details
-                          </Link>
-                        )}
-                      ></Label>
+                      <LabelLink to={`/jobs/srpm/${data.srpm_build_id}`}>
+                        Details
+                      </LabelLink>
                     </DescriptionListDescription>
                   </>
                 ) : null}

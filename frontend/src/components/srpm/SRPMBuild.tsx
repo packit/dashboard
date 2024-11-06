@@ -100,7 +100,6 @@ export const SRPMBuild = () => {
           </Content>
         </Content>
       </PageSection>
-      <Divider></Divider>
       <PageSection hasBodyWrapper={false}>
         <Card>
           <CardBody>
