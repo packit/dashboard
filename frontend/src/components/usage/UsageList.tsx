@@ -282,7 +282,6 @@ const UsageList: React.FC<UsageListProps> = (props) => {
                   ariaTitle="Chart describing downstream onboarding."
                   constrainToVisibleArea
                   labels={({ datum }) => `${datum.name}: ${datum.y}`}
-                  maxDomain={{ y: 500 }}
                   name="Chart describing downstream onboarding."
                   primarySegmentedMeasureData={[
                     {
@@ -290,7 +289,6 @@ const UsageList: React.FC<UsageListProps> = (props) => {
                       y: data.onboarded_projects_q1_2024,
                     },
                   ]}
-                  qualitativeRangeData={[{ name: "Q4 2023 state", y: 222 }]}
                   height={150}
                   width={424}
                 />
