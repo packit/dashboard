@@ -30,6 +30,7 @@ import { Route as JobsPullFromUpstreamsImport } from './routes/jobs/pull-from-up
 import { Route as JobsPullFromUpstreamImport } from './routes/jobs/pull-from-upstream'
 import { Route as JobsProposeDownstreamsImport } from './routes/jobs/propose-downstreams'
 import { Route as JobsProposeDownstreamImport } from './routes/jobs/propose-downstream'
+import { Route as JobsOshScansImport } from './routes/jobs/osh-scans'
 import { Route as JobsKojiDownstreamImport } from './routes/jobs/koji-downstream'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
@@ -42,6 +43,7 @@ import { Route as JobsTestingFarmIdImport } from './routes/jobs_/testing-farm.$i
 import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
 import { Route as JobsPullFromUpstreamIdImport } from './routes/jobs_/pull-from-upstream.$id'
 import { Route as JobsProposeDownstreamIdImport } from './routes/jobs_/propose-downstream.$id'
+import { Route as JobsOshScansIdImport } from './routes/jobs_/osh-scans.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
 import { Route as JobsKojiDownstreamIdImport } from './routes/jobs_/koji-downstream.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
@@ -151,6 +153,11 @@ const JobsProposeDownstreamRoute = JobsProposeDownstreamImport.update({
   getParentRoute: () => JobsRoute,
 } as any)
 
+const JobsOshScansRoute = JobsOshScansImport.update({
+  path: '/osh-scans',
+  getParentRoute: () => JobsRoute,
+} as any)
+
 const JobsKojiDownstreamRoute = JobsKojiDownstreamImport.update({
   path: '/koji-downstream',
   getParentRoute: () => JobsRoute,
@@ -217,6 +224,11 @@ const JobsPullFromUpstreamIdRoute = JobsPullFromUpstreamIdImport.update({
 
 const JobsProposeDownstreamIdRoute = JobsProposeDownstreamIdImport.update({
   path: '/jobs/propose-downstream/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JobsOshScansIdRoute = JobsOshScansIdImport.update({
+  path: '/jobs/osh-scans/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -351,6 +363,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiDownstreamImport
       parentRoute: typeof JobsImport
     }
+    '/jobs/osh-scans': {
+      id: '/jobs/osh-scans'
+      path: '/osh-scans'
+      fullPath: '/jobs/osh-scans'
+      preLoaderRoute: typeof JobsOshScansImport
+      parentRoute: typeof JobsImport
+    }
     '/jobs/propose-downstream': {
       id: '/jobs/propose-downstream'
       path: '/propose-downstream'
@@ -463,6 +482,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiIdImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/osh-scans/$id': {
+      id: '/jobs/osh-scans/$id'
+      path: '/jobs/osh-scans/$id'
+      fullPath: '/jobs/osh-scans/$id'
+      preLoaderRoute: typeof JobsOshScansIdImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/propose-downstream/$id': {
       id: '/jobs/propose-downstream/$id'
       path: '/jobs/propose-downstream/$id'
@@ -519,6 +545,7 @@ interface JobsRouteChildren {
   JobsKojiRoute: typeof JobsKojiRoute
   JobsKojiBuildsRoute: typeof JobsKojiBuildsRoute
   JobsKojiDownstreamRoute: typeof JobsKojiDownstreamRoute
+  JobsOshScansRoute: typeof JobsOshScansRoute
   JobsProposeDownstreamRoute: typeof JobsProposeDownstreamRoute
   JobsProposeDownstreamsRoute: typeof JobsProposeDownstreamsRoute
   JobsPullFromUpstreamRoute: typeof JobsPullFromUpstreamRoute
@@ -539,6 +566,7 @@ const JobsRouteChildren: JobsRouteChildren = {
   JobsKojiRoute: JobsKojiRoute,
   JobsKojiBuildsRoute: JobsKojiBuildsRoute,
   JobsKojiDownstreamRoute: JobsKojiDownstreamRoute,
+  JobsOshScansRoute: JobsOshScansRoute,
   JobsProposeDownstreamRoute: JobsProposeDownstreamRoute,
   JobsProposeDownstreamsRoute: JobsProposeDownstreamsRoute,
   JobsPullFromUpstreamRoute: JobsPullFromUpstreamRoute,
@@ -567,6 +595,7 @@ export interface FileRoutesByFullPath {
   '/jobs/koji': typeof JobsKojiRoute
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/osh-scans': typeof JobsOshScansRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
   '/jobs/pull-from-upstream': typeof JobsPullFromUpstreamRoute
@@ -583,6 +612,7 @@ export interface FileRoutesByFullPath {
   '/jobs/copr/$id': typeof JobsCoprIdRoute
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/osh-scans/$id': typeof JobsOshScansIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
   '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
@@ -605,6 +635,7 @@ export interface FileRoutesByTo {
   '/jobs/koji': typeof JobsKojiRoute
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/osh-scans': typeof JobsOshScansRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
   '/jobs/pull-from-upstream': typeof JobsPullFromUpstreamRoute
@@ -621,6 +652,7 @@ export interface FileRoutesByTo {
   '/jobs/copr/$id': typeof JobsCoprIdRoute
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/osh-scans/$id': typeof JobsOshScansIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
   '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
@@ -645,6 +677,7 @@ export interface FileRoutesById {
   '/jobs/koji': typeof JobsKojiRoute
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/osh-scans': typeof JobsOshScansRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
   '/jobs/pull-from-upstream': typeof JobsPullFromUpstreamRoute
@@ -661,6 +694,7 @@ export interface FileRoutesById {
   '/jobs/copr/$id': typeof JobsCoprIdRoute
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/osh-scans/$id': typeof JobsOshScansIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
   '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
@@ -686,6 +720,7 @@ export interface FileRouteTypes {
     | '/jobs/koji'
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
+    | '/jobs/osh-scans'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
     | '/jobs/pull-from-upstream'
@@ -702,6 +737,7 @@ export interface FileRouteTypes {
     | '/jobs/copr/$id'
     | '/jobs/koji-downstream/$id'
     | '/jobs/koji/$id'
+    | '/jobs/osh-scans/$id'
     | '/jobs/propose-downstream/$id'
     | '/jobs/pull-from-upstream/$id'
     | '/jobs/srpm/$id'
@@ -723,6 +759,7 @@ export interface FileRouteTypes {
     | '/jobs/koji'
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
+    | '/jobs/osh-scans'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
     | '/jobs/pull-from-upstream'
@@ -739,6 +776,7 @@ export interface FileRouteTypes {
     | '/jobs/copr/$id'
     | '/jobs/koji-downstream/$id'
     | '/jobs/koji/$id'
+    | '/jobs/osh-scans/$id'
     | '/jobs/propose-downstream/$id'
     | '/jobs/pull-from-upstream/$id'
     | '/jobs/srpm/$id'
@@ -761,6 +799,7 @@ export interface FileRouteTypes {
     | '/jobs/koji'
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
+    | '/jobs/osh-scans'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
     | '/jobs/pull-from-upstream'
@@ -777,6 +816,7 @@ export interface FileRouteTypes {
     | '/jobs/copr/$id'
     | '/jobs/koji-downstream/$id'
     | '/jobs/koji/$id'
+    | '/jobs/osh-scans/$id'
     | '/jobs/propose-downstream/$id'
     | '/jobs/pull-from-upstream/$id'
     | '/jobs/srpm/$id'
@@ -800,6 +840,7 @@ export interface RootRouteChildren {
   JobsCoprIdRoute: typeof JobsCoprIdRoute
   JobsKojiDownstreamIdRoute: typeof JobsKojiDownstreamIdRoute
   JobsKojiIdRoute: typeof JobsKojiIdRoute
+  JobsOshScansIdRoute: typeof JobsOshScansIdRoute
   JobsProposeDownstreamIdRoute: typeof JobsProposeDownstreamIdRoute
   JobsPullFromUpstreamIdRoute: typeof JobsPullFromUpstreamIdRoute
   JobsSrpmIdRoute: typeof JobsSrpmIdRoute
@@ -822,6 +863,7 @@ const rootRouteChildren: RootRouteChildren = {
   JobsCoprIdRoute: JobsCoprIdRoute,
   JobsKojiDownstreamIdRoute: JobsKojiDownstreamIdRoute,
   JobsKojiIdRoute: JobsKojiIdRoute,
+  JobsOshScansIdRoute: JobsOshScansIdRoute,
   JobsProposeDownstreamIdRoute: JobsProposeDownstreamIdRoute,
   JobsPullFromUpstreamIdRoute: JobsPullFromUpstreamIdRoute,
   JobsSrpmIdRoute: JobsSrpmIdRoute,
@@ -855,6 +897,7 @@ export const routeTree = rootRoute
         "/jobs/copr/$id",
         "/jobs/koji-downstream/$id",
         "/jobs/koji/$id",
+        "/jobs/osh-scans/$id",
         "/jobs/propose-downstream/$id",
         "/jobs/pull-from-upstream/$id",
         "/jobs/srpm/$id",
@@ -877,6 +920,7 @@ export const routeTree = rootRoute
         "/jobs/koji",
         "/jobs/koji-builds",
         "/jobs/koji-downstream",
+        "/jobs/osh-scans",
         "/jobs/propose-downstream",
         "/jobs/propose-downstreams",
         "/jobs/pull-from-upstream",
@@ -930,6 +974,10 @@ export const routeTree = rootRoute
     },
     "/jobs/koji-downstream": {
       "filePath": "jobs/koji-downstream.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/osh-scans": {
+      "filePath": "jobs/osh-scans.tsx",
       "parent": "/jobs"
     },
     "/jobs/propose-downstream": {
@@ -988,6 +1036,9 @@ export const routeTree = rootRoute
     },
     "/jobs/koji/$id": {
       "filePath": "jobs_/koji.$id.tsx"
+    },
+    "/jobs/osh-scans/$id": {
+      "filePath": "jobs_/osh-scans.$id.tsx"
     },
     "/jobs/propose-downstream/$id": {
       "filePath": "jobs_/propose-downstream.$id.tsx"

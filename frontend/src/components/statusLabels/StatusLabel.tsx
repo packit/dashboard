@@ -28,6 +28,7 @@ export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
 
   useEffect(() => {
     switch (props.status) {
+      case "succeeded":
       case "success":
       case "passed":
         setColor("green");
