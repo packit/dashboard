@@ -288,9 +288,9 @@ export const Route = createRootRouteWithContext<RouterContext>()({
                   <a
                     target="_blank"
                     rel="noreferrer"
-                    href="https://github.com/packit/dashboard"
+                    href="https://github.com/packit/packit-service"
                   >
-                    Service
+                    Packit Service
                   </a>
                 </ListItem>
               </List>
