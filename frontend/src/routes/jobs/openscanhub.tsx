@@ -1,12 +1,12 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { OSHScansTable } from "../../components/osh/OSHScansTable";
 
-export const Route = createFileRoute("/jobs/osh-scans")({
+export const Route = createFileRoute("/jobs/openscanhub")({
   staticData: {
-    title: "OSH scan jobs",
+    title: "OpenScanHub jobs",
   },
   component: () => OSHScansTable(),
 });

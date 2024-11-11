@@ -5,9 +5,9 @@ import { createFileRoute } from "@tanstack/react-router";
 import { OSHScan } from "../../components/osh/OSHScan";
 import { oshScanQueryOptions } from "../../queries/osh/oshScanQuery";
 
-export const Route = createFileRoute("/jobs/osh-scans/$id")({
+export const Route = createFileRoute("/jobs/openscanhub/$id")({
   staticData: {
-    title: "OSH scan job detail",
+    title: "OpenScanHub job detail",
   },
   loader: ({ context: { queryClient }, params: { id } }) =>
     queryClient.ensureQueryData(oshScanQueryOptions({ id })),
