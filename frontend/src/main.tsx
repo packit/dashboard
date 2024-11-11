@@ -13,6 +13,7 @@ import { ErrorApp } from "./components/errors/ErrorApp";
 import { NotFoundCard } from "./components/errors/NotFoundCard";
 import { Preloader } from "./components/shared/Preloader";
 import { routeTree } from "./routeTree.gen";
+import "./main.css";
 
 const queryClient = new QueryClient();
 

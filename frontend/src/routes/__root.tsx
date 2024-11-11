@@ -4,6 +4,10 @@
 import {
   Button,
   Content,
+  Grid,
+  GridItem,
+  List,
+  ListItem,
   Masthead,
   MastheadBrand,
   MastheadContent,
@@ -15,11 +19,14 @@ import {
   NavItem,
   NavList,
   Page,
+  PageBody,
+  PageSection,
   PageSidebar,
   PageSidebarBody,
   PageToggleButton,
   Popover,
   SkipToContent,
+  Title,
   ToggleGroup,
   ToggleGroupItem,
   Toolbar,
@@ -29,13 +36,13 @@ import {
 } from "@patternfly/react-core";
 import {
   BarsIcon,
+  BookOpenIcon,
   CodeBranchIcon,
-  CopyIcon,
+  DesktopIcon,
   ExternalLinkAltIcon,
+  KeyIcon,
   MoonIcon,
-  ShareSquareIcon,
   SunIcon,
-  UndoIcon,
 } from "@patternfly/react-icons";
 import { QueryClient } from "@tanstack/react-query";
 import {
@@ -205,27 +212,6 @@ export const Route = createRootRouteWithContext<RouterContext>()({
           <NavItem isActive={!!matchRoute({ to: "/usage" })}>
             <Link to={"/usage"}>Usage</Link>
           </NavItem>
-          <NavExpandable
-            title="External links"
-            groupId="nav-expandable-group-external"
-            isExpanded
-          >
-            <NavItem key="status" id="status">
-              <a href="https://status.packit.dev">Status</a>
-            </NavItem>
-            <NavItem key="blog-posts" id="blog-posts">
-              <a href="https://packit.dev/posts">Blog posts</a>
-            </NavItem>
-            <NavItem key="faq-page" id="faq-page">
-              <a
-                target="_blank"
-                href="https://packit.dev/docs/faq"
-                rel="noreferrer"
-              >
-                FAQ
-              </a>
-            </NavItem>
-          </NavExpandable>
         </NavList>
       </Nav>
     );
@@ -248,6 +234,69 @@ export const Route = createRootRouteWithContext<RouterContext>()({
         skipToContent={PageSkipToContent}
       >
         <Outlet />
+        <PageSection component="footer" variant="secondary">
+          <Grid hasGutter className="pf-v6-u-py-xl">
+            <GridItem md={4} mdOffset={1} sm={12}>
+              <Title headingLevel="h3" className="packit-footer-header">
+                Packit
+              </Title>
+              <List isPlain>
+                <ListItem>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://status.packit.dev"
+                  >
+                    Status
+                  </a>
+                </ListItem>
+                <ListItem>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://packit.dev/posts"
+                  >
+                    Blog posts
+                  </a>
+                </ListItem>
+                <ListItem>
+                  <a
+                    target="_blank"
+                    href="https://packit.dev/docs/faq"
+                    rel="noreferrer"
+                  >
+                    FAQ
+                  </a>
+                </ListItem>
+              </List>
+            </GridItem>
+            <GridItem md={3} sm={12}>
+              <Title headingLevel="h3" className="packit-footer-header">
+                GitHub
+              </Title>
+              <List isPlain>
+                <ListItem>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://github.com/packit/dashboard"
+                  >
+                    Dashboard
+                  </a>
+                </ListItem>
+                <ListItem>
+                  <a
+                    target="_blank"
+                    rel="noreferrer"
+                    href="https://github.com/packit/dashboard"
+                  >
+                    Service
+                  </a>
+                </ListItem>
+              </List>
+            </GridItem>
+          </Grid>
+        </PageSection>
       </Page>
     );
   },
