@@ -1,0 +1,9 @@
+.packit-footer {
+  color: var(--pf-t--global--text--color--regular);
+  background-color: var(--pf-t--global--background--color--secondary--default);
+  z-index: 1;
+}
+
+.packit-footer-header {
+  margin-bottom: var(--pf-t--global--spacer--md)
+}
