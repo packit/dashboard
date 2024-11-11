@@ -22,7 +22,7 @@ import {
   TriggerSuffix,
 } from "../../components/trigger/TriggerLink";
 import { oshScansQueryOptions } from "../../queries/osh/oshScansQuery";
-import { ForgeIcon, ForgeIconByForge } from "../icons/ForgeIcon";
+import { ForgeIcon } from "../icons/ForgeIcon";
 import { LoadMore } from "../shared/LoadMore";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 
@@ -31,9 +31,9 @@ const OSHScansTable = () => {
   const columnNames = {
     forge: "Forge",
     trigger: "Trigger",
-    scan: "OpenScanHub task",
-    branch: "Scan details",
+    scanDetails: "Scan details",
     timeProcessed: "Time Processed",
+    scan: "OpenScanHub task",
   };
 
   const {
@@ -55,8 +55,8 @@ const OSHScansTable = () => {
     <Th key={columnNames.trigger} width={35}>
       {columnNames.trigger}
     </Th>,
-    <Th key={columnNames.branch} width={20}>
-      {columnNames.branch}
+    <Th key={columnNames.scanDetails} width={20}>
+      {columnNames.scanDetails}
     </Th>,
     <Th key={columnNames.timeProcessed} width={20}>
       {columnNames.timeProcessed}
@@ -75,7 +75,7 @@ const OSHScansTable = () => {
     return (
       <SkeletonTable
         variant={TableVariant.compact}
-        rows={10}
+        rowsCount={10}
         columns={TableHeads}
       />
     );
@@ -100,17 +100,17 @@ const OSHScansTable = () => {
                   </TriggerLink>
                 </strong>
               </Td>
-              <Td dataLabel={columnNames.branch}>
+              <Td dataLabel={columnNames.scanDetails}>
                 <StatusLabel
                   target={"rawhide"}
                   status={scan.status}
-                  link={`/jobs/osh-scans/${scan.packit_id}`}
+                  link={`/jobs/openscanhub/${scan.packit_id}`}
                 />
               </Td>
               <Td dataLabel={columnNames.timeProcessed}>
                 <Timestamp stamp={scan.submitted_time} />
               </Td>
-              <Td dataLabel={columnNames.bodhiUpdate}>
+              <Td dataLabel={columnNames.scan}>
                 <strong>
                   <a href={scan.url ?? ""} target="_blank" rel="noreferrer">
                     {scan.task_id}

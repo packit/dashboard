@@ -392,26 +392,27 @@ export interface PipelineRun {
 
 // /api/osh-scans
 export interface OSHScanGroup {
-  packit_id: number;
   anitya_package: string | null;
   anitya_project_id: number | null;
   anitya_project_name: string | null;
   anitya_version: string | null;
   branch_name: string | null;
   commit_sha: string;
+  copr_build_target_id: number;
+  issues_added_url: string;
+  issues_fixed_url: string;
   non_git_upstream: boolean;
+  packit_id: number;
   pr_id: number | null;
   project_url: string;
   release: string | null;
   repo_name: string;
   repo_namespace: string;
-  copr_build_target_id: number;
+  scan_results_url: string;
   status: string;
+  submitted_time: number | null;
   task_id: number;
   url: string;
-  issues_added_url: string;
-  issues_fixed_url: string;
-  scan_results_url: string;
 }
 
 // /api/osh-scans/$id
@@ -422,17 +423,18 @@ export interface OSHScan {
   anitya_version: string | null;
   branch_name: string | null;
   commit_sha: string;
+  copr_build_target_id: number;
+  issues_added_url: string;
+  issues_fixed_url: string;
   non_git_upstream: boolean;
   pr_id: number | null;
   project_url: string;
   release: string | null;
   repo_name: string;
   repo_namespace: string;
-  copr_build_target_id: number;
+  scan_results_url: string;
   status: string;
+  submitted_time: number | null;
   task_id: number;
   url: string;
-  issues_added_url: string;
-  issues_fixed_url: string;
-  scan_results_url: string;
 }

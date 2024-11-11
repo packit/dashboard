@@ -9,12 +9,14 @@ import {
   DescriptionListDescription,
   DescriptionListGroup,
   DescriptionListTerm,
+  List,
+  ListItem,
   PageSection,
   Title,
 } from "@patternfly/react-core";
 import { useQuery } from "@tanstack/react-query";
 import { oshScanQueryOptions } from "../../queries/osh/oshScanQuery";
-import { Route as OSHScanRoute } from "../../routes/jobs_/osh-scans.$id";
+import { Route as OSHScanRoute } from "../../routes/jobs_/openscanhub.$id";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { LabelLink } from "../shared/LabelLink";
 import { Preloader } from "../shared/Preloader";
@@ -91,33 +93,35 @@ export const OSHScan = () => {
                   <>
                     <DescriptionListTerm>Result files</DescriptionListTerm>
                     <DescriptionListDescription>
-                      <div>
-                        <a
-                          href={data.issues_added_url}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          Added issues
-                        </a>
-                      </div>
-                      <div>
-                        <a
-                          href={data.issues_fixed_url}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          Fixed issues
-                        </a>
-                      </div>
-                      <div>
-                        <a
-                          href={data.scan_results_url}
-                          rel="noreferrer"
-                          target="_blank"
-                        >
-                          All results
-                        </a>
-                      </div>
+                      <List>
+                        <ListItem>
+                          <a
+                            href={data.issues_added_url}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            Added issues
+                          </a>
+                        </ListItem>
+                        <ListItem>
+                          <a
+                            href={data.issues_fixed_url}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            Fixed issues
+                          </a>
+                        </ListItem>
+                        <ListItem>
+                          <a
+                            href={data.scan_results_url}
+                            rel="noreferrer"
+                            target="_blank"
+                          >
+                            All results
+                          </a>
+                        </ListItem>
+                      </List>
                     </DescriptionListDescription>
                   </>
                 ) : (
