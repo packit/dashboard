@@ -389,3 +389,50 @@ export interface PipelineRun {
     | null;
   vm_image_build: unknown[]; //TODO - @Venefilyn - No clue what it should be
 }
+
+// /api/osh-scans
+export interface OSHScanGroup {
+  packit_id: number;
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
+  branch_name: string | null;
+  commit_sha: string;
+  non_git_upstream: boolean;
+  pr_id: number | null;
+  project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  copr_build_target_id: number;
+  status: string;
+  task_id: number;
+  url: string;
+  issues_added_url: string;
+  issues_fixed_url: string;
+  scan_results_url: string;
+}
+
+// /api/osh-scans/$id
+export interface OSHScan {
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
+  branch_name: string | null;
+  commit_sha: string;
+  non_git_upstream: boolean;
+  pr_id: number | null;
+  project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  copr_build_target_id: number;
+  status: string;
+  task_id: number;
+  url: string;
+  issues_added_url: string;
+  issues_fixed_url: string;
+  scan_results_url: string;
+}
