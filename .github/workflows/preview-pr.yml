@@ -32,7 +32,7 @@ jobs:
         with:
           node-version: "20"
           cache: "pnpm"
-          cache-dependency-path: frontend/pnpm-lock.yaml
+          cache-dependency-path: pnpm-lock.yaml
 
       # Yes, we really need to get the PR changes
       - name: Get the PR changes
