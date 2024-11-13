@@ -4,7 +4,13 @@
 import {
   Card,
   CardBody,
+  ClipboardCopy,
   Content,
+  DataList,
+  DataListCell,
+  DataListItem,
+  DataListItemCells,
+  DataListItemRow,
   List,
   ListItem,
   PageSection,
@@ -12,6 +18,7 @@ import {
 } from "@patternfly/react-core";
 
 import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import { CoprBuildPackage } from "../../apiDefinitions";
 import { coprBuildQueryOptions } from "../../queries/copr/coprBuildQuery";
 import { Route as CoprRoute } from "../../routes/jobs_/copr.$id";
@@ -25,6 +32,12 @@ export const CoprBuild = () => {
   const { id } = CoprRoute.useParams();
 
   const { data, isError, isLoading } = useQuery(coprBuildQueryOptions({ id }));
+
+  const [packagesToInstall, setPackagesToInstall] = useState<string[]>([]);
+
+  useEffect(() => {
+    if (data) setPackagesToInstall(getPackagesToInstall(data.built_packages));
+  }, [data?.built_packages]);
 
   // If backend API is down
   if (isError) {
@@ -79,32 +92,77 @@ export const CoprBuild = () => {
             <Card>
               <CardBody>
                 <Content component="p">
-                  <strong>
-                    You can install the built RPMs by following these steps:
-                  </strong>
-                </Content>
-                <br />
-                <List>
-                  <ListItem>
-                    <code>sudo dnf install -y dnf-plugins-core</code>
-                  </ListItem>
-                  <ListItem>
-                    <code>
-                      sudo dnf copr enable {data.copr_owner}/{data.copr_project}{" "}
-                      {data.chroot}
-                    </code>
-                  </ListItem>
-                  <ListItem>
-                    <code>
-                      sudo dnf install -y{" "}
-                      {getPackagesToInstall(data.built_packages).join(" ")}
-                    </code>
-                  </ListItem>
-                </List>
-                <Content component="p">
-                  <br />
+                  <Title headingLevel="h2">Installation instructions</Title>
                   Please note that the RPMs should be used only in a testing
-                  environment.
+                  environment
+                </Content>
+                <Content component="p">
+                  <Title headingLevel="h3">Repository</Title>
+                  <List isPlain>
+                    <ListItem>
+                      <ClipboardCopy
+                        hoverTip="Copy"
+                        clickTip="Copied"
+                        variant="inline-compact"
+                        isCode
+                      >
+                        sudo dnf install -y 'dnf*-command(copr)'
+                      </ClipboardCopy>
+                    </ListItem>
+                    <ListItem>
+                      <ClipboardCopy
+                        hoverTip="Copy"
+                        clickTip="Copied"
+                        variant="inline-compact"
+                        isCode
+                      >
+                        sudo dnf copr enable {data.copr_owner}/
+                        {data.copr_project} {data.chroot}
+                      </ClipboardCopy>
+                    </ListItem>
+                  </List>
+                </Content>
+                <Content component="p">
+                  <Title headingLevel="h3">Built packages</Title>
+                  {packagesToInstall.length <= 1 ? (
+                    <>
+                      <ClipboardCopy
+                        hoverTip="Copy"
+                        clickTip="Copied"
+                        variant="inline-compact"
+                        isCode
+                      >
+                        sudo dnf install -y {packagesToInstall.join(" ")}
+                      </ClipboardCopy>
+                    </>
+                  ) : (
+                    <>
+                      <Title headingLevel="h4">All packages</Title>
+                      <ClipboardCopy
+                        hoverTip="Copy"
+                        clickTip="Copied"
+                        variant="inline-compact"
+                        isCode
+                      >
+                        sudo dnf install -y {packagesToInstall.join(" ")}
+                      </ClipboardCopy>
+                      <Title headingLevel="h4">Individual packages</Title>
+                      <List isPlain>
+                        {packagesToInstall.map((pkg) => (
+                          <ListItem>
+                            <ClipboardCopy
+                              hoverTip="Copy"
+                              clickTip="Copied"
+                              variant="inline-compact"
+                              isCode
+                            >
+                              sudo dnf install -y {pkg}
+                            </ClipboardCopy>
+                          </ListItem>
+                        ))}
+                      </List>
+                    </>
+                  )}
                 </Content>
               </CardBody>
             </Card>
