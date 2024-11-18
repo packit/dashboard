@@ -34,6 +34,7 @@ const OSHScansTable = () => {
     scanDetails: "Scan details",
     timeProcessed: "Time Processed",
     scan: "OpenScanHub task",
+    newFindings: "New findings",
   };
 
   const {
@@ -57,6 +58,9 @@ const OSHScansTable = () => {
     </Th>,
     <Th key={columnNames.scanDetails} width={20}>
       {columnNames.scanDetails}
+    </Th>,
+    <Th key={columnNames.newFindings} width={15}>
+      {columnNames.newFindings}
     </Th>,
     <Th key={columnNames.timeProcessed} width={20}>
       {columnNames.timeProcessed}
@@ -106,6 +110,9 @@ const OSHScansTable = () => {
                   status={scan.status}
                   link={`/jobs/openscanhub/${scan.packit_id}`}
                 />
+              </Td>
+              <Td dataLabel={columnNames.newFindings}>
+                {scan.issues_added_count ?? "N/A"}
               </Td>
               <Td dataLabel={columnNames.timeProcessed}>
                 <Timestamp stamp={scan.submitted_time} />

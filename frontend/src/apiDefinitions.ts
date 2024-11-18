@@ -399,6 +399,7 @@ export interface OSHScanGroup {
   branch_name: string | null;
   commit_sha: string;
   copr_build_target_id: number;
+  issues_added_count: number | null;
   issues_added_url: string;
   issues_fixed_url: string;
   non_git_upstream: boolean;
@@ -424,6 +425,7 @@ export interface OSHScan {
   branch_name: string | null;
   commit_sha: string;
   copr_build_target_id: number;
+  issues_added_count: number | null;
   issues_added_url: string;
   issues_fixed_url: string;
   non_git_upstream: boolean;
