@@ -116,8 +116,7 @@ export const CoprBuild = () => {
                         variant="inline-compact"
                         isCode
                       >
-                        sudo dnf copr enable {data.copr_owner}/
-                        {data.copr_project} {data.chroot}
+                        {`sudo dnf copr enable ${data.copr_owner}/${data.copr_project} ${data.chroot}`}
                       </ClipboardCopy>
                     </ListItem>
                   </List>
