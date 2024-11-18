@@ -36,7 +36,8 @@ export const CoprBuild = () => {
   const [packagesToInstall, setPackagesToInstall] = useState<string[]>([]);
 
   useEffect(() => {
-    if (data) setPackagesToInstall(getPackagesToInstall(data.built_packages));
+    if (data?.built_packages)
+      setPackagesToInstall(getPackagesToInstall(data.built_packages));
   }, [data?.built_packages]);
 
   // If backend API is down

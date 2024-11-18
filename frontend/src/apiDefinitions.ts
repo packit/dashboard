@@ -112,7 +112,7 @@ export interface CoprBuild {
   build_logs_url: string;
   build_start_time: number;
   build_submitted_time: number;
-  built_packages: CoprBuildPackage[];
+  built_packages: CoprBuildPackage[] | null;
   chroot: string;
   commit_sha: string;
   copr_owner: string;
