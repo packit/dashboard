@@ -91,6 +91,10 @@ export const OSHScan = () => {
 
                 {data.status === "succeeded" ? (
                   <>
+                    <DescriptionListTerm>New findings</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      {data.issues_added_count ?? "N/A"}
+                    </DescriptionListDescription>
                     <DescriptionListTerm>Result files</DescriptionListTerm>
                     <DescriptionListDescription>
                       <List>
