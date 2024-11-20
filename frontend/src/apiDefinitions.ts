@@ -180,6 +180,51 @@ export interface KojiBuild {
   web_url: string;
 }
 
+// /api/koji-tag-requests
+export interface KojiTagRequestGroup {
+  branch_name: string | null;
+  tag_request_submitted_time: number;
+  chroot: string;
+  sidetag: string;
+  nvr: string;
+  packit_id: number;
+  // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
+  // They seem to be mutually exclusive so can be sure one is null and other is string
+  pr_id: number | null;
+  project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  task_id: string | null;
+  web_url: string;
+}
+
+// /api/koji-tag-requests/$id
+export interface KojiTagRequest {
+  anitya_package: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_version: string | null;
+  branch_name: string | null;
+  tag_request_submitted_time: number;
+  chroot: string;
+  sidetag: string;
+  nvr: string;
+  commit_sha: string;
+  issue_id: number | null;
+  non_git_upstream: boolean;
+  // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
+  // They seem to be mutually exclusive so can be sure one is null and other is string
+  pr_id: number | null;
+  project_url: string;
+  release: string | null;
+  repo_name: string;
+  repo_namespace: string;
+  run_ids: number[];
+  task_id: string;
+  web_url: string;
+}
+
 // /api/srpm-builds
 export interface SRPMBuildGroup {
   branch_name: string | null;

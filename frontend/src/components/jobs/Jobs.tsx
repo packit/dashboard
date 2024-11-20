@@ -64,6 +64,11 @@ const Jobs = () => {
           <NavItem isActive={!!matchRoute(jobTypeObject("openscanhub"))}>
             <Link {...jobTypeObject("openscanhub")}>OpenScanHub</Link>
           </NavItem>
+          <NavItem isActive={!!matchRoute(jobTypeObject("koji-tag-requests"))}>
+            <Link {...jobTypeObject("koji-tag-requests")}>
+              Koji Tagging Requests
+            </Link>
+          </NavItem>
         </NavList>
       </Nav>
       <PageSection hasBodyWrapper={false}>
