@@ -31,6 +31,7 @@ import { Route as JobsPullFromUpstreamImport } from './routes/jobs/pull-from-ups
 import { Route as JobsProposeDownstreamsImport } from './routes/jobs/propose-downstreams'
 import { Route as JobsProposeDownstreamImport } from './routes/jobs/propose-downstream'
 import { Route as JobsOpenscanhubImport } from './routes/jobs/openscanhub'
+import { Route as JobsKojiTagRequestsImport } from './routes/jobs/koji-tag-requests'
 import { Route as JobsKojiDownstreamImport } from './routes/jobs/koji-downstream'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
 import { Route as JobsKojiImport } from './routes/jobs/koji'
@@ -45,6 +46,7 @@ import { Route as JobsPullFromUpstreamIdImport } from './routes/jobs_/pull-from-
 import { Route as JobsProposeDownstreamIdImport } from './routes/jobs_/propose-downstream.$id'
 import { Route as JobsOpenscanhubIdImport } from './routes/jobs_/openscanhub.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
+import { Route as JobsKojiTagRequestIdImport } from './routes/jobs_/koji-tag-request.$id'
 import { Route as JobsKojiDownstreamIdImport } from './routes/jobs_/koji-downstream.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
@@ -158,6 +160,11 @@ const JobsOpenscanhubRoute = JobsOpenscanhubImport.update({
   getParentRoute: () => JobsRoute,
 } as any)
 
+const JobsKojiTagRequestsRoute = JobsKojiTagRequestsImport.update({
+  path: '/koji-tag-requests',
+  getParentRoute: () => JobsRoute,
+} as any)
+
 const JobsKojiDownstreamRoute = JobsKojiDownstreamImport.update({
   path: '/koji-downstream',
   getParentRoute: () => JobsRoute,
@@ -234,6 +241,11 @@ const JobsOpenscanhubIdRoute = JobsOpenscanhubIdImport.update({
 
 const JobsKojiIdRoute = JobsKojiIdImport.update({
   path: '/jobs/koji/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
+const JobsKojiTagRequestIdRoute = JobsKojiTagRequestIdImport.update({
+  path: '/jobs/koji-tag-request/$id',
   getParentRoute: () => rootRoute,
 } as any)
 
@@ -363,6 +375,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiDownstreamImport
       parentRoute: typeof JobsImport
     }
+    '/jobs/koji-tag-requests': {
+      id: '/jobs/koji-tag-requests'
+      path: '/koji-tag-requests'
+      fullPath: '/jobs/koji-tag-requests'
+      preLoaderRoute: typeof JobsKojiTagRequestsImport
+      parentRoute: typeof JobsImport
+    }
     '/jobs/openscanhub': {
       id: '/jobs/openscanhub'
       path: '/openscanhub'
@@ -475,6 +494,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiDownstreamIdImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/koji-tag-request/$id': {
+      id: '/jobs/koji-tag-request/$id'
+      path: '/jobs/koji-tag-request/$id'
+      fullPath: '/jobs/koji-tag-request/$id'
+      preLoaderRoute: typeof JobsKojiTagRequestIdImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/koji/$id': {
       id: '/jobs/koji/$id'
       path: '/jobs/koji/$id'
@@ -545,6 +571,7 @@ interface JobsRouteChildren {
   JobsKojiRoute: typeof JobsKojiRoute
   JobsKojiBuildsRoute: typeof JobsKojiBuildsRoute
   JobsKojiDownstreamRoute: typeof JobsKojiDownstreamRoute
+  JobsKojiTagRequestsRoute: typeof JobsKojiTagRequestsRoute
   JobsOpenscanhubRoute: typeof JobsOpenscanhubRoute
   JobsProposeDownstreamRoute: typeof JobsProposeDownstreamRoute
   JobsProposeDownstreamsRoute: typeof JobsProposeDownstreamsRoute
@@ -566,6 +593,7 @@ const JobsRouteChildren: JobsRouteChildren = {
   JobsKojiRoute: JobsKojiRoute,
   JobsKojiBuildsRoute: JobsKojiBuildsRoute,
   JobsKojiDownstreamRoute: JobsKojiDownstreamRoute,
+  JobsKojiTagRequestsRoute: JobsKojiTagRequestsRoute,
   JobsOpenscanhubRoute: JobsOpenscanhubRoute,
   JobsProposeDownstreamRoute: JobsProposeDownstreamRoute,
   JobsProposeDownstreamsRoute: JobsProposeDownstreamsRoute,
@@ -595,6 +623,7 @@ export interface FileRoutesByFullPath {
   '/jobs/koji': typeof JobsKojiRoute
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/koji-tag-requests': typeof JobsKojiTagRequestsRoute
   '/jobs/openscanhub': typeof JobsOpenscanhubRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
@@ -611,6 +640,7 @@ export interface FileRoutesByFullPath {
   '/jobs/bodhi/$id': typeof JobsBodhiIdRoute
   '/jobs/copr/$id': typeof JobsCoprIdRoute
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
+  '/jobs/koji-tag-request/$id': typeof JobsKojiTagRequestIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
   '/jobs/openscanhub/$id': typeof JobsOpenscanhubIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
@@ -635,6 +665,7 @@ export interface FileRoutesByTo {
   '/jobs/koji': typeof JobsKojiRoute
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/koji-tag-requests': typeof JobsKojiTagRequestsRoute
   '/jobs/openscanhub': typeof JobsOpenscanhubRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
@@ -651,6 +682,7 @@ export interface FileRoutesByTo {
   '/jobs/bodhi/$id': typeof JobsBodhiIdRoute
   '/jobs/copr/$id': typeof JobsCoprIdRoute
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
+  '/jobs/koji-tag-request/$id': typeof JobsKojiTagRequestIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
   '/jobs/openscanhub/$id': typeof JobsOpenscanhubIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
@@ -677,6 +709,7 @@ export interface FileRoutesById {
   '/jobs/koji': typeof JobsKojiRoute
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
+  '/jobs/koji-tag-requests': typeof JobsKojiTagRequestsRoute
   '/jobs/openscanhub': typeof JobsOpenscanhubRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
@@ -693,6 +726,7 @@ export interface FileRoutesById {
   '/jobs/bodhi/$id': typeof JobsBodhiIdRoute
   '/jobs/copr/$id': typeof JobsCoprIdRoute
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
+  '/jobs/koji-tag-request/$id': typeof JobsKojiTagRequestIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
   '/jobs/openscanhub/$id': typeof JobsOpenscanhubIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
@@ -720,6 +754,7 @@ export interface FileRouteTypes {
     | '/jobs/koji'
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
+    | '/jobs/koji-tag-requests'
     | '/jobs/openscanhub'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
@@ -736,6 +771,7 @@ export interface FileRouteTypes {
     | '/jobs/bodhi/$id'
     | '/jobs/copr/$id'
     | '/jobs/koji-downstream/$id'
+    | '/jobs/koji-tag-request/$id'
     | '/jobs/koji/$id'
     | '/jobs/openscanhub/$id'
     | '/jobs/propose-downstream/$id'
@@ -759,6 +795,7 @@ export interface FileRouteTypes {
     | '/jobs/koji'
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
+    | '/jobs/koji-tag-requests'
     | '/jobs/openscanhub'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
@@ -775,6 +812,7 @@ export interface FileRouteTypes {
     | '/jobs/bodhi/$id'
     | '/jobs/copr/$id'
     | '/jobs/koji-downstream/$id'
+    | '/jobs/koji-tag-request/$id'
     | '/jobs/koji/$id'
     | '/jobs/openscanhub/$id'
     | '/jobs/propose-downstream/$id'
@@ -799,6 +837,7 @@ export interface FileRouteTypes {
     | '/jobs/koji'
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
+    | '/jobs/koji-tag-requests'
     | '/jobs/openscanhub'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
@@ -815,6 +854,7 @@ export interface FileRouteTypes {
     | '/jobs/bodhi/$id'
     | '/jobs/copr/$id'
     | '/jobs/koji-downstream/$id'
+    | '/jobs/koji-tag-request/$id'
     | '/jobs/koji/$id'
     | '/jobs/openscanhub/$id'
     | '/jobs/propose-downstream/$id'
@@ -839,6 +879,7 @@ export interface RootRouteChildren {
   JobsBodhiIdRoute: typeof JobsBodhiIdRoute
   JobsCoprIdRoute: typeof JobsCoprIdRoute
   JobsKojiDownstreamIdRoute: typeof JobsKojiDownstreamIdRoute
+  JobsKojiTagRequestIdRoute: typeof JobsKojiTagRequestIdRoute
   JobsKojiIdRoute: typeof JobsKojiIdRoute
   JobsOpenscanhubIdRoute: typeof JobsOpenscanhubIdRoute
   JobsProposeDownstreamIdRoute: typeof JobsProposeDownstreamIdRoute
@@ -862,6 +903,7 @@ const rootRouteChildren: RootRouteChildren = {
   JobsBodhiIdRoute: JobsBodhiIdRoute,
   JobsCoprIdRoute: JobsCoprIdRoute,
   JobsKojiDownstreamIdRoute: JobsKojiDownstreamIdRoute,
+  JobsKojiTagRequestIdRoute: JobsKojiTagRequestIdRoute,
   JobsKojiIdRoute: JobsKojiIdRoute,
   JobsOpenscanhubIdRoute: JobsOpenscanhubIdRoute,
   JobsProposeDownstreamIdRoute: JobsProposeDownstreamIdRoute,
@@ -896,6 +938,7 @@ export const routeTree = rootRoute
         "/jobs/bodhi/$id",
         "/jobs/copr/$id",
         "/jobs/koji-downstream/$id",
+        "/jobs/koji-tag-request/$id",
         "/jobs/koji/$id",
         "/jobs/openscanhub/$id",
         "/jobs/propose-downstream/$id",
@@ -920,6 +963,7 @@ export const routeTree = rootRoute
         "/jobs/koji",
         "/jobs/koji-builds",
         "/jobs/koji-downstream",
+        "/jobs/koji-tag-requests",
         "/jobs/openscanhub",
         "/jobs/propose-downstream",
         "/jobs/propose-downstreams",
@@ -974,6 +1018,10 @@ export const routeTree = rootRoute
     },
     "/jobs/koji-downstream": {
       "filePath": "jobs/koji-downstream.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/koji-tag-requests": {
+      "filePath": "jobs/koji-tag-requests.tsx",
       "parent": "/jobs"
     },
     "/jobs/openscanhub": {
@@ -1033,6 +1081,9 @@ export const routeTree = rootRoute
     },
     "/jobs/koji-downstream/$id": {
       "filePath": "jobs_/koji-downstream.$id.tsx"
+    },
+    "/jobs/koji-tag-request/$id": {
+      "filePath": "jobs_/koji-tag-request.$id.tsx"
     },
     "/jobs/koji/$id": {
       "filePath": "jobs_/koji.$id.tsx"
