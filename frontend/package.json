@@ -43,7 +43,8 @@
     "build": "vite build",
     "build:analyze": "vite-bundle-visualizer --open",
     "preview": "vite preview",
-    "test": "vitest"
+    "test": "vitest",
+    "coverage": "vitest run --coverage"
   },
   "browserslist": {
     "production": [
@@ -61,7 +62,8 @@
     "@biomejs/biome": "1.8.3",
     "babel-plugin-named-exports-order": "^0.0.2",
     "prop-types": "^15.8.1",
-    "vitest": "^2.1.2"
+    "vitest": "^2.1.5",
+    "@vitest/coverage-v8": "^2.1.5"
   },
   "engines": {
     "node": ">=20",

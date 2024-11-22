@@ -50,5 +50,11 @@ export default defineConfig(() => ({
   },
   test: {
     environment: "happy-dom",
+    reporters: process.env.GITHUB_ACTIONS ? ['dot', 'github-actions'] : ['dot'],
+    include: ["src"],
   },
+  coverage: {
+    provider: "v8",
+    include: ["src"]
+  }
 }));

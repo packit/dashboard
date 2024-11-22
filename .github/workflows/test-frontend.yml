@@ -1,0 +1,35 @@
+name: Test frontend
+on:
+  push:
+    branches:
+      - main
+      - stable
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  run-vitest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+          run_install: false
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "pnpm"
+          cache-dependency-path: pnpm-lock.yaml
+
+      - name: Install and Build
+        run: |
+          (cd frontend && pnpm install);
+          make .install-logos
+          API_URL="https://prod.packit.dev/api" make transpile-prod
+
+      - name: Run Vitest
+        run: make test_frontend_coverage

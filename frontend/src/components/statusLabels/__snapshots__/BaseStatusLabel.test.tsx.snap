@@ -10,33 +10,37 @@ exports[`default label > default label 1`] = `
         style="padding: 2px;"
       >
         <span
-          class="pf-v5-c-label pf-m-blue"
+          class="pf-v6-c-label pf-m-blue pf-m-filled"
         >
           <span
-            class="pf-v5-c-label__icon"
+            class="pf-v6-c-label__content"
           >
-            <svg
-              aria-hidden="true"
-              class="pf-v5-svg"
-              fill="currentColor"
-              height="1em"
-              role="img"
-              viewBox="0 0 448 512"
-              width="1em"
-            >
-              <path
-                d="M368 160h-.94a144 144 0 1 0-286.12 0H80a48 48 0 0 0 0 96h288a48 48 0 0 0 0-96zM195.38 493.69a31.52 31.52 0 0 0 57.24 0L352 288H96z"
-              />
-            </svg>
-          </span>
-          <span
-            class="pf-v5-c-label__text"
-          >
-            Label fsdf
             <span
-              class="pf-v5-u-screen-reader"
+              class="pf-v6-c-label__icon"
             >
-              tooltipText
+              <svg
+                aria-hidden="true"
+                class="pf-v6-svg"
+                fill="currentColor"
+                height="1em"
+                role="img"
+                viewBox="0 0 448 512"
+                width="1em"
+              >
+                <path
+                  d="M368 160h-.94a144 144 0 1 0-286.12 0H80a48 48 0 0 0 0 96h288a48 48 0 0 0 0-96zM195.38 493.69a31.52 31.52 0 0 0 57.24 0L352 288H96z"
+                />
+              </svg>
+            </span>
+            <span
+              class="pf-v6-c-label__text"
+            >
+              Label fsdf
+              <span
+                class="pf-v6-u-screen-reader"
+              >
+                tooltipText
+              </span>
             </span>
           </span>
         </span>

@@ -61,6 +61,9 @@ test_image: files/ansible/install-deps.yaml files/ansible/recipe-tests.yaml
 test_frontend:
 	cd frontend && pnpm run test
 
+test_frontend_coverage:
+	cd frontend && pnpm run coverage
+
 check_in_container: test_image
 	$(CONTAINER_ENGINE) run --rm \
 		--security-opt label=disable \
