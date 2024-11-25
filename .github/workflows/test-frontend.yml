@@ -32,4 +32,4 @@ jobs:
           API_URL="https://prod.packit.dev/api" make transpile-prod
 
       - name: Run Vitest
-        run: make test_frontend_coverage
+        run: make test-frontend-coverage
