@@ -14,7 +14,7 @@ export const fetchScans = async ({
   signal,
 }: fetchScansProps): Promise<OSHScanGroup[]> => {
   const data = await fetch(
-    `${import.meta.env.VITE_API_URL}/osh-scans?page=${pageParam}`,
+    `${import.meta.env.VITE_API_URL}/openscanhub-scans?page=${pageParam}`,
     { signal },
   )
     .then((response) => response.json())
