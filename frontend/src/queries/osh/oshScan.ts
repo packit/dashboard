@@ -13,9 +13,12 @@ export const fetchOSHScan = async ({
   id,
   signal,
 }: fetchOSHScanProps): Promise<OSHScan> => {
-  const data = await fetch(`${import.meta.env.VITE_API_URL}/osh-scans/${id}`, {
-    signal,
-  })
+  const data = await fetch(
+    `${import.meta.env.VITE_API_URL}/openscanhub-scans/${id}`,
+    {
+      signal,
+    },
+  )
     .then((response) => response.json())
     .catch((err) => {
       if (err.status === 404) {

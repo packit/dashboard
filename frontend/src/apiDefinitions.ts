@@ -435,7 +435,7 @@ export interface PipelineRun {
   vm_image_build: unknown[]; //TODO - @Venefilyn - No clue what it should be
 }
 
-// /api/osh-scans
+// /api/openscanhub-scans
 export interface OSHScanGroup {
   anitya_package: string | null;
   anitya_project_id: number | null;
@@ -461,7 +461,7 @@ export interface OSHScanGroup {
   url: string;
 }
 
-// /api/osh-scans/$id
+// /api/openscanhub-scans/$id
 export interface OSHScan {
   anitya_package: string | null;
   anitya_project_id: number | null;
