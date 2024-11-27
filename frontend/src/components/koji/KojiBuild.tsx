@@ -12,7 +12,11 @@ import {
   Label,
   PageSection,
   Title,
+  Toolbar,
+  ToolbarContent,
+  ToolbarItem,
 } from "@patternfly/react-core";
+import { LogViewer, LogViewerSearch } from "@patternfly/react-log-viewer";
 import { Table, Tbody, Td, Tr } from "@patternfly/react-table";
 import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
@@ -56,6 +60,34 @@ export const KojiBuild = () => {
       </PageSection>
     );
   }
+
+  const logs = data.build_submission_stdout ? (
+    <PageSection hasBodyWrapper={false}>
+      <Card>
+        <CardBody>
+          <LogViewer
+            data={data.build_submission_stdout}
+            toolbar={
+              <Toolbar>
+                <ToolbarContent>
+                  <ToolbarItem>
+                    <LogViewerSearch
+                      placeholder="Search value"
+                      minSearchChars={3}
+                    />
+                  </ToolbarItem>
+                </ToolbarContent>
+              </Toolbar>
+            }
+            hasLineNumbers={false}
+          />
+        </CardBody>
+      </Card>
+    </PageSection>
+  ) : (
+    ""
+  );
+
   return (
     <>
       <PageSection hasBodyWrapper={false}>
@@ -146,6 +178,7 @@ export const KojiBuild = () => {
           </CardBody>
         </Card>
       </PageSection>
+      {logs}
     </>
   );
 };
