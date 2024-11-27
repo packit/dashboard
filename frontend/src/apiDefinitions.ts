@@ -179,6 +179,7 @@ export interface KojiBuild {
   task_id: string;
   web_url: string;
   build_submission_stdout: string | null;
+  error_message: string | null;
 }
 
 // /api/koji-tag-requests
@@ -307,6 +308,7 @@ export interface BodhiUpdate {
   submitted_time: number;
   update_creation_time: number | null;
   web_url: string | null;
+  error_message: string | null;
 }
 
 // /api/testing-farm/results

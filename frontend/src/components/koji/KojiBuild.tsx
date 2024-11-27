@@ -4,6 +4,8 @@
 import {
   Card,
   CardBody,
+  CodeBlock,
+  CodeBlockCode,
   Content,
   DescriptionList,
   DescriptionListDescription,
@@ -158,6 +160,18 @@ export const KojiBuild = () => {
                     <span>not provided</span>
                   )}
                 </DescriptionListDescription>
+                {data.error_message ? (
+                  <>
+                    <DescriptionListTerm>Error message</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      <CodeBlock>
+                        <CodeBlockCode>{data.error_message}</CodeBlockCode>
+                      </CodeBlock>
+                    </DescriptionListDescription>
+                  </>
+                ) : (
+                  <></>
+                )}
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>

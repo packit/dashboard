@@ -4,6 +4,8 @@
 import {
   Card,
   CardBody,
+  CodeBlock,
+  CodeBlockCode,
   Content,
   DescriptionList,
   DescriptionListDescription,
@@ -97,6 +99,18 @@ export const BodhiUpdate = () => {
                   {" "}
                   {data.koji_nvrs}
                 </DescriptionListDescription>
+                {data.error_message ? (
+                  <>
+                    <DescriptionListTerm>Error message</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      <CodeBlock>
+                        <CodeBlockCode>{data.error_message}</CodeBlockCode>
+                      </CodeBlock>
+                    </DescriptionListDescription>
+                  </>
+                ) : (
+                  <></>
+                )}
               </DescriptionListGroup>
               <DescriptionListGroup>
                 <DescriptionListTerm>
