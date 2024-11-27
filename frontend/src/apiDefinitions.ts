@@ -178,6 +178,7 @@ export interface KojiBuild {
   status: string; // TODO: @Venefilyn - Probably an enum right? Change to be one if so
   task_id: string;
   web_url: string;
+  build_submission_stdout: string | null;
 }
 
 // /api/koji-tag-requests
