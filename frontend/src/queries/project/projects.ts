@@ -5,6 +5,7 @@ import { Project } from "../../apiDefinitions";
 
 interface fetchProjectsProps {
   pageParam: number;
+  perPage?: number;
   signal?: AbortSignal;
   forge?: string;
   namespace?: string;
@@ -13,6 +14,7 @@ interface fetchProjectsProps {
 // Fetch data from dashboard backend (or if we want, directly from the API)
 export const fetchProjects = async ({
   pageParam = 1,
+  perPage = 10,
   signal,
   forge,
   namespace,
@@ -20,7 +22,7 @@ export const fetchProjects = async ({
   const projects = await fetch(
     `${import.meta.env.VITE_API_URL}/projects${forge ? "/" + forge : ""}${
       namespace ? "/" + namespace : ""
-    }?page=${pageParam}`,
+    }?page=${pageParam}&per_page=${perPage}`,
     { signal },
   )
     .then((response) => response.json())
