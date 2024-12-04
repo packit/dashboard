@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import React, { useMemo } from "react";
+import React, { useContext, useMemo, useState } from "react";
 
 import {
   BlueprintIcon,
@@ -19,11 +19,13 @@ import {
   Thead,
   Tr,
 } from "@patternfly/react-table";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { Project } from "../../apiDefinitions";
 import { projectsQueryOptions } from "../../queries/project/projectsQuery";
 import { LoadMore } from "../shared/LoadMore";
+import { PackitPagination } from "../shared/PackitPagination";
+import { PackitPaginationContext } from "../shared/PackitPaginationContext";
 
 function getProjectInfoURL(project: Project) {
   const urlArray = project.project_url?.split("/");
@@ -51,8 +53,9 @@ const columnNames = {
 type ColumnKey = keyof typeof columnNames;
 
 const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
-  const { data, isLoading, fetchNextPage, hasNextPage, isFetchingNextPage } =
-    useInfiniteQuery(projectsQueryOptions(forge, namespace));
+  const { page, perPage } = useContext(PackitPaginationContext);
+  const queryOptions = projectsQueryOptions(page, perPage, forge, namespace);
+  const { data, isLoading } = useQuery(queryOptions);
   const expandedCells: Record<string, ColumnKey> = {};
 
   // Headings
@@ -64,9 +67,6 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
     prsHandled: "Pull Requests Handled",
     externalProjectLink: "External Project Link",
   };
-
-  // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
-  const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
   const TableHeads = [
     <Th width={25} key={columnNames.repositories}>
@@ -92,7 +92,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
   ];
 
   if (isLoading) {
-    return <SkeletonTable rows={10} columns={TableHeads} />;
+    return <SkeletonTable rowsCount={perPage} columns={TableHeads} />;
   }
 
   return (
@@ -101,7 +101,7 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
         <Thead>
           <Tr>{TableHeads}</Tr>
         </Thead>
-        {rows.map((project) => {
+        {data?.map((project) => {
           const expandedCellKey = expandedCells
             ? expandedCells[project.repo_name]
             : null;
@@ -177,11 +177,6 @@ const ProjectsList: React.FC<ProjectsListProps> = ({ forge, namespace }) => {
           );
         })}
       </Table>
-      <LoadMore
-        isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage}
-        fetchNextPage={() => void fetchNextPage()}
-      />
     </>
   );
 };
