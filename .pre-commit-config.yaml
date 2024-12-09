@@ -10,7 +10,7 @@ repos:
       - id: black
         language_version: python3
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v0.5.0" # Use the sha / tag you want to point at
+    rev: "v0.6.0" # Use the sha / tag you want to point at
     hooks:
       - id: biome-check
         additional_dependencies: ["@biomejs/biome@1.8.3"]
@@ -54,7 +54,7 @@ repos:
           - https://github.com/packit/dashboard.git
         stages: [manual, pre-push]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.29.4
+    rev: 0.30.0
     hooks:
       - id: check-github-workflows
         args: ["--verbose"]
