@@ -83,13 +83,13 @@ export const OSHScan = () => {
                 <DescriptionListTerm>Status</DescriptionListTerm>
                 <DescriptionListDescription>
                   <StatusLabel
-                    status={data.status}
+                    status={data.status ?? "unknown"}
                     target={"rawhide"}
                     link={data.url}
                   />
                 </DescriptionListDescription>
 
-                {data.status === "succeeded" ? (
+                {data.status === "succeeded" && data.scan_results_url ? (
                   <>
                     <DescriptionListTerm>New findings</DescriptionListTerm>
                     <DescriptionListDescription>

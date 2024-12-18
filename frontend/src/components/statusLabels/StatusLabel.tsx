@@ -16,7 +16,7 @@ import { BaseStatusLabel, BaseStatusLabelProps } from "./BaseStatusLabel";
 
 export interface StatusLabelProps {
   status: string;
-  link?: string;
+  link?: string | null;
   target?: string;
 }
 
@@ -24,8 +24,8 @@ export interface StatusLabelProps {
  * Status label component that is used from other components.
  */
 export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
-  const [color, setColor] = useState<BaseStatusLabelProps["color"]>("purple");
-  const [icon, setIcon] = useState(<InfoCircleIcon />);
+  const [color, setColor] = useState<BaseStatusLabelProps["color"]>("grey");
+  const [icon, setIcon] = useState(<QuestionCircleIcon />);
 
   useEffect(() => {
     switch (props.status) {
@@ -45,7 +45,7 @@ export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
         setIcon(<ExclamationTriangleIcon />);
         break;
       case "pending":
-        setColor("cyan");
+        setColor("teal");
         setIcon(<HourglassHalfIcon />);
         break;
       case "running":
