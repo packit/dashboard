@@ -482,9 +482,9 @@ export interface OSHScan {
   release: string | null;
   repo_name: string;
   repo_namespace: string;
-  scan_results_url: string;
-  status: string;
+  scan_results_url: string | null;
+  status: string | null;
   submitted_time: number | null;
-  task_id: number;
-  url: string;
+  task_id: number | null;
+  url: string | null;
 }
