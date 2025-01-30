@@ -16,7 +16,7 @@ import {
 import { SkeletonTable } from "@patternfly/react-component-groups";
 import { LabelGroup } from "@patternfly/react-core";
 import { ExternalLinkAltIcon } from "@patternfly/react-icons";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { PipelineRun } from "../../apiDefinitions";
 import { pipelinesQueryOptions } from "../../queries/pipeline/pipelinesQuery";
@@ -24,7 +24,8 @@ import coprLogo from "../../static/copr.ico";
 import kojiLogo from "../../static/koji.ico";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { ForgeIcon, ForgeIconByForge } from "../icons/ForgeIcon";
-import { LoadMore } from "../shared/LoadMore";
+import { PackitPagination } from "../shared/PackitPagination";
+import { PackitPaginationContext } from "../shared/PackitPaginationContext";
 import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { SyncReleaseTargetStatusLabel } from "../statusLabels/SyncReleaseTargetStatusLabel";
@@ -104,24 +105,20 @@ const columnNames = {
   external: "External",
 };
 export function PipelinesTable() {
-  const {
-    isLoading,
-    isError,
-    fetchNextPage,
-    data,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useInfiniteQuery(pipelinesQueryOptions());
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const value = { page, setPage, perPage, setPerPage };
 
-  // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
-  const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
+  const { isLoading, isError, data } = useQuery(
+    pipelinesQueryOptions(page, perPage),
+  );
 
   const mappedRows = useMemo(
     () =>
-      rows
-        .filter((run) => run.trigger)
+      data
+        ?.filter((run) => run.trigger)
         .map((run) => <PipelinesTableTr key={run.merged_run_id} run={run} />),
-    [columnNames, rows],
+    [columnNames, data],
   );
 
   const TableHeads = [
@@ -142,30 +139,24 @@ export function PipelinesTable() {
     return <ErrorConnection />;
   }
 
-  if (isLoading) {
-    return (
-      <SkeletonTable
-        variant={TableVariant.compact}
-        rows={10}
-        columns={TableHeads}
-      />
-    );
-  }
-
   return (
-    <>
-      <Table aria-label="Pipeline runs" variant={TableVariant.compact}>
-        <Thead>
-          <Tr>{TableHeads}</Tr>
-        </Thead>
-        <Tbody>{mappedRows}</Tbody>
-      </Table>
-      <LoadMore
-        isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage}
-        fetchNextPage={() => void fetchNextPage()}
-      />
-    </>
+    <PackitPaginationContext.Provider value={value}>
+      <PackitPagination />
+      {isLoading ? (
+        <SkeletonTable
+          variant={TableVariant.compact}
+          rows={perPage}
+          columns={TableHeads}
+        />
+      ) : (
+        <Table aria-label="Pipeline runs" variant={TableVariant.compact}>
+          <Thead>
+            <Tr>{TableHeads}</Tr>
+          </Thead>
+          <Tbody>{mappedRows}</Tbody>
+        </Table>
+      )}
+    </PackitPaginationContext.Provider>
   );
 }
 
