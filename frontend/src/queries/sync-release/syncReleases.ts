@@ -6,6 +6,7 @@ import { SyncReleaseJobGroup } from "../../apiDefinitions";
 export interface fetchSyncReleasesProps {
   job: "propose-downstream" | "pull-from-upstream";
   pageParam: number;
+  perPage: number;
   signal?: AbortSignal;
 }
 
@@ -13,10 +14,11 @@ export interface fetchSyncReleasesProps {
 export const fetchSyncReleases = async ({
   job,
   pageParam = 1,
+  perPage,
   signal,
 }: fetchSyncReleasesProps): Promise<SyncReleaseJobGroup[]> => {
   const data = await fetch(
-    `${import.meta.env.VITE_API_URL}/${job}?page=${pageParam}`,
+    `${import.meta.env.VITE_API_URL}/${job}?page=${pageParam}&per_page=${perPage}`,
     { signal },
   )
     .then((response) => response.json())

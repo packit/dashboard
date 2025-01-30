@@ -1,29 +1,21 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { infiniteQueryOptions } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import { fetchSyncReleases, fetchSyncReleasesProps } from "./syncReleases";
 
-type syncReleasesQueryOptionsProps = Pick<fetchSyncReleasesProps, "job">;
+type syncReleasesQueryOptionsProps = Pick<fetchSyncReleasesProps, "job"> & {
+  pageParam: number;
+  perPage: number;
+};
 
 export const syncReleasesQueryOptions = ({
   job,
+  pageParam,
+  perPage = 20,
 }: syncReleasesQueryOptionsProps) =>
-  infiniteQueryOptions({
-    queryKey: ["sync-release", job],
-    queryFn: async ({ pageParam, signal }) =>
-      await fetchSyncReleases({ job, pageParam, signal }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-      if (lastPage.length === 0) {
-        return undefined;
-      }
-      return lastPageParam + 1;
-    },
-    getPreviousPageParam: (_firstPage, _allPages, firstPageParam) => {
-      if (firstPageParam <= 1) {
-        return undefined;
-      }
-      return firstPageParam - 1;
-    },
+  queryOptions({
+    queryKey: ["sync-release", { job, pageParam, perPage }],
+    queryFn: async ({ signal }) =>
+      await fetchSyncReleases({ job, pageParam, perPage, signal }),
   });
