@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { useMemo } from "react";
+import { useState } from "react";
 
 import {
   Table,
@@ -14,7 +14,7 @@ import {
 } from "@patternfly/react-table";
 
 import { SkeletonTable } from "@patternfly/react-component-groups";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { ErrorConnection } from "../../components/errors/ErrorConnection";
 import { Timestamp } from "../../components/shared/Timestamp";
 import {
@@ -23,10 +23,15 @@ import {
 } from "../../components/trigger/TriggerLink";
 import { bodhiUpdatesQueryOptions } from "../../queries/bodhi/bodhiUpdatesQuery";
 import { ForgeIcon, ForgeIconByForge } from "../icons/ForgeIcon";
-import { LoadMore } from "../shared/LoadMore";
+import { PackitPagination } from "../shared/PackitPagination";
+import { PackitPaginationContext } from "../shared/PackitPaginationContext";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 
 const BodhiUpdatesTable = () => {
+  const [page, setPage] = useState(1);
+  const [perPage, setPerPage] = useState(10);
+  const value = { page, setPage, perPage, setPerPage };
+
   // Headings
   const columnNames = {
     forge: "Forge",
@@ -36,17 +41,9 @@ const BodhiUpdatesTable = () => {
     bodhiUpdate: "Bodhi Update",
   };
 
-  const {
-    isLoading,
-    isError,
-    fetchNextPage,
-    data,
-    isFetchingNextPage,
-    hasNextPage,
-  } = useInfiniteQuery(bodhiUpdatesQueryOptions());
-
-  // Create a memoization of all the data when we flatten it out. Ideally one should render all the pages separately so that rendering will be done faster
-  const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
+  const { isLoading, isError, data } = useQuery(
+    bodhiUpdatesQueryOptions(page, perPage),
+  );
 
   const TableHeads = [
     <Th key={columnNames.forge} screenReaderText={columnNames.forge}></Th>,
@@ -69,70 +66,64 @@ const BodhiUpdatesTable = () => {
     return <ErrorConnection />;
   }
 
-  if (isLoading) {
-    return (
-      <SkeletonTable
-        variant={TableVariant.compact}
-        rows={10}
-        columns={TableHeads}
-      />
-    );
-  }
-
   return (
-    <>
-      <Table aria-label="Bodhi updates" variant={TableVariant.compact}>
-        <Thead>
-          <Tr>{TableHeads}</Tr>
-        </Thead>
-        <Tbody>
-          {rows.map((bodhi_update) => (
-            <Tr key={bodhi_update.packit_id}>
-              <Td dataLabel={columnNames.forge}>
-                {bodhi_update.project_url ? (
-                  <ForgeIcon url={bodhi_update.project_url} />
-                ) : (
-                  <ForgeIconByForge />
-                )}
-              </Td>
-              <Td dataLabel={columnNames.trigger}>
-                <strong>
-                  <TriggerLink trigger={bodhi_update}>
-                    <TriggerSuffix trigger={bodhi_update} />
-                  </TriggerLink>
-                </strong>
-              </Td>
-              <Td dataLabel={columnNames.branch}>
-                <StatusLabel
-                  target={bodhi_update.branch}
-                  status={bodhi_update.status}
-                  link={`/jobs/bodhi/${bodhi_update.packit_id}`}
-                />
-              </Td>
-              <Td dataLabel={columnNames.timeProcessed}>
-                <Timestamp stamp={bodhi_update.submitted_time} />
-              </Td>
-              <Td dataLabel={columnNames.bodhiUpdate}>
-                <strong>
-                  <a
-                    href={bodhi_update.web_url ?? ""}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    {bodhi_update.alias}
-                  </a>
-                </strong>
-              </Td>
-            </Tr>
-          ))}
-        </Tbody>
-      </Table>
-      <LoadMore
-        isFetchingNextPage={isFetchingNextPage}
-        hasNextPage={hasNextPage}
-        fetchNextPage={() => void fetchNextPage()}
-      />
-    </>
+    <PackitPaginationContext.Provider value={value}>
+      <PackitPagination />
+      {isLoading ? (
+        <SkeletonTable
+          variant={TableVariant.compact}
+          rowsCount={perPage}
+          columns={TableHeads}
+        />
+      ) : (
+        <Table aria-label="Bodhi updates" variant={TableVariant.compact}>
+          <Thead>
+            <Tr>{TableHeads}</Tr>
+          </Thead>
+          <Tbody>
+            {data?.map((bodhi_update) => (
+              <Tr key={bodhi_update.packit_id}>
+                <Td dataLabel={columnNames.forge}>
+                  {bodhi_update.project_url ? (
+                    <ForgeIcon url={bodhi_update.project_url} />
+                  ) : (
+                    <ForgeIconByForge />
+                  )}
+                </Td>
+                <Td dataLabel={columnNames.trigger}>
+                  <strong>
+                    <TriggerLink trigger={bodhi_update}>
+                      <TriggerSuffix trigger={bodhi_update} />
+                    </TriggerLink>
+                  </strong>
+                </Td>
+                <Td dataLabel={columnNames.branch}>
+                  <StatusLabel
+                    target={bodhi_update.branch}
+                    status={bodhi_update.status}
+                    link={`/jobs/bodhi/${bodhi_update.packit_id}`}
+                  />
+                </Td>
+                <Td dataLabel={columnNames.timeProcessed}>
+                  <Timestamp stamp={bodhi_update.submitted_time} />
+                </Td>
+                <Td dataLabel={columnNames.bodhiUpdate}>
+                  <strong>
+                    <a
+                      href={bodhi_update.web_url ?? ""}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      {bodhi_update.alias}
+                    </a>
+                  </strong>
+                </Td>
+              </Tr>
+            ))}
+          </Tbody>
+        </Table>
+      )}
+    </PackitPaginationContext.Provider>
   );
 };
 
