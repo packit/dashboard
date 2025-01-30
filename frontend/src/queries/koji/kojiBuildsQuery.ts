@@ -1,31 +1,23 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { infiniteQueryOptions } from "@tanstack/react-query";
+import { queryOptions } from "@tanstack/react-query";
 import { fetchKojiBuilds, fetchKojiBuildsProps } from "./kojiBuilds";
 
 type kojiBuildsQueryOptionsProps = Required<
   Pick<fetchKojiBuildsProps, "scratch">
->;
+> & {
+  pageParam: number;
+  perPage?: number;
+};
 
 export const kojiBuildsQueryOptions = ({
   scratch,
+  pageParam,
+  perPage = 20,
 }: kojiBuildsQueryOptionsProps) =>
-  infiniteQueryOptions({
-    queryKey: ["koji", { scratch }],
-    queryFn: async ({ pageParam, signal }) =>
-      await fetchKojiBuilds({ pageParam, scratch, signal }),
-    initialPageParam: 1,
-    getNextPageParam: (lastPage, _allPages, lastPageParam) => {
-      if (lastPage.length === 0) {
-        return undefined;
-      }
-      return lastPageParam + 1;
-    },
-    getPreviousPageParam: (_firstPage, _allPages, firstPageParam) => {
-      if (firstPageParam <= 1) {
-        return undefined;
-      }
-      return firstPageParam - 1;
-    },
+  queryOptions({
+    queryKey: ["koji", { scratch, pageParam, perPage }],
+    queryFn: async ({ signal }) =>
+      await fetchKojiBuilds({ scratch, pageParam, perPage, signal }),
   });

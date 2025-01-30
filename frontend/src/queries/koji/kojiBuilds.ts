@@ -5,6 +5,7 @@ import { KojiBuildGroup } from "../../apiDefinitions";
 
 export interface fetchKojiBuildsProps {
   pageParam: number;
+  perPage: number;
   scratch?: boolean;
   signal?: AbortSignal;
 }
@@ -12,13 +13,14 @@ export interface fetchKojiBuildsProps {
 // Fetch data from dashboard backend (or if we want, directly from the API)
 export const fetchKojiBuilds = async ({
   pageParam = 1,
+  perPage,
   scratch = false,
   signal,
 }: fetchKojiBuildsProps): Promise<KojiBuildGroup[]> => {
   const data = await fetch(
     `${
       import.meta.env.VITE_API_URL
-    }/koji-builds?page=${pageParam}&scratch=${scratch.toString()}`,
+    }/koji-builds?page=${pageParam}&per_page=${perPage}&scratch=${scratch.toString()}`,
     { signal },
   )
     .then((response) => response.json())
