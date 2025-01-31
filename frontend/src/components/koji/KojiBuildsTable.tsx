@@ -45,9 +45,7 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
   const rows = useMemo(() => (data ? data.pages.flat() : []), [data]);
 
   const TableHeads = [
-    <Th key={columnNames.forge}>
-      <span className="pf-v6-u-screen-reader">{columnNames.forge}</span>
-    </Th>,
+    <Th key={columnNames.forge} screenReaderText={columnNames.forge}></Th>,
     <Th key={columnNames.trigger} width={35}>
       {columnNames.trigger}
     </Th>,
