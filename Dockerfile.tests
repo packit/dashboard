@@ -1,4 +1,4 @@
-FROM fedora:35
+FROM quay.io/packit/base:fedora
 
 ENV HOME=/home/packit_dashboard \
     ANSIBLE_PYTHON_INTERPRETER=/usr/bin/python3 \
