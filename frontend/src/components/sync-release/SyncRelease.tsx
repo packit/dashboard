@@ -140,6 +140,15 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
     }
   };
 
+  const targetStatusLabels = data.downstream_prs.map((pr) => (
+    <SyncReleaseTargetStatusLabel
+      key={pr.pr_id}
+      status={data.status}
+      target={pr.branch}
+      link={pr.url}
+    />
+  ));
+
   // TODO(SpyTec): Move to its own component
   const logs = (
     <PageSection hasBodyWrapper={false}>
@@ -266,11 +275,7 @@ export const SyncRelease: React.FC<SyncReleaseProps> = ({ job }) => {
               <DescriptionListGroup>
                 <DescriptionListTerm>Sync status</DescriptionListTerm>
                 <DescriptionListDescription>
-                  <SyncReleaseTargetStatusLabel
-                    status={data.status}
-                    target={data.branch}
-                    link={data.downstream_pr_url}
-                  />
+                  {targetStatusLabels}
                 </DescriptionListDescription>
                 <DescriptionListTerm>Package</DescriptionListTerm>
                 <DescriptionListDescription>
