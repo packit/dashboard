@@ -371,6 +371,13 @@ export interface SyncReleaseJobGroup {
   submitted_time: number;
 }
 
+export interface DownstreamPR {
+  pr_id: number;
+  branch: string;
+  is_fast_forward: boolean;
+  url: string;
+}
+
 // /api/propose-downstream/$id
 // /api/pull-from-upstream/$id
 export interface SyncReleaseJob {
@@ -380,9 +387,8 @@ export interface SyncReleaseJob {
   anitya_version: string | null;
   branch: string;
   branch_name: string | null;
-  downstream_pr_id: number | null;
+  downstream_prs: DownstreamPR[];
   downstream_pr_project: string | null;
-  downstream_pr_url: string;
   finished_time: number;
   issue_id: number | null;
   logs: string;
