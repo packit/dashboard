@@ -114,6 +114,7 @@ const ProjectSearch = () => {
               <InputGroupItem>
                 <Button
                   icon={<SearchIcon />}
+                  type="submit"
                   variant="plain"
                   aria-label="Search"
                   onClick={goToProjectDetails}
