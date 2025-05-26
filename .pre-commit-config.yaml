@@ -10,7 +10,7 @@ repos:
       - id: black
         language_version: python3
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v1.9.4" # Use the sha / tag you want to point at
+    rev: "v2.0.0-beta.5" # Use the sha / tag you want to point at
     hooks:
       - id: biome-check
         additional_dependencies: ["@biomejs/biome@1.8.3"]
@@ -33,7 +33,7 @@ repos:
   #       args:
   #         - --parse-only
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.1.2
+    rev: 7.2.0
     hooks:
       - id: flake8
         args:
@@ -47,14 +47,14 @@ repos:
         additional_dependencies: [types-requests, types-Flask, types-cachetools]
 
   - repo: https://github.com/packit/pre-commit-hooks
-    rev: v1.2.0
+    rev: v1.3.0
     hooks:
       - id: check-rebase
         args:
           - https://github.com/packit/dashboard.git
         stages: [manual, pre-push]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.31.3
+    rev: 0.33.0
     hooks:
       - id: check-github-workflows
         args: ["--verbose"]
