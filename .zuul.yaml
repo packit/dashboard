@@ -1,5 +1,6 @@
 ---
 - project:
+    merge-mode: rebase
     check:
       jobs:
         - pre-commit
