@@ -132,7 +132,7 @@ export const CoprBuild = () => {
                         variant="inline-compact"
                         isCode
                       >
-                        sudo dnf install -y {packagesToInstall.join(" ")}
+                        {"sudo dnf install -y " + packagesToInstall.join(" ")}
                       </ClipboardCopy>
                     </>
                   ) : (
@@ -144,7 +144,7 @@ export const CoprBuild = () => {
                         variant="inline-compact"
                         isCode
                       >
-                        sudo dnf install -y {packagesToInstall.join(" ")}
+                        {"sudo dnf install -y " + packagesToInstall.join(" ")}
                       </ClipboardCopy>
                       <Title headingLevel="h4">Individual packages</Title>
                       <List isPlain>
