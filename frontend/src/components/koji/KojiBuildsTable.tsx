@@ -98,7 +98,7 @@ export const KojiBuildsTable: React.FC<KojiBuildTableProps> = ({ scratch }) => {
                   />
                 </Td>
                 <Td dataLabel={columnNames.timeSubmitted}>
-                  <Timestamp stamp={koji_build.build_submitted_time} />
+                  <Timestamp stamp={koji_build.submitted_time} />
                 </Td>
                 <Td dataLabel={columnNames.kojiBuildTask}>
                   <strong>
