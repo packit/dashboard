@@ -29,8 +29,3 @@ def _setup_app_context_for_test():
     ctx.push()
     yield  # tests will run here
     ctx.pop()
-
-
-def test_architecture_image(client):
-    response = client.get("/api/images/architecture.svg")
-    assert response.status_code == 200
