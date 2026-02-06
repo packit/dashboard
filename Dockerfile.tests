@@ -8,7 +8,7 @@ ENV HOME=/home/packit_dashboard \
 RUN dnf install -y ansible
 
 COPY ./files /src/files
-COPY ./package.json /src
+COPY ./frontend/package.json /src
 COPY ./Makefile /src/Makefile
 
 WORKDIR "/src"
@@ -18,5 +18,4 @@ RUN ansible-playbook -vv -c local -i localhost, ./files/ansible/recipe-tests.yam
     && dnf clean all
 
 COPY ./packit_dashboard  /src/packit_dashboard
-COPY ./templates  /src/templates
 COPY ./tests  /src/tests
