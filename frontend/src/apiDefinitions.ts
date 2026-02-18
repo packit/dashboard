@@ -336,6 +336,7 @@ export interface TestingFarmRun {
   chroot: string;
   commit_sha: string;
   copr_build_ids: number[];
+  koji_build_ids: number[];
   issue_id: number | null;
   non_git_upstream: boolean;
   pipeline_id: string; // UUID
