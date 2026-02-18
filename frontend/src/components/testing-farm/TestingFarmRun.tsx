@@ -26,6 +26,7 @@ import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { CoprDataListItem } from "./CoprDataListItem";
+import { KojiDataListItem } from "./KojiDataListItem";
 
 export const TestingFarmRun = () => {
   const { id } = TestingFarmRoute.useParams();
@@ -34,10 +35,14 @@ export const TestingFarmRun = () => {
     testingFarmRunQueryOptions({ id }),
   );
   const [coprBuildIds, setCoprBuildIds] = useState<number[]>([]);
+  const [kojiBuildIds, setKojiBuildIds] = useState<number[]>([]);
 
   useEffect(() => {
     if (data && "copr_build_ids" in data) {
       setCoprBuildIds(data?.copr_build_ids.filter((copr) => copr !== null));
+    }
+    if (data && "koji_build_ids" in data) {
+      setKojiBuildIds(data?.koji_build_ids.filter((koji) => koji !== null));
     }
   }, [data]);
 
@@ -129,20 +134,38 @@ export const TestingFarmRun = () => {
                   </DescriptionListGroup>
                 </DescriptionList>
               </CardBody>
-              <CardBody>
-                <DescriptionList>
-                  <DescriptionListGroup>
-                    <DescriptionListTerm>Copr Build(s)</DescriptionListTerm>
-                    <DescriptionListDescription>
-                      <DataList aria-label="Copr builds">
-                        {coprBuildIds.map((coprId) => (
-                          <CoprDataListItem id={coprId} key={coprId} />
-                        ))}
-                      </DataList>
-                    </DescriptionListDescription>
-                  </DescriptionListGroup>
-                </DescriptionList>
-              </CardBody>
+              {coprBuildIds.length > 0 && (
+                <CardBody>
+                  <DescriptionList>
+                    <DescriptionListGroup>
+                      <DescriptionListTerm>Copr Build(s)</DescriptionListTerm>
+                      <DescriptionListDescription>
+                        <DataList aria-label="Copr builds">
+                          {coprBuildIds.map((coprId) => (
+                            <CoprDataListItem id={coprId} key={coprId} />
+                          ))}
+                        </DataList>
+                      </DescriptionListDescription>
+                    </DescriptionListGroup>
+                  </DescriptionList>
+                </CardBody>
+              )}
+              {kojiBuildIds.length > 0 && (
+                <CardBody>
+                  <DescriptionList>
+                    <DescriptionListGroup>
+                      <DescriptionListTerm>Koji build(s)</DescriptionListTerm>
+                      <DescriptionListDescription>
+                        <DataList aria-label="Koji builds">
+                          {kojiBuildIds.map((kojiId) => (
+                            <KojiDataListItem id={kojiId} key={kojiId} />
+                          ))}
+                        </DataList>
+                      </DescriptionListDescription>
+                    </DescriptionListGroup>
+                  </DescriptionList>
+                </CardBody>
+              )}
             </>
           )}
         </Card>
