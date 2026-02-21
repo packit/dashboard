@@ -4,7 +4,6 @@
 from flask import jsonify, Response as FlaskResponse
 from requests import request, Response as RequestsResponse
 
-
 """ Common utility functions used in multiple files in the packit_dashboard package. """
 
 
