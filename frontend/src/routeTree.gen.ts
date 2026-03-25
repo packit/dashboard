@@ -31,6 +31,7 @@ import { Route as JobsPullFromUpstreamImport } from './routes/jobs/pull-from-ups
 import { Route as JobsProposeDownstreamsImport } from './routes/jobs/propose-downstreams'
 import { Route as JobsProposeDownstreamImport } from './routes/jobs/propose-downstream'
 import { Route as JobsOpenscanhubImport } from './routes/jobs/openscanhub'
+import { Route as JobsLogDetectiveImport } from './routes/jobs/log-detective'
 import { Route as JobsKojiTagRequestsImport } from './routes/jobs/koji-tag-requests'
 import { Route as JobsKojiDownstreamImport } from './routes/jobs/koji-downstream'
 import { Route as JobsKojiBuildsImport } from './routes/jobs/koji-builds'
@@ -45,12 +46,14 @@ import { Route as JobsSrpmIdImport } from './routes/jobs_/srpm.$id'
 import { Route as JobsPullFromUpstreamIdImport } from './routes/jobs_/pull-from-upstream.$id'
 import { Route as JobsProposeDownstreamIdImport } from './routes/jobs_/propose-downstream.$id'
 import { Route as JobsOpenscanhubIdImport } from './routes/jobs_/openscanhub.$id'
+import { Route as JobsLogDetectiveIdImport } from './routes/jobs_/log-detective.$id'
 import { Route as JobsKojiIdImport } from './routes/jobs_/koji.$id'
 import { Route as JobsKojiTagRequestIdImport } from './routes/jobs_/koji-tag-request.$id'
 import { Route as JobsKojiDownstreamIdImport } from './routes/jobs_/koji-downstream.$id'
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
 import { Route as ProjectsForgeNamespaceRepoImport } from './routes/projects/$forge.$namespace.$repo'
+import { Route as JobsLogDetectiveGroupIdImport } from './routes/jobs_/log-detective.group.$id'
 
 // Create Virtual Routes
 
@@ -160,6 +163,11 @@ const JobsOpenscanhubRoute = JobsOpenscanhubImport.update({
   getParentRoute: () => JobsRoute,
 } as any)
 
+const JobsLogDetectiveRoute = JobsLogDetectiveImport.update({
+  path: '/log-detective',
+  getParentRoute: () => JobsRoute,
+} as any)
+
 const JobsKojiTagRequestsRoute = JobsKojiTagRequestsImport.update({
   path: '/koji-tag-requests',
   getParentRoute: () => JobsRoute,
@@ -239,6 +247,11 @@ const JobsOpenscanhubIdRoute = JobsOpenscanhubIdImport.update({
   getParentRoute: () => rootRoute,
 } as any)
 
+const JobsLogDetectiveIdRoute = JobsLogDetectiveIdImport.update({
+  path: '/jobs/log-detective/$id',
+  getParentRoute: () => rootRoute,
+} as any)
+
 const JobsKojiIdRoute = JobsKojiIdImport.update({
   path: '/jobs/koji/$id',
   getParentRoute: () => rootRoute,
@@ -272,6 +285,11 @@ const ProjectsForgeNamespaceRepoRoute = ProjectsForgeNamespaceRepoImport.update(
 ).lazy(() =>
   import('./routes/projects/$forge.$namespace.$repo.lazy').then((d) => d.Route),
 )
+
+const JobsLogDetectiveGroupIdRoute = JobsLogDetectiveGroupIdImport.update({
+  path: '/jobs/log-detective/group/$id',
+  getParentRoute: () => rootRoute,
+} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -380,6 +398,13 @@ declare module '@tanstack/react-router' {
       path: '/koji-tag-requests'
       fullPath: '/jobs/koji-tag-requests'
       preLoaderRoute: typeof JobsKojiTagRequestsImport
+      parentRoute: typeof JobsImport
+    }
+    '/jobs/log-detective': {
+      id: '/jobs/log-detective'
+      path: '/log-detective'
+      fullPath: '/jobs/log-detective'
+      preLoaderRoute: typeof JobsLogDetectiveImport
       parentRoute: typeof JobsImport
     }
     '/jobs/openscanhub': {
@@ -508,6 +533,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof JobsKojiIdImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/log-detective/$id': {
+      id: '/jobs/log-detective/$id'
+      path: '/jobs/log-detective/$id'
+      fullPath: '/jobs/log-detective/$id'
+      preLoaderRoute: typeof JobsLogDetectiveIdImport
+      parentRoute: typeof rootRoute
+    }
     '/jobs/openscanhub/$id': {
       id: '/jobs/openscanhub/$id'
       path: '/jobs/openscanhub/$id'
@@ -550,6 +582,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsForgeNamespaceLazyImport
       parentRoute: typeof rootRoute
     }
+    '/jobs/log-detective/group/$id': {
+      id: '/jobs/log-detective/group/$id'
+      path: '/jobs/log-detective/group/$id'
+      fullPath: '/jobs/log-detective/group/$id'
+      preLoaderRoute: typeof JobsLogDetectiveGroupIdImport
+      parentRoute: typeof rootRoute
+    }
     '/projects/$forge/$namespace/$repo': {
       id: '/projects/$forge/$namespace/$repo'
       path: '/projects/$forge/$namespace/$repo'
@@ -572,6 +611,7 @@ interface JobsRouteChildren {
   JobsKojiBuildsRoute: typeof JobsKojiBuildsRoute
   JobsKojiDownstreamRoute: typeof JobsKojiDownstreamRoute
   JobsKojiTagRequestsRoute: typeof JobsKojiTagRequestsRoute
+  JobsLogDetectiveRoute: typeof JobsLogDetectiveRoute
   JobsOpenscanhubRoute: typeof JobsOpenscanhubRoute
   JobsProposeDownstreamRoute: typeof JobsProposeDownstreamRoute
   JobsProposeDownstreamsRoute: typeof JobsProposeDownstreamsRoute
@@ -594,6 +634,7 @@ const JobsRouteChildren: JobsRouteChildren = {
   JobsKojiBuildsRoute: JobsKojiBuildsRoute,
   JobsKojiDownstreamRoute: JobsKojiDownstreamRoute,
   JobsKojiTagRequestsRoute: JobsKojiTagRequestsRoute,
+  JobsLogDetectiveRoute: JobsLogDetectiveRoute,
   JobsOpenscanhubRoute: JobsOpenscanhubRoute,
   JobsProposeDownstreamRoute: JobsProposeDownstreamRoute,
   JobsProposeDownstreamsRoute: JobsProposeDownstreamsRoute,
@@ -624,6 +665,7 @@ export interface FileRoutesByFullPath {
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
   '/jobs/koji-tag-requests': typeof JobsKojiTagRequestsRoute
+  '/jobs/log-detective': typeof JobsLogDetectiveRoute
   '/jobs/openscanhub': typeof JobsOpenscanhubRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
@@ -642,12 +684,14 @@ export interface FileRoutesByFullPath {
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
   '/jobs/koji-tag-request/$id': typeof JobsKojiTagRequestIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/log-detective/$id': typeof JobsLogDetectiveIdRoute
   '/jobs/openscanhub/$id': typeof JobsOpenscanhubIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
   '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
   '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
   '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
+  '/jobs/log-detective/group/$id': typeof JobsLogDetectiveGroupIdRoute
   '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -666,6 +710,7 @@ export interface FileRoutesByTo {
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
   '/jobs/koji-tag-requests': typeof JobsKojiTagRequestsRoute
+  '/jobs/log-detective': typeof JobsLogDetectiveRoute
   '/jobs/openscanhub': typeof JobsOpenscanhubRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
@@ -684,12 +729,14 @@ export interface FileRoutesByTo {
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
   '/jobs/koji-tag-request/$id': typeof JobsKojiTagRequestIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/log-detective/$id': typeof JobsLogDetectiveIdRoute
   '/jobs/openscanhub/$id': typeof JobsOpenscanhubIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
   '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
   '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
   '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
+  '/jobs/log-detective/group/$id': typeof JobsLogDetectiveGroupIdRoute
   '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -710,6 +757,7 @@ export interface FileRoutesById {
   '/jobs/koji-builds': typeof JobsKojiBuildsRoute
   '/jobs/koji-downstream': typeof JobsKojiDownstreamRoute
   '/jobs/koji-tag-requests': typeof JobsKojiTagRequestsRoute
+  '/jobs/log-detective': typeof JobsLogDetectiveRoute
   '/jobs/openscanhub': typeof JobsOpenscanhubRoute
   '/jobs/propose-downstream': typeof JobsProposeDownstreamRoute
   '/jobs/propose-downstreams': typeof JobsProposeDownstreamsRoute
@@ -728,12 +776,14 @@ export interface FileRoutesById {
   '/jobs/koji-downstream/$id': typeof JobsKojiDownstreamIdRoute
   '/jobs/koji-tag-request/$id': typeof JobsKojiTagRequestIdRoute
   '/jobs/koji/$id': typeof JobsKojiIdRoute
+  '/jobs/log-detective/$id': typeof JobsLogDetectiveIdRoute
   '/jobs/openscanhub/$id': typeof JobsOpenscanhubIdRoute
   '/jobs/propose-downstream/$id': typeof JobsProposeDownstreamIdRoute
   '/jobs/pull-from-upstream/$id': typeof JobsPullFromUpstreamIdRoute
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
   '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
   '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
+  '/jobs/log-detective/group/$id': typeof JobsLogDetectiveGroupIdRoute
   '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -755,6 +805,7 @@ export interface FileRouteTypes {
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
     | '/jobs/koji-tag-requests'
+    | '/jobs/log-detective'
     | '/jobs/openscanhub'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
@@ -773,12 +824,14 @@ export interface FileRouteTypes {
     | '/jobs/koji-downstream/$id'
     | '/jobs/koji-tag-request/$id'
     | '/jobs/koji/$id'
+    | '/jobs/log-detective/$id'
     | '/jobs/openscanhub/$id'
     | '/jobs/propose-downstream/$id'
     | '/jobs/pull-from-upstream/$id'
     | '/jobs/srpm/$id'
     | '/jobs/testing-farm/$id'
     | '/projects/$forge/$namespace'
+    | '/jobs/log-detective/group/$id'
     | '/projects/$forge/$namespace/$repo'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -796,6 +849,7 @@ export interface FileRouteTypes {
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
     | '/jobs/koji-tag-requests'
+    | '/jobs/log-detective'
     | '/jobs/openscanhub'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
@@ -814,12 +868,14 @@ export interface FileRouteTypes {
     | '/jobs/koji-downstream/$id'
     | '/jobs/koji-tag-request/$id'
     | '/jobs/koji/$id'
+    | '/jobs/log-detective/$id'
     | '/jobs/openscanhub/$id'
     | '/jobs/propose-downstream/$id'
     | '/jobs/pull-from-upstream/$id'
     | '/jobs/srpm/$id'
     | '/jobs/testing-farm/$id'
     | '/projects/$forge/$namespace'
+    | '/jobs/log-detective/group/$id'
     | '/projects/$forge/$namespace/$repo'
   id:
     | '__root__'
@@ -838,6 +894,7 @@ export interface FileRouteTypes {
     | '/jobs/koji-builds'
     | '/jobs/koji-downstream'
     | '/jobs/koji-tag-requests'
+    | '/jobs/log-detective'
     | '/jobs/openscanhub'
     | '/jobs/propose-downstream'
     | '/jobs/propose-downstreams'
@@ -856,12 +913,14 @@ export interface FileRouteTypes {
     | '/jobs/koji-downstream/$id'
     | '/jobs/koji-tag-request/$id'
     | '/jobs/koji/$id'
+    | '/jobs/log-detective/$id'
     | '/jobs/openscanhub/$id'
     | '/jobs/propose-downstream/$id'
     | '/jobs/pull-from-upstream/$id'
     | '/jobs/srpm/$id'
     | '/jobs/testing-farm/$id'
     | '/projects/$forge/$namespace'
+    | '/jobs/log-detective/group/$id'
     | '/projects/$forge/$namespace/$repo'
   fileRoutesById: FileRoutesById
 }
@@ -881,12 +940,14 @@ export interface RootRouteChildren {
   JobsKojiDownstreamIdRoute: typeof JobsKojiDownstreamIdRoute
   JobsKojiTagRequestIdRoute: typeof JobsKojiTagRequestIdRoute
   JobsKojiIdRoute: typeof JobsKojiIdRoute
+  JobsLogDetectiveIdRoute: typeof JobsLogDetectiveIdRoute
   JobsOpenscanhubIdRoute: typeof JobsOpenscanhubIdRoute
   JobsProposeDownstreamIdRoute: typeof JobsProposeDownstreamIdRoute
   JobsPullFromUpstreamIdRoute: typeof JobsPullFromUpstreamIdRoute
   JobsSrpmIdRoute: typeof JobsSrpmIdRoute
   JobsTestingFarmIdRoute: typeof JobsTestingFarmIdRoute
   ProjectsForgeNamespaceLazyRoute: typeof ProjectsForgeNamespaceLazyRoute
+  JobsLogDetectiveGroupIdRoute: typeof JobsLogDetectiveGroupIdRoute
   ProjectsForgeNamespaceRepoRoute: typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -905,12 +966,14 @@ const rootRouteChildren: RootRouteChildren = {
   JobsKojiDownstreamIdRoute: JobsKojiDownstreamIdRoute,
   JobsKojiTagRequestIdRoute: JobsKojiTagRequestIdRoute,
   JobsKojiIdRoute: JobsKojiIdRoute,
+  JobsLogDetectiveIdRoute: JobsLogDetectiveIdRoute,
   JobsOpenscanhubIdRoute: JobsOpenscanhubIdRoute,
   JobsProposeDownstreamIdRoute: JobsProposeDownstreamIdRoute,
   JobsPullFromUpstreamIdRoute: JobsPullFromUpstreamIdRoute,
   JobsSrpmIdRoute: JobsSrpmIdRoute,
   JobsTestingFarmIdRoute: JobsTestingFarmIdRoute,
   ProjectsForgeNamespaceLazyRoute: ProjectsForgeNamespaceLazyRoute,
+  JobsLogDetectiveGroupIdRoute: JobsLogDetectiveGroupIdRoute,
   ProjectsForgeNamespaceRepoRoute: ProjectsForgeNamespaceRepoRoute,
 }
 
@@ -940,12 +1003,14 @@ export const routeTree = rootRoute
         "/jobs/koji-downstream/$id",
         "/jobs/koji-tag-request/$id",
         "/jobs/koji/$id",
+        "/jobs/log-detective/$id",
         "/jobs/openscanhub/$id",
         "/jobs/propose-downstream/$id",
         "/jobs/pull-from-upstream/$id",
         "/jobs/srpm/$id",
         "/jobs/testing-farm/$id",
         "/projects/$forge/$namespace",
+        "/jobs/log-detective/group/$id",
         "/projects/$forge/$namespace/$repo"
       ]
     },
@@ -964,6 +1029,7 @@ export const routeTree = rootRoute
         "/jobs/koji-builds",
         "/jobs/koji-downstream",
         "/jobs/koji-tag-requests",
+        "/jobs/log-detective",
         "/jobs/openscanhub",
         "/jobs/propose-downstream",
         "/jobs/propose-downstreams",
@@ -1022,6 +1088,10 @@ export const routeTree = rootRoute
     },
     "/jobs/koji-tag-requests": {
       "filePath": "jobs/koji-tag-requests.tsx",
+      "parent": "/jobs"
+    },
+    "/jobs/log-detective": {
+      "filePath": "jobs/log-detective.tsx",
       "parent": "/jobs"
     },
     "/jobs/openscanhub": {
@@ -1088,6 +1158,9 @@ export const routeTree = rootRoute
     "/jobs/koji/$id": {
       "filePath": "jobs_/koji.$id.tsx"
     },
+    "/jobs/log-detective/$id": {
+      "filePath": "jobs_/log-detective.$id.tsx"
+    },
     "/jobs/openscanhub/$id": {
       "filePath": "jobs_/openscanhub.$id.tsx"
     },
@@ -1105,6 +1178,9 @@ export const routeTree = rootRoute
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"
+    },
+    "/jobs/log-detective/group/$id": {
+      "filePath": "jobs_/log-detective.group.$id.tsx"
     },
     "/projects/$forge/$namespace/$repo": {
       "filePath": "projects/$forge.$namespace.$repo.tsx"
