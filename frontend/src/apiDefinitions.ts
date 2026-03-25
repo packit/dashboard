@@ -495,3 +495,71 @@ export interface OSHScan {
   task_id: number | null;
   url: string | null;
 }
+
+// /api/log-detective
+export interface LogDetectiveResultGroup {
+  packit_id: number;
+  analysis_id: string;
+  status: string;
+  chroot: string;
+  commit_sha: string;
+  log_detective_response: LogDetectiveResponse | null;
+  target_build: string | null;
+  run_ids: number[];
+  submitted_time: number | null;
+}
+
+// /api/log-detective/groups/$id
+export interface LogDetectiveGroup {
+  packit_id: number;
+  submitted_time: number | null;
+  run_ids: number[];
+  log_detective_target_ids: number[];
+  pr_id: number | null;
+  issue_id: number | null;
+  branch_name: string | null;
+  release: string | null;
+  anitya_version: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_package: string | null;
+  non_git_upstream: boolean;
+  project_url: string;
+  repo_name: string;
+  repo_namespace: string;
+}
+
+// /api/log-detective/$id
+export interface LogDetectiveExplanation {
+  logprobs: unknown | null;
+  text: string;
+}
+
+export interface LogDetectiveResponse {
+  explanation: LogDetectiveExplanation;
+  response_certainty: number;
+}
+
+export interface LogDetectiveResult {
+  packit_id: number;
+  analysis_id: string;
+  branch_name: string | null;
+  chroot: string;
+  commit_sha: string;
+  run_ids: number[];
+  status: string;
+  log_detective_response: LogDetectiveResponse | null;
+  target_build: string | null;
+  submitted_time: number | null;
+  project_url: string;
+  pr_id: number | null;
+  issue_id: number | null;
+  release: string | null;
+  anitya_version: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_package: string | null;
+  non_git_upstream: boolean;
+  repo_name: string;
+  repo_namespace: string;
+}
