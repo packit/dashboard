@@ -20,6 +20,8 @@ import { logDetectiveResultQueryOptions } from "../../queries/logdetective/logDe
 import { Route as LogDetectiveRoute } from "../../routes/jobs_/log-detective.$id";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
+import { Timestamp } from "../shared/Timestamp";
+import { StatusLabel } from "../statusLabels/StatusLabel";
 
 export const LogDetectiveResult = () => {
   const { id } = LogDetectiveRoute.useParams();
@@ -76,12 +78,31 @@ export const LogDetectiveResult = () => {
                 <DescriptionList
                   columnModifier={{
                     default: "1Col",
+                    sm: "2Col",
                   }}
                 >
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>Packit ID</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      {data.packit_id}
+                    </DescriptionListDescription>
+                  </DescriptionListGroup>
                   <DescriptionListGroup>
                     <DescriptionListTerm>Analysis ID</DescriptionListTerm>
                     <DescriptionListDescription>
                       {data.analysis_id}
+                    </DescriptionListDescription>
+                  </DescriptionListGroup>
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>Status</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      <StatusLabel status={data.status} />
+                    </DescriptionListDescription>
+                  </DescriptionListGroup>
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>Submitted Time</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      <Timestamp stamp={data.submitted_time} verbose={true} />
                     </DescriptionListDescription>
                   </DescriptionListGroup>
                 </DescriptionList>
