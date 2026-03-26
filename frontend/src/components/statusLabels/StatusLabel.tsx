@@ -56,6 +56,10 @@ export const StatusLabel: React.FC<StatusLabelProps> = (props) => {
         setColor("grey");
         setIcon(<AngleDoubleRightIcon />);
         break;
+      case "complete":
+        setColor("blue");
+        setIcon(<InfoCircleIcon />);
+        break;
       case "unknown":
         setColor("grey");
         setIcon(<QuestionCircleIcon />);
