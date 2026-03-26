@@ -69,6 +69,9 @@ const Jobs = () => {
               Koji Tagging Requests
             </Link>
           </NavItem>
+          <NavItem isActive={!!matchRoute(jobTypeObject("log-detective"))}>
+            <Link {...jobTypeObject("log-detective")}>Log Detective</Link>
+          </NavItem>
         </NavList>
       </Nav>
       <PageSection hasBodyWrapper={false}>
