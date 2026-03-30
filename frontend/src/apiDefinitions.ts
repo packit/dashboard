@@ -507,6 +507,16 @@ export interface LogDetectiveResultGroup {
   target_build: string | null;
   run_ids: number[];
   submitted_time: number | null;
+  branch_name: string | null;
+  pr_id: number | null;
+  issue_id: number | null;
+  release: string | null;
+  project_url: string;
+  repo_name: string;
+  repo_namespace: string;
+  anitya_version: string | null;
+  anitya_project_name: string | null;
+  anitya_package: string | null;
 }
 
 // /api/log-detective/groups/$id

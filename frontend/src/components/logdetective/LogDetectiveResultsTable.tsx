@@ -17,10 +17,12 @@ import { SkeletonTable } from "@patternfly/react-component-groups";
 import { useQuery } from "@tanstack/react-query";
 import { logDetectiveResultsQueryOptions } from "../../queries/logdetective/logDetectiveResultsQuery";
 import { ErrorConnection } from "../errors/ErrorConnection";
+import { ForgeIcon } from "../icons/ForgeIcon";
 import { PackitPagination } from "../shared/PackitPagination";
 import { PackitPaginationContext } from "../shared/PackitPaginationContext";
 import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 export const LogDetectiveResultsTable = () => {
   const [page, setPage] = useState(1);
@@ -29,6 +31,8 @@ export const LogDetectiveResultsTable = () => {
 
   // Headings
   const columnNames = {
+    forge: "Forge",
+    trigger: "Trigger",
     packit_id: "Packit ID",
     analysisId: "Analysis ID",
     target: "Target",
@@ -41,19 +45,25 @@ export const LogDetectiveResultsTable = () => {
   );
 
   const TableHeads = [
+    <Th key={columnNames.forge} width={10}>
+      {columnNames.forge}
+    </Th>,
+    <Th key={columnNames.trigger} width={15}>
+      {columnNames.trigger}
+    </Th>,
     <Th key={columnNames.packit_id} width={10}>
       {columnNames.packit_id}
     </Th>,
-    <Th key={columnNames.analysisId} width={20}>
+    <Th key={columnNames.analysisId} width={15}>
       {columnNames.analysisId}
     </Th>,
-    <Th key={columnNames.target} width={20}>
+    <Th key={columnNames.target} width={15}>
       {columnNames.target}
     </Th>,
-    <Th key={columnNames.commitSha} width={20}>
+    <Th key={columnNames.commitSha} width={15}>
       {columnNames.commitSha}
     </Th>,
-    <Th key={columnNames.timeSubmitted} width={20}>
+    <Th key={columnNames.timeSubmitted} width={15}>
       {columnNames.timeSubmitted}
     </Th>,
   ];
@@ -82,6 +92,16 @@ export const LogDetectiveResultsTable = () => {
           <Tbody>
             {data?.map((log_detective_result) => (
               <Tr key={log_detective_result.packit_id}>
+                <Td dataLabel={columnNames.forge}>
+                  <ForgeIcon url={log_detective_result.project_url} />
+                </Td>
+                <Td dataLabel={columnNames.trigger}>
+                  <strong>
+                    <TriggerLink trigger={log_detective_result}>
+                      <TriggerSuffix trigger={log_detective_result} />
+                    </TriggerLink>
+                  </strong>
+                </Td>
                 <Td dataLabel={columnNames.packit_id}>
                   {log_detective_result.packit_id}
                 </Td>
