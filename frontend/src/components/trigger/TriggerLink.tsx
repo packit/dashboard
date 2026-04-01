@@ -81,7 +81,12 @@ const TriggerSuffix: React.FC<TriggerSuffixProps> = ({ trigger }) => {
   let jobSuffix = "";
 
   if (isAnityaTrigger(trigger)) {
-    jobSuffix = `#version:${trigger.anitya_version}`;
+    const versions = trigger.anitya_version.split(";");
+    if (versions.length > 1) {
+      jobSuffix = `#versions:{${versions.join(",")}}`;
+    } else {
+      jobSuffix = `#version:${versions[0]}`;
+    }
     return (
       <>
         {trigger.anitya_project_name}
