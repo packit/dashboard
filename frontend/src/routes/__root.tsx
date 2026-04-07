@@ -52,7 +52,7 @@ import {
   useMatchRoute,
   useMatches,
 } from "@tanstack/react-router";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useTitle } from "../components/shared/useTitle";
 import packitLogo from "../static/logo.png";
 
@@ -69,15 +69,21 @@ export const Route = createRootRouteWithContext<RouterContext>()({
     const [isMobileView, setIsMobileView] = useState(true);
     const [isNavOpenMobile, setIsNavOpenMobile] = useState(false);
 
-    const [isDarkTheme, setIsDarkTheme] = React.useState(false);
+    const [isDarkTheme, setIsDarkTheme] = React.useState(
+      window.sessionStorage.getItem("theme-dark") === "true",
+    );
+
+    useEffect(() => {
+      const htmlRoot = document.querySelector("html");
+      if (htmlRoot) {
+        htmlRoot.classList.toggle("pf-v6-theme-dark", isDarkTheme);
+      }
+      window.sessionStorage.setItem("theme-dark", isDarkTheme.toString());
+    }, [isDarkTheme]);
 
     const toggleDarkTheme = (_evt, selected: boolean) => {
       const darkThemeToggleClicked = !selected === isDarkTheme;
-      const htmlRoot = document.querySelector("html");
-      if (htmlRoot) {
-        htmlRoot.classList.toggle("pf-v6-theme-dark", darkThemeToggleClicked);
-        setIsDarkTheme(darkThemeToggleClicked);
-      }
+      setIsDarkTheme(darkThemeToggleClicked);
     };
 
     const matchRoute = useMatchRoute();
