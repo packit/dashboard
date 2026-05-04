@@ -4,6 +4,7 @@
 """
 Let's test flask views.
 """
+
 import pytest
 from packit_dashboard.app import app as application
 
