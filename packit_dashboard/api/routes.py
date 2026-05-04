@@ -6,7 +6,6 @@ from logging import getLogger
 from flask import Blueprint
 from flask_cors import CORS
 
-
 logger = getLogger("packit_dashboard")
 api = Blueprint(
     "api",
