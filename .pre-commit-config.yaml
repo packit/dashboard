@@ -5,17 +5,17 @@
 exclude: ^frontend/src/routeTree.gen.ts$
 repos:
   - repo: https://github.com/psf/black
-    rev: 25.1.0
+    rev: c6755bb741b6481d6b3d3bb563c83fa060db96c9  # frozen: 26.3.1
     hooks:
       - id: black
         language_version: python3
   - repo: https://github.com/biomejs/pre-commit
-    rev: "v2.0.0-beta.5" # Use the sha / tag you want to point at
+    rev: "5e71eb16415bb412e2e88eeea7348d6f9c780d25"  # frozen: v2.4.15
     hooks:
       - id: biome-check
         additional_dependencies: ["@biomejs/biome@1.8.3"]
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v5.0.0
+    rev: 3e8a8703264a2f4a69428a0aa4dcb512790b2c8c  # frozen: v6.0.0
     hooks:
       - id: check-added-large-files
       - id: check-ast
@@ -33,33 +33,33 @@ repos:
   #       args:
   #         - --parse-only
   - repo: https://github.com/PyCQA/flake8
-    rev: 7.2.0
+    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f  # frozen: 7.3.0
     hooks:
       - id: flake8
         args:
           - --max-line-length=100
           - --per-file-ignores=packit_dashboard/packit_dashboard.wsgi:F401,E402
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: v1.15.0
+    rev: d2823d321df3af8f878f7ee3414dc94d037145b9  # frozen: v2.1.0
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
         additional_dependencies: [types-requests, types-Flask, types-cachetools]
 
   - repo: https://github.com/packit/pre-commit-hooks
-    rev: v1.3.0
+    rev: ce4b530e5913c1b8651127ace81996464975ef48  # frozen: v1.3.0
     hooks:
       - id: check-rebase
         args:
           - https://github.com/packit/dashboard.git
         stages: [manual, pre-push]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 0.33.0
+    rev: 943377262562a12b57292fc98fabd7dbf81451fe  # frozen: 0.37.2
     hooks:
       - id: check-github-workflows
         args: ["--verbose"]
   - repo: https://github.com/Lucas-C/pre-commit-hooks
-    rev: v1.5.5
+    rev: ad1b27d73581aa16cca06fc4a0761fc563ffe8e8  # frozen: v1.5.6
     hooks:
       - id: insert-license
         name: insert-license-python
