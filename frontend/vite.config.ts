@@ -47,6 +47,9 @@ export default defineConfig(() => ({
   ],
   server: {
     open: true,
+    proxy: {
+      "/api/usage": "http://localhost:5000",
+    },
   },
   test: {
     environment: "happy-dom",
