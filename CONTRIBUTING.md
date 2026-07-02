@@ -11,7 +11,12 @@ Please follow common guidelines for our projects [here](https://github.com/packi
 
 ### Dependencies
 
-`make install-dependencies` automatically installs python dependencies and `pnpm`.
+Python dependencies are declared in `pyproject.toml` and can be installed either via system packages or pip.
+
+For local development, you can either:
+- Use `make install-dependencies` to install system packages (Fedora/RHEL)
+- Use `pip install -e .` to install in a virtual environment (see README.md for details)
+
 In case the `pnpm` installation fails, follow [this](https://pnpm.io/installation) guide for
 different installation options.
 

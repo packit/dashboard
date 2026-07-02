@@ -1,0 +1,53 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "packit-dashboard"
+# Using static version for now since the repo doesn't have version tags yet.
+# TODO: Switch to dynamic versioning with hatch-vcs when version tags are added.
+version = "0.1.0"
+authors = [
+    { name = "Red Hat", email = "hello@packit.dev" },
+]
+description = "Dashboard for Packit Service"
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.9"
+classifiers = [
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Software Development",
+]
+keywords = [
+    "packit",
+    "dashboard",
+]
+dependencies = [
+    "Flask >= 2.0.0",
+    "flask-cors >= 3.0.0",
+    "flask-talisman >= 1.0.0",
+    "cachetools >= 4.0.0",
+    "requests >= 2.20.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/packit/dashboard"
+
+[project.optional-dependencies]
+testing = [
+    "pytest",
+    "pytest-cov",
+    "requre",
+]
+
+[tool.hatch.build.targets.wheel]
+packages = ["packit_dashboard"]
