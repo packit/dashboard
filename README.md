@@ -13,10 +13,32 @@ for [the staging instance](https://dashboard.stg.packit.dev)).
 
 ### Running the dashboard locally
 
+#### Option 1: Using system packages (Fedora/RHEL)
+
 ```bash
 # install dependencies
 :~/dashboard $ make install-dependencies
 ```
+
+#### Option 2: Using pip/virtualenv
+
+```bash
+# create a virtual environment (optional but recommended)
+:~/dashboard $ python3 -m venv venv
+:~/dashboard $ source venv/bin/activate
+
+# install the package with dependencies
+:~/dashboard $ pip install -e .
+
+# install test dependencies (if running tests)
+:~/dashboard $ pip install -e '.[testing]'
+
+# install pnpm and frontend dependencies
+:~/dashboard $ sudo dnf install pnpm
+:~/dashboard $ cd frontend && pnpm install && cd ..
+```
+
+#### Start the development servers
 
 ```bash
 # this will start the flask development server
