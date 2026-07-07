@@ -25,6 +25,9 @@ classifiers = [
     "Programming Language :: Python :: 3.9",
     "Programming Language :: Python :: 3.10",
     "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
     "Topic :: Software Development",
 ]
 keywords = [
@@ -35,7 +38,6 @@ dependencies = [
     "Flask >= 2.0.0",
     "flask-cors >= 3.0.0",
     "flask-talisman >= 1.0.0",
-    "cachetools >= 4.0.0",
     "requests >= 2.20.0",
 ]
 
