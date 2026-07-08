@@ -1,5 +1,9 @@
 packages:
   - "frontend"
+allowBuilds:
+  '@sentry/cli': true
+  esbuild: true
+  sharp: true
 pnpm:
   supportedArchitectures:
     os: ["win32", "darwin", "current"]
