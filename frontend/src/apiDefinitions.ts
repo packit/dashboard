@@ -546,8 +546,13 @@ export interface LogDetectiveExplanation {
   text: string;
 }
 
+export interface LogDetectiveSolution {
+  text: string;
+}
+
 export interface LogDetectiveResponse {
   explanation: LogDetectiveExplanation;
+  solution: LogDetectiveSolution | null;
   response_certainty: number;
 }
 
