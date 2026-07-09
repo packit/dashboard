@@ -105,6 +105,20 @@ export const LogDetectiveResult = () => {
                       <Timestamp stamp={data.submitted_time} verbose={true} />
                     </DescriptionListDescription>
                   </DescriptionListGroup>
+                  {data.target_build ? (
+                    <DescriptionListGroup>
+                      <DescriptionListTerm>Koji Build</DescriptionListTerm>
+                      <DescriptionListDescription>
+                        <a
+                          href={`https://koji.fedoraproject.org/koji/taskinfo?taskID=${data.target_build}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          {data.target_build}
+                        </a>
+                      </DescriptionListDescription>
+                    </DescriptionListGroup>
+                  ) : null}
                 </DescriptionList>
               </CardBody>
               {data.status === "complete" && data.log_detective_response ? (
