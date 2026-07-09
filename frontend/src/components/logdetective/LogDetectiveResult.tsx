@@ -107,16 +107,32 @@ export const LogDetectiveResult = () => {
                   </DescriptionListGroup>
                 </DescriptionList>
               </CardBody>
-              {data.log_detective_response?.explanation ? (
+              {data.status === "complete" && data.log_detective_response ? (
+                <CardBody>
+                  <DescriptionList>
+                    {data.log_detective_response.explanation?.text ? (
+                      <DescriptionListGroup>
+                        <DescriptionListTerm>Explanation</DescriptionListTerm>
+                        <DescriptionListDescription>
+                          <CodeBlock>
+                            <CodeBlockCode>
+                              {data.log_detective_response.explanation.text}
+                            </CodeBlockCode>
+                          </CodeBlock>
+                        </DescriptionListDescription>
+                      </DescriptionListGroup>
+                    ) : null}
+                  </DescriptionList>
+                </CardBody>
+              ) : null}
+              {data.status === "error" && data.error_msg ? (
                 <CardBody>
                   <DescriptionList>
                     <DescriptionListGroup>
-                      <DescriptionListTerm>Explanation</DescriptionListTerm>
+                      <DescriptionListTerm>Error</DescriptionListTerm>
                       <DescriptionListDescription>
                         <CodeBlock>
-                          <CodeBlockCode>
-                            {data.log_detective_response.explanation.text}
-                          </CodeBlockCode>
+                          <CodeBlockCode>{data.error_msg}</CodeBlockCode>
                         </CodeBlock>
                       </DescriptionListDescription>
                     </DescriptionListGroup>

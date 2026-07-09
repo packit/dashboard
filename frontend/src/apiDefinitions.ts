@@ -504,6 +504,7 @@ export interface LogDetectiveResultGroup {
   chroot: string;
   commit_sha: string;
   log_detective_response: LogDetectiveResponse | null;
+  error_msg: string | null;
   target_build: string | null;
   run_ids: number[];
   submitted_time: number | null;
@@ -559,6 +560,7 @@ export interface LogDetectiveResult {
   run_ids: number[];
   status: string;
   log_detective_response: LogDetectiveResponse | null;
+  error_msg: string | null;
   target_build: string | null;
   submitted_time: number | null;
   project_url: string;
