@@ -136,6 +136,18 @@ export const LogDetectiveResult = () => {
                         </DescriptionListDescription>
                       </DescriptionListGroup>
                     ) : null}
+                    {data.log_detective_response.solution?.text ? (
+                      <DescriptionListGroup>
+                        <DescriptionListTerm>Solution</DescriptionListTerm>
+                        <DescriptionListDescription>
+                          <CodeBlock>
+                            <CodeBlockCode>
+                              {data.log_detective_response.solution.text}
+                            </CodeBlockCode>
+                          </CodeBlock>
+                        </DescriptionListDescription>
+                      </DescriptionListGroup>
+                    ) : null}
                   </DescriptionList>
                 </CardBody>
               ) : null}
