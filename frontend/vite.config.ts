@@ -2,7 +2,7 @@
 // SPDX-License-Identifier: MIT
 /// <reference types="vitest" />
 import { defineConfig } from "vite";
-import react from "@vitejs/plugin-react";
+import preact from "@preact/preset-vite";
 import { sentryVitePlugin } from "@sentry/vite-plugin";
 import { ViteImageOptimizer } from "vite-plugin-image-optimizer";
 import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
@@ -33,7 +33,7 @@ export default defineConfig(() => ({
   },
   plugins: [
     TanStackRouterVite(),
-    react(),
+    preact(),
     ViteImageOptimizer(),
     // Put the Sentry vite plugin after all other plugins
     sentryVitePlugin({
