@@ -550,9 +550,17 @@ export interface LogDetectiveSolution {
   text: string;
 }
 
+export interface LogDetectiveSnippet {
+  text: string;
+  line_number: number;
+  source_file: string;
+  snippet_analysis?: string;
+}
+
 export interface LogDetectiveResponse {
   explanation: LogDetectiveExplanation;
   solution: LogDetectiveSolution | null;
+  snippets: LogDetectiveSnippet[] | null;
   response_certainty: number;
 }
 
