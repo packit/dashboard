@@ -542,7 +542,6 @@ export interface LogDetectiveGroup {
 
 // /api/log-detective/$id
 export interface LogDetectiveExplanation {
-  logprobs: unknown | null;
   text: string;
 }
 
@@ -559,9 +558,9 @@ export interface LogDetectiveSnippet {
 
 export interface LogDetectiveResponse {
   explanation: LogDetectiveExplanation;
+  no_issue_found: boolean;
   solution: LogDetectiveSolution | null;
   snippets: LogDetectiveSnippet[] | null;
-  response_certainty: number;
 }
 
 export interface LogDetectiveResult {
