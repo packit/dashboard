@@ -8,6 +8,7 @@ from flask_talisman import Talisman
 
 from packit_dashboard.api.routes import api
 from packit_dashboard.home.routes import home
+from packit_dashboard.usage.routes import usage
 
 app = Flask(
     "Packit Service Dashboard",
@@ -16,6 +17,7 @@ app = Flask(
 
 # Note: Declare any other flask blueprints or routes above this.
 # Routes declared below this will be rendered by React
+app.register_blueprint(usage)
 app.register_blueprint(home)
 app.register_blueprint(api)
 

@@ -22,14 +22,12 @@ import { Preloader } from "../shared/Preloader";
 import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageListProps["what"]) =>
-  fetch(`${import.meta.env.VITE_API_URL}/usage/${granularity}`).then(
-    (response) => {
-      if (!response.ok) {
-        throw Promise.reject(response);
-      }
-      return response.json();
-    },
-  );
+  fetch(`/api/usage/${granularity}`).then((response) => {
+    if (!response.ok) {
+      throw Promise.reject(response);
+    }
+    return response.json();
+  });
 
 interface UsageListProps {
   what: "past-day" | "past-week" | "past-month" | "past-year" | "total";
