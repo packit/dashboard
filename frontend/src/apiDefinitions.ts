@@ -1,20 +1,25 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
+import { z } from "zod";
+
 /**
  * This is a list of items from the Packit API
  */
 
 // /api/projects/$forge/$namespace/$repo
-export interface Project {
-  namespace: string;
-  repo_name: string;
-  project_url: string;
-  prs_handled: number;
-  branches_handled: number;
-  releases_handled: number;
-  issues_handled: number;
-}
+
+export const Project = z.object({
+  namespace: z.string(),
+  repo_name: z.string(),
+  project_url: z.string(),
+  prs_handled: z.number(),
+  branches_handled: z.number(),
+  releases_handled: z.number(),
+  issues_handled: z.number(),
+});
+
+export type Project = z.infer<typeof Project>;
 
 // /api/projects/$forge/$namespace/$repo/issues
 export type ProjectIssue = number;
