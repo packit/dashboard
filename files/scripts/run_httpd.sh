@@ -14,6 +14,14 @@ fi
 # open HTTP/2 connection gets reused
 API_SERVER_NAME="${DEPLOYMENT}.packit.dev"
 
+# Pre-warm the usage cache at startup and schedule daily refresh at 00:01
+PYTHONPATH=/src python3 -m packit_dashboard.usage.warm_cache || true
+(while true; do
+    seconds_until_midnight=$(( $(date -d "tomorrow 00:01" +%s) - $(date +%s) ))
+    sleep "${seconds_until_midnight}"
+    PYTHONPATH=/src python3 -m packit_dashboard.usage.warm_cache || true
+done) &
+
 # See "mod_wsgi-express-3 start-server --help" for details on
 # these options, and the configuration documentation of mod_wsgi:
 # https://modwsgi.readthedocs.io/en/master/configuration.html
