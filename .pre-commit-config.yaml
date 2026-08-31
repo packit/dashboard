@@ -4,13 +4,13 @@
 
 exclude: ^frontend/src/routeTree.gen.ts$
 repos:
-  - repo: https://github.com/psf/black
-    rev: c6755bb741b6481d6b3d3bb563c83fa060db96c9  # frozen: 26.3.1
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 4160603246a6b365d4a2af661c6d71b0a0f50478  # frozen: 26.5.1
     hooks:
       - id: black
         language_version: python3
   - repo: https://github.com/biomejs/pre-commit
-    rev: "5e71eb16415bb412e2e88eeea7348d6f9c780d25"  # frozen: v2.4.15
+    rev: "8a54093106c1c85f977afbb95ada8685786a2999"  # frozen: v2.5.11
     hooks:
       - id: biome-check
         additional_dependencies: ["@biomejs/biome@1.8.3"]
@@ -40,7 +40,7 @@ repos:
           - --max-line-length=100
           - --per-file-ignores=packit_dashboard/packit_dashboard.wsgi:F401,E402
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: d2823d321df3af8f878f7ee3414dc94d037145b9  # frozen: v2.1.0
+    rev: 7ff8d35ae36a7d2b968f2f90b4c723e292e594ee  # frozen: v2.3.1
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
@@ -54,7 +54,7 @@ repos:
           - https://github.com/packit/dashboard.git
         stages: [manual, pre-push]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 943377262562a12b57292fc98fabd7dbf81451fe  # frozen: 0.37.2
+    rev: c4654a7e007c9619a5eb63c39a456572a0fa1851  # frozen: 0.38.0
     hooks:
       - id: check-github-workflows
         args: ["--verbose"]
