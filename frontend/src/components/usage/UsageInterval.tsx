@@ -30,9 +30,7 @@ import { UsageListData } from "./UsageListData";
 
 const fetchDataByGranularity = (granularity: UsageIntervalProps) =>
   fetch(
-    `${import.meta.env.VITE_API_URL}/usage/intervals?days=${
-      granularity.days
-    }&hours=${granularity.hours}&count=${granularity.count}`,
+    `/api/usage/intervals?days=${granularity.days}&hours=${granularity.hours}&count=${granularity.count}`,
   ).then((response) => {
     if (!response.ok) {
       throw Promise.reject(response);
