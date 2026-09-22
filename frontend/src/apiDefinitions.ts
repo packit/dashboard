@@ -496,28 +496,31 @@ export interface OSHScan {
   url: string | null;
 }
 
-// /api/log-detective
-export interface LogDetectiveResultGroup {
-  packit_id: number;
-  analysis_id: string;
+export interface LogDetectiveTarget {
+  id: number;
+  target_arch: string;
   status: string;
-  chroot: string;
-  commit_sha: string;
-  log_detective_response: LogDetectiveResponse | null;
-  error_msg: string | null;
-  target_build: string | null;
-  run_ids: number[];
+}
+
+// /api/log-detective/groups
+export interface LogDetectiveQueryGroup {
+  packit_id: number;
   submitted_time: number | null;
-  branch_name: string | null;
+  run_ids: number[];
+  log_detective_targets: LogDetectiveTarget[];
+  commit_sha: string | null;
   pr_id: number | null;
   issue_id: number | null;
+  branch_name: string | null;
   release: string | null;
+  anitya_version: string | null;
+  anitya_project_id: number | null;
+  anitya_project_name: string | null;
+  anitya_package: string | null;
+  non_git_upstream: boolean;
   project_url: string;
   repo_name: string;
   repo_namespace: string;
-  anitya_version: string | null;
-  anitya_project_name: string | null;
-  anitya_package: string | null;
 }
 
 // /api/log-detective/groups/$id
@@ -540,7 +543,6 @@ export interface LogDetectiveGroup {
   repo_namespace: string;
 }
 
-// /api/log-detective/$id
 export interface LogDetectiveExplanation {
   text: string;
 }
@@ -563,6 +565,7 @@ export interface LogDetectiveResponse {
   snippets: LogDetectiveSnippet[] | null;
 }
 
+// /api/log-detective/$id
 export interface LogDetectiveResult {
   packit_id: number;
   analysis_id: string;
