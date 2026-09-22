@@ -23,8 +23,10 @@ import { logDetectiveResultQueryOptions } from "../../queries/logdetective/logDe
 import { Route as LogDetectiveRoute } from "../../routes/jobs_/log-detective.$id";
 import { ErrorConnection } from "../errors/ErrorConnection";
 import { Preloader } from "../shared/Preloader";
+import { SHACopy } from "../shared/SHACopy";
 import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
+import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
 // PF CodeBlock has very generous default padding; these overrides keep snippet rows compact.
 // The `as` cast is needed because PF CSS custom properties aren't in the CSSProperties type.
@@ -173,6 +175,20 @@ export const LogDetectiveResult = () => {
       <PageSection hasBodyWrapper={false}>
         <Content>
           <Content component="h1">Log Detective Results</Content>
+          {data ? (
+            <>
+              <strong>
+                <TriggerLink trigger={data}>
+                  <TriggerSuffix trigger={data} />
+                </TriggerLink>
+                <SHACopy
+                  project_url={data.project_url}
+                  commit_sha={data.commit_sha}
+                />
+              </strong>
+              <br />
+            </>
+          ) : null}
         </Content>
       </PageSection>
       <PageSection hasBodyWrapper={false}>
@@ -210,6 +226,12 @@ export const LogDetectiveResult = () => {
                     <DescriptionListTerm>Analysis ID</DescriptionListTerm>
                     <DescriptionListDescription>
                       {data.analysis_id}
+                    </DescriptionListDescription>
+                  </DescriptionListGroup>
+                  <DescriptionListGroup>
+                    <DescriptionListTerm>Target arch</DescriptionListTerm>
+                    <DescriptionListDescription>
+                      {data.chroot}
                     </DescriptionListDescription>
                   </DescriptionListGroup>
                   <DescriptionListGroup>
