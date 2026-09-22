@@ -24,6 +24,9 @@ import { Preloader } from "../shared/Preloader";
 import { Timestamp } from "../shared/Timestamp";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 
+// Note: Even though the route is technically reachable, it is not linked from the dashboard FE.
+// No one will see this, unless they request /jobs/log-detective/group/{id} directly.
+
 export const LogDetectiveGroup = () => {
   const { id } = LogDetectiveGroupRoute.useParams();
 
