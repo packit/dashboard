@@ -1,7 +1,7 @@
 // Copyright Contributors to the Packit project.
 // SPDX-License-Identifier: MIT
 
-import { LogDetectiveQueryGroup } from "../../apiDefinitions";
+import { LogDetectiveGroup } from "../../apiDefinitions";
 
 export interface fetchLogDetectiveResultProps {
   pageParam: number;
@@ -14,7 +14,7 @@ export const fetchLogDetectiveResults = async ({
   pageParam = 1,
   perPage,
   signal,
-}: fetchLogDetectiveResultProps): Promise<LogDetectiveQueryGroup[]> => {
+}: fetchLogDetectiveResultProps): Promise<LogDetectiveGroup[]> => {
   const data = await fetch(
     `${import.meta.env.VITE_API_URL}/log-detective/groups?page=${pageParam}&per_page=${perPage}`,
     { signal },

@@ -503,32 +503,12 @@ export interface LogDetectiveTarget {
 }
 
 // /api/log-detective/groups
-export interface LogDetectiveQueryGroup {
+export interface LogDetectiveGroup {
   packit_id: number;
   submitted_time: number | null;
   run_ids: number[];
   log_detective_targets: LogDetectiveTarget[];
   commit_sha: string | null;
-  pr_id: number | null;
-  issue_id: number | null;
-  branch_name: string | null;
-  release: string | null;
-  anitya_version: string | null;
-  anitya_project_id: number | null;
-  anitya_project_name: string | null;
-  anitya_package: string | null;
-  non_git_upstream: boolean;
-  project_url: string;
-  repo_name: string;
-  repo_namespace: string;
-}
-
-// /api/log-detective/groups/$id
-export interface LogDetectiveGroup {
-  packit_id: number;
-  submitted_time: number | null;
-  run_ids: number[];
-  log_detective_target_ids: number[];
   pr_id: number | null;
   issue_id: number | null;
   branch_name: string | null;
