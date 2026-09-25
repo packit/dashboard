@@ -53,7 +53,6 @@ import { Route as JobsKojiDownstreamIdImport } from './routes/jobs_/koji-downstr
 import { Route as JobsCoprIdImport } from './routes/jobs_/copr.$id'
 import { Route as JobsBodhiIdImport } from './routes/jobs_/bodhi.$id'
 import { Route as ProjectsForgeNamespaceRepoImport } from './routes/projects/$forge.$namespace.$repo'
-import { Route as JobsLogDetectiveGroupIdImport } from './routes/jobs_/log-detective.group.$id'
 
 // Create Virtual Routes
 
@@ -285,11 +284,6 @@ const ProjectsForgeNamespaceRepoRoute = ProjectsForgeNamespaceRepoImport.update(
 ).lazy(() =>
   import('./routes/projects/$forge.$namespace.$repo.lazy').then((d) => d.Route),
 )
-
-const JobsLogDetectiveGroupIdRoute = JobsLogDetectiveGroupIdImport.update({
-  path: '/jobs/log-detective/group/$id',
-  getParentRoute: () => rootRoute,
-} as any)
 
 // Populate the FileRoutesByPath interface
 
@@ -582,13 +576,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsForgeNamespaceLazyImport
       parentRoute: typeof rootRoute
     }
-    '/jobs/log-detective/group/$id': {
-      id: '/jobs/log-detective/group/$id'
-      path: '/jobs/log-detective/group/$id'
-      fullPath: '/jobs/log-detective/group/$id'
-      preLoaderRoute: typeof JobsLogDetectiveGroupIdImport
-      parentRoute: typeof rootRoute
-    }
     '/projects/$forge/$namespace/$repo': {
       id: '/projects/$forge/$namespace/$repo'
       path: '/projects/$forge/$namespace/$repo'
@@ -691,7 +678,6 @@ export interface FileRoutesByFullPath {
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
   '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
   '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
-  '/jobs/log-detective/group/$id': typeof JobsLogDetectiveGroupIdRoute
   '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -736,7 +722,6 @@ export interface FileRoutesByTo {
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
   '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
   '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
-  '/jobs/log-detective/group/$id': typeof JobsLogDetectiveGroupIdRoute
   '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -783,7 +768,6 @@ export interface FileRoutesById {
   '/jobs/srpm/$id': typeof JobsSrpmIdRoute
   '/jobs/testing-farm/$id': typeof JobsTestingFarmIdRoute
   '/projects/$forge/$namespace': typeof ProjectsForgeNamespaceLazyRoute
-  '/jobs/log-detective/group/$id': typeof JobsLogDetectiveGroupIdRoute
   '/projects/$forge/$namespace/$repo': typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -831,7 +815,6 @@ export interface FileRouteTypes {
     | '/jobs/srpm/$id'
     | '/jobs/testing-farm/$id'
     | '/projects/$forge/$namespace'
-    | '/jobs/log-detective/group/$id'
     | '/projects/$forge/$namespace/$repo'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -875,7 +858,6 @@ export interface FileRouteTypes {
     | '/jobs/srpm/$id'
     | '/jobs/testing-farm/$id'
     | '/projects/$forge/$namespace'
-    | '/jobs/log-detective/group/$id'
     | '/projects/$forge/$namespace/$repo'
   id:
     | '__root__'
@@ -920,7 +902,6 @@ export interface FileRouteTypes {
     | '/jobs/srpm/$id'
     | '/jobs/testing-farm/$id'
     | '/projects/$forge/$namespace'
-    | '/jobs/log-detective/group/$id'
     | '/projects/$forge/$namespace/$repo'
   fileRoutesById: FileRoutesById
 }
@@ -947,7 +928,6 @@ export interface RootRouteChildren {
   JobsSrpmIdRoute: typeof JobsSrpmIdRoute
   JobsTestingFarmIdRoute: typeof JobsTestingFarmIdRoute
   ProjectsForgeNamespaceLazyRoute: typeof ProjectsForgeNamespaceLazyRoute
-  JobsLogDetectiveGroupIdRoute: typeof JobsLogDetectiveGroupIdRoute
   ProjectsForgeNamespaceRepoRoute: typeof ProjectsForgeNamespaceRepoRoute
 }
 
@@ -973,7 +953,6 @@ const rootRouteChildren: RootRouteChildren = {
   JobsSrpmIdRoute: JobsSrpmIdRoute,
   JobsTestingFarmIdRoute: JobsTestingFarmIdRoute,
   ProjectsForgeNamespaceLazyRoute: ProjectsForgeNamespaceLazyRoute,
-  JobsLogDetectiveGroupIdRoute: JobsLogDetectiveGroupIdRoute,
   ProjectsForgeNamespaceRepoRoute: ProjectsForgeNamespaceRepoRoute,
 }
 
@@ -1010,7 +989,6 @@ export const routeTree = rootRoute
         "/jobs/srpm/$id",
         "/jobs/testing-farm/$id",
         "/projects/$forge/$namespace",
-        "/jobs/log-detective/group/$id",
         "/projects/$forge/$namespace/$repo"
       ]
     },
@@ -1178,9 +1156,6 @@ export const routeTree = rootRoute
     },
     "/projects/$forge/$namespace": {
       "filePath": "projects/$forge.$namespace_.lazy.tsx"
-    },
-    "/jobs/log-detective/group/$id": {
-      "filePath": "jobs_/log-detective.group.$id.tsx"
     },
     "/projects/$forge/$namespace/$repo": {
       "filePath": "projects/$forge.$namespace.$repo.tsx"
