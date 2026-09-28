@@ -4,13 +4,13 @@
 
 exclude: ^frontend/src/routeTree.gen.ts$
 repos:
-  - repo: https://github.com/psf/black
-    rev: c6755bb741b6481d6b3d3bb563c83fa060db96c9  # frozen: 26.3.1
+  - repo: https://github.com/psf/black-pre-commit-mirror
+    rev: 4160603246a6b365d4a2af661c6d71b0a0f50478  # frozen: 26.5.1
     hooks:
       - id: black
         language_version: python3
   - repo: https://github.com/biomejs/pre-commit
-    rev: "5e71eb16415bb412e2e88eeea7348d6f9c780d25"  # frozen: v2.4.15
+    rev: "221fa73eac76e0540995318b44e2efb2774af990"  # frozen: v2.5.14
     hooks:
       - id: biome-check
         additional_dependencies: ["@biomejs/biome@1.8.3"]
@@ -33,14 +33,14 @@ repos:
   #       args:
   #         - --parse-only
   - repo: https://github.com/PyCQA/flake8
-    rev: d93590f5be797aabb60e3b09f2f52dddb02f349f  # frozen: 7.3.0
+    rev: cfbbfdeb2391c14a37e101e92a77f54f329e1726  # frozen: 7.4.1
     hooks:
       - id: flake8
         args:
           - --max-line-length=100
           - --per-file-ignores=packit_dashboard/packit_dashboard.wsgi:F401,E402
   - repo: https://github.com/pre-commit/mirrors-mypy
-    rev: d2823d321df3af8f878f7ee3414dc94d037145b9  # frozen: v2.1.0
+    rev: 7ff8d35ae36a7d2b968f2f90b4c723e292e594ee  # frozen: v2.3.1
     hooks:
       - id: mypy
         args: [--no-strict-optional, --ignore-missing-imports]
@@ -54,7 +54,7 @@ repos:
           - https://github.com/packit/dashboard.git
         stages: [manual, pre-push]
   - repo: https://github.com/python-jsonschema/check-jsonschema
-    rev: 943377262562a12b57292fc98fabd7dbf81451fe  # frozen: 0.37.2
+    rev: 4f85d46a92dc17713078e5de73f8a13190edf6fc  # frozen: 0.38.2
     hooks:
       - id: check-github-workflows
         args: ["--verbose"]
