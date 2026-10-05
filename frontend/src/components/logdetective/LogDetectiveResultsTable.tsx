@@ -35,7 +35,6 @@ export const LogDetectiveResultsTable = () => {
     trigger: "Trigger",
     packitId: "Packit ID",
     targets: "Targets",
-    commitSha: "Commit SHA",
     timeSubmitted: "Time Submitted",
   };
 
@@ -44,20 +43,17 @@ export const LogDetectiveResultsTable = () => {
   );
 
   const TableHeads = [
-    <Th key={columnNames.forge} width={5}>
+    <Th key={columnNames.forge} width={10}>
       {columnNames.forge}
     </Th>,
     <Th key={columnNames.trigger} width={15}>
       {columnNames.trigger}
     </Th>,
-    <Th key={columnNames.packitId} width={5}>
+    <Th key={columnNames.packitId} width={10}>
       {columnNames.packitId}
     </Th>,
     <Th key={columnNames.targets} width={50}>
       {columnNames.targets}
-    </Th>,
-    <Th key={columnNames.commitSha} width={10}>
-      {columnNames.commitSha}
     </Th>,
     <Th key={columnNames.timeSubmitted} width={10}>
       {columnNames.timeSubmitted}
@@ -109,9 +105,6 @@ export const LogDetectiveResultsTable = () => {
                       />
                     </span>
                   ))}
-                </Td>
-                <Td dataLabel={columnNames.commitSha}>
-                  {group.commit_sha?.slice(0, 7)}
                 </Td>
                 <Td dataLabel={columnNames.timeSubmitted}>
                   <Timestamp stamp={group.submitted_time} />
