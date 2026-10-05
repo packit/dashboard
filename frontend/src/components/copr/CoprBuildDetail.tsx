@@ -77,7 +77,7 @@ export const CoprBuildDetail: React.FC<CoprBuildDetailProps> = ({ data }) => {
         </DescriptionListTerm>
         <DescriptionListDescription>
           <ResultProgressStep
-            submittedTime={data.build_submitted_time}
+            submittedTime={data.submitted_time}
             startTime={data.build_start_time}
             finishedTime={data.build_finished_time}
             status={getCoprBuildStatus(data.status)}

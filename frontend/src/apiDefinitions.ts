@@ -72,7 +72,7 @@ export interface ProjectPRs {
 export interface CoprBuildGroup {
   branch_name: string | null;
   build_id: number;
-  build_submitted_time: number;
+  submitted_time: number;
   packit_id: number;
   packit_id_per_chroot: {
     [key: string]: number;
@@ -111,7 +111,7 @@ export interface CoprBuild {
   build_id: string;
   build_logs_url: string;
   build_start_time: number;
-  build_submitted_time: number;
+  submitted_time: number;
   built_packages: CoprBuildPackage[] | null;
   chroot: string;
   commit_sha: string;
@@ -134,7 +134,7 @@ export interface CoprBuild {
 export interface KojiBuildGroup {
   branch_name: string | null;
   build_logs_urls: string;
-  build_submitted_time: number;
+  submitted_time: number;
   chroot: string;
   packit_id: number;
   // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
@@ -160,7 +160,7 @@ export interface KojiBuild {
   build_finished_time: number;
   build_logs_urls: [string: string];
   build_start_time: number;
-  build_submitted_time: number;
+  submitted_time: number;
   chroot: string;
   commit_sha: string;
   issue_id: number | null;
@@ -230,7 +230,7 @@ export interface KojiTagRequest {
 // /api/srpm-builds
 export interface SRPMBuildGroup {
   branch_name: string | null;
-  build_submitted_time: number;
+  submitted_time: number;
   log_url: string;
   // TODO: @Venefilyn - change interface depending on status of pr_id or branch_item.
   // They seem to be mutually exclusive so can be sure one is null and other is string
@@ -251,7 +251,7 @@ export interface SRPMBuild {
   branch_name: string | null;
   build_finished_time: number;
   build_start_time: number;
-  build_submitted_time: number;
+  submitted_time: number;
   copr_build_id: string;
   copr_web_url: string;
   issue_id: number | null;
