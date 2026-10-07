@@ -12,29 +12,32 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        include:
-          - dockerfile: Dockerfile
-            image: dashboard
+        dockerfile: [Dockerfile]
+        image: [dashboard]
+        # Include only configurations for the branch that triggered the workflow.
+        # [TODO] Switch internal to `stable` once stabilized, duh…
+        include: >-
+          ${{ fromJSON(
+            github.ref_name == 'main' &&
+            '[{"branch":"main","deployment":"stg","tag":"stg latest","api":"https://stg.packit.dev/api"},
+              {"branch":"main","deployment":"internal","tag":"internal","api":"https://internal.packit.dev/api"}]'
+            ||
+            '[{"branch":"stable","deployment":"prod","tag":"prod","api":"https://prod.packit.dev/api"}]'
+          ) }}
 
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
       - name: Extract branch name and set tag
         shell: bash
+        env:
+          BRANCH: ${{ matrix.branch }}
+          TAG: ${{ matrix.tag }}
+          API: ${{ matrix.api }}
         run: |
-          branch=${GITHUB_REF#refs/heads/}
-          tag=""
-          api=""
-          case $branch in
-              main)
-                  tag="stg latest"
-                  api="https://stg.packit.dev/api"
-                  ;;
-              stable)
-                  tag="prod"
-                  api="https://prod.packit.dev/api"
-                  ;;
-          esac
+          branch="$BRANCH"
+          tag="$TAG"
+          api="$API"
           echo "branch=${branch}" >> $GITHUB_OUTPUT
           unique_tag="${branch}-${GITHUB_SHA::7}"
           echo "tag=${tag} ${unique_tag}" >> $GITHUB_OUTPUT
@@ -58,6 +61,7 @@ jobs:
           build-args: |
             VITE_API_URL=${{ steps.branch_tag.outputs.api }}
             VITE_GIT_SHA=${{ steps.branch_tag.outputs.commit_sha }}
+            DEPLOYMENT=${{ matrix.deployment }}
           extra-args: |
             --secret id=sentry_auth_token,src=/tmp/sentry-secret
           oci: true
