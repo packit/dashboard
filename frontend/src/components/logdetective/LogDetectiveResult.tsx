@@ -265,25 +265,25 @@ export const LogDetectiveResult = () => {
               {data.status === "complete" && data.log_detective_response ? (
                 <CardBody>
                   <DescriptionList>
-                    {data.log_detective_response.explanation?.text ? (
+                    {data.log_detective_response.explanation ? (
                       <DescriptionListGroup>
                         <DescriptionListTerm>Explanation</DescriptionListTerm>
                         <DescriptionListDescription>
                           <CodeBlock>
                             <CodeBlockCode>
-                              {data.log_detective_response.explanation.text}
+                              {data.log_detective_response.explanation}
                             </CodeBlockCode>
                           </CodeBlock>
                         </DescriptionListDescription>
                       </DescriptionListGroup>
                     ) : null}
-                    {data.log_detective_response.solution?.text ? (
+                    {data.log_detective_response.solution ? (
                       <DescriptionListGroup>
                         <DescriptionListTerm>Solution</DescriptionListTerm>
                         <DescriptionListDescription>
                           <CodeBlock>
                             <CodeBlockCode>
-                              {data.log_detective_response.solution.text}
+                              {data.log_detective_response.solution}
                             </CodeBlockCode>
                           </CodeBlock>
                         </DescriptionListDescription>

@@ -523,14 +523,6 @@ export interface LogDetectiveGroup {
   repo_namespace: string;
 }
 
-export interface LogDetectiveExplanation {
-  text: string;
-}
-
-export interface LogDetectiveSolution {
-  text: string;
-}
-
 export interface LogDetectiveSnippet {
   text: string;
   line_number: number;
@@ -539,9 +531,9 @@ export interface LogDetectiveSnippet {
 }
 
 export interface LogDetectiveResponse {
-  explanation: LogDetectiveExplanation;
+  explanation: string;
   no_issue_found: boolean;
-  solution: LogDetectiveSolution | null;
+  solution: string | null;
   snippets: LogDetectiveSnippet[] | null;
 }
 
