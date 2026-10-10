@@ -16,57 +16,59 @@ jobs:
         image: [dashboard]
         # Include only configurations for the branch that triggered the workflow.
         # [TODO] Switch internal to `stable` once stabilized, duh…
-        include: >-
-          ${{ fromJSON(
-            github.ref_name == 'main' &&
-            '[{"branch":"main","deployment":"stg","tag":"stg latest","api":"https://stg.packit.dev/api"},
-              {"branch":"main","deployment":"internal","tag":"internal","api":"https://internal.packit.dev/api"}]'
-            ||
-            '[{"branch":"stable","deployment":"prod","tag":"prod","api":"https://prod.packit.dev/api"}]'
-          ) }}
+        include:
+          - branch: main
+            deployment: stg
+            tags: "stg latest"
+
+          - branch: main
+            deployment: internal
+            tags: "internal"
+
+          - branch: stable
+            deployment: prod
+            tags: "prod"
 
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
 
-      - name: Extract branch name and set tag
+      - name: Construct image tags and get commit SHA
         shell: bash
         env:
           BRANCH: ${{ matrix.branch }}
-          TAG: ${{ matrix.tag }}
-          API: ${{ matrix.api }}
+          TAGS: ${{ matrix.tags }}
         run: |
-          branch="$BRANCH"
-          tag="$TAG"
-          api="$API"
-          echo "branch=${branch}" >> $GITHUB_OUTPUT
-          unique_tag="${branch}-${GITHUB_SHA::7}"
-          echo "tag=${tag} ${unique_tag}" >> $GITHUB_OUTPUT
-          echo "api=${api}" >> $GITHUB_OUTPUT
+          UNIQUE_TAG="${BRANCH}-${GITHUB_SHA::7}"
+          echo "tags=${TAGS} ${UNIQUE_TAG}" >> $GITHUB_OUTPUT
+
           echo "commit_sha=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
-        id: branch_tag
+        id: make_facts
 
       - name: Set up secret file needed for the build
+        if: ${{ github.ref_name == matrix.branch }}
         run: echo "$SENTRY_AUTH_TOKEN" > /tmp/sentry-secret
         env:
           SENTRY_AUTH_TOKEN: ${{ secrets.SENTRY_AUTH_TOKEN }}
 
       - name: Build Image
+        if: ${{ github.ref_name == matrix.branch }}
         id: build-image
         # https://github.com/marketplace/actions/buildah-build
         uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         with:
           dockerfiles: ${{ matrix.dockerfile }}
           image: ${{ matrix.image }}
-          tags: ${{ steps.branch_tag.outputs.tag }}
+          tags: ${{ steps.make_facts.outputs.tags }}
           build-args: |
-            VITE_API_URL=${{ steps.branch_tag.outputs.api }}
-            VITE_GIT_SHA=${{ steps.branch_tag.outputs.commit_sha }}
             DEPLOYMENT=${{ matrix.deployment }}
+            VITE_API_URL=https://${{ matrix.deployment }}.packit.dev/api
+            VITE_GIT_SHA=${{ steps.make_facts.outputs.commit_sha }}
           extra-args: |
             --secret id=sentry_auth_token,src=/tmp/sentry-secret
           oci: true
 
       - name: Push To Quay
+        if: ${{ github.ref_name == matrix.branch }}
         # https://github.com/marketplace/actions/push-to-registry
         uses: redhat-actions/push-to-registry@5ed88d269cf581ea9ef6dd6806d01562096bee9c # v2
         with:
