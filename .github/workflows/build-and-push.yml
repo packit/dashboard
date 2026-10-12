@@ -18,20 +18,14 @@ jobs:
           - branch: main
             deployment: stg
             tags: "stg latest"
-            dockerfile: Dockerfile
-            image: dashboard
 
           - branch: main
             deployment: internal
             tags: "internal"
-            dockerfile: Dockerfile
-            image: dashboard
 
           - branch: stable
             deployment: prod
             tags: "prod"
-            dockerfile: Dockerfile
-            image: dashboard
 
     steps:
       - uses: actions/checkout@f43a0e5ff2bd294095638e18286ca9a3d1956744 # v3
@@ -60,8 +54,8 @@ jobs:
         # https://github.com/marketplace/actions/buildah-build
         uses: redhat-actions/buildah-build@7a95fa7ee0f02d552a32753e7414641a04307056 # v2
         with:
-          dockerfiles: ${{ matrix.dockerfile }}
-          image: ${{ matrix.image }}
+          dockerfiles: Dockerfile
+          image: dashboard
           tags: ${{ steps.make_facts.outputs.tags }}
           build-args: |
             DEPLOYMENT=${{ matrix.deployment }}
