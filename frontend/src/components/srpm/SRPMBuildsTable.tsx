@@ -93,7 +93,7 @@ export const SRPMBuildsTable = () => {
                   />
                 </Td>
                 <Td dataLabel={columnNames.timeSubmitted}>
-                  <Timestamp stamp={srpm_build.build_submitted_time} />
+                  <Timestamp stamp={srpm_build.submitted_time} />
                 </Td>
               </Tr>
             ))}
