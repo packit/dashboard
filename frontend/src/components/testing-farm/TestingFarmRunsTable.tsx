@@ -102,7 +102,12 @@ export const TestingFarmRunsTable = () => {
                 </Td>
                 <Td dataLabel={columnNames.testResults}>
                   <strong>
-                    <a href={testing_farm_run.web_url}>
+                    <a
+                      href={
+                        testing_farm_run.web_url ||
+                        `https://api.testing-farm.io/v0.1/requests/${testing_farm_run.pipeline_id}`
+                      }
+                    >
                       {testing_farm_run.pipeline_id}
                     </a>
                   </strong>
