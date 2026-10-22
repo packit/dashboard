@@ -323,7 +323,7 @@ export interface TestingFarmRunGroup {
   status: string;
   submitted_time: number;
   target: string;
-  web_url: string;
+  web_url: string | null;
 }
 
 // /api/testing-farm/$id
@@ -348,7 +348,7 @@ export interface TestingFarmRun {
   run_ids: number[];
   status: string;
   submitted_time: number;
-  web_url: string;
+  web_url: string | null;
 }
 
 // /api/propose-downstream
