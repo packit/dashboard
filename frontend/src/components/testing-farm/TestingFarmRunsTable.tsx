@@ -23,6 +23,7 @@ import { PackitPaginationContext } from "../shared/PackitPaginationContext";
 import { Timestamp } from "../shared/Timestamp";
 import { StatusLabel } from "../statusLabels/StatusLabel";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
+import { getTestingFarmResultsUrl } from "./testingFarmUrls";
 
 export const TestingFarmRunsTable = () => {
   const [page, setPage] = useState(1);
@@ -102,7 +103,11 @@ export const TestingFarmRunsTable = () => {
                 </Td>
                 <Td dataLabel={columnNames.testResults}>
                   <strong>
-                    <a href={testing_farm_run.web_url}>
+                    <a
+                      href={
+                        getTestingFarmResultsUrl(testing_farm_run) ?? undefined
+                      }
+                    >
                       {testing_farm_run.pipeline_id}
                     </a>
                   </strong>
