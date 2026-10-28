@@ -27,6 +27,7 @@ import { StatusLabel } from "../statusLabels/StatusLabel";
 import { TriggerLink, TriggerSuffix } from "../trigger/TriggerLink";
 import { CoprDataListItem } from "./CoprDataListItem";
 import { KojiDataListItem } from "./KojiDataListItem";
+import { getTestingFarmResultsUrl } from "./testingFarmUrls";
 
 export const TestingFarmRun = () => {
   const { id } = TestingFarmRoute.useParams();
@@ -109,7 +110,7 @@ export const TestingFarmRun = () => {
                       <StatusLabel
                         status={data.status}
                         target={data.chroot}
-                        link={data.web_url}
+                        link={getTestingFarmResultsUrl(data)}
                       />
                     </DescriptionListDescription>
                     <DescriptionListTerm>Pipeline ID</DescriptionListTerm>
