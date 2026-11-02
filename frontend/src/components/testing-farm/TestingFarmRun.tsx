@@ -114,14 +114,21 @@ export const TestingFarmRun = () => {
                     </DescriptionListDescription>
                     <DescriptionListTerm>Pipeline ID</DescriptionListTerm>
                     <DescriptionListDescription>
-                      <ClipboardCopy
-                        isReadOnly
-                        hoverTip="Copy"
-                        clickTip="Copied"
-                        variant="inline-compact"
+                      <a
+                        href={
+                          data.web_url ||
+                          `https://api.testing-farm.io/v0.1/requests/${data.pipeline_id}`
+                        }
                       >
-                        {data.pipeline_id}
-                      </ClipboardCopy>
+                        <ClipboardCopy
+                          isReadOnly
+                          hoverTip="Copy"
+                          clickTip="Copied"
+                          variant="inline-compact"
+                        >
+                          {data.pipeline_id}
+                        </ClipboardCopy>
+                      </a>
                     </DescriptionListDescription>
                   </DescriptionListGroup>
                   <DescriptionListGroup>
