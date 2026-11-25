@@ -119,7 +119,7 @@ const CoprBuildsTable = () => {
                   />
                 </Td>
                 <Td dataLabel={columnNames.timeSubmitted}>
-                  <Timestamp stamp={copr_build.build_submitted_time} />
+                  <Timestamp stamp={copr_build.submitted_time} />
                 </Td>
                 <Td dataLabel={columnNames.coprBuild}>
                   <strong>
